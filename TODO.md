@@ -7,7 +7,7 @@ Detail per day: [PLAN.md](PLAN.md). Notes: [notes/](notes/).
 
 | Day | Theme | Target | Status |
 |---|---|---|---|
-| 1 | Mental model + basics | 10-12 | ✅ |
+| 1 | Mental model + basics | 10-12 | 🟨 |
 | 2 | Ticket analysis, repro | 10-13 | ⬜ |
 | 3 | Fix/review/merge **CP1** | 10-14 | ⬜ |
 | 4 | Install, daily loop | 10-15 | ⬜ |
@@ -29,10 +29,10 @@ Legend: ⬜ todo · 🟨 doing · ✅ done · ❌ checkpoint failed (redo)
 
 ### Day 1
 - [x] Setup: claude.ai login, desktop app, repo cloned
-- [x] Course: Claude 101 (start) · AI Fluency + AI capabilities (optional, short)
-- [x] 3 chat tasks (bug summary / explain concept / drafting); log prompt improvements in notes
+- [ ] Course: Claude 101 (start) · AI Fluency + AI capabilities (optional, short)
+- [ ] 3 chat tasks (bug summary / explain concept / drafting); log prompt improvements in notes
 - [x] Git: branch → commit → push (`init-setup`)
-- [x] Notes: `notes/day-01.md`
+- [ ] Notes: `notes/day-01.md`
 
 ### Day 2
 - [ ] 5 tickets → 3-sentence analysis (asks/ambiguous/first step); use `sample-project/assets/issue.md` as one
