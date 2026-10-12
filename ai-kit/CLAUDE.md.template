@@ -1,0 +1,22 @@
+# <project name>
+
+<one line: what this is>
+
+## Commands
+- Install: `<cmd>`
+- Run: `<cmd>`
+- Test: `<cmd>`
+- Lint/format: `<cmd>`
+
+## Layout
+- `<dir>` — <purpose>
+
+## Conventions
+- One ticket per branch; small commits; PR always, never push to main.
+- Every change ships with a test. Keep diffs minimal.
+- <language/style rules>
+
+## Never
+- Commit or print secrets / `.env`.
+- Merge or claim "done" without running tests.
+- Add dependencies without asking.
