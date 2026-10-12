@@ -8,10 +8,14 @@
 - Extend: subagents (delegate, own context), MCP (external tools/data), hooks (deterministic: format, block cmds, notify).
 
 ## Prompts that worked
-- Bug summary: **"Summarize in 3 sentences: what breaks, likely cause, first debug step. Then list missing info."** → right symptom + sharp missing-info list. Chat can't read repo, so cause stayed a guess.
-- Explain concept: vague "in 5 lines" → 4 paragraphs. Hard format "exactly 5 bullets, max 15 words each. One analogy. One tip." → obeyed. Numeric limits beat vague ones.
-- Drafting: "Slack msg, friendly, 3 lines max" → on tone/length, but generic. Add PR link, bug name, tone example, audience to get a send-ready draft.
-- Improve next time: "Rank 2–3 hypotheses with how to confirm each" (answer gave only 1 cause).
+1. Bug summary (+ pasted `issue.md`) → right symptom, sharp missing-info list; chat can't read repo so cause stayed a guess.
+   > Summarize this bug in 3 sentences: what breaks, likely cause, first debugging step. Then list what info is missing.
+   - Improve: add "Rank 2–3 hypotheses and how to confirm each".
+2. Explain concept. Vague → 4 paragraphs (ignored "5 lines"). Hard format → obeyed:
+   > Explain a context window to a junior dev in exactly 5 lines/bullets, max 15 words each. One analogy. One practical tip.
+3. Drafting → right tone/length, generic (no link/bug name):
+   > Draft a short Slack message to a teammate: the login bug is reproduced, the fix is in PR review, and I need their review by tomorrow. Friendly, 3 lines max.
+   - Improve: add PR link, ticket, audience, tone example.
 
 ## Gotchas
 - Instructions in `CLAUDE.md` are advice; only hooks/permission deny rules are guaranteed.
