@@ -28,10 +28,10 @@ Legend: ⬜ todo · 🟨 doing · ✅ done · ❌ checkpoint failed (redo)
 ## Week 1 — Fundamentals
 
 ### Day 1
-- [ ] Setup: claude.ai login, desktop app, repo cloned
+- [x] Setup: claude.ai login, desktop app, repo cloned
 - [ ] Course: Claude 101 (start) · AI Fluency + AI capabilities (optional, short)
 - [ ] 3 chat tasks (bug summary / explain concept / drafting); log prompt improvements in notes
-- [ ] Git: branch → commit → push (use `sample-project`)
+- [x] Git: branch → commit → push (`init-setup`)
 - [ ] Notes: `notes/day-01.md`
 
 ### Day 2
