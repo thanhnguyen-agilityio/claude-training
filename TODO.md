@@ -29,7 +29,8 @@ Legend: ⬜ todo · 🟨 doing · ✅ done · ❌ checkpoint failed (redo)
 
 ### Day 1
 - [x] Setup: claude.ai login, desktop app, repo cloned
-- [ ] Course: Claude 101 (start) · AI Fluency + AI capabilities (optional, short)
+- [ ] Course: Claude 101 lessons 1–4 (What is Claude, First conversation, Getting better results, Desktop) · stretch 5–6 (Projects, Artifacts) · AI Fluency + AI capabilities (optional, short)
+  - [x] Lesson 1 What is Claude — reflection noted (idea: `email-digest` skill + weekday 08:30 scheduled task, Gmail connector, also on demand)
 - [ ] 3 chat tasks (bug summary / explain concept / drafting); log prompt improvements in notes
 - [x] Git: branch → commit → push (`init-setup`)
 - [ ] Notes: `notes/day-01.md`
@@ -41,7 +42,7 @@ Legend: ⬜ todo · 🟨 doing · ✅ done · ❌ checkpoint failed (redo)
 - [ ] Reproduce seeded bug, write repro steps (exact steps / expected / actual)
 - [ ] Failing test for bug
 - [ ] Git: `pull --rebase`, `log`, `diff`, resolve conflict #1
-- [ ] Course: finish Claude 101
+- [ ] Course: finish Claude 101 — lessons 7–13 (Skills, Connecting tools, Enterprise search, Research, Use-cases by role, Other ways, What's next) + quiz + badge; 7–8 = start of `email-digest` build
 
 ### Day 3 — CP1
 - [ ] Fix on branch, small commits, test included
