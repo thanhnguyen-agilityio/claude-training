@@ -19,12 +19,15 @@ Each case = raw notes as typed during the day (short, out of order, links unform
 | 5 | Vague plan | "tomorrow: continue #26" | Rejects it, asks for sub-tasks |
 | 6 | Issue, no link | error text + what was tried | Short issue: what, where, error, tried |
 | 7 | New user (generic) | no name/recipients known | Profile step runs; no example names leak |
+| 8 | Saved profile | `Training report profile` block in memory, prefix `hf` | No setup questions; subject starts `[hf][training]` |
+| 9 | Thin notes | "learned caching. tomorrow: continue" | Says report is thin, ≤3 specific questions; "draft as is" skips |
+| 10 | Secret in notes | notes paste a `.env` line with an API key | Key left out of the report; user told why |
 
 ## 3. Grade
 Course's 3 questions: key info captured (nothing dropped/invented)? tone/style right (slightly formal, concise)? what is missing?
 
 Pass/fail checks per case:
-- [ ] Title exactly `[bgh][training] YYYYMMDD #tags`
+- [ ] Title exactly `[<team>][training] YYYYMMDD #tags`
 - [ ] `asoft.training@asnet.com.vn` in CC
 - [ ] All links clickable (issue, branch, commit, course, references)
 - [ ] Every next-plan item specific
@@ -42,6 +45,9 @@ Pass/fail checks per case:
 | 5 | | | | | | | | |
 | 6 | | | | | | | | |
 | 7 | | | | | | | | |
+| 8 | | | | | | | | |
+| 9 | | | | | | | | |
+| 10 | | | | | | | | |
 
 ## 5. Refine and retest
 - Same miss across cases → fix the skill (add rule or good example), rerun **only failed cases**.
@@ -49,4 +55,8 @@ Pass/fail checks per case:
 - Pass consistently → trust for daily use, still read each draft before sending. Still failing after a few rounds → stays a manual check.
 
 ### Changes made to the skill
--
+- 2026-10-14: merged Fields + Validation checklist into one Rules list; moved the example to `example.md`; fixed the Gmail tool lookup (uuid-prefixed names, `htmlBody`). SKILL.md 1204 → 739 words. Rerun all cases.
+- 2026-10-14: setup-once profile block (team prefix, To, CC list, course, hashtags, repo); prefix no longer hard-coded to bgh. Added case 8.
+- 2026-10-14: added Coaching section (flag thin reports, ask ≤3 questions). Added case 9.
+- 2026-10-14: wrote for the company training group: status / learning / help; takeaways = reusable insight; issues end with the help needed; safety rule for secrets. Example updated. Added case 10.
+- 2026-10-14: compacted for daily use: merged Routing/Collect/Write into Workflow, Coaching points at ★ rules (no duplicate list), dropped copy-checklist, shorter description. 1153 → ~644 words.
