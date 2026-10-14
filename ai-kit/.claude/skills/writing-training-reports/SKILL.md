@@ -25,7 +25,7 @@ Training report profile
 ## Workflow
 
 - **Notes**: merge them into the running report (no duplicates, key points only). Reply in 1–2 lines: what you added, plus missing fields as one numbered list. "show report" → print it.
-- **"write" / "draft it"**: fill gaps (branch, commit, day tags), build from the template, check the Rules, show subject, To, CC, then the body in one code block; apply edits, then create the Gmail draft after the user confirms ("just draft it" skips confirmation).
+- **"write" / "draft it"**: fill gaps (branch, commit, day tags), build from the template, check the Rules, show subject, To, CC, then the body as rendered Markdown (never in a code block, so copy-paste keeps bullets and links); apply edits, then create the Gmail draft after the user confirms ("just draft it" skips confirmation).
 - **Edit after drafting**: update the same draft.
 
 **Coaching**: if content breaks a quality rule (marked ★), say plainly what is weak ("'learned caching' doesn't show what you learned") and ask at most 3 specific questions in one message. For plan sub-tasks, lesson ranges, or missing links, propose a concrete answer (e.g. "Lessons 1–4 + Notion note?") so "ok" accepts it. Never propose takeaways from titles; ask what the user learned or offer to shape their own notes. Add only what the user answers or accepts. "draft as is" → stop asking.
@@ -87,4 +87,4 @@ Worked example: [example.md](example.md).
 
 ## Gmail draft
 
-Find the tools with ToolSearch `gmail draft`. Call `create_draft` with `to`, `cc`, `subject`, and `htmlBody` (`<a href>`, nested `<ul><li>`, `<b>` headers), with text identical to the approved report. **Never send.** If Gmail is missing or fails, give copy-ready text and one line why (connect via Settings → Connectors).
+Find the tools with ToolSearch `gmail draft`. Call `create_draft` with `to`, `cc`, `subject`, and `htmlBody` (`<a href>`, nested `<ul><li>`, `<b>` headers), with text identical to the approved report. **Never send.** If Gmail is missing or fails, show the body as rendered Markdown and say: select the formatted text and copy it (the code-block Copy button gives raw Markdown); one line why (connect via Settings → Connectors).
