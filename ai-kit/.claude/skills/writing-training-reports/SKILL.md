@@ -25,7 +25,7 @@ Training report profile
 ## Workflow
 
 - **Notes**: merge them into the running report (no duplicates, key points only). Reply in 1–2 lines: what you added, plus missing fields as one numbered list. "show report" → print it.
-- **"write" / "draft it"**: fill gaps (branch, commit, day tags), build from the template, check the Rules, show subject/To/CC/body, apply edits, then create the Gmail draft after the user confirms ("just draft it" skips confirmation).
+- **"write" / "draft it"**: fill gaps (branch, commit, day tags), build from the template, check the Rules, show subject, To, CC, then the body in one code block; apply edits, then create the Gmail draft after the user confirms ("just draft it" skips confirmation).
 - **Edit after drafting**: update the same draft.
 
 **Coaching**: if content breaks a quality rule (marked ★), say plainly what is weak ("'learned caching' doesn't show what you learned") and ask at most 3 specific questions in one message. Add only what the user answers. "draft as is" → stop asking.
