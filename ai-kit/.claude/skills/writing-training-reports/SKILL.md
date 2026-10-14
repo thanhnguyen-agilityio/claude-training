@@ -1,6 +1,6 @@
 ---
 name: writing-training-reports
-description: Writes daily or weekly Agility training report emails ("[team][training] YYYYMMDD #tags") from the user's notes and saves them as a Gmail draft. Use for a training report, daily or weekly report, training log, or training progress notes.
+description: Writes daily or weekly Agility training report emails (subject [team][training] YYYYMMDD plus hashtags) from the user's notes and saves them as a Gmail draft. Use for a training report, daily or weekly report, training log, or training progress notes.
 ---
 
 # Writing training reports
@@ -9,7 +9,7 @@ The report goes to supporters, and the company training group reads it. It must 
 
 ## Setup (once per course)
 
-Use the `Training report profile` block from memory, preferences, project instructions, or the chat. If it's missing or incomplete, ask for all gaps in one message, then output the block and tell the user to save it there. Ask the team prefix as a choice (bgh / hf / other); never assume one. Ask profile fields only, not the day's work. Do the same when the user says "update my profile".
+Use the `Training report profile` block from memory, preferences, project instructions, or the chat. If it's missing or incomplete, ask for all gaps in one message. Once every field is known, output the complete block (no TODOs) and tell the user to save it there. Ask the team prefix as a choice (bgh / hf / other); never assume one. Ask profile fields only, not the day's work. Do the same when the user says "update my profile".
 
 ```
 Training report profile
@@ -28,7 +28,7 @@ Training report profile
 - **"write" / "draft it"**: fill gaps (branch, commit, day tags), build from the template, check the Rules, show subject, To, CC, then the body in one code block; apply edits, then create the Gmail draft after the user confirms ("just draft it" skips confirmation).
 - **Edit after drafting**: update the same draft.
 
-**Coaching**: if content breaks a quality rule (marked ★), say plainly what is weak ("'learned caching' doesn't show what you learned") and ask at most 3 specific questions in one message. Where possible, propose a concrete answer built from the user's own notes (e.g. "Lessons 1–4 + Notion note?") so "ok" accepts it. Add only what the user answers or accepts. "draft as is" → stop asking.
+**Coaching**: if content breaks a quality rule (marked ★), say plainly what is weak ("'learned caching' doesn't show what you learned") and ask at most 3 specific questions in one message. For plan sub-tasks, lesson ranges, or missing links, propose a concrete answer (e.g. "Lessons 1–4 + Notion note?") so "ok" accepts it. Never propose takeaways from titles; ask what the user learned or offer to shape their own notes. Add only what the user answers or accepts. "draft as is" → stop asking.
 
 ## Rules
 
