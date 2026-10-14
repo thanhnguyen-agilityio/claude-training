@@ -1,6 +1,6 @@
 ---
 name: writing-training-reports
-description: Writes daily or weekly Agility training report emails ("[<team>][training] YYYYMMDD #tags") from the user's notes and saves them as a Gmail draft. Use for a training report, daily or weekly report, training log, or training progress notes.
+description: Writes daily or weekly Agility training report emails ("[team][training] YYYYMMDD #tags") from the user's notes and saves them as a Gmail draft. Use for a training report, daily or weekly report, training log, or training progress notes.
 ---
 
 # Writing training reports
