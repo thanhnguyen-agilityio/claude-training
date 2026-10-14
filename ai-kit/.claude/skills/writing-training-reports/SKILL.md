@@ -15,7 +15,7 @@ Use the `Training report profile` block from memory, preferences, project instru
 Training report profile
 - Sender: <full name>
 - Team prefix: <bgh | hf | ...>
-- Supporters (To): <First Last <email>>, ...
+- Supporters (To): <greeting name> <email>, ...   (greeting name as used in "Hi ...", e.g. Xuan)
 - CC: asoft.training@asnet.com.vn, <others <email>>, ...
 - Course: [<name>](<link>)
 - Hashtags: #<tag> #<tag>
@@ -28,13 +28,13 @@ Training report profile
 - **"write" / "draft it"**: fill gaps (branch, commit, day tags), build from the template, check the Rules, show subject, To, CC, then the body in one code block; apply edits, then create the Gmail draft after the user confirms ("just draft it" skips confirmation).
 - **Edit after drafting**: update the same draft.
 
-**Coaching**: if content breaks a quality rule (marked ★), say plainly what is weak ("'learned caching' doesn't show what you learned") and ask at most 3 specific questions in one message. Add only what the user answers. "draft as is" → stop asking.
+**Coaching**: if content breaks a quality rule (marked ★), say plainly what is weak ("'learned caching' doesn't show what you learned") and ask at most 3 specific questions in one message. Where possible, propose a concrete answer built from the user's own notes (e.g. "Lessons 1–4 + Notion note?") so "ok" accepts it. Add only what the user answers or accepts. "draft as is" → stop asking.
 
 ## Rules
 
 - Subject: `[<team prefix>][training] YYYYMMDD #tags`, date = today. Weekly: ask the date range, use its last working day, add `#weekly`, open with "This week, I learned/continued…".
 - CC always includes `asoft.training@asnet.com.vn`.
-- ★ Finished item: task, issue link if any, 2–4 takeaways a colleague can reuse (what + why/how). "Caching: TTL for lists, invalidate on write", not "Learned caching".
+- ★ Finished learning or practice item: task, issue link if any, 2–4 takeaways a colleague can reuse (what + why/how). "Caching: TTL for lists, invalidate on write", not "Learned caching".
 - ★ Include references (notes, docs, board, demo) when they exist.
 - ★ Next plan: each item names a task and its sub-tasks. Reject "continue working on practice".
 - ★ Issue: title + link, or what / where / error / tried, ending with the help needed.
@@ -47,7 +47,7 @@ Training report profile
 ## Template
 
 ```
-Hi <supporter first names>,
+Hi <supporter greeting names>,
 Today, I continued training the [<Course>](<link>) by <one-line summary>.
 Please find more detail in content below:
 FINISHED

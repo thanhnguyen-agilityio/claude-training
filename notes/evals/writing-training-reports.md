@@ -60,3 +60,4 @@ Pass/fail checks per case:
 - 2026-10-14: added Coaching section (flag thin reports, ask ≤3 questions). Added case 9.
 - 2026-10-14: wrote for the company training group: status / learning / help; takeaways = reusable insight; issues end with the help needed; safety rule for secrets. Example updated. Added case 10.
 - 2026-10-14: compacted for daily use: merged Routing/Collect/Write into Workflow, Coaching points at ★ rules (no duplicate list), dropped copy-checklist, shorter description. 1153 → ~644 words.
+- 2026-10-14 (real run, My Le profile): coaching turned lesson lists into reusable takeaways ✅; empty sections omitted ✅; sender/Gmail mismatch flagged ✅. Misses: greeting "Hi Xuan Mai" (full name) → profile stores greeting name; plan drafted without sub-tasks → coaching now proposes a concrete answer "ok" accepts; repo-created item nagged for takeaways → ★ applies to learning/practice items only.
