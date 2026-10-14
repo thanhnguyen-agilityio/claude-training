@@ -9,7 +9,7 @@ The report goes to supporters, and the company training group reads it. It must 
 
 ## Setup (once per course)
 
-Use the `Training report profile` block from memory, preferences, project instructions, or the chat. If it's missing or incomplete, ask for all gaps in one message. Once every field is known, output the complete block (no TODOs) and tell the user to save it there. Ask the team prefix as a choice (bgh / hf / other); never assume one. Ask profile fields only, not the day's work. Do the same when the user says "update my profile".
+Use the `Training report profile` block from memory, preferences, project instructions, or the chat. If it's missing or incomplete, ask for all gaps in one message. Once every field is known, show the complete block (no TODOs) and ask "Save this profile to memory?". On "ok", save it with your memory tool. If you have no memory tool, tell the user to paste it into their preferences or project instructions. Ask the team prefix as a choice (bgh / hf / other); never assume one. Ask profile fields only, not the day's work. Do the same when the user says "update my profile".
 
 ```
 Training report profile
