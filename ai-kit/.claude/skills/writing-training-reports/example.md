@@ -2,11 +2,28 @@
 
 All names and links are made up. Always use the user's own profile.
 
-**Notes from the user:**
+**Saved profile (from setup, not repeated in daily notes):**
 
-> Supporters An and Binh. Plan: MCP training plan https://docs.google.com/document/d/EXAMPLE. Repo https://gitlab.asoft-python.com/an.tran/mcp-training. Worked on issue #12 Implement Database MCP Server: init server, resources database://connection, database://schema; sql tools list_database_tables, execute_sql_query. Learned: resources = read-only context for the model, tools = actions; keep SQL tools read-only to avoid unsafe queries. Branch feat/ecommerce, folder 3-practices/3-2-ecommerce, commit b69e476. Stuck: SQLite connection closes between tool calls, tried a connection pool, still failing. Anyone handled SQLite with async MCP servers? Tomorrow: cart and order tools.
+```
+Training report profile
+- Sender: Minh Le
+- Team prefix: hf
+- Supporters (To): An Tran <an.tran@example.com>, Binh Do <binh.do@example.com>
+- CC: asoft.training@asnet.com.vn, Cuong Pham <cuong.pham@example.com>
+- Course: [MCP training plan](https://docs.google.com/document/d/EXAMPLE)
+- Hashtags: #llm #mcp
+- Repo: [mcp-training](https://gitlab.asoft-python.com/minh.le/mcp-training), folder 3-practices/3-2-ecommerce
+```
 
-**Body:**
+**Today's notes from the user:**
+
+> Worked on #12 Implement Database MCP Server: init server, resources database://connection, database://schema; sql tools list_database_tables, execute_sql_query. Learned: resources = read-only context for the model, tools = actions; keep SQL tools read-only to avoid unsafe queries. Branch feat/ecommerce, commit b69e476. Stuck: SQLite connection closes between tool calls, tried a connection pool, still failing. Anyone handled SQLite with async MCP servers? Tomorrow: cart and order tools. Tags: #practice
+
+**Draft:**
+
+- Subject: `[hf][training] 20261014 #llm #mcp #practice`
+- To: an.tran@example.com, binh.do@example.com
+- CC: asoft.training@asnet.com.vn, cuong.pham@example.com
 
 ```
 Hi An and Binh,
@@ -14,15 +31,15 @@ Today, I continued training the [MCP training plan](https://docs.google.com/docu
 Please find more detail in content below:
 FINISHED
 
-* Implement Database MCP Server ([#12](https://gitlab.asoft-python.com/an.tran/mcp-training/-/issues/12))
+* Implement Database MCP Server ([#12](https://gitlab.asoft-python.com/minh.le/mcp-training/-/issues/12))
    * Resources (database://connection, database://schema) give the model read-only context; tools perform actions
    * SQL tools (list_database_tables, execute_sql_query) are read-only to avoid unsafe queries
-* For more details, please refer to the [board](https://gitlab.asoft-python.com/an.tran/mcp-training/-/boards)
+* For more details, please refer to the [board](https://gitlab.asoft-python.com/minh.le/mcp-training/-/boards)
 * Source code:
-   * Git repository: [mcp-training](https://gitlab.asoft-python.com/an.tran/mcp-training)
-   * Branch: [feat/ecommerce](https://gitlab.asoft-python.com/an.tran/mcp-training/-/commits/feat/ecommerce)
+   * Git repository: [mcp-training](https://gitlab.asoft-python.com/minh.le/mcp-training)
+   * Branch: [feat/ecommerce](https://gitlab.asoft-python.com/minh.le/mcp-training/-/commits/feat/ecommerce)
    * Folder: 3-practices/3-2-ecommerce
-   * Last commit: [b69e476](https://gitlab.asoft-python.com/an.tran/mcp-training/-/commit/b69e476)
+   * Last commit: [b69e476](https://gitlab.asoft-python.com/minh.le/mcp-training/-/commit/b69e476)
 
 ISSUES
 
@@ -31,12 +48,12 @@ ISSUES
 
 NEXT PLAN
 
-* Continue task Implement Database MCP Server ([#12](https://gitlab.asoft-python.com/an.tran/mcp-training/-/issues/12))
+* Continue task Implement Database MCP Server ([#12](https://gitlab.asoft-python.com/minh.le/mcp-training/-/issues/12))
    * Implement cart tools
    * Implement order tools
 
 Best regards,
-<Sender name>.
+Minh Le.
 ```
 
-The user gave only "#12" and the branch name. The issue, branch, and commit links follow the repo's GitLab URL pattern. IN PROCESS is omitted because it is empty.
+Recipients, course, repo, and folder come from the profile. The daily notes add only the work, branch, commit, and extra tags. Issue, branch, commit, and board links follow the repo's GitLab URL pattern. IN PROCESS is omitted because it is empty.
