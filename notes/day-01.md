@@ -7,7 +7,7 @@
   - [x] 1 [What is Claude](https://academy.claude.com/courses/claude-101/what-is-claude)
   - [x] 2 Your first conversation with Claude
   - [x] 3 Getting better results (do before the 3 chat tasks)
-  - [ ] 4 How you'll work with Claude on your desktop
+  - [x] 4 How you'll work with Claude on your desktop
   - [ ] stretch: 5 Introduction to projects · 6 Creating with artifacts
 - [ ] 3 chat tasks (bug summary / explain concept / drafting)
 
@@ -64,6 +64,39 @@ Work idea to build: **company email digest** via Gmail connector.
 2. Evaluate Claude against my own completed work.
 3. The 4D framework shows that collaborating well with Claude takes learning: know its capabilities, know my goals, describe the task well, evaluate the results, and use AI responsibly.
 
+## Lesson 4 notes — How you'll work with Claude on your desktop
+Claude desktop app has **3 shapes of work**. Know which one you're in to use it well.
+
+### 1. Turn by turn: work *with* Claude
+The most common and basic shape: a back-and-forth conversation. Ask → answer → steer → revise. We think together with Claude.
+- **Reach for it when:** the answer changes what you ask next · you want to stay in the loop · it's quick.
+- **Try it for:** unfamiliar topics · drafting emails, rephrasing, talking an idea through · working with documents, brainstorming, checking.
+- **Product:** desktop **Chat** tab (like claude.ai) + quick entry, screenshots, window sharing, dictation, connectors.
+
+### 2. Hand off: delegate a whole piece of work
+Describe the **outcome** (a brief, a formatted deliverable, a scheduled task). Claude plans it, does it, and comes back with the result. My job: **(1) review the plan, (2) review the output**, not do the steps myself.
+- **Reach for it when:** the task has several steps you'd normally do in sequence · the output is finished files, delivered where you need them · the work spans your tools · it should run on a schedule or while you do something else.
+- Hand-off ≠ stepping away: Claude first asks a few questions to pin down scope and format, then shows the plan. You can watch progress and steer at any point; it stops to ask permission before actions that matter.
+- **Try it for:** querying across all your tools · a huge folder of documents · repeated workflows / scheduled tasks.
+- **Product:** **Cowork**: local folder access · scheduled tasks · subagents · projects · browser use · computer use · plugins (bundles of skills + connectors + agents for one kind of work).
+
+### 3. Build software: Claude Code
+Claude works in the codebase: reads, writes, tests, runs commands, previews changes, tracks via git. For developers.
+- **Where:** Local (pick a folder) or Cloud (connect a GitHub repo).
+- **Permission modes:** Manually approve · Accept edits · Plan.
+- **Product:** desktop **Code** tab.
+
+### Choosing the shape
+| Doing | Shape | Use |
+|---|---|---|
+| Ask, brainstorm, draft, think; quick, turn by turn | Turn by turn | Chat (quick entry, dictation, screenshots) |
+| Multi-step task ending in a finished deliverable; spans tools; runs on a schedule | Hand off | Cowork (folder access, connectors, scheduled tasks, subagents) |
+| Write, test, run, ship code | Build software | Code tab (local / cloud) |
+
+### Reflection
+1. Log my daily work in detail, then pick repeated work to automate as hand-off tasks. First candidates: **morning inbox triage**, **daily briefing**, **weekly roundup**.
+2. Once the kit grows, bundle the skills + connectors into a **plugin**.
+
 ## Learned
 -
 
@@ -75,3 +108,4 @@ Work idea to build: **company email digest** via Gmail connector.
 
 ## Kit candidates
 - `email-digest` skill (Gmail connector, weekday 08:30 + on demand) → `ai-kit/.claude/skills/`
+- Hand-off trio: morning inbox triage · daily briefing · weekly roundup → later a plugin
