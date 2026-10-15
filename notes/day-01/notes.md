@@ -9,7 +9,7 @@
   - [x] 3 Getting better results (do before the 3 chat tasks)
   - [x] 4 How you'll work with Claude on your desktop
   - [ ] stretch: 5 Introduction to projects · 6 Creating with artifacts
-- [ ] 3 chat tasks (bug summary / explain concept / drafting)
+- [ ] 3 chat tasks (bug summary / explain concept / drafting) → [exercises/](exercises/README.md)
 
 ## Lesson 1 notes — What is Claude
 - Claude is an AI assistant for life and work, far more than a chatbot. Designed to be steerable and collaborative, very intelligent, and available in many places: web, app, CLI.
