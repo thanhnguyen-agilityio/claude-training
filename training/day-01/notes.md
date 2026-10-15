@@ -101,7 +101,14 @@ Claude works in the codebase: reads, writes, tests, runs commands, previews chan
 -
 
 ## Prompts that worked
-- **Bug summary → ticket (Task 1, v4, 5/5):** Stage + Task + Rules: `max 5 lines; label each line Known (shown in the ticket) or Suspected (a guess); no fixes yet. Line 1: what a user sees and when it starts. If the ticket doesn't say, label it Suspected.` Details: [exercises/01-bug-summary/log.md](exercises/01-bug-summary/log.md).
+- **Bug summary → ticket (Task 1, v4, scored 5/5):** full log in [exercises/01-bug-summary/log.md](exercises/01-bug-summary/log.md)
+  ```
+  I'm a developer who just joined the e-commerce agent project, and I need to paste the summary into the ticket. Summarize the bug in the ticket below.
+  Rules: max 5 lines; label each line Known (shown in the ticket) or Suspected (a guess); no fixes yet.
+  Line 1: what a user sees and when it starts. If the ticket doesn't say, label it Suspected.
+  <paste ticket>
+  ```
+  Why it works: Stage (role + purpose) · Task · Rules (length cap, Known/Suspected labels, no fixes) · a fallback for missing info.
 
 ## Gotchas
 - A required field the source doesn't cover makes Claude invent it, and it may mark the invention as fact. Always say what to do when info is missing.
