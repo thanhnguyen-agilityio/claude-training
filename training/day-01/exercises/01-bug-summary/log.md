@@ -7,7 +7,7 @@ Rubric: see [README.md](README.md). Scores marked *(proposed)* are the teacher's
 | Round | Change | Score /5 | What improved / what was still wrong |
 |---|---|---|---|
 | v1 | lazy prompt | 3 *(proposed)* | See v1 analysis below |
-| v2 | | | |
+| v2 | Stage / Task / Rules: ≤5 lines, Known vs Suspected, no fixes | 4.5 *(proposed)* | Length and shape fixed, no unrequested fix list, guesses labelled. Still missing: *when* it starts (only once the history is long enough to be trimmed). |
 | v3 | | | |
 
 ---
@@ -76,7 +76,49 @@ Reference: https://github.com/langchain-ai/langgraph/discussions/1398
 
 ## v2: framed (Stage / Task / Rules)
 
-_To do._
+**Prompt**
+````
+(paste your exact v2 prompt here. It was not included when the response was logged.)
+````
+
+**Response**
+````
+* Known: The summarize-conversation feature intermittently fails with an OpenAI `400 BadRequestError`: "messages with role 'tool' must be a response to a preceeding message with 'tool_calls'" (param `messages.[1].role`), raised in the `assistant` node. The only workaround so far is disabling the feature.
+* Known: The state dump at the failure shows `state["messages"]` starting with `ToolMessage`s (`sql_db_list_tables`, `sql_db_schema`) whose originating `AIMessage` with `tool_calls` is absent, so the list begins with orphaned tool messages.
+* Known: The latest turn ("Compare Gilded Prowl Skirt with Khaki Mini Skirt") has an `AIMessage` with two parallel `tool_calls` followed by two `ToolMessage` replies, and the ticket notes the history is cut so a `ToolMessage` ends up without its preceding `AIMessage`.
+* Suspected: The summarization step trims or removes the oldest messages by count, cutting between an `AIMessage(tool_calls)` and its `ToolMessage`s, which leaves orphaned tool messages at the start of the history sent to the model.
+* Suspected: It is intermittent because it only occurs when the cut point lands inside a tool-call group, which is more likely with parallel tool calls producing multiple `ToolMessage`s; this is unconfirmed until the summarization/trim code is inspected.
+````
+
+### Rubric check (proposed)
+
+| Criterion | Pt | Why |
+|---|---|---|
+| Symptom: what the user sees, and when | 0.5 | Says "intermittently" and gives a *suspected* trigger (cut point inside a tool-call group). Still doesn't say it only happens once the history is long enough to be trimmed. |
+| Error, precisely | 1 | Exact exception, message and `param`. |
+| Where | 1 | Summarization step plus the `assistant` node. |
+| Status / impact | 1 | Workaround stated. |
+| Shape: ≤ 5 lines, known vs guessed separated | 1 | 5 bullets, each labelled **Known** or **Suspected**, and it says the intermittency is "unconfirmed until the summarization/trim code is inspected". |
+| **Total** | **4.5** | |
+
+### Discernment: what I verified against `issue.md`
+- [x] `Compare "Gilded Prowl Skirt" with "Khaki Mini Skirt"` is the human message in the dump, so the "latest turn" in bullet 3 is real.
+- [x] It no longer invents "fine-tuned gpt-4o-mini" or a fix list. The Known/Suspected rule stopped those guesses.
+- [ ] **Still check:** bullet 3 says the ticket "notes the history is cut". The ticket only says one tool message has no `AIMessage` before it. It never says why. That is Suspected, not Known.
+- [ ] **Still check:** is "trims by count" correct? Open `summarize_conversation` in `sample-project/server/agent/graph.py` and `RECENT_MESSAGE_LIMIT` in `sample-project/server/utils/constants.py`.
+
+### What changed v1 → v2
+| | v1 | v2 |
+|---|---|---|
+| Length | ~25 lines | 5 bullets |
+| Root cause | stated as fact | labelled Suspected |
+| Fix list | included | gone |
+| Invented details (fine-tuned model) | yes | no |
+| Score | 3 | 4.5 |
+
+The biggest gain came from the **Rules** block, specifically the length cap and the Known/Suspected labels. Giving Claude a role and context mattered less.
+
+---
 
 ## v3: fix one gap
 
