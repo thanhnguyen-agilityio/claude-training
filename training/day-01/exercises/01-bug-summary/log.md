@@ -9,6 +9,7 @@ Rubric: see [README.md](README.md). Scores marked *(proposed)* are the teacher's
 | v1 | lazy prompt | 3 *(proposed)* | See v1 analysis below |
 | v2 | Stage (role + purpose) / Task / Rules (≤5 lines, Known vs Suspected, no fixes) | 4.5 *(proposed)* | Length and shape fixed, no unrequested fix list, guesses labelled. Still missing: *when* it starts (only once the history is long enough to be trimmed). |
 | v3 | Added: "Line 1 must say what a user sees and when it starts." | 4 *(proposed)* | Line 1 now has "when", but it is labelled Known although the ticket doesn't say it, and line 2 contains a claim the ticket contradicts. See v3 analysis. |
+| v4 | Fixed v3: "If the ticket doesn't say, label it Suspected." | 5 *(proposed)* | No false claims. Missing info is admitted ("the ticket doesn't show the summary code"), and the "when" (threshold) is labelled Suspected. |
 
 ---
 
@@ -181,15 +182,80 @@ Known: A user sees a failed or broken response on a follow-up question in a conv
 | Fix list | yes | no | no |
 | Score (proposed) | 3 | 4.5 | 4 |
 
+## v4: v3 with an honesty rule
+
+**Change (one thing only, vs v3):** `If the ticket doesn't say, label it Suspected.`
+
+**Prompt**
+````
+I'm developer who just joined the e-commerce agent project, and I need to paste the summary into the ticket. Summarize the bug in the ticket below.
+Rules: max 5 lines; label each line Known (shown in the ticket) or Suspected (a guesst); no fixes yet.
+Line 1: what a user sees and when it starts. If the ticket doesn't say, label it Suspected.
+<paste issue.md>
+````
+
+**Response**
+````
+Known: Users sometimes get an error instead of a reply when the "summary conversation" feature is on; the ticket says it happens "sometime" and gives no exact trigger, and the temp workaround is to disable the feature.
+Known: The OpenAI API returns a 400 `BadRequestError` ("messages with role 'tool' must be a response to a preceeding message with 'tool_calls'", param `messages.[1].role`), raised from the `assistant` node in `graph.py` while streaming via `chat.py`.
+Known: The debugged `state["messages"]` begins with orphaned `ToolMessage`s (the first two, with no preceding `AIMessage` carrying `tool_calls`), and later has an `AIMessage` with two `tool_calls` followed by two `ToolMessage`s.
+Suspected: The summarization step trims or replaces earlier history and cuts between an `AIMessage(tool_calls)` and its `ToolMessage`s, leaving tool responses at the start of the list; the ticket doesn't show the summary code.
+Suspected: It only fails sometimes because the cut falls inside a tool-call group only when the history reaches the summarization threshold, so shorter conversations work.
+````
+
+### Rubric check (proposed)
+
+| Criterion | Pt | Why |
+|---|---|---|
+| Symptom: what the user sees, and when | 1 | Error instead of a reply, "sometimes", and the "when" (only once the history reaches the summarization threshold) is stated and labelled Suspected. |
+| Error, precisely | 1 | Exact message and `param`. |
+| Where | 1 | `assistant` node in `graph.py`, streamed via `chat.py`, and the summarization step. |
+| Status / impact | 1 | Workaround stated. |
+| Shape: ≤ 5 lines, known vs guessed separated | 1 | 5 lines; every Known is backed by the ticket; guesses are labelled and it admits the summary code isn't in the ticket. |
+| **Total** | **5** | |
+
+### Discernment: checked against `issue.md` and the repo
+| Claim | Verdict | Evidence |
+|---|---|---|
+| Line 3: first two messages are orphan `ToolMessage`s | **True** | `sql_db_list_tables` and `sql_db_schema` tool messages open the dump. |
+| Line 3: later, an `AIMessage` with two `tool_calls` followed by two `ToolMessage`s | **True** | `call_qK4F…` and `call_yc6c…`, then the Gilded Prowl / Khaki Mini replies. v3 got this wrong. |
+| Line 2: raised from `assistant` node in `graph.py`, streaming via `chat.py` | **True** | Traceback: `chat.py` line 64 `stream_agent_response`, `graph.py` line 53 `__call__`. |
+| Line 5: fails only once the history reaches the threshold | **Matches the code** | `summarize_conversation` returns early when `len(messages) <= RECENT_MESSAGE_LIMIT + 1` (default 5). Claude didn't see the code, so this was a good guess. |
+| Line 4: cuts between an `AIMessage(tool_calls)` and its `ToolMessage`s | **Still unproven** | `handle_keep_recent_messages` tries to keep these pairs together. Whether it always does is the Day 2 question. |
+
+**Minor nit:** line 1 is labelled Known, but "an error instead of a reply" is inferred from a stack trace. It is honest about the trigger though ("gives no exact trigger"). Not worth a point.
+
 ---
 
-**Best prompt (copy to `../../notes.md`):**
-Best tested: **v2**. Untested improvement (use as v4 if you want to try):
+## Comparison
+
+| | v1 lazy | v2 framed | v3 + "line 1" | v4 + honesty rule |
+|---|---|---|---|---|
+| Length | ~25 lines | 5 | 5 | 5 |
+| Has "when" | no | partly | yes (as Known, a guess) | yes (as Suspected) |
+| Invented / wrong facts | yes | no | yes | **no** |
+| Fix list | yes | no | no | no |
+| Score (proposed) | 3 | 4.5 | 4 | **5** |
+
+**Which change moved the score:**
+1. Rules block (length cap + Known/Suspected labels): 3 → 4.5, the biggest jump.
+2. "Line 1 must say what a user sees and when": 4.5 → 4, **worse**. It forced Claude to invent.
+3. "If the ticket doesn't say, label it Suspected": 4 → 5. It gave Claude an honest way out.
+
+**Rule to keep:** every time you require a field the source may not contain, say what to do when it's missing.
+
+---
+
+---
+
+**Best prompt (copy to `../../notes.md`):** v4
 ```
 I'm a developer who just joined the e-commerce agent project, and I need to paste the summary into the ticket. Summarize the bug in the ticket below.
-Rules: max 5 lines; label each line Known (shown in the ticket, quote the evidence) or Suspected (a guess); no fixes yet.
+Rules: max 5 lines; label each line Known (shown in the ticket) or Suspected (a guess); no fixes yet.
 Line 1: what a user sees and when it starts. If the ticket doesn't say, label it Suspected.
+<paste ticket>
 ```
 **Surprise (good/bad):**
 - Good: adding the Rules block cut the answer from ~25 lines to 5 and removed an invented detail.
 - Bad: when I forced a "when it starts" line, Claude filled the gap with a guess labelled Known, then mis-read the dump (said an `AIMessage` was missing when it was present).
+- Good: telling Claude what to do when the source is silent ("label it Suspected") fixed the invention problem without making the answer longer.

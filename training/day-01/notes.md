@@ -101,10 +101,11 @@ Claude works in the codebase: reads, writes, tests, runs commands, previews chan
 -
 
 ## Prompts that worked
--
+- **Bug summary → ticket (Task 1, v4, 5/5):** Stage + Task + Rules: `max 5 lines; label each line Known (shown in the ticket) or Suspected (a guess); no fixes yet. Line 1: what a user sees and when it starts. If the ticket doesn't say, label it Suspected.` Details: [exercises/01-bug-summary/log.md](exercises/01-bug-summary/log.md).
 
 ## Gotchas
--
+- A required field the source doesn't cover makes Claude invent it, and it may mark the invention as fact. Always say what to do when info is missing.
+- "Known" claims can still be wrong (v3 said an `AIMessage` was missing when the dump shows it). Check against the source.
 
 ## Kit candidates
 - `email-digest` skill (Gmail connector, weekday 08:30 + on demand) → `ai-kit/.claude/skills/`
