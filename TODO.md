@@ -1,7 +1,7 @@
 # TODO / Progress
 
 Start 2026-10-12. Dates = flex targets; compress if ahead. Tell Claude "done day N" / "update todo" to tick items.
-Detail per day: [PLAN.md](PLAN.md). Notes: [notes/](notes/).
+Detail per day: [PLAN.md](PLAN.md). Notes: [training/](training/).
 
 ## Progress
 
@@ -35,7 +35,7 @@ Legend: ⬜ todo · 🟨 doing · ✅ done · ❌ checkpoint failed (redo)
   - [x] Lesson 4 Desktop — 3 shapes: turn by turn (Chat) / hand off (Cowork) / build (Code tab)
 - [ ] 3 chat tasks (bug summary / explain concept / drafting); log prompt improvements in notes
 - [x] Git: branch → commit → push (`init-setup`)
-- [ ] Notes: `notes/day-01/notes.md` · exercises: `notes/day-01/exercises/`
+- [ ] Notes: `training/day-01/notes.md` · exercises: `training/day-01/exercises/`
 
 ### Day 2
 - [ ] 5 tickets → 3-sentence analysis (asks/ambiguous/first step); use `sample-project/assets/issue.md` as one
