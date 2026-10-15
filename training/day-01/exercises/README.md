@@ -31,8 +31,8 @@ Prompt skeleton for v2:
 
 ## Tasks (~30 min each)
 1. [01-bug-summary/](01-bug-summary/README.md): summarize the seeded bug in `sample-project/assets/issue.md`
-2. [02-explain-concept.md](02-explain-concept.md): explain conversation summarization / message trimming in the LangGraph agent
-3. [03-drafting.md](03-drafting.md): draft a status update about the bug for a non-technical PM
+2. [02-explain-concept/](02-explain-concept/README.md): explain conversation summarization / message trimming in the LangGraph agent
+3. [03-drafting/](03-drafting/README.md): draft a status update about the bug for a non-technical PM
 
 Tasks 1, 2 and 3 use the same bug, so by the end of the day you understand it well. That's your head start for Day 2 (repro + failing test).
 

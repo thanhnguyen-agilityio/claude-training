@@ -28,19 +28,4 @@ write a message to my PM about the summary bug
 - Tell it what *not* to say ("don't apologize three times", "no bullet list")
 
 ## Your log
-| Round | Prompt (or the change) | Score /5 | What improved / what was still wrong |
-|---|---|---|---|
-| v1 | `write a message to my PM about the summary bug` | | |
-| v2 | | | |
-| v3 | | | |
-
-**Final message (after your own hand edit):**
-```
-
-```
-**What you changed by hand, and why:**
-
-**Best prompt (copy to notes):**
-```
-
-```
+Keep it in [log.md](log.md): one section per round (prompt, response, score, what changed).
