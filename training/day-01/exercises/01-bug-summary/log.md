@@ -7,7 +7,7 @@ Rubric: see [README.md](README.md). Scores marked *(proposed)* are the teacher's
 | Round | Change | Score /5 | What improved / what was still wrong |
 |---|---|---|---|
 | v1 | lazy prompt | 3 *(proposed)* | See v1 analysis below |
-| v2 | Stage / Task / Rules: ≤5 lines, Known vs Suspected, no fixes | 4.5 *(proposed)* | Length and shape fixed, no unrequested fix list, guesses labelled. Still missing: *when* it starts (only once the history is long enough to be trimmed). |
+| v2 | Stage (role + purpose) / Task / Rules (≤5 lines, Known vs Suspected, no fixes) | 4.5 *(proposed)* | Length and shape fixed, no unrequested fix list, guesses labelled. Still missing: *when* it starts (only once the history is long enough to be trimmed). |
 | v3 | | | |
 
 ---
@@ -78,7 +78,9 @@ Reference: https://github.com/langchain-ai/langgraph/discussions/1398
 
 **Prompt**
 ````
-(paste your exact v2 prompt here. It was not included when the response was logged.)
+I'm developer who just joined the e-commerce agent project, and I need to paste the summary into the ticket. Summarize the bug in the ticket below.
+Rules: max 5 lines; label each line Known (shown in the ticket) or Suspected (a guesst); no fixes yet.
+<paste issue.md>
 ````
 
 **Response**
