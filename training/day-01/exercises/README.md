@@ -30,7 +30,7 @@ Prompt skeleton for v2:
 ```
 
 ## Tasks (~30 min each)
-1. [01-bug-summary.md](01-bug-summary.md): summarize the seeded bug in `sample-project/assets/issue.md`
+1. [01-bug-summary/](01-bug-summary/README.md): summarize the seeded bug in `sample-project/assets/issue.md`
 2. [02-explain-concept.md](02-explain-concept.md): explain conversation summarization / message trimming in the LangGraph agent
 3. [03-drafting.md](03-drafting.md): draft a status update about the bug for a non-technical PM
 

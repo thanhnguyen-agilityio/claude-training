@@ -31,14 +31,4 @@ What a good summary should get right, from the repo:
 </details>
 
 ## Your log
-| Round | Prompt (or the change) | Score /5 | What improved / what was still wrong |
-|---|---|---|---|
-| v1 | `summarize this bug` | | |
-| v2 | | | |
-| v3 | | | |
-
-**Best prompt (copy to notes):**
-```
-
-```
-**Surprise (good/bad):**
+Keep it in [log.md](log.md): one section per round (prompt, response, score, what changed).
