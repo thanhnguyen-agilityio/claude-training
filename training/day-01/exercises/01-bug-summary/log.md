@@ -8,7 +8,7 @@ Rubric: see [README.md](README.md). Scores marked *(proposed)* are the teacher's
 |---|---|---|---|
 | v1 | lazy prompt | 3 *(proposed)* | See v1 analysis below |
 | v2 | Stage (role + purpose) / Task / Rules (≤5 lines, Known vs Suspected, no fixes) | 4.5 *(proposed)* | Length and shape fixed, no unrequested fix list, guesses labelled. Still missing: *when* it starts (only once the history is long enough to be trimmed). |
-| v3 | | | |
+| v3 | Added: "Line 1 must say what a user sees and when it starts." | 4 *(proposed)* | Line 1 now has "when", but it is labelled Known although the ticket doesn't say it, and line 2 contains a claim the ticket contradicts. See v3 analysis. |
 
 ---
 
@@ -124,12 +124,72 @@ The biggest gain came from the **Rules** block, specifically the length cap and 
 
 ## v3: fix one gap
 
-_To do._
+**Change (one thing only):** added `Line 1 must say what a user sees and when it starts.`
+
+**Prompt**
+````
+I'm developer who just joined the e-commerce agent project, and I need to paste the summary into the ticket. Summarize the bug in the ticket below.
+Rules: max 5 lines; label each line Known (shown in the ticket) or Suspected (a guesst); no fixes yet.
+Line 1 must say what a user sees and when it starts.
+<paste issue.md>
+````
+
+**Response**
+````
+Known: A user sees a failed or broken response on a follow-up question in a conversation (e.g. "Compare X with Y"), and it starts when the agent issues two parallel tool calls in one turn and the conversation is then summarized; the stream aborts with an OpenAI 400 error ("messages with role 'tool' must be a response to a preceeding message with 'tool_calls'").
+
+1. Known: The state messages passed to the `assistant` node begin with orphaned `ToolMessage`s (no preceding `AIMessage` with `tool_calls`), and the failing param is `messages.[1].role`; the same error appears with the summary feature on, and the current temp workaround is disabling it.
+2. Known: The last two messages in state are `ToolMessage`s from one parallel `check_and_execute_query_tool` pair (Gilded Prowl Skirt / Khaki Mini Skirt), and the `AIMessage` that issued those calls is the one missing from the end of the list.
+3. Suspected: The summarization step trims or cuts the message history at a point that separates an `AIMessage` (with `tool_calls`) from its `ToolMessage` responses, leaving orphans at the start or end of the list (OpenAI requires them paired).
+4. Suspected: The bug is intermittent ("sometime") because it only triggers when the cut-off boundary lands inside a tool-call/tool-response group, which parallel tool calls make more likely; the linked LangGraph discussion (#1398) may describe the same pattern.
+````
+
+### Rubric check (proposed)
+
+| Criterion | Pt | Why |
+|---|---|---|
+| Symptom: what the user sees, and when | 1 | Line 1 now covers both, and links the trigger to the conversation being summarized. This is the half point v2 missed. |
+| Error, precisely | 1 | Exact message and `param`. |
+| Where | 1 | The summarization step and the `assistant` node. |
+| Status / impact | 1 | Workaround mentioned (line 1 of the list). |
+| Shape: ≤ 5 lines, known vs guessed separated | 0 | Line 1 puts a guess under **Known** (see below), and item 2 states a false fact under **Known**. The labels are what the ticket reader relies on. |
+| **Total** | **4** | |
+
+### Discernment: I checked these against the dump in `issue.md`
+
+| Claim (v3) | Verdict | Evidence |
+|---|---|---|
+| Line 1 (Known): "starts when the agent issues two parallel tool calls in one turn and the conversation is then summarized" | **Guess labelled Known** | The ticket only says summarization is involved (title and temp fix). It never says parallel calls are the trigger. This should be Suspected. |
+| Line 1 (Known): "a failed or broken response on a follow-up question" | **Guess** | The ticket shows a stack trace, not what the user sees. |
+| Item 1: state starts with orphaned `ToolMessage`s | **True** | The first two messages in the dump are `sql_db_list_tables` and `sql_db_schema` tool messages with no `AIMessage` before them. |
+| Item 2 (Known): the `AIMessage` that issued the last two tool calls "is the one missing from the end of the list" | **False** | The dump has an `AIMessage` with the two parallel calls (`call_qK4F…`, `call_yc6c…`) immediately before the last two `ToolMessage`s. Those two are paired correctly. The orphans are at the **start**. |
+| Item 3: separates an `AIMessage` from its tool replies "at the start or end" | **Half true** | "Start" matches the dump. "End" is not supported. |
+
+**What this teaches:** the "Known / Suspected" rule only works if Claude follows it honestly. When the new rule forced Claude to put a "when" on line 1, it filled the gap with a guess and marked it Known. Then it mis-read the dump in item 2. v3 is more complete but less trustworthy than v2.
+
+**Where I made a mistake as teacher:** my suggested v3 line demanded a "when" even when the ticket doesn't give one. That pushed Claude to invent it. A better version is: `Line 1: what a user sees and when it starts. If the ticket doesn't say, label it Suspected.`
+
+---
+
+## Comparison
+
+| | v1 lazy | v2 framed | v3 + "line 1" |
+|---|---|---|---|
+| Length | ~25 lines | 5 bullets | 5 lines |
+| Has "when" | no | partly | yes |
+| Invented facts | yes (fine-tuned model) | no | guess labelled Known + one false claim |
+| Fix list | yes | no | no |
+| Score (proposed) | 3 | 4.5 | 4 |
 
 ---
 
 **Best prompt (copy to `../../notes.md`):**
+Best tested: **v2**. Untested improvement (use as v4 if you want to try):
 ```
-
+I'm a developer who just joined the e-commerce agent project, and I need to paste the summary into the ticket. Summarize the bug in the ticket below.
+Rules: max 5 lines; label each line Known (shown in the ticket, quote the evidence) or Suspected (a guess); no fixes yet.
+Line 1: what a user sees and when it starts. If the ticket doesn't say, label it Suspected.
 ```
 **Surprise (good/bad):**
+- Good: adding the Rules block cut the answer from ~25 lines to 5 and removed an invented detail.
+- Bad: when I forced a "when it starts" line, Claude filled the gap with a guess labelled Known, then mis-read the dump (said an `AIMessage` was missing when it was present).
