@@ -39,6 +39,8 @@ Legend: ⬜ todo · 🟨 doing · ✅ done · ❌ checkpoint failed (redo)
 - [x] Notes: `training/day-01/notes.md` · exercises: `training/day-01/exercises/`
 
 ### Day 2
+Exercises: [training/day-02/exercises/](training/day-02/exercises/README.md)
+
 - [ ] Carried from Day 1: Task 3 drafting v2/v3 (`training/day-01/exercises/03-drafting/log.md`)
 - [ ] 5 tickets → 3-sentence analysis (asks/ambiguous/first step); use `sample-project/assets/issue.md` as one
 - [ ] Draft clarifying questions with Claude
