@@ -18,6 +18,7 @@ Installs: `CLAUDE.md` (from template — fill `<…>`), `.claude/settings.json`,
 | `skills/review-checklist` | Review order: correctness → tests → readability → security → scope |
 | `skills/repro-bug` | Reproduce-ready bug report + failing test first |
 | `skills/optimize-skill` | Shrink a skill's tokens without changing its output: baseline runs, cut in order, re-run, report before/after |
+| `skills/unslop` | Cut AI tells from any writing: 31 patterns (content, language, style, filler, jargon, plain speech) plus a self-audit |
 | `skills/writing-training-reports` | Daily/weekly `[bgh][training]` report email from session notes → Gmail draft (never sends). Eval: [notes/evals/](../notes/evals/writing-training-reports.md) |
 
 ## Backlog (add as course reaches it)
