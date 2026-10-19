@@ -109,9 +109,11 @@ Claude works in the codebase: reads, writes, tests, runs commands, previews chan
   <paste ticket>
   ```
   Why it works: Stage (role + purpose) · Task · Rules (length cap, Known/Suspected labels, no fixes) · a fallback for missing info.
+- **Explain code + prove it (Task 2, v3, 4/5):** v2 prompt (role, "explain how X and Y work together", ≤250 words, one diagram, `file:line` or "unsure", 3 self-check questions) **plus** `Then trace <function> by hand with N=5 on this input: <concrete input>. Show the returned list. Is any ToolMessage left without its AIMessage? Quote the lines that decide it.` Full prompt and log: [exercises/02-explain-concept/log.md](exercises/02-explain-concept/log.md).
 
 ## Gotchas
 - A required field the source doesn't cover makes Claude invent it, and it may mark the invention as fact. Always say what to do when info is missing.
+- To check code, ask Claude to trace it on a concrete input, not just explain it. Explanations repeat what the code is meant to do; a trace found the real bug (Task 2). Then confirm with real execution (a test).
 - "Known" claims can still be wrong (v3 said an `AIMessage` was missing when the dump shows it). Check against the source.
 
 ## Kit candidates

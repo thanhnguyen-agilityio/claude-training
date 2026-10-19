@@ -8,7 +8,7 @@ Rubric: see [README.md](README.md). Scores marked *(proposed)* are the teacher's
 |---|---|---|---|
 | v1 | lazy prompt **+ 2 files attached** (`graph.py`, `utils.py`) | 3 *(proposed, before your own claim check)* | Accurate on the flow and the summarize steps. Too long, added an unrequested code review, and two claims are wrong (see claim check). |
 | v2 | Stage (new to LangGraph, fixing a bug tomorrow) + Task + Rules (≤250 words, 1 diagram, no review, `file:line` or "unsure", 3 self-check questions) | 3 *(proposed; 4 once you verify 2 claims)* | Length, structure and honesty fixed, and every line reference is correct. Still repeats the helper's *intent* as if it works. |
-| v3 | | | |
+| v3 | Added a hand trace: "trace `handle_keep_recent_messages` by hand with N=5 on this history… is any ToolMessage left without its AIMessage?" | 4 *(proposed; 5 once you verify 2 claims)* | Found the bug. The trace matches my stub run, with the deciding lines quoted. |
 
 ## Claim check (Discernment)
 
@@ -215,14 +215,118 @@ Is any ToolMessage left without its AIMessage? Quote the lines that decide it.
 
 ---
 
-## v3: fix one gap
+## v3: add a trace (execute, don't just explain)
 
-_To do._
+**Change (one thing only, vs v2):** appended a hand trace on a concrete input and asked whether any `ToolMessage` is left without its `AIMessage`.
+
+**Prompt** (files attached: `graph.py`, `utils.py`)
+````
+I'm a developer new to LangGraph. I need to fix a bug in this summarization code tomorrow, so I need to understand how it works, not review it. Explain how `summarize_conversation` and `handle_keep_recent_messages` work together.
+Rules: max 250 words; one small diagram; no code review or fixes; after every claim about the code, give the file:line, or say "unsure". End with 3 questions I should be able to answer if I understand it.
+
+Then trace `handle_keep_recent_messages` by hand (this part does not count toward the 250 words). Use recent_messages_number=5 and this input list:
+[Human, AI(tool_calls a,b), Tool a, Tool b, AI, Human, AI, Human]
+Show the returned list. Is any ToolMessage left without the AIMessage that called it? Quote the lines that decide it.
+````
+
+**Response** (diagram fence re-laid out from the paste)
+`````
+How they work together
+`summarize_conversation` runs first after START (graph.py:163-164). It returns early if there are `RECENT_MESSAGE_LIMIT + 1` messages or fewer (graph.py:100-103). The constant's value is unsure, because constants.py wasn't provided.
+Otherwise it appends a summary-request HumanMessage (graph.py:117) and asks gpt-4o-mini for the summary (graph.py:118). It then asks `handle_keep_recent_messages` which messages to keep (graph.py:121-124). Everything not returned becomes a `RemoveMessage` (graph.py:125-128). The node returns the summary text plus those deletions (graph.py:130-133).
+The helper slices the last N messages (utils.py:165) and collects tool-call IDs from them (utils.py:169-171). It then scans the older messages and re-adds any ToolMessage or AIMessage matching those IDs (utils.py:174-183).
+
+state.messages ──(+prompt, graph:117)──┬─► LLM ─► state["summary"] (graph:131)
+                                       └─► handle_keep_recent_messages (graph:121)
+                                              last N + rescued (utils:165-183)
+everything else ─► RemoveMessage (graph:125-128)
+
+Whether `summary` reaches the prompt: unsure (`get_chat_prompt` isn't shown).
+Check yourself:
+
+1. Which messages does the LLM summarize: the full list or only the ones being deleted?
+2. Which message types contribute IDs to `tool_call_ids`?
+3. The node returns only RemoveMessages in `messages`. What does that do to state?
+
+Hand trace (n=5)
+Input indices: 0 Human, 1 AI(a,b), 2 Tool a, 3 Tool b, 4 AI, 5 Human, 6 AI, 7 Human.
+
+* `recent_messages = messages[-5:]` gives idx 3-7 (utils.py:165).
+* `remove_messages = messages[:-5]` gives idx 0-2 (utils.py:166).
+* Loop at utils.py:169-171: this assumes AIMessage always has a `tool_calls` attribute, empty by default, and Human/Tool messages don't. AI(4) and AI(6) contribute nothing, so `tool_call_ids` stays empty.
+* Rescue loop at utils.py:174-183: Human(0) matches neither branch. Tool a (2) fails the `in tool_call_ids` test, and AI(1) fails the `any(...)` test, both against an empty set. Nothing is appended.
+
+Returned list: `[Tool b, AI(4), Human(5), AI(6), Human(7)]`
+Is a ToolMessage orphaned? Yes. Tool b is kept, but its calling AI(a,b) at idx 1 is not.
+Lines that decide it:
+
+* utils.py:165: `recent_messages = messages[-recent_messages_number:]` puts Tool b inside the kept slice.
+* utils.py:170-171: `if hasattr(msg, 'tool_calls'): tool_call_ids.update([tc["id"] for tc in msg.tool_calls])` collects IDs only from AI messages in the recent slice. None of them have tool calls, so the set is empty.
+* utils.py:176: `if isinstance(msg, ToolMessage) and msg.tool_call_id in tool_call_ids:`
+* utils.py:178-181: `isinstance(msg, AIMessage) and msg.tool_calls and any(tc["id"] in tool_call_ids ...)`
+
+Both rescue checks test against that empty set, so AI(1) can never be pulled back in.
+`````
+
+### Rubric check (proposed)
+
+| Criterion | Pt | Why |
+|---|---|---|
+| Graph flow | 0.5 | Still only `START → summarize_conversation → assistant`. The tool loop and `END` are missing. |
+| What is kept / deleted | 1 | Last N + rescued, `RemoveMessage` for the rest. |
+| Tool-call pairing rule and why trimming can break it | 1 | Now concrete: it shows exactly how the cut leaves `Tool b` without `AI(a,b)`, with the deciding lines quoted. |
+| Level and length | 1 | Explanation about 200 words, trace excluded as I allowed. |
+| Verified 2 claims | 0 | Waiting on you. |
+| **Total** | **3.5, rounded up to 4** | 5 once you verify 2 claims. |
+
+### Discernment: teacher pre-check
+| Claim | Verdict |
+|---|---|
+| Returned list is `[Tool b, AI(4), Human(5), AI(6), Human(7)]` | **Matches my stub run.** I ran the real function body with stub message classes and got `[Tool:b, AI, Human, AI, Human]` for the same input. |
+| `tool_call_ids` stays empty because AI(4) and AI(6) have no tool calls | **True.** It only reads `tool_calls` on the recent `AIMessage`s. |
+| Both rescue checks test against that empty set, so `AI(1)` can never be pulled back in | **True, and this is the bug.** The ids needed are the recent `ToolMessage.tool_call_id`s. |
+| "constants.py wasn't provided", so the limit's value is unsure | **Good.** The default is 5 (`constants.py:37`). |
+| All `file:line` refs | **Correct** (same ones as v2, plus `utils.py:170-171`, `176`, `178-181`). |
+
+**Caveat:** the trace is Claude reasoning, not execution. It matches my stub run, and the stub run used copied code with fake message classes, not real LangChain. **Day 2 must reproduce it with real LangChain and write the failing test.** Also, I picked this input, so real histories may break in other ways too (for example when the cut lands between two parallel `Tool` messages, as in the ticket).
+
+### Answers to the 3 self-check questions (v3)
+<details><summary>Teacher's answers</summary>
+
+1. The **full** list, plus the throwaway prompt (`graph.py:117-118`). The LLM sees everything, not only the messages to be deleted.
+2. Only messages with a `tool_calls` attribute, which means `AIMessage`s in the **recent** slice (`utils.py:169-171`). `ToolMessage`s contribute nothing. That is the bug.
+3. `RemoveMessage(id=…)` entries go through the `add_messages` reducer, which deletes those ids from the saved state. Nothing new is added, so the history shrinks.
+</details>
+
+### What changed across rounds
+| | v1 (+files) | v2 | v3 |
+|---|---|---|---|
+| Length | ~600 words + review | ~230 | ~200 + trace |
+| `file:line` refs | none | all correct | all correct |
+| False claims | 2 | 1 | **0** |
+| Finds the bug | no (said it works) | no (said it works) | **yes** |
+| Score (proposed) | 3 | 3 | 4 |
+
+**Which change moved the score:**
+1. Attaching the code made the answer about *your* code, not generic LangGraph.
+2. Rules (length, `file:line`, "unsure") gave the shape and the honesty.
+3. **Asking for a trace on a concrete input** found the bug. Both earlier rounds described what the function is meant to do. A trace forces Claude to follow what it actually does.
+
+**Rule to keep:** to check code, ask Claude to run it on an input, not to explain it. Then confirm with real execution (a test).
 
 ---
 
-**Best prompt (copy to `../../notes.md`):**
-```
+---
 
+**Best prompt (copy to `../../notes.md`):** v3
+```
+I'm a developer new to LangGraph. I need to fix a bug in this summarization code tomorrow, so I need to understand how it works, not review it. Explain how `summarize_conversation` and `handle_keep_recent_messages` work together.
+Rules: max 250 words; one small diagram; no code review or fixes; after every claim about the code, give the file:line, or say "unsure". End with 3 questions I should be able to answer if I understand it.
+
+Then trace `handle_keep_recent_messages` by hand (this part does not count toward the 250 words). Use recent_messages_number=5 and this input list:
+[Human, AI(tool_calls a,b), Tool a, Tool b, AI, Human, AI, Human]
+Show the returned list. Is any ToolMessage left without the AIMessage that called it? Quote the lines that decide it.
 ```
 **Surprise (good/bad):**
+- Good: a hand trace on a concrete input found the bug that two explanations missed. Claude followed the code instead of repeating what it is meant to do.
+- Bad: Claude described the helper as working in v1 and v2, with correct line numbers. Accurate citations don't mean the claim about behavior is right.
