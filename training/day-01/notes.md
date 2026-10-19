@@ -10,7 +10,6 @@
   - [x] 4 How you'll work with Claude on your desktop
   - [x] 5 Introduction to projects
   - [x] 6 Creating with artifacts
-  - [x] 7 Working with skills (early; Day 2 plan)
 - [ ] 3 chat tasks (bug summary / explain concept / drafting) → [exercises/](exercises/README.md)
 
 ## Lesson 1 notes — What is Claude
@@ -123,19 +122,6 @@ Claude works in the codebase: reads, writes, tests, runs commands, previews chan
   - An artifact is worth it only if someone else reads it, or if you want a view that's nicer than markdown. Then regenerate it from the repo on demand ("update my status page"), not by hand each day.
   - Otherwise skip it. A page nobody opens is one more thing to keep current.
   - The plan already has two artifact exercises: Day 6 (PR walkthrough) and Day 15 (personal playbook "how I work with Claude").
-
-## Lesson 7 notes — Working with skills
-- A skill is a folder of instructions, scripts and resources that Claude loads dynamically to do better on a specialized task.
-- Two types: **Anthropic skills** and **custom skills**.
-- Turn them on in the desktop app under Settings.
-- Claude loads and uses a skill automatically, based on your prompt.
-- Best results: **create the skill with Claude**.
-- **Skills vs projects:** a project stores knowledge; a skill performs a task.
-
-### Reflection
-- I already made many custom skills at work: write training report, optimize skill, PR description, and others. These can go into `ai-kit/`.
-- Link to lesson 5: `writing-training-reports` is the skill (does the task); a "Training Report" project would hold the knowledge (past reports). They work together.
-- Link to Day 7 of the plan: skills get built properly there (team skill + personal command, PR into `.claude/`). The kit already has `writing-training-reports`, `optimize-skill`, `review-checklist`, `repro-bug`.
 
 ## Learned
 -
