@@ -114,7 +114,7 @@ This is a strong candidate for the Task 1 root cause. **Day 2 still has to repro
 
 **Prompt**
 ````
-(paste your exact v2 prompt here. It was not included when the response was logged.)
+I'm a developer new to LangGraph. I need to fix a bug in this summarization code tomorrow, so I need to understand how it works, not review it. Explain how `summarize_conversation` and `handle_keep_recent_messages` work together. Rules: max 250 words; one small diagram; no code review or fixes; after every claim about the code, give the file:line, or say "unsure". End with 3 questions I should able to answer if I understand it.
 (+ attached: graph.py, utils.py)
 ````
 
