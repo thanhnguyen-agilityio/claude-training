@@ -1,13 +1,13 @@
 # TODO / Progress
 
 Start 2026-10-12. Dates = flex targets; compress if ahead. Tell Claude "done day N" / "update todo" to tick items.
-Detail per day: [PLAN.md](PLAN.md). Notes: [notes/](notes/).
+Detail per day: [PLAN.md](PLAN.md). Notes: [training/](training/).
 
 ## Progress
 
 | Day | Theme | Target | Status |
 |---|---|---|---|
-| 1 | Mental model + basics | 10-12 | 🟨 |
+| 1 | Mental model + basics | 10-12 | ✅ (Task 3 carried to Day 2) |
 | 2 | Ticket analysis, repro | 10-13 | ⬜ |
 | 3 | Fix/review/merge **CP1** | 10-14 | ⬜ |
 | 4 | Install, daily loop | 10-15 | ⬜ |
@@ -29,20 +29,24 @@ Legend: ⬜ todo · 🟨 doing · ✅ done · ❌ checkpoint failed (redo)
 
 ### Day 1
 - [x] Setup: claude.ai login, desktop app, repo cloned
-- [ ] Course: Claude 101 lessons 1–4 (What is Claude, First conversation, Getting better results, Desktop) · stretch 5–6 (Projects, Artifacts) · AI Fluency + AI capabilities (optional, short)
+- [x] Course: Claude 101 lessons 1–4 (What is Claude, First conversation, Getting better results, Desktop) · stretch 5–6 (Projects, Artifacts) · AI Fluency + AI capabilities (optional, short)
   - [x] Lesson 1 What is Claude — reflection noted (idea: `email-digest` skill + weekday 08:30 scheduled task, Gmail connector, also on demand)
-- [ ] 3 chat tasks (bug summary / explain concept / drafting); log prompt improvements in notes
+  - [x] Lessons 2–3 First conversation, Getting better results (Stage/Task/Rules, 4D framework)
+  - [x] Lesson 4 Desktop — 3 shapes: turn by turn (Chat) / hand off (Cowork) / build (Code tab)
+  - [x] Stretch: lessons 5–6 Projects, Artifacts
+- [~] 3 chat tasks (bug summary / explain concept / drafting); log prompt improvements in notes — Task 1 ✅, Task 2 ✅, Task 3 paused after v1; finish v2/v3 on Day 2 (`training/day-01/exercises/03-drafting/`)
 - [x] Git: branch → commit → push (`init-setup`)
-- [ ] Notes: `notes/day-01.md`
+- [x] Notes: `training/day-01/notes.md` · exercises: `training/day-01/exercises/`
 
 ### Day 2
+- [ ] Carried from Day 1: Task 3 drafting v2/v3 (`training/day-01/exercises/03-drafting/log.md`)
 - [ ] 5 tickets → 3-sentence analysis (asks/ambiguous/first step); use `sample-project/assets/issue.md` as one
 - [ ] Draft clarifying questions with Claude
 - [ ] Run sample app from scratch (`make` targets, `.env.example` → `.env`)
 - [ ] Reproduce seeded bug, write repro steps (exact steps / expected / actual)
 - [ ] Failing test for bug
 - [ ] Git: `pull --rebase`, `log`, `diff`, resolve conflict #1
-- [ ] Course: finish Claude 101 — lessons 7–13 (Skills, Connecting tools, Enterprise search, Research, Use-cases by role, Other ways, What's next) + quiz + badge; 7–8 = start of `email-digest` build
+- [ ] Course: finish Claude 101 — lessons 7–13 (Skills ✅ done, notes in `training/day-02/notes.md`; Connecting tools, Enterprise search, Research, Use-cases by role, Other ways, What's next) + quiz + badge; 7–8 = start of `email-digest` build
 
 ### Day 3 — CP1
 - [ ] Fix on branch, small commits, test included
