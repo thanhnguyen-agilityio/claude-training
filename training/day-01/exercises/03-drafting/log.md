@@ -69,9 +69,26 @@ If you can share the summarization code or an ETA, I can tighten the next-step s
 
 ---
 
-## v2: framed (Stage / Task / Rules)
+## v2: framed (Stage / Task / Rules + facts)
 
-_To do._
+**Prompt** (the Task 1 v4 summary pasted under it, same as v1)
+````
+I'm a developer. My PM is not technical and asked me on Slack: "Why is conversation summary turned off? When is it coming back?" Reply to them using the bug summary below.
+Facts to use:
+
+* The feature is turned off as a temporary fix. Long chats work, but older context is no longer summarized.
+* I haven't reproduced the bug yet. I'll do that tomorrow, then fix and test it.
+* Realistic earliest date: after the fix is reviewed, in 2-3 days.
+
+Rules: max 80 words; no headers or bullets; no technical terms (no code, API or file names); answer both questions in the first two lines; give the date as a range and say what it depends on; end with when I'll next update them; don't promise a specific fix.
+
+<paste the Task 1 v4 summary>
+````
+
+**Response**
+`````
+(paused: no response yet. Claude had an issue, so run the prompt again later and paste the response here.)
+`````
 
 ## v3: fix one gap
 
