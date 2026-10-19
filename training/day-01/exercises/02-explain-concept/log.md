@@ -178,8 +178,22 @@ Check yourself
 
 1. `recent_messages` is the last N of `messages` (which includes the throwaway summary `HumanMessage`), plus any older messages the loop appends at the end (176-183). It can exceed N only through those appends. Note: the appended ones go after the recent ones, so the order in the returned list isn't the original order. Only ids matter for `RemoveMessage`, so it doesn't change state order.
 2. The throwaway summary `HumanMessage` (`graph.py:117`). It has no id and was never saved to state.
-3. In `state["summary"]` (a plain string) and, through the checkpointer, persisted. Nothing in the prompt reads it (`prompt.py:26-33`).
+3. In `state["summary"]` (a plain string), persisted by the checkpointer. The only reader is `summarize_conversation` itself on the next run (`graph.py:105-110`). Nothing in the prompt reads it (`prompt.py:26-33`).
 </details>
+
+### Your answers to the 3 self-check questions
+
+| # | Your answer | Grade | Fix |
+|---|---|---|---|
+| 1 | It appends messages back to `recent_messages` if the kept messages have a tool call id | **Mostly right** | Add the base: it starts as the last N of `messages` (`utils.py:165`). Appends then go at the *end*, so the order changes. Only the ids matter for `RemoveMessage`, so state order isn't affected. |
+| 2 | The state messages and the summary human message | **Mostly right** | The question was what the list has that the saved state *doesn't*. That's only the summary `HumanMessage`. The state messages are in both. |
+| 3 | Nothing reads the state summary | **Half right** | Nothing in the *prompt* reads it (`prompt.py:26-33`), which is the important finding. But `summarize_conversation` itself reads it next time to extend it (`graph.py:105-110`). It ends up in `state["summary"]`, saved by the checkpointer. |
+
+**Score: 2.5/3.** Q3 is the one to remember. "Nothing reads it" is true for the model call and false for the graph. The summary is written, read by the summarizer, and never shown to the assistant. So the model forgets what was deleted, and the summary only ever feeds the next summary.
+
+I also said "nothing reads it" in my last message. That was too loose. The wording above is the precise one.
+
+---
 
 ### What changed v1 → v2
 | | v1 (+files) | v2 |
