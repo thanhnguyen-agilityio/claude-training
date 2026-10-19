@@ -8,7 +8,8 @@
   - [x] 2 Your first conversation with Claude
   - [x] 3 Getting better results (do before the 3 chat tasks)
   - [x] 4 How you'll work with Claude on your desktop
-  - [ ] stretch: 5 Introduction to projects · 6 Creating with artifacts
+  - [x] 5 Introduction to projects
+  - [x] 6 Creating with artifacts
 - [ ] 3 chat tasks (bug summary / explain concept / drafting) → [exercises/](exercises/README.md)
 
 ## Lesson 1 notes — What is Claude
@@ -96,6 +97,31 @@ Claude works in the codebase: reads, writes, tests, runs commands, previews chan
 ### Reflection
 1. Log my daily work in detail, then pick repeated work to automate as hand-off tasks. First candidates: **morning inbox triage**, **daily briefing**, **weekly roundup**.
 2. Once the kit grows, bundle the skills + connectors into a **plugin**.
+
+## Lesson 5 notes — Introduction to projects
+- A project is a self-contained workspace with its own memory, chat history, knowledge base and custom instructions. One dedicated environment per work stream.
+- **Knowledge** improves Claude's understanding: upload the relevant documents.
+- **Instructions** guide Claude's behavior (tone, expertise level, response style) and apply to every conversation in the project.
+- **Scales automatically:** when the knowledge base nears the context limit, Claude switches to searching it and pulls only what's relevant. Capacity grows up to 10x with the same response quality.
+- Work users can collaborate in a project.
+
+### Reflection
+- A **"Training Report" project**: keep all my reports in one place, with the report format as instructions.
+- A big feature or **project analysis** can be a project, so I reuse its resources and instructions.
+
+## Lesson 6 notes — Creating with artifacts
+- Artifacts are the output you care about: a document, deck, design, dashboard or prototype.
+- Claude's Design, Slides and Docs make common work deliverables as files you can download.
+- An artifact is different: it opens and updates inside Claude and can be shared by link.
+- **Tips:** ask for the deliverable, not just the content · be specific about what you want · describe the end user · build on work you've already done · refresh the data when you need it current.
+
+### Reflection
+- I already made an artifact for the email training-report skill.
+- Question: should I make a daily project-status artifact and update it every day? My daily notes already live in the project repo. See the answer below.
+  - **Keep the repo as the source of truth** (`TODO.md`, `training/day-NN/notes.md`).
+  - An artifact is worth it only if someone else reads it, or if you want a view that's nicer than markdown. Then regenerate it from the repo on demand ("update my status page"), not by hand each day.
+  - Otherwise skip it. A page nobody opens is one more thing to keep current.
+  - The plan already has two artifact exercises: Day 6 (PR walkthrough) and Day 15 (personal playbook "how I work with Claude").
 
 ## Learned
 -

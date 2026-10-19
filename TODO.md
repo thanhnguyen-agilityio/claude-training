@@ -29,10 +29,11 @@ Legend: ⬜ todo · 🟨 doing · ✅ done · ❌ checkpoint failed (redo)
 
 ### Day 1
 - [x] Setup: claude.ai login, desktop app, repo cloned
-- [ ] Course: Claude 101 lessons 1–4 (What is Claude, First conversation, Getting better results, Desktop) · stretch 5–6 (Projects, Artifacts) · AI Fluency + AI capabilities (optional, short)
+- [x] Course: Claude 101 lessons 1–4 (What is Claude, First conversation, Getting better results, Desktop) · stretch 5–6 (Projects, Artifacts) · AI Fluency + AI capabilities (optional, short)
   - [x] Lesson 1 What is Claude — reflection noted (idea: `email-digest` skill + weekday 08:30 scheduled task, Gmail connector, also on demand)
   - [x] Lessons 2–3 First conversation, Getting better results (Stage/Task/Rules, 4D framework)
   - [x] Lesson 4 Desktop — 3 shapes: turn by turn (Chat) / hand off (Cowork) / build (Code tab)
+  - [x] Stretch: lessons 5–6 Projects, Artifacts
 - [ ] 3 chat tasks (bug summary / explain concept / drafting); log prompt improvements in notes
 - [x] Git: branch → commit → push (`init-setup`)
 - [ ] Notes: `training/day-01/notes.md` · exercises: `training/day-01/exercises/`
