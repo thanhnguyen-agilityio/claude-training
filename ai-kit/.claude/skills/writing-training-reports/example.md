@@ -1,6 +1,6 @@
 # Example
 
-All names and links are made up. Always use the user's own profile.
+All names and links are made up.
 
 **Saved profile (from setup, not repeated in daily notes):**
 
@@ -56,4 +56,4 @@ Best regards,
 Minh Le.
 ```
 
-Recipients, course, repo, and folder come from the profile. The daily notes add only the work, branch, commit, and extra tags. Issue, branch, commit, and board links follow the repo's GitLab URL pattern. IN PROCESS is omitted because it is empty.
+Recipients, course, repo, and folder come from the profile; notes add only work, branch, commit, extra tags. IN PROCESS is omitted because it is empty.
