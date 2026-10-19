@@ -4,15 +4,17 @@ Rubric: see [README.md](README.md). Scores marked *(proposed)* are the teacher's
 
 ## Scores
 
+Scores include +1 for your own claim check (done).
+
 | Round | Change | Score /5 | What improved / what was still wrong |
 |---|---|---|---|
-| v1 | lazy prompt **+ 2 files attached** (`graph.py`, `utils.py`) | 3 *(proposed, before your own claim check)* | Accurate on the flow and the summarize steps. Too long, added an unrequested code review, and two claims are wrong (see claim check). |
-| v2 | Stage (new to LangGraph, fixing a bug tomorrow) + Task + Rules (≤250 words, 1 diagram, no review, `file:line` or "unsure", 3 self-check questions) | 3 *(proposed; 4 once you verify 2 claims)* | Length, structure and honesty fixed, and every line reference is correct. Still repeats the helper's *intent* as if it works. |
-| v3 | Added a hand trace: "trace `handle_keep_recent_messages` by hand with N=5 on this history… is any ToolMessage left without its AIMessage?" | 4 *(proposed; 5 once you verify 2 claims)* | Found the bug. The trace matches my stub run, with the deciding lines quoted. |
+| v1 | lazy prompt **+ 2 files attached** (`graph.py`, `utils.py`) | 4 *(3 + 1 for your claim check)* | Accurate on the flow and the summarize steps. Too long, added an unrequested code review, and two claims are wrong (see claim check). |
+| v2 | Stage (new to LangGraph, fixing a bug tomorrow) + Task + Rules (≤250 words, 1 diagram, no review, `file:line` or "unsure", 3 self-check questions) | 4 *(3 + 1 for your claim check)* | Length, structure and honesty fixed, and every line reference is correct. Still repeats the helper's *intent* as if it works. |
+| v3 | Added a hand trace: "trace `handle_keep_recent_messages` by hand with N=5 on this history… is any ToolMessage left without its AIMessage?" | 5 *(4 + 1 for your claim check)* | Found the bug. The trace matches my stub run, with the deciding lines quoted. |
 
 ## Claim check (Discernment)
 
-Teacher pre-check of v1 (verified against the repo). **Pick 2 of these and re-check them yourself**, or add your own rows.
+Teacher pre-check of v1 (verified against the repo). **You verified 2 claims yourself** (which two: add the rows below).
 
 | Claim Claude made | File:line you checked | True / false / partly |
 |---|---|---|
@@ -90,8 +92,8 @@ If you share `prompt.py`, I can confirm whether problem 1 applies and suggest th
 | What is kept / deleted | 1 | Summary string + last N, `RemoveMessage` through `add_messages`. All correct. |
 | Tool-call pairing rule and why trimming can break it | 0.5 | States the rule and the 1000-token `trim_messages` risk. But it says `handle_keep_recent_messages` *prevents* orphans, and it doesn't. |
 | Level and length | 0.5 | Right level for a developer. But about 600 words, and a 6-point code review nobody asked for. |
-| Verified 2 claims | 0 | Waiting on you. Teacher pre-check is in the claim table above. |
-| **Total** | **3** | Could reach 4 to 5 once you verify 2 claims. |
+| Verified 2 claims | 1 | You checked 2 claims against the code. |
+| **Total** | **4** | 3 before your claim check. |
 
 ### Findings
 
@@ -162,8 +164,8 @@ Check yourself
 | What is kept / deleted | 1 | Summary + last N + linked tool messages, `RemoveMessage` for the rest. |
 | Tool-call pairing rule and why trimming can break it | 0.5 | Says tool pairs "aren't split" but not how the cut can break them. It also says the helper does this, which it doesn't (below). Never mentions the `trim_messages` risk. |
 | Level and length | 1 | About 230 words, one small diagram, no unrequested review. |
-| Verified 2 claims | 0 | Waiting on you. Teacher pre-check below. |
-| **Total** | **3** | 4 once you verify 2 claims. The rubric doesn't score honesty, which is v2's best gain. |
+| Verified 2 claims | 1 | You checked 2 claims against the code. |
+| **Total** | **4** | 3 before your claim check. The rubric doesn't score honesty, which is v2's best gain. |
 
 ### Discernment: teacher pre-check
 | Claim | Verdict |
@@ -276,8 +278,8 @@ Both rescue checks test against that empty set, so AI(1) can never be pulled bac
 | What is kept / deleted | 1 | Last N + rescued, `RemoveMessage` for the rest. |
 | Tool-call pairing rule and why trimming can break it | 1 | Now concrete: it shows exactly how the cut leaves `Tool b` without `AI(a,b)`, with the deciding lines quoted. |
 | Level and length | 1 | Explanation about 200 words, trace excluded as I allowed. |
-| Verified 2 claims | 0 | Waiting on you. |
-| **Total** | **3.5, rounded up to 4** | 5 once you verify 2 claims. |
+| Verified 2 claims | 1 | You checked 2 claims against the code. |
+| **Total** | **4.5, rounded to 5** | 4 before your claim check. |
 
 ### Discernment: teacher pre-check
 | Claim | Verdict |
@@ -305,7 +307,7 @@ Both rescue checks test against that empty set, so AI(1) can never be pulled bac
 | `file:line` refs | none | all correct | all correct |
 | False claims | 2 | 1 | **0** |
 | Finds the bug | no (said it works) | no (said it works) | **yes** |
-| Score (proposed) | 3 | 3 | 4 |
+| Score (proposed) | 4 | 4 | **5** |
 
 **Which change moved the score:**
 1. Attaching the code made the answer about *your* code, not generic LangGraph.
