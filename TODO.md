@@ -7,7 +7,7 @@ Detail per day: [PLAN.md](PLAN.md). Notes: [training/](training/).
 
 | Day | Theme | Target | Status |
 |---|---|---|---|
-| 1 | Mental model + basics | 10-12 | 🟨 |
+| 1 | Mental model + basics | 10-12 | ✅ (Task 3 carried to Day 2) |
 | 2 | Ticket analysis, repro | 10-13 | ⬜ |
 | 3 | Fix/review/merge **CP1** | 10-14 | ⬜ |
 | 4 | Install, daily loop | 10-15 | ⬜ |
@@ -34,11 +34,12 @@ Legend: ⬜ todo · 🟨 doing · ✅ done · ❌ checkpoint failed (redo)
   - [x] Lessons 2–3 First conversation, Getting better results (Stage/Task/Rules, 4D framework)
   - [x] Lesson 4 Desktop — 3 shapes: turn by turn (Chat) / hand off (Cowork) / build (Code tab)
   - [x] Stretch: lessons 5–6 Projects, Artifacts
-- [ ] 3 chat tasks (bug summary / explain concept / drafting); log prompt improvements in notes
+- [~] 3 chat tasks (bug summary / explain concept / drafting); log prompt improvements in notes — Task 1 ✅, Task 2 ✅, Task 3 paused after v1; finish v2/v3 on Day 2 (`training/day-01/exercises/03-drafting/`)
 - [x] Git: branch → commit → push (`init-setup`)
-- [ ] Notes: `training/day-01/notes.md` · exercises: `training/day-01/exercises/`
+- [x] Notes: `training/day-01/notes.md` · exercises: `training/day-01/exercises/`
 
 ### Day 2
+- [ ] Carried from Day 1: Task 3 drafting v2/v3 (`training/day-01/exercises/03-drafting/log.md`)
 - [ ] 5 tickets → 3-sentence analysis (asks/ambiguous/first step); use `sample-project/assets/issue.md` as one
 - [ ] Draft clarifying questions with Claude
 - [ ] Run sample app from scratch (`make` targets, `.env.example` → `.env`)

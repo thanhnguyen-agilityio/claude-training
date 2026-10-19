@@ -3,14 +3,15 @@
 ## Progress
 - [x] Setup: claude.ai login, desktop app, repo cloned
 - [x] Git: branch → commit → push
-- [~] Course: Claude 101 (13 lessons; rest on Day 2: 7–13 + quiz + badge)
+- [x] Course: Claude 101 lessons 1–6 (7–13 + quiz + badge on Day 2; lesson 7 already done)
   - [x] 1 [What is Claude](https://academy.claude.com/courses/claude-101/what-is-claude)
   - [x] 2 Your first conversation with Claude
   - [x] 3 Getting better results (do before the 3 chat tasks)
   - [x] 4 How you'll work with Claude on your desktop
   - [x] 5 Introduction to projects
   - [x] 6 Creating with artifacts
-- [ ] 3 chat tasks (bug summary / explain concept / drafting) → [exercises/](exercises/README.md)
+- [~] 3 chat tasks → [exercises/](exercises/README.md): Task 1 ✅ 5/5 · Task 2 ✅ 5/5 · Task 3 drafting: v1 done (1/5), v2 prompt ready, **carried to Day 2**
+- [x] Debrief: Learned written (Surprises and Task 3 prompt to add when Task 3 is done)
 
 ## Lesson 1 notes — What is Claude
 - Claude is an AI assistant for life and work, far more than a chatbot. Designed to be steerable and collaborative, very intelligent, and available in many places: web, app, CLI.
@@ -124,7 +125,9 @@ Claude works in the codebase: reads, writes, tests, runs commands, previews chan
   - The plan already has two artifact exercises: Day 6 (PR walkthrough) and Day 15 (personal playbook "how I work with Claude").
 
 ## Learned
--
+- A prompt with rules is essential to get what you expect. The rules (a length cap, an output format) stop long, unstructured answers.
+- Say what to do when information is missing. This avoids hallucination.
+- To check code, ask Claude to trace it on a concrete input. This forces it to think step by step and follow the code, not just describe it.
 
 ## Prompts that worked
 - **Bug summary → ticket (Task 1, v4, scored 5/5):** full log in [exercises/01-bug-summary/log.md](exercises/01-bug-summary/log.md)
@@ -135,7 +138,7 @@ Claude works in the codebase: reads, writes, tests, runs commands, previews chan
   <paste ticket>
   ```
   Why it works: Stage (role + purpose) · Task · Rules (length cap, Known/Suspected labels, no fixes) · a fallback for missing info.
-- **Explain code + prove it (Task 2, v3, 4/5):** v2 prompt (role, "explain how X and Y work together", ≤250 words, one diagram, `file:line` or "unsure", 3 self-check questions) **plus** `Then trace <function> by hand with N=5 on this input: <concrete input>. Show the returned list. Is any ToolMessage left without its AIMessage? Quote the lines that decide it.` Full prompt and log: [exercises/02-explain-concept/log.md](exercises/02-explain-concept/log.md).
+- **Explain code + prove it (Task 2, v3, 5/5):** v2 prompt (role, "explain how X and Y work together", ≤250 words, one diagram, `file:line` or "unsure", 3 self-check questions) **plus** `Then trace <function> by hand with N=5 on this input: <concrete input>. Show the returned list. Is any ToolMessage left without its AIMessage? Quote the lines that decide it.` Full prompt and log: [exercises/02-explain-concept/log.md](exercises/02-explain-concept/log.md).
 
 ## Gotchas
 - A required field the source doesn't cover makes Claude invent it, and it may mark the invention as fact. Always say what to do when info is missing.
