@@ -17,6 +17,7 @@ Installs: `CLAUDE.md` (from template — fill `<…>`), `.claude/settings.json`,
 | `commands/pr` | `/pr` → PR description from current branch diff |
 | `skills/review-checklist` | Review order: correctness → tests → readability → security → scope |
 | `skills/repro-bug` | Reproduce-ready bug report + failing test first |
+| `skills/optimize-skill` | `optimize a skill` → trims a skill's tokens without changing its output (baseline → cut → re-run → report). Needs the `unslop` skill installed |
 | `skills/writing-training-reports` | Daily/weekly `[bgh][training]` report email from session notes → Gmail draft (never sends). Eval: [training/evals/](../training/evals/writing-training-reports.md) |
 
 ## Backlog (add as course reaches it)
