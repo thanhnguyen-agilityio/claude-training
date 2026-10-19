@@ -204,7 +204,7 @@ I also said "nothing reads it" in my last message. That was too loose. The wordi
 | `file:line` refs | none | all correct |
 | Admits gaps | one hedge | 2 "Unsure" items, both real |
 | False claims | 2 (helper works; memories frozen) | 1 (helper's purpose) |
-| Score (proposed) | 3 | 3 |
+| Score (proposed) | 4 | 4 |
 
 Rules gave you the shape. **They did not make Claude check the code.** "Explain" asks for a description, and a description can't find a bug in what it describes.
 
