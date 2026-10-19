@@ -7,7 +7,7 @@ Rubric: see [README.md](README.md). Scores marked *(proposed)* are the teacher's
 | Round | Change | Score /5 | What improved / what was still wrong |
 |---|---|---|---|
 | v1 | lazy prompt **+ 2 files attached** (`graph.py`, `utils.py`) | 3 *(proposed, before your own claim check)* | Accurate on the flow and the summarize steps. Too long, added an unrequested code review, and two claims are wrong (see claim check). |
-| v2 | | | |
+| v2 | Stage (new to LangGraph, fixing a bug tomorrow) + Task + Rules (≤250 words, 1 diagram, no review, `file:line` or "unsure", 3 self-check questions) | 3 *(proposed; 4 once you verify 2 claims)* | Length, structure and honesty fixed, and every line reference is correct. Still repeats the helper's *intent* as if it works. |
 | v3 | | | |
 
 ## Claim check (Discernment)
@@ -112,7 +112,94 @@ This is a strong candidate for the Task 1 root cause. **Day 2 still has to repro
 
 ## v2: framed (Stage / Task / Rules)
 
-_To do._
+**Prompt**
+````
+(paste your exact v2 prompt here. It was not included when the response was logged.)
+(+ attached: graph.py, utils.py)
+````
+
+**Response** (diagram fence re-laid out from the paste)
+`````
+Flow (graph.py:163-164): START → `summarize_conversation` → `assistant`
+
+messages ──► [+ summary prompt] ──► LLM ──► summary text
+   │
+   └─► keep_recent(last N + linked tool msgs) ──► delete the rest
+
+`summarize_conversation`
+
+* It does nothing if messages ≤ limit+1 (graph.py:100-103).
+* It builds an "extend" or "create" prompt depending on the existing summary (107-113).
+* It appends that prompt as a HumanMessage and asks the LLM for a summary (117-118).
+* It asks the helper which messages to keep (121-124), then makes a RemoveMessage for every other message (125-128).
+* It returns the new summary and the removals (130-133).
+
+`handle_keep_recent_messages`
+
+* It takes the last N messages (utils.py:165) and sets aside the older ones (166).
+* It collects tool-call IDs from the kept messages (169-171).
+* It then rescues older ToolMessages and AIMessages that belong to those IDs, so tool pairs aren't split (174-183), and returns the list (185).
+
+Unsure
+
+* Whether the assistant ever reads `summary`. `Assistant` doesn't (graph.py:42-55), and the prompt builder isn't in the files you pasted.
+* How `RemoveMessage` interacts with messages lacking IDs. Nothing here shows it.
+
+Line numbers are counted from the pasted text, so confirm them in your editor.
+
+Check yourself
+
+1. Which messages does `recent_messages` contain after the helper returns, and why can it exceed N?
+2. What does the `messages` list passed to the helper contain that the saved state doesn't?
+3. Where does the new `summary` end up after this node, and what reads it?
+`````
+
+### Rubric check (proposed)
+
+| Criterion | Pt | Why |
+|---|---|---|
+| Graph flow | 0.5 | Shows `START → summarize_conversation → assistant`. Leaves out the tool loop and `END`. |
+| What is kept / deleted | 1 | Summary + last N + linked tool messages, `RemoveMessage` for the rest. |
+| Tool-call pairing rule and why trimming can break it | 0.5 | Says tool pairs "aren't split" but not how the cut can break them. It also says the helper does this, which it doesn't (below). Never mentions the `trim_messages` risk. |
+| Level and length | 1 | About 230 words, one small diagram, no unrequested review. |
+| Verified 2 claims | 0 | Waiting on you. Teacher pre-check below. |
+| **Total** | **3** | 4 once you verify 2 claims. The rubric doesn't score honesty, which is v2's best gain. |
+
+### Discernment: teacher pre-check
+| Claim | Verdict |
+|---|---|
+| All `file:line` refs (graph.py 100-103, 107-113, 117-118, 121-128, 130-133, 163-164, 42-55; utils.py 165, 166, 169-171, 174-183, 185) | **All correct.** The "unsure" note about counting from pasted text was needless but harmless. |
+| "Whether the assistant ever reads `summary`" is unknown | **Good call.** `get_chat_prompt` has no `{summary}` slot, so nothing reads it. |
+| "It collects tool-call IDs from the kept messages (169-171)" | **True.** It does this from the recent `AIMessage.tool_calls`. |
+| "…rescues older messages that belong to those IDs, **so tool pairs aren't split**" | **Wrong in effect.** The ids come from the recent `AIMessage`s, so a recent `ToolMessage` whose `AIMessage` was cut isn't rescued. Claude described the intent again. |
+
+### Answers to the 3 self-check questions (try them first; open after)
+<details><summary>Teacher's answers</summary>
+
+1. `recent_messages` is the last N of `messages` (which includes the throwaway summary `HumanMessage`), plus any older messages the loop appends at the end (176-183). It can exceed N only through those appends. Note: the appended ones go after the recent ones, so the order in the returned list isn't the original order. Only ids matter for `RemoveMessage`, so it doesn't change state order.
+2. The throwaway summary `HumanMessage` (`graph.py:117`). It has no id and was never saved to state.
+3. In `state["summary"]` (a plain string) and, through the checkpointer, persisted. Nothing in the prompt reads it (`prompt.py:26-33`).
+</details>
+
+### What changed v1 → v2
+| | v1 (+files) | v2 |
+|---|---|---|
+| Length | ~600 words + code review | ~230 words |
+| `file:line` refs | none | all correct |
+| Admits gaps | one hedge | 2 "Unsure" items, both real |
+| False claims | 2 (helper works; memories frozen) | 1 (helper's purpose) |
+| Score (proposed) | 3 | 3 |
+
+Rules gave you the shape. **They did not make Claude check the code.** "Explain" asks for a description, and a description can't find a bug in what it describes.
+
+**v3 idea (one change):** ask Claude to *execute* instead of explain. Give it a concrete input and tell it to trace the helper by hand:
+```
+Trace `handle_keep_recent_messages` by hand with N=5 on this history and show the returned list:
+[Human, AI(tool_calls a,b), Tool a, Tool b, AI, Human, AI, Human]
+Is any ToolMessage left without its AIMessage? Quote the lines that decide it.
+```
+
+---
 
 ## v3: fix one gap
 
