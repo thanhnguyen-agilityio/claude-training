@@ -1,12 +1,14 @@
-# Task 3 — Log
+# Task 3: Log
 
-Rubric: see [README.md](README.md). Scores marked *(proposed)* are the teacher's first pass. Confirm or change them.
+The rubric is in [README.md](README.md). Scores marked "proposed" are the teacher's first pass. Confirm or change them.
+
+Status: paused after v1. The v2 prompt is ready and its response is still to come. This task continues on Day 2.
 
 ## Scores
 
-| Round | Change | Score /5 | What improved / what was still wrong |
+| Round | Change | Score /5 | What improved, and what was still wrong |
 |---|---|---|---|
-| v1 | lazy prompt + the Task 1 v4 summary pasted | 1 *(proposed)* | It's an engineer's status report, not a Slack reply to a PM. It has no ETA, headers, jargon and about 230 words. It did not invent an ETA. |
+| v1 | Lazy prompt plus the Task 1 v4 summary pasted | 1 (proposed) | It reads as an engineer's status report, not a Slack reply to a PM. It has no date, it has headers and jargon, and it runs about 230 words. It did not invent a date. |
 | v2 | | | |
 | v3 | | | |
 
@@ -14,7 +16,7 @@ Rubric: see [README.md](README.md). Scores marked *(proposed)* are the teacher's
 
 ## v1: lazy prompt
 
-**Prompt** (the Task 1 v4 summary pasted below it, nothing else)
+Prompt (the Task 1 v4 summary pasted below it, nothing else)
 ````
 write a message to my PM about the summary bug
 
@@ -25,7 +27,7 @@ Suspected: The summarization step trims or replaces earlier history and cuts bet
 Suspected: It only fails sometimes because the cut falls inside a tool-call group only when the history reaches the summarization threshold, so shorter conversations work.
 ````
 
-**Response**
+Response
 `````
 Here's a Slack-style draft:
 
@@ -50,28 +52,28 @@ If you can share the summarization code or an ETA, I can tighten the next-step s
 
 ### Rubric check (proposed)
 
-| Criterion | Pt | Why |
+| Criterion | Points | Why |
 |---|---|---|
-| Answers both questions (why off, when back) in the first 2 lines | 0 | The first lines say what's happening. "When is it back" is never answered. |
-| No jargon | 0 | `BadRequestError`, `ToolMessage`, `AIMessage`, `graph.py`, `state["messages"]`. A PM can't read this. |
-| Honest ETA: a range and what it depends on | 0 | No ETA. It didn't invent one, which is good, but a PM needs a range. It only asks you for an ETA at the end. |
-| Slack-sized: ≤ 80 words, no headers, sounds like you | 0 | About 230 words with four bold headers. It reads like a ticket. |
-| Ends with what the PM can expect | 0.5 | "Keep the feature disabled. Let me know if you want it handled differently." That's something, but there's no "I'll update you after X". |
-| **Total** | **0.5, rounded to 1** | |
+| Answers both questions (why it's off, when it's back) in the first 2 lines | 0 | The first lines say what is happening. "When is it back" is never answered. |
+| No jargon | 0 | It uses `BadRequestError`, `ToolMessage`, `AIMessage`, `graph.py` and `state["messages"]`. A PM can't read this. |
+| Honest date: a range and what it depends on | 0 | There is no date. It didn't invent one, which is good, but a PM needs a range. It only asks you for a date at the end. |
+| Slack-sized: 80 words or fewer, no headers, sounds like you | 0 | About 230 words with four bold headers. It reads like a ticket. |
+| Ends with what the PM can expect | 0.5 | "Keep the feature disabled. Let me know if you want it handled differently." That is something, but there is no "I'll update you after X". |
+| Total | 0.5, rounded to 1 | |
 
 ### Observations
-- **Good:** it didn't invent an ETA or state the cause as fact. It kept "confirmed" and "not yet confirmed" apart, because that labelling was in the input.
-- **Good:** it asked for an ETA instead of making one up.
-- **Bad:** the output copies the style of the input. You pasted an engineering summary and got an engineering message back. Claude didn't know who the reader was.
-- **Bad:** it committed you to a fix plan ("I'll make the trim keep each `AIMessage` together…"). You never said that.
-- **Bad:** meta lines slipped through ("the ticket doesn't include the summary code", "Hi [name]").
-- **Next change for v2:** Stage (the PM is non-technical, it's Slack) + Task (answer the PM's 2 questions) + Rules (word cap, no jargon, ETA as a range with its dependency, end with the next update) + the missing facts.
+- Good: it didn't invent a date or state the cause as fact. It kept "confirmed" and "not yet confirmed" apart, because that labeling was in the input.
+- Good: it asked for a date instead of making one up.
+- Bad: the output copies the style of the input. You pasted an engineering summary and got an engineering message back, because Claude didn't know who the reader was.
+- Bad: it committed you to a fix plan ("I'll make the trim keep each `AIMessage` together..."). You never said that.
+- Bad: meta lines slipped through ("the ticket doesn't include the summary code", "Hi [name]").
+- For v2: say the PM is non-technical and it's Slack, ask it to answer the PM's 2 questions, add rules (a word cap, no jargon, a date range with what it depends on, end with the next update), and add the missing facts.
 
 ---
 
-## v2: framed (Stage / Task / Rules + facts)
+## v2: Stage, Task, Rules plus facts
 
-**Prompt** (the Task 1 v4 summary pasted under it, same as v1)
+Prompt (the Task 1 v4 summary pasted under it, same as v1)
 ````
 I'm a developer. My PM is not technical and asked me on Slack: "Why is conversation summary turned off? When is it coming back?" Reply to them using the bug summary below.
 Facts to use:
@@ -85,25 +87,29 @@ Rules: max 80 words; no headers or bullets; no technical terms (no code, API or 
 <paste the Task 1 v4 summary>
 ````
 
-**Response**
+Response
 `````
 (paused: no response yet. Claude had an issue, so run the prompt again later and paste the response here.)
 `````
 
+---
+
 ## v3: fix one gap
 
-_To do._
+To do.
 
 ---
 
-**Final message (after your own hand edit):**
+## Final message (after your own hand edit)
 ```
 
 ```
-**What you changed by hand, and why:**
 
-**Best prompt (copy to `../../notes.md`):**
+What you changed by hand, and why:
+
+## Best prompt
 ```
 
 ```
-**Surprise (good/bad):**
+
+## Surprises
