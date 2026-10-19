@@ -34,6 +34,7 @@ Legend: ⬜ todo · 🟨 doing · ✅ done · ❌ checkpoint failed (redo)
   - [x] Lessons 2–3 First conversation, Getting better results (Stage/Task/Rules, 4D framework)
   - [x] Lesson 4 Desktop — 3 shapes: turn by turn (Chat) / hand off (Cowork) / build (Code tab)
   - [x] Stretch: lessons 5–6 Projects, Artifacts
+  - [x] Lesson 7 Working with skills (early; Day 2 has 7–13)
 - [ ] 3 chat tasks (bug summary / explain concept / drafting); log prompt improvements in notes
 - [x] Git: branch → commit → push (`init-setup`)
 - [ ] Notes: `training/day-01/notes.md` · exercises: `training/day-01/exercises/`
