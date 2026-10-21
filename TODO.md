@@ -8,7 +8,7 @@ Detail per day: [PLAN.md](PLAN.md). Notes: [training/](training/).
 | Day | Theme | Target | Status |
 |---|---|---|---|
 | 1 | Mental model + basics | 10-12 | ✅ |
-| 2 | Ticket analysis, repro | 10-13 | ⬜ |
+| 2 | Ticket analysis, repro | 10-13 | 🟨 |
 | 3 | Fix/review/merge **CP1** | 10-14 | ⬜ |
 | 4 | Install, daily loop | 10-15 | ⬜ |
 | 5 | Memory & context | 10-16 | ⬜ |
