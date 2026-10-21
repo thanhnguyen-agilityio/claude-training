@@ -26,7 +26,7 @@ summarize this bug
 What a good summary gets right, from the repo:
 - `summarize_conversation` runs at `START` on every turn. Once the history is longer than `RECENT_MESSAGE_LIMIT + 1` (default 5), it keeps only the last N messages and deletes the rest.
 - If the cut falls between an `AIMessage(tool_calls=...)` and its `ToolMessage`, the history sent to OpenAI starts with an orphan `ToolMessage`, which gives the 400 (`param: messages.[1].role`).
-- `handle_keep_recent_messages` tries to keep tool pairs together. Whether it does is the Day 2 question. Don't fix it today.
+- `handle_keep_recent_messages` tries to keep tool pairs together. Whether it does is the Day 2 question. Task 2 traces it and finds a likely bug. Day 2 confirms it in the running app. Don't fix it on Day 1.
 - Mark down any summary that states a root cause as fact without pointing to evidence in the ticket.
 </details>
 
