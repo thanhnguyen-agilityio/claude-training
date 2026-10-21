@@ -62,7 +62,7 @@ Reference: https://github.com/langchain-ai/langgraph/discussions/1398
 | Total | 3.5, rounded down to 3 | |
 
 ### Claims to verify
-- [x] "fine-tuned `gpt-4o-mini`". Not in `issue.md` (no match for "fine-tun"). Claude invented it. The repo does have fine-tuning prompt files, but Claude never saw them.
+- [x] "fine-tuned `gpt-4o-mini`". True. The dump has `model_name='ft:gpt-4o-mini-2024-07-18:personal::B16sK6xs'`, and the `ft:` prefix marks a fine-tuned model, so Claude read it correctly. I first marked this as invented because I searched the file for the word "fine-tun" and missed the model name. That was my mistake, corrected on Day 2.
 - [x] "LangGraph SQL agent". Inferred from the `sql_db_*` tool names in the dump. The repo is a LangGraph agent with SQL tools, so this one is fine.
 - [x] "trims or truncates `state["messages"]`". Confirmed in `graph.py` (`summarize_conversation`), found in Task 2. It was a guess from the ticket title that turned out right.
 - [x] "A second case appears later... `qK4F...` and `yc6c...`". Both ids are in the dump, in one `AIMessage` followed by two `ToolMessage`s.
@@ -106,7 +106,7 @@ Response
 
 ### What I checked against `issue.md`
 - [x] `Compare "Gilded Prowl Skirt" with "Khaki Mini Skirt"` is the human message in the dump, so the "latest turn" in bullet 3 is real.
-- [x] It no longer invents "fine-tuned gpt-4o-mini" or a fix list. The Known/Suspected rule stopped those guesses.
+- [x] It no longer mentions the fine-tuned model, which was correct (the `ft:` model name is in the dump), and it dropped the fix list. The Known/Suspected rule stopped the fix list and the root cause stated as fact.
 - [x] Checked: bullet 3 says the ticket "notes the history is cut". The ticket only says one tool message has no `AIMessage` before it, and never says why. That claim is Suspected, not Known. Later rounds fixed it.
 - [x] Checked: "trims by count" is correct. `summarize_conversation` keeps the last `RECENT_MESSAGE_LIMIT` messages (default 5, `constants.py:37`).
 
@@ -116,7 +116,7 @@ Response
 | Length | about 25 lines | 5 bullets |
 | Root cause | stated as fact | labeled Suspected |
 | Fix list | included | gone |
-| Invented details (fine-tuned model) | yes | no |
+| Fine-tuned model mentioned (correct, from the `ft:` model name) | yes | no |
 | Score | 3 | 4.5 |
 
 The rules block gave the biggest gain, in particular the length cap and the Known/Suspected labels. Giving Claude a role and context mattered less.
@@ -223,7 +223,7 @@ A small nit: line 1 is labeled Known, but "an error instead of a reply" is infer
 |---|---|---|---|---|
 | Length | about 25 lines | 5 | 5 | 5 |
 | Has the "when" | no | partly | yes (as Known, a guess) | yes (as Suspected) |
-| Invented or wrong facts | yes | no | yes | no |
+| Invented or wrong facts | root cause stated as fact | no | yes | no |
 | Fix list | yes | no | no | no |
 | Score (proposed) | 3 | 4.5 | 4 | 5 |
 
@@ -245,6 +245,6 @@ Line 1: what a user sees and when it starts. If the ticket doesn't say, label it
 ```
 
 ## Surprises
-- Good: adding the rules block cut the answer from about 25 lines to 5 and removed an invented detail.
+- Good: adding the rules block cut the answer from about 25 lines to 5 and removed the root cause stated as fact.
 - Bad: when I forced a "when it starts" line, Claude filled the gap with a guess labeled Known, then misread the dump and said an `AIMessage` was missing when it was there.
 - Good: telling Claude what to do when the source is silent ("label it Suspected") fixed the invention problem without making the answer longer.

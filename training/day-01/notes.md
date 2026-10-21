@@ -167,7 +167,7 @@ Claude works in the codebase. It reads, writes, tests, runs commands, previews c
 
 ## Surprises
 - Good: a hand trace on a concrete input found the bug that two explanations missed (Task 2).
-- Good: telling Claude what to do when the source is silent removed the invented details (Task 1 v4).
+- Good: telling Claude what to do when the source is silent removed the guesses stated as facts (Task 1 v4).
 - Bad: Claude described `handle_keep_recent_messages` as working in two rounds, with correct line numbers. Accurate citations did not mean the claim about behavior was right.
 - Bad: when a prompt demanded a field the ticket didn't contain, Claude filled it with a guess labeled as fact (Task 1 v3).
 - Task 3: the same bug summary became a 68-word Slack reply once the reader, the rules and the facts were in the prompt.
