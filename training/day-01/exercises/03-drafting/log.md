@@ -2,14 +2,14 @@
 
 The rubric is in [README.md](README.md). Scores marked "proposed" are the teacher's first pass. Confirm or change them.
 
-Status: paused after v1. The v2 prompt is ready and its response is still to come. This task continues on Day 2.
+Status: v1 and v2 are done. v3 and the hand-edited final message are still to do. This task continues on Day 2.
 
 ## Scores
 
 | Round | Change | Score /5 | What improved, and what was still wrong |
 |---|---|---|---|
 | v1 | Lazy prompt plus the Task 1 v4 summary pasted | 1 (proposed) | It reads as an engineer's status report, not a Slack reply to a PM. It has no date, it has headers and jargon, and it runs about 230 words. It did not invent a date. |
-| v2 | | | |
+| v2 | Added the PM's question, three facts and eight rules (80 words, no jargon, a date range, an update time) | 4 (proposed) | It fits Slack at 68 words with no jargon, a date range with its dependency, and an update promise. It never says why the feature was turned off (the errors), and it invents "afternoon". |
 | v3 | | | |
 
 ---
@@ -89,8 +89,27 @@ Rules: max 80 words; no headers or bullets; no technical terms (no code, API or 
 
 Response
 `````
-(paused: no response yet. Claude had an issue, so run the prompt again later and paste the response here.)
+Conversation summary is off as a temporary fix: long chats still work, but older context just isn't summarized anymore. I can't give a firm return date yet, since I haven't reproduced the bug. I'll do that tomorrow, then fix and test it. Realistic earliest is 2-3 days from now (Oct 23-24), depending on the fix passing review without surprises. I'll update you tomorrow afternoon once I've reproduced it.
 `````
+
+### Rubric check (proposed)
+
+| Criterion | Points | Why |
+|---|---|---|
+| Answers both questions (why it's off, when it's back) in the first 2 lines | 0.5 | "When" gets an honest answer in line 2 ("no firm return date yet"). "Why" only says "a temporary fix". It never says the feature caused errors, which is what the PM asked. |
+| No jargon | 1 | No code, API or file names. "Reproduced" is the only technical word, and a PM can follow it. |
+| Honest date: a range and what it depends on | 1 | "2-3 days from now (Oct 23-24), depending on the fix passing review". The dates match the facts (the day this was run was Oct 21). |
+| Slack-sized: 80 words or fewer, no headers, sounds like you | 1 | 68 words, no headers or bullets. |
+| Ends with what the PM can expect | 1 | "I'll update you tomorrow afternoon once I've reproduced it." |
+| Total | 4.5, rounded down to 4 | The missing "why" matters most to this reader, so I rounded down. |
+
+### Observations
+- Good: it followed every rule, and the date range matches your facts.
+- Good: it didn't promise a fix, and it said it can't give a firm date.
+- Bad: the PM asked "why is it turned off", and the answer never mentions the errors. A PM reading this can't tell whether summary was switched off for cost, for a decision or for a bug.
+- Bad: "tomorrow afternoon" is invented. Your facts said "tomorrow". You can't promise an afternoon update unless you mean it. Fix this in your hand edit.
+- Good: the facts did the work. The v1 response had no date because the facts were missing, and v2 has one because you supplied them. This is the Task 1 lesson in a new place.
+- For v3: add the missing "why" as a fact, for example "Why it's off: in some long chats the assistant crashed with an error instead of replying". That is one change, and it is the biggest remaining gap. Fix "afternoon" by hand.
 
 ---
 

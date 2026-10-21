@@ -34,14 +34,14 @@ Legend: ⬜ todo · 🟨 doing · ✅ done · ❌ checkpoint failed (redo)
   - [x] Lessons 2–3 First conversation, Getting better results (Stage/Task/Rules, 4D framework)
   - [x] Lesson 4 Desktop — 3 shapes: turn by turn (Chat) / hand off (Cowork) / build (Code tab)
   - [x] Stretch: lessons 5–6 Projects, Artifacts
-- [~] 3 chat tasks (bug summary / explain concept / drafting); log prompt improvements in notes — Task 1 ✅, Task 2 ✅, Task 3 paused after v1; finish v2/v3 on Day 2 (`training/day-01/exercises/03-drafting/`)
+- [~] 3 chat tasks (bug summary / explain concept / drafting); log prompt improvements in notes — Task 1 ✅, Task 2 ✅, Task 3 has v1 (1/5) and v2 (4/5), finish v3 on Day 2 (`training/day-01/exercises/03-drafting/`)
 - [x] Git: branch → commit → push (`init-setup`)
 - [x] Notes: `training/day-01/notes.md` · exercises: `training/day-01/exercises/`
 
 ### Day 2
 Exercises: [training/day-02/exercises/](training/day-02/exercises/README.md)
 
-- [ ] Carried from Day 1: Task 3 drafting v2/v3 (`training/day-01/exercises/03-drafting/log.md`)
+- [ ] Carried from Day 1: Task 3 drafting v3 (`training/day-01/exercises/03-drafting/log.md`)
 - [ ] 5 tickets → 3-sentence analysis (asks/ambiguous/first step); use `sample-project/assets/issue.md` as one
 - [ ] Draft clarifying questions with Claude
 - [ ] Run sample app from scratch (`make` targets, `.env.example` → `.env`)

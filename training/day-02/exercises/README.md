@@ -6,7 +6,7 @@ Source: [dojo/schedule/day-02.md](../../../dojo/schedule/day-02.md). The dojo da
 Turn a vague ticket into a reproduce-ready report and a failing test. The Claude habit for the day is to paste the trace and the code, ask for hypotheses, and verify each one by running it, not by trusting it.
 
 ## Before you start
-- Finish Task 3 from Day 1 ([03-drafting](../../day-01/exercises/03-drafting/log.md)). It takes about 5 minutes.
+- Finish Task 3 from Day 1 ([03-drafting](../../day-01/exercises/03-drafting/log.md)). Only v3 is left, about 5 minutes.
 - Use only `sample-project/` content. No client code, secrets or customer data.
 - Keep the OpenAI key in `.env` only. Never paste it into a chat.
 

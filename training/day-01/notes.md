@@ -10,7 +10,7 @@
   - [x] 4 How you'll work with Claude on your desktop
   - [x] 5 Introduction to projects
   - [x] 6 Creating with artifacts
-- [~] 3 chat tasks in [exercises/](exercises/README.md). Task 1 done (5/5), Task 2 done (5/5), Task 3 (drafting) has v1 scored 1/5 and the v2 response is pending, so it moves to Day 2.
+- [~] 3 chat tasks in [exercises/](exercises/README.md). Task 1 done (5/5), Task 2 done (5/5), Task 3 (drafting) has v1 scored 1/5 and v2 scored 4/5, and v3 is still to do on Day 2.
 - [x] Debrief: Learned is written. Surprises and the Task 3 prompt get added when Task 3 is done.
 
 ## Lesson 1: What is Claude
