@@ -41,7 +41,6 @@ Legend: ⬜ todo · 🟨 doing · ✅ done · ❌ checkpoint failed (redo)
 ### Day 2
 Exercises: [training/day-02/exercises/](training/day-02/exercises/README.md)
 
-- [ ] Carried from Day 1: Task 3 drafting v3 (`training/day-01/exercises/03-drafting/log.md`)
 - [ ] 5 tickets → 3-sentence analysis (asks/ambiguous/first step); use `sample-project/assets/issue.md` as one
 - [ ] Draft clarifying questions with Claude
 - [ ] Run sample app from scratch (`make` targets, `.env.example` → `.env`)
