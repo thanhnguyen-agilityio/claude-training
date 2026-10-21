@@ -7,7 +7,7 @@ Detail per day: [PLAN.md](PLAN.md). Notes: [training/](training/).
 
 | Day | Theme | Target | Status |
 |---|---|---|---|
-| 1 | Mental model + basics | 10-12 | ✅ (Task 3 carried to Day 2) |
+| 1 | Mental model + basics | 10-12 | ✅ |
 | 2 | Ticket analysis, repro | 10-13 | ⬜ |
 | 3 | Fix/review/merge **CP1** | 10-14 | ⬜ |
 | 4 | Install, daily loop | 10-15 | ⬜ |
@@ -34,7 +34,7 @@ Legend: ⬜ todo · 🟨 doing · ✅ done · ❌ checkpoint failed (redo)
   - [x] Lessons 2–3 First conversation, Getting better results (Stage/Task/Rules, 4D framework)
   - [x] Lesson 4 Desktop — 3 shapes: turn by turn (Chat) / hand off (Cowork) / build (Code tab)
   - [x] Stretch: lessons 5–6 Projects, Artifacts
-- [~] 3 chat tasks (bug summary / explain concept / drafting); log prompt improvements in notes — Task 1 ✅, Task 2 ✅, Task 3 has v1 (1/5) and v2 (4/5), finish v3 on Day 2 (`training/day-01/exercises/03-drafting/`)
+- [x] 3 chat tasks (bug summary / explain concept / drafting); log prompt improvements in notes — Task 1 5/5, Task 2 5/5, Task 3 5/5 (hand-edited final message left in `training/day-01/exercises/03-drafting/log.md`)
 - [x] Git: branch → commit → push (`init-setup`)
 - [x] Notes: `training/day-01/notes.md` · exercises: `training/day-01/exercises/`
 

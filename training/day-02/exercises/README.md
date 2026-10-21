@@ -6,7 +6,7 @@ Source: [dojo/schedule/day-02.md](../../../dojo/schedule/day-02.md). The dojo da
 Turn a vague ticket into a reproduce-ready report and a failing test. The Claude habit for the day is to paste the trace and the code, ask for hypotheses, and verify each one by running it, not by trusting it.
 
 ## Before you start
-- Finish Task 3 from Day 1 ([03-drafting](../../day-01/exercises/03-drafting/log.md)). Only v3 is left, about 5 minutes.
+- Task 3 from Day 1 is done. Write your hand-edited final message in [03-drafting](../../day-01/exercises/03-drafting/log.md) if you haven't.
 - Use only `sample-project/` content. No client code, secrets or customer data.
 - Keep the OpenAI key in `.env` only. Never paste it into a chat.
 
@@ -28,7 +28,6 @@ Do task 3 early. A broken setup is the most likely thing to block the afternoon.
 - Do not fix the bug today. The fix is Day 3.
 
 ## Done when
-- [ ] Task 3 from Day 1 is finished
 - [ ] Tasks 1 to 5 have their logs filled in
 - [ ] The failing test is committed on its own branch
 - [ ] Lessons 8 to 13, the quiz and the badge are done, with notes

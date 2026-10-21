@@ -2,7 +2,6 @@
 
 ## Progress
 - [ ] Exercises: [exercises/](exercises/README.md) (ticket analysis, clarifying questions, run the app, reproduce and failing test, git block)
-- [ ] Carried over from Day 1: Task 3 drafting v3
 - [~] Course: finish Claude 101 (lessons 7–13 + quiz + badge)
   - [x] 7 Working with skills (done early, on Day 1)
   - [ ] 8–13 Connecting tools, Enterprise search, Research, Use-cases by role, Other ways, What's next · quiz · badge
