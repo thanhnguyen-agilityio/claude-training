@@ -10,7 +10,7 @@
   - [x] 4 How you'll work with Claude on your desktop
   - [x] 5 Introduction to projects
   - [x] 6 Creating with artifacts
-- [x] 3 chat tasks in [exercises/](exercises/README.md). Task 1 done (5/5), Task 2 done (5/5), Task 3 done (5/5). Only your hand-edited final message is still to write, in the Task 3 log.
+- [x] 3 chat tasks in [exercises/](exercises/README.md). Task 1 done (5/5), Task 2 done (5/5), Task 3 done (5/5), with the final message in the Task 3 log.
 - [x] Debrief: Learned, Prompts that worked, Gotchas and Surprises are written.
 
 ## Lesson 1: What is Claude

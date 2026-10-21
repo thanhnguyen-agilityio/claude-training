@@ -42,6 +42,6 @@ Write the answers in `../notes.md`, under Learned, Prompts that worked, Gotchas 
 4. Which one habit will you keep from tomorrow on?
 
 ## Done when
-- [x] The three task logs have v1, v2 and v3 with scores (Task 3 still needs your hand-edited final message)
+- [x] The three task logs have v1, v2 and v3 with scores, and Task 3 has the final message
 - [x] Debrief answers are in `../notes.md` (Learned, Prompts that worked, Gotchas, Surprises)
 - [x] Everything is committed and pushed
