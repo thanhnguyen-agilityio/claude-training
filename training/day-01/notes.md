@@ -10,8 +10,8 @@
   - [x] 4 How you'll work with Claude on your desktop
   - [x] 5 Introduction to projects
   - [x] 6 Creating with artifacts
-- [~] 3 chat tasks in [exercises/](exercises/README.md). Task 1 done (5/5), Task 2 done (5/5), Task 3 (drafting) has v1 scored 1/5 and the v2 response is pending, so it moves to Day 2.
-- [x] Debrief: Learned is written. Surprises and the Task 3 prompt get added when Task 3 is done.
+- [x] 3 chat tasks in [exercises/](exercises/README.md). Task 1 done (5/5), Task 2 done (5/5), Task 3 done (5/5), with the final message in the Task 3 log.
+- [x] Debrief: Learned, Prompts that worked, Gotchas and Surprises are written.
 
 ## Lesson 1: What is Claude
 - Claude is an AI assistant for life and work, far more than a chatbot. It is steerable, collaborative, very intelligent, and available on the web, in an app and in a CLI.
@@ -140,10 +140,37 @@ Claude works in the codebase. It reads, writes, tests, runs commands, previews c
   It works because it has a role and purpose, a task, rules (a length cap, Known/Suspected labels, no fixes) and a fallback for missing information.
 - Explain code and prove it (Task 2, v3, scored 5/5). It is the v2 prompt (a role, "explain how X and Y work together", at most 250 words, one diagram, `file:line` or "unsure", 3 self-check questions) plus this: `Then trace <function> by hand with N=5 on this input: <concrete input>. Show the returned list. Is any ToolMessage left without its AIMessage? Quote the lines that decide it.` Full prompt and log in [exercises/02-explain-concept/log.md](exercises/02-explain-concept/log.md).
 
+- Message to a non-technical reader (Task 3, v3, scored 5/5). Full prompt and log in [exercises/03-drafting/log.md](exercises/03-drafting/log.md).
+  ```
+  I'm a developer. My PM is not technical and asked me on Slack: "Why is conversation summary turned off? When is it coming back?" Reply to them using the bug summary below.
+  Facts to use:
+
+  * Why it is off: in some long chats the assistant crashed with an error instead of replying, so I turned the feature off as a temporary fix.
+  * What it means now: long chats work, but older context is no longer summarized.
+  * I haven't reproduced the bug yet. I'll do that tomorrow, then fix and test it.
+  * Realistic earliest date: after the fix is reviewed, in 2-3 days.
+
+  Rules: max 80 words; no headers or bullets; no technical terms (no code, API or file names); answer both questions in the first two lines; give the date as a range and say what it depends on; end with when I'll next update them; don't promise a specific fix.
+
+  <paste the Task 1 v4 summary>
+  ```
+  It works because it names the reader and the question, gives the facts to use, and sets hard rules. v3 added the one fact the reader asked about and v2 had left out.
+
 ## Gotchas
 - A required field the source doesn't cover makes Claude invent it, and it may label the invention as fact. Always say what to do when information is missing.
 - To check code, ask Claude to trace it on a concrete input instead of explaining it. An explanation repeats what the code is meant to do. A trace found the real bug in Task 2. Then confirm it by running the code in a test.
 - "Known" claims can still be wrong. In Task 1 v3, Claude said an `AIMessage` was missing when the dump shows it. Check against the source.
+
+- Claude can only answer what you give it. If the reader asks "why" and you don't supply it, the answer is vague. Before sending, check that every question the reader asks has a fact behind it.
+- Claude can soften your facts. In Task 3 v3, "realistic earliest" became "likely back". Read the result against your facts.
+- A prompt that pastes an engineering summary gets an engineering message back. Name the reader.
+
+## Surprises
+- Good: a hand trace on a concrete input found the bug that two explanations missed (Task 2).
+- Good: telling Claude what to do when the source is silent removed the invented details (Task 1 v4).
+- Bad: Claude described `handle_keep_recent_messages` as working in two rounds, with correct line numbers. Accurate citations did not mean the claim about behavior was right.
+- Bad: when a prompt demanded a field the ticket didn't contain, Claude filled it with a guess labeled as fact (Task 1 v3).
+- Task 3: the same bug summary became a 68-word Slack reply once the reader, the rules and the facts were in the prompt.
 
 ## Kit candidates
 - `email-digest` skill (Gmail connector, weekdays at 08:30 and on demand) in `ai-kit/.claude/skills/`

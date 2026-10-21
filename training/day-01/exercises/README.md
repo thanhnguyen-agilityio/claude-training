@@ -35,13 +35,13 @@ Prompt skeleton for v2:
 All three tasks use the same bug, so by the end of the day you understand it well. That gives you a head start on Day 2 (repro and failing test).
 
 ## Debrief (15 min)
-Write the answers in `../notes.md`. They answer the dojo discussion question.
+Write the answers in `../notes.md`, under Learned, Prompts that worked, Gotchas and Surprises. They answer the dojo discussion question.
 1. Where did Claude beat what you would have written?
 2. Where was it wrong, generic or confidently off, and how did you notice? This is the Discernment step.
 3. Which three prompt changes helped most, ranked? Copy them to Prompts that worked.
 4. Which one habit will you keep from tomorrow on?
 
 ## Done when
-- [ ] The three task logs have v1, v2 and v3 with scores
-- [ ] Debrief answers are in `../notes.md` (Learned, Prompts that worked, Gotchas)
-- [ ] Everything is committed and pushed
+- [x] The three task logs have v1, v2 and v3 with scores, and Task 3 has the final message
+- [x] Debrief answers are in `../notes.md` (Learned, Prompts that worked, Gotchas, Surprises)
+- [x] Everything is committed and pushed

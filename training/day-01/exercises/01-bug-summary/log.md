@@ -62,11 +62,11 @@ Reference: https://github.com/langchain-ai/langgraph/discussions/1398
 | Total | 3.5, rounded down to 3 | |
 
 ### Claims to verify
-- [ ] "fine-tuned `gpt-4o-mini`". Is this in `issue.md`? If not, where did it come from?
-- [ ] "LangGraph SQL agent". Is it inferred from the tool names (`sql_db_*`)? Check the repo.
-- [ ] "trims or truncates `state["messages"]`". The ticket never shows the summarize code. Confirm in `sample-project/server/agent/graph.py` (`summarize_conversation`).
-- [ ] "A second case appears later... `qK4F...` and `yc6c...`". Confirm the IDs are in the dump. The ticket text mentions 2 tool messages.
-- [ ] "Likely fixes". Are the `trim_messages` arguments (`start_on`, `end_on`) real and correct for the installed LangChain version?
+- [x] "fine-tuned `gpt-4o-mini`". Not in `issue.md` (no match for "fine-tun"). Claude invented it. The repo does have fine-tuning prompt files, but Claude never saw them.
+- [x] "LangGraph SQL agent". Inferred from the `sql_db_*` tool names in the dump. The repo is a LangGraph agent with SQL tools, so this one is fine.
+- [x] "trims or truncates `state["messages"]`". Confirmed in `graph.py` (`summarize_conversation`), found in Task 2. It was a guess from the ticket title that turned out right.
+- [x] "A second case appears later... `qK4F...` and `yc6c...`". Both ids are in the dump, in one `AIMessage` followed by two `ToolMessage`s.
+- [x] "Likely fixes". `start_on` and `end_on` are real `trim_messages` arguments in the pinned `langchain-core` 0.3.34.
 
 ### Observations
 - Good: it is accurate on the error and the pairing rule, and it found the orphan `ToolMessage` in the dump on its own.
@@ -107,8 +107,8 @@ Response
 ### What I checked against `issue.md`
 - [x] `Compare "Gilded Prowl Skirt" with "Khaki Mini Skirt"` is the human message in the dump, so the "latest turn" in bullet 3 is real.
 - [x] It no longer invents "fine-tuned gpt-4o-mini" or a fix list. The Known/Suspected rule stopped those guesses.
-- [ ] Still to check: bullet 3 says the ticket "notes the history is cut". The ticket only says one tool message has no `AIMessage` before it, and never says why. That claim is Suspected, not Known.
-- [ ] Still to check: is "trims by count" correct? Open `summarize_conversation` in `sample-project/server/agent/graph.py` and `RECENT_MESSAGE_LIMIT` in `sample-project/server/utils/constants.py`.
+- [x] Checked: bullet 3 says the ticket "notes the history is cut". The ticket only says one tool message has no `AIMessage` before it, and never says why. That claim is Suspected, not Known. Later rounds fixed it.
+- [x] Checked: "trims by count" is correct. `summarize_conversation` keeps the last `RECENT_MESSAGE_LIMIT` messages (default 5, `constants.py:37`).
 
 ### What changed from v1 to v2
 | | v1 | v2 |
