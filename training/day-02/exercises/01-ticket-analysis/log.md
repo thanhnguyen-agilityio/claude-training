@@ -61,7 +61,38 @@ Fix the intermittent 400 error in the "summary conversation" feature, where Open
 Find the summarization/trim code in `server/agent/graph.py` (or wherever history is cut) and reproduce it locally with a short script. Feed it a history that contains an AIMessage with parallel `tool_calls` and its ToolMessages, lower the threshold so the cut lands inside that group, and confirm the same 400. Once reproduced, fix it by making the cut land only at safe boundaries: never start the kept history with a `ToolMessage`, and keep each AIMessage with its ToolMessages together. Either drop leading orphan ToolMessages or move the cut back to the preceding HumanMessage. In LangChain, `trim_messages(start_on="human")` does this.
 `````
 
-Ticket 2 to 5: add your prompt and Claude's response here, in the same format.
+### Ticket 1 again, with three rules added
+The one change: `Rules: three sentences per answer; use only what the ticket says, and write "not stated" for anything it doesn't say; no fixes.`
+`````
+**1. What the ticket asks for.**
+The ticket reports that the "summary conversation" feature sometimes errors, and it records a temporary fix of disabling that feature. The error is an OpenAI 400 BadRequestError saying a message with role 'tool' must respond to a preceding message with 'tool_calls', pointing at `messages.[1].role`. The ticket does not state an explicit request such as "investigate" or "resolve"; that is not stated.
+
+**2. What is ambiguous or missing.**
+Not stated: what "summary conversation" does or when it triggers, what "sometime" means (frequency or conditions), and what outcome is expected beyond the temporary fix. The state dump shows two ToolMessages from parallel tool calls with the AIMessage holding their `tool_calls` missing before them, but the ticket does not say how that message was lost or whether summarization causes it. The ticket also does not say whether the feature is already disabled, who owns it, or its priority, and it links a LangGraph discussion without saying what it concludes.
+
+**3. The first step I would take.**
+I would reproduce the failure in a conversation where the agent makes parallel tool calls, as in the "Compare Gilded Prowl Skirt with Khaki Mini Skirt" request. At the point of the error I would inspect `state["messages"]` and check whether the summary step removed or trimmed the AIMessage carrying the two `tool_calls`. The ticket does not state the summary logic or where it lives, so I would first locate that code before changing anything.
+`````
+
+### Ticket 1: first run against the run with rules
+
+| | First run (no rules) | With the three rules |
+|---|---|---|
+| Words | about 270 | about 225 |
+| Proposes a fix | yes (`trim_messages(start_on="human")`) | no |
+| Says the root cause is visible in the dump | yes, stated | no, left open |
+| Gap: whether the temporary fix stays | yes | partly ("whether the feature is already disabled") |
+| Generic gaps (owner, priority) | no | yes |
+| Reads the dump correctly | partly | no |
+
+What the rules fixed: the fix is gone, the structure follows the three questions, and the guesses are gone from section 2.
+
+What they didn't fix, and what they added:
+- **A false claim in section 2.** It says the `AIMessage` holding the two parallel `tool_calls` is "missing before them". In the dump, that `AIMessage` is there, right before the last two `ToolMessage`s (`call_qK4F...` and `call_yc6c...`). The orphans are the first two messages in the list. This is the same misreading as Task 1 v3 on Day 1. The "not stated" rule made Claude more careful about the ticket's text and no more careful about the dump.
+- **It sent the first step to the wrong place.** Step 3 says to check whether the summary step removed the `AIMessage` with the two `tool_calls`. That one was never removed. Inspecting `state["messages"]` would still show the real orphans, but the hypothesis is wrong.
+- **The rule was applied too literally.** "The ticket does not state an explicit request such as investigate or resolve; that is not stated" adds nothing, and "who owns it, or its priority" is generic and could go on any ticket.
+
+Tickets 2 to 5: add your prompt and Claude's response here, in the same format.
 
 ## Comparison
 | Ticket | A gap Claude found that I missed | A fact Claude invented | Which analysis was better |
