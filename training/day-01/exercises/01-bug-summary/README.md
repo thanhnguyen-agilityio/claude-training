@@ -4,14 +4,12 @@
 You just joined the e-commerce agent project. The lead hands you a ticket that says only "Summary conversation sometime got error" and a 90-line traceback. Before you touch code, you need a summary you could paste into the ticket or say at standup.
 
 ## Input
-`sample-project/assets/issue.md`, attached or pasted. It holds the traceback, the `state["messages"]` dump and a link to a LangGraph discussion.
-
-For v2 and v3 you can add `sample-project/server/agent/graph.py` (`summarize_conversation`) and `sample-project/server/utils/utils.py` (`handle_keep_recent_messages`).
+`resources/practice/issues/issue-1.md`, attached or pasted. It holds the description, the traceback and the `state["messages"]` dump. The source code is not in this repo, so work from the issue alone.
 
 ## v1: lazy prompt (send exactly this)
 ```
 summarize this bug
-<paste issue.md>
+<paste issue-1.md>
 ```
 
 ## Rubric (1 point each, 5 max)
@@ -23,10 +21,10 @@ summarize this bug
 
 <details><summary>Teacher's check (open only after v3)</summary>
 
-What a good summary gets right, from the repo:
-- `summarize_conversation` runs at `START` on every turn. Once the history is longer than `RECENT_MESSAGE_LIMIT + 1` (default 5), it keeps only the last N messages and deletes the rest.
-- If the cut falls between an `AIMessage(tool_calls=...)` and its `ToolMessage`, the history sent to OpenAI starts with an orphan `ToolMessage`, which gives the 400 (`param: messages.[1].role`).
-- `handle_keep_recent_messages` tries to keep tool pairs together. Whether it does is the Day 2 question. Task 2 traces it and finds a likely bug. Day 2 confirms it in the running app. Don't fix it on Day 1.
+What a good summary gets right, from the issue:
+- The error is an OpenAI 400 (`param: messages.[1].role`): a `tool` message has no preceding assistant message with `tool_calls`.
+- The dump starts with `ToolMessage`s and no `AIMessage`, so the history was cut in the middle of a tool-call pair. This points to the summarize or trim step, but the issue never shows that code, so it is Suspected.
+- The workaround is that the summary feature is turned off.
 - Mark down any summary that states a root cause as fact without pointing to evidence in the ticket.
 </details>
 

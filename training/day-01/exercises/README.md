@@ -9,7 +9,7 @@ Practice the turn-by-turn shape (lesson 4) and the Stage / Task / Rules prompt (
 - Use the Chat tab in Claude desktop. Today is chat only, not Code or Cowork.
 - Open a new chat for each task so context doesn't carry over.
 - Chat can't see this repo. Paste the code or attach the file yourself. Choosing what context to give is part of the exercise.
-- Use only `sample-project/` content. No client code, secrets or customer data.
+- Use only `resources/practice/` content. No client code, secrets or customer data.
 
 ## The loop (same for every task)
 | Round | What you do | What you log |
@@ -28,8 +28,8 @@ Prompt skeleton for v2:
 ```
 
 ## Tasks (about 30 min each)
-1. [01-bug-summary/](01-bug-summary/README.md): summarize the seeded bug in `sample-project/assets/issue.md`.
-2. [02-explain-concept/](02-explain-concept/README.md): explain conversation summarization and message trimming in the LangGraph agent.
+1. [01-bug-summary/](01-bug-summary/README.md): summarize the bug in `resources/practice/issues/issue-1.md`.
+2. [02-explain-concept/](02-explain-concept/README.md): explain conversation summarization and message trimming in a LangGraph agent, from the issue.
 3. [03-drafting/](03-drafting/README.md): draft a status update about the bug for a non-technical PM.
 
 All three tasks use the same bug, so by the end of the day you understand it well. That gives you a head start on Day 2 (repro and failing test).
@@ -42,6 +42,6 @@ Write the answers in `../notes.md`, under Learned, Prompts that worked, Gotchas 
 4. Which one habit will you keep from tomorrow on?
 
 ## Done when
-- [x] The three task logs have v1, v2 and v3 with scores, and Task 3 has the final message
-- [x] Debrief answers are in `../notes.md` (Learned, Prompts that worked, Gotchas, Surprises)
-- [x] Everything is committed and pushed
+- [ ] The three task logs have v1, v2 and v3 with scores, and Task 3 has the final message
+- [ ] Debrief answers are in `../notes.md` (Learned, Prompts that worked, Gotchas, Surprises)
+- [ ] Everything is committed and pushed
