@@ -10,8 +10,8 @@
   - [x] 4 How you'll work with Claude on your desktop
   - [x] 5 Introduction to projects
   - [x] 6 Creating with artifacts
-- [ ] 3 chat tasks in [exercises/](exercises/README.md), now on `resources/practice/issues/issue-1.md`. Task 1 done (v2 scored 5/5).
-- [ ] Debrief: Learned, Prompts that worked, Gotchas and Surprises are written.
+- [x] 3 chat tasks in [exercises/](exercises/README.md), on `resources/practice/issues/issue-1.md`. Task 1: v2 5/5. Task 2: v2 and v3 4.5/5. Task 3: v2 and v3 4.0/5, plus a hand-edited final message.
+- [x] Debrief: Learned, Prompts that worked, Gotchas and Surprises are written.
 
 ## Lesson 1: What is Claude
 - Claude is an AI assistant for life and work, far more than a chatbot. It is steerable, collaborative, very intelligent, and available on the web, in an app and in a CLI.
@@ -127,6 +127,9 @@ Claude works in the codebase. It reads, writes, tests, runs commands, previews c
 ## Learned
 - A prompt with rules is essential to get what you expect. The rules (a length cap, Known/Suspected labels, no fixes) took the bug summary from about 20 lines with a root cause stated as fact to 5 honest lines.
 - When you add a required field, say what to do when the source doesn't cover it. Also repeat the format limit, because a new rule can push Claude to explain itself.
+- Name the reader and the question. In Task 3, "the PM is not technical, and asked this" took the draft from 1.5 to 4.0, mostly through audience and length, not through facts.
+- Context fixes only what depends on it. Adding the facts in Task 3 moved just the date item. Jargon, length and format came from missing rules.
+- "Cite the line, or label it general, and say if unsure" (Task 2) makes Claude separate evidence from textbook, so you know what to check.
 
 ## Prompts that worked
 - Bug summary for a ticket (Task 1, v2, scored 5/5). Full log in [exercises/01-bug-summary/log.md](exercises/01-bug-summary/log.md).
@@ -136,15 +139,40 @@ Claude works in the codebase. It reads, writes, tests, runs commands, previews c
   <paste ticket>
   ```
   It works because it has a role and purpose, a task, and rules (a length cap, Known/Suspected labels, no fixes).
+- Explain a concept for this case (Task 2, v2, 4.5/5). Full log in [exercises/02-explain-concept/log.md](exercises/02-explain-concept/log.md).
+  ```
+  I'm a Python/API developer, new to LangGraph, joining an e-commerce agent project. Tomorrow I'll fix the bug in the issue below, so I need to understand how this agent keeps its chat history short.
+  Explain, for this case: how the agent loops, what summarization keeps and deletes, and why tool messages make trimming break.
+  Rules: max 250 words; one ASCII diagram of the message list; for each claim, point to the line in the issue that supports it, or label it "general LangGraph, can't see your code"; if unsure, say so.
+  <paste issue>
+  ```
+- Reply to a non-technical PM (Task 3, v2, 4.0/5, final message in [exercises/03-drafting/log.md](exercises/03-drafting/log.md)). The shape: who I am, who the reader is, the exact question, then rules (80 words, no bullets, answer both questions first, date as a range plus what it depends on, end with what happens next), then the summary "for you only, don't copy it" and the facts.
+
+Ranked, the three changes that helped most across the tasks:
+1. A Rules block with a hard cap and a format (word limit, no bullets, Known/Suspected, one diagram). Biggest jump every time.
+2. Naming the reader and the real question, so Claude stops reformatting my notes and answers what was asked.
+3. An evidence rule ("cite the line or label it general, say if unsure"), which makes the guesses visible.
 
 ## Gotchas
 - A prompt with no rules gets a long answer: root cause stated as fact, an unrequested fix list and invented extras (v1).
 - Claude can pick a concrete detail it can't check, like "the second orphaned message" for `messages.[1]`. Check such details against the source.
-- A new rule can break an old one. The line 1 rule in v3 added a preamble, so the reply was six lines (4.5, lower than v2).
+- A new rule can break an old one. The line 1 rule in Task 1 v3 added a preamble, so the reply was six lines (4.5, lower than v2). It happened again in Task 2 v3 (330 words against a 250 cap) and Task 3 v3 (83 words against 80). Repeat the limit whenever you add a rule.
+- Claude states checkable details with confidence and gets some wrong. In Task 2 v3 it said "every message in your dump has an `id`", but the `AIMessage` at issue-1.md:31 has none. I only caught it by reading the line.
+- Soft words win over a vague rule. Claude kept "should be back in roughly 2 to 3 days" and never wrote "earliest" until a hard rule says to. Say the exact word.
+- Claude Chat sometimes returns a draft in a card, and its note only describes it. Ask it to paste the draft as plain text.
+- Chat memory leaks context. The first answer in Task 2 knew about the "e-commerce one you're working on" with nothing attached.
 
 ## Surprises
-- Good: the rules block alone took the score from 4 to 5. The role and purpose mattered less.
-- Bad: v3 scored lower than v2, because an extra rule added a preamble and a needless hedge.
+- Good: the rules block alone took Task 1 from 4 to 5. The role and purpose mattered less.
+- Good: the cite-or-label rule made Claude mark its own guesses ("my inference", "a guess").
+- Bad: v3 scored the same as or lower than v2 in all three tasks, because the fix for one gap costs something elsewhere.
+- Bad: the claim check was the hardest part. The agent code isn't in the repo, so I could only check Claude against the issue.
+
+## Debrief answers
+1. Where Claude beat me: the one-sentence plain cause for the PM ("cuts them in the wrong spot and the assistant fails to reply"), and the ASCII diagram that shows two orphan tool messages at the front.
+2. Where it was wrong or confidently off, and how I noticed: the invented "every message has an id" claim (checked issue-1.md:31); the `messages.[1]` index explained as a system prompt (I couldn't verify it, Claude called it a guess); the "second orphaned message" detail in Task 1. I noticed by checking the line, not by the tone.
+3. Three prompt changes that helped most: see the ranked list above.
+4. Habit to keep: end every prompt with a Rules block that includes the limit, and check at least one claim against the source before I trust it.
 
 ## Kit candidates
 - `email-digest` skill (Gmail connector, weekdays at 08:30 and on demand) in `ai-kit/.claude/skills/`
