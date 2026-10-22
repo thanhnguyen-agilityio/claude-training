@@ -16,11 +16,13 @@ write a message to my PM about the summary bug
 ```
 
 ## Rubric (1 point each, 5 max)
-- [ ] It answers both questions (why it's off, when it's back) in the first 2 lines.
-- [ ] No jargon. No "ToolMessage", "400" or "LangGraph", and the cause fits in one plain sentence.
-- [ ] Honest date: a range, plus what it depends on. No over-promising.
-- [ ] Slack-sized: 80 words or fewer, no headers, and it sounds like you, not a press release.
-- [ ] It ends with what the PM can expect, for example "I'll update you after the repro tomorrow".
+- [x] It answers both questions (why it's off, when it's back) in the first 2 lines.
+- [x] No jargon. No "ToolMessage", "400" or "LangGraph", and the cause fits in one plain sentence.
+- [x] Honest date: a range, plus what it depends on. No over-promising.
+- [x] Slack-sized: 80 words or fewer, no headers, and it sounds like you, not a press release.
+- [x] It ends with what the PM can expect, for example "I'll update you after the repro tomorrow".
+
+Ticked for the final hand-edited message in [log.md](log.md). No Claude round scored above 4.0: v2 and v3 both got 4.0.
 
 ## Ideas for v3
 - Paste a past Slack message of yours as a tone example.
