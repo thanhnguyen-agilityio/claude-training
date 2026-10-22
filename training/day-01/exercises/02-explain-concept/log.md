@@ -1,22 +1,18 @@
 # Task 2: Log
 
-The rubric is in [README.md](README.md).
+Rubric and claim check: [README.md](README.md). Model for all rounds: Claude Sonnet 5.5, medium effort, Chat tab, new chat each time.
 
-## Scores
-
-| Round | Change | Score /5 | What improved, and what was still wrong |
+| Round | Change | Score /5 | Result |
 |---|---|---|---|
-| v1 | Lazy prompt | 1.5 | Gets what is kept/deleted (summary + last 2, `RemoveMessage`). Nothing on tool calls/results or the pairing rule, so it never touches the bug. Long, textbook, extra topics (langmem, Store). Never says it can't see the agent code. |
-| v2 | Stage / Task / Rules | 4.5 | Loop, pairing rule, level and length all hit; cites the issue and labels guesses. Still missing the "summary string + last N" mechanic (said "can't see"). Claim check done after v2 (2 true), which adds the 5th point. |
-| v3 | Add a "general LangGraph" sentence on the summary mechanic | 4.5 | Mechanic now explained (item 2 full), but about 330 words against the 250 cap (item 4 half), plus a false claim ("every message has an id", issue-1.md:31) and an unlabelled invented diagram. Same score as v2 for a different reason. |
+| v1 | Lazy prompt | 1.5 | Explains what is kept and deleted. Never mentions tool calls, tool results or the pairing rule. About 600 words of textbook, and it never says it can't see the agent code. |
+| v2 | Stage / Task / Rules | 4.5 | Loop, pairing rule, length all hit. Cites the issue and labels guesses. Missing the "summary string + last N" mechanic. Includes the claim check point (2 true). |
+| v3 | Added a "general LangGraph" sentence on the summary mechanic | 4.5 | Mechanic explained, but about 330 words against a 250 cap, one false claim, and an unlabeled invented diagram. Same score as v2 for a different reason. |
 
 ---
 
 ## v1: lazy prompt
 
-Model: Claude Sonnet 5.5, medium effort (Chat tab, new chat, nothing attached).
-
-Prompt
+Prompt (nothing attached)
 ````
 explain langgraph conversation summary
 ````
@@ -97,20 +93,14 @@ Rather than hand-rolling the node, the `langmem` library provides `Summarization
 If you tell me which version of LangGraph you're on and whether you want message-count or token-based triggering, I can tailor the example.
 ````
 
-Score: 1.5/5
-- [ ] Agent loop in the issue: no. Tool calls and tool results are never mentioned.
-- [x] What is kept and deleted: yes (summary + last 2, `RemoveMessage`).
-- [ ] Pairing rule: no.
-- [~] Level and length: half. About 600 words, with textbook extras (langmem, Store, trim_messages) that don't help the bug.
-- [ ] Claim check: not done yet.
+Score 1.5/5: loop 0, kept and deleted 1, pairing rule 0, level and length 0.5, claim check 0.
 
-Observations
-- It pulled "the e-commerce one you're working on" from chat memory, even though nothing was attached. Useful, but it never said it can't see the agent code.
-- The example deletes `messages[:-2]` by count. That is the pattern that can cut a tool-call pair in half. It is the answer to the bug, but v1 never says so.
+- It knew "the e-commerce one you're working on" from chat memory with nothing attached.
+- Its example deletes `messages[:-2]` by count. That is the pattern that can split a tool-call pair, but it never says so.
+
+---
 
 ## v2: Stage, Task, Rules
-
-Model: Claude Sonnet 5.5, medium effort (Chat tab, new chat, issue-1.md pasted).
 
 Prompt
 ````
@@ -154,23 +144,17 @@ Response
 Likely fix direction (general LangGraph, can't see your code): remove or keep AI+Tool groups together, never one without the other. Check the summarizer's cut logic tomorrow.
 ````
 
-Score: 3.5/5 (item 5 still open)
-- [x] Agent loop: yes, with the `assistant` node and `finish_reason: 'stop'`.
-- [~] Kept and deleted: half. It reads the dump well (what survived, what is missing) but never explains the summary string + last N mechanic. It says "can't see where the summary is stored".
-- [x] Pairing rule: yes, with the orphan ToolMessages marked in the diagram.
-- [x] Level and length: yes. The diagram is the right size and nothing is padded.
-- [ ] Claim check: see README table.
+Score 4.5/5 with the claim check. Loop 1, kept and deleted 0.5, pairing rule 1, level and length 1, claim check 1.
 
-What the Rules changed
-- The "cite or label it general" rule made it honest. It marks inferences ("my inference", "a guess") instead of stating a root cause as fact. This is the same win as Task 1.
-- The diagram made the bug visible at a glance: two orphans at the front.
-- It gave up on the summary mechanic rather than explaining the general pattern. That is the gap for v3.
+- The cite-or-label rule made Claude mark inferences ("my inference", "a guess") instead of stating the cause as fact.
+- The diagram shows the bug at a glance: two orphans at the front.
+- Gap: it gave up on the summary mechanic ("can't see where the summary is stored").
+
+---
 
 ## v3: fix one gap
 
-Model: Claude Sonnet 5.5, medium effort (Chat tab, new chat, issue-1.md pasted).
-
-Change: one sentence added to the Task line of v2. Everything else, including "max 250 words", unchanged.
+One sentence added to the Task line of v2. Everything else, including "max 250 words", unchanged.
 ````
 Also explain, in 2 sentences labelled "general LangGraph", how a typical summarize step stores a summary string and deletes older messages, and tie it to the dump above.
 ````
@@ -193,16 +177,10 @@ General LangGraph: A typical summarize node asks the LLM for a summary string, s
 Likely fix to check tomorrow: move the cut so the kept slice starts at a `HumanMessage`, or also remove leading `ToolMessage`s.
 ````
 
-Score: 4.5/5 (items 1 to 4 = 3.5, plus item 5 from the claim check)
-- [x] Agent loop: yes.
-- [x] Kept and deleted: yes now. The "general LangGraph" sentence explains the summary string, `RemoveMessage` and the `add_messages` reducer, and ties them to the dump. This closes the v2 gap.
-- [x] Pairing rule: yes.
-- [~] Level and length: half. About 330 words against a 250 cap.
-- [x] Claim check: done (see README).
+Score 4.5/5. Kept and deleted is now 1, because the general sentence covers the summary string, `RemoveMessage` and the `add_messages` reducer. Level and length dropped to 0.5.
 
-What the one change did
-- The gap closed (item 2 went from 0.5 to 1), but the extra requirement pushed it over the length cap. Same lesson as Task 1: a new rule needs the old limit repeated, or it breaks the old rule.
-- New error: "every message has an `id`" is false. The `AIMessage` at issue-1.md:31 has no `id` field in the dump. The claim sounded like evidence, so I caught it only by reading the line.
+- Cost of the fix: about 330 words against the 250 cap. Third time in Day 1 a new rule broke an old limit.
+- False claim: "every message has an `id`". The `AIMessage` at issue-1.md:31 has none.
 - "The cut was by count" is stated as fact. The dump doesn't show how the cut was made.
-- The diagram's "before" row invents a `HumanMessage` and calls A,B. It is hypothetical but not labelled, and the `^` markers are misaligned.
-- It went back to the unrequested "likely fix" line, which is the same drift as v1.
+- The diagram's "before" row invents a `HumanMessage` and calls A,B without saying so, and its markers are misaligned.
+- The unrequested "likely fix" line is back.
