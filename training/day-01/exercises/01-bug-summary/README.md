@@ -13,7 +13,7 @@ summarize this bug
 ```
 
 ## Rubric (1 point each, 5 max)
-- [ ] Symptom: what the user sees, and when. It only happens on longer conversations, once summarization starts.
+- [x] Symptom: what the user sees, and when. It only happens on longer conversations, once summarization starts.
 - [ ] Error, exactly: an OpenAI 400, because a `tool` message has no preceding assistant message with `tool_calls`.
 - [ ] Where: it names the summarize or trim step, not just "the OpenAI call" or "LangGraph".
 - [ ] Status: it mentions the current workaround (the feature is disabled).
