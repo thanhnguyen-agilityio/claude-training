@@ -14,10 +14,10 @@ summarize this bug
 
 ## Rubric (1 point each, 5 max)
 - [x] Symptom: what the user sees, and when. It only happens on longer conversations, once summarization starts.
-- [ ] Error, exactly: an OpenAI 400, because a `tool` message has no preceding assistant message with `tool_calls`.
-- [ ] Where: it names the summarize or trim step, not just "the OpenAI call" or "LangGraph".
-- [ ] Status: it mentions the current workaround (the feature is disabled).
-- [ ] Shape: short enough for a ticket (5 lines or fewer), with known facts kept apart from guesses.
+- [x] Error, exactly: an OpenAI 400, because a `tool` message has no preceding assistant message with `tool_calls`.
+- [x] Where: it names the summarize or trim step, not just "the OpenAI call" or "LangGraph".
+- [x] Status: it mentions the current workaround (the feature is disabled).
+- [x] Shape: short enough for a ticket (5 lines or fewer), with known facts kept apart from guesses.
 
 <details><summary>Teacher's check (open only after v3)</summary>
 

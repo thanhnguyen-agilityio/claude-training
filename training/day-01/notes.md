@@ -10,7 +10,7 @@
   - [x] 4 How you'll work with Claude on your desktop
   - [x] 5 Introduction to projects
   - [x] 6 Creating with artifacts
-- [ ] 3 chat tasks in [exercises/](exercises/README.md), now on `resources/practice/issues/issue-1.md`
+- [ ] 3 chat tasks in [exercises/](exercises/README.md), now on `resources/practice/issues/issue-1.md`. Task 1 done (v2 scored 5/5).
 - [ ] Debrief: Learned, Prompts that worked, Gotchas and Surprises are written.
 
 ## Lesson 1: What is Claude
@@ -125,12 +125,26 @@ Claude works in the codebase. It reads, writes, tests, runs commands, previews c
   - The plan already has two artifact exercises: a PR walkthrough on Day 6 and a personal playbook, "how I work with Claude", on Day 15.
 
 ## Learned
+- A prompt with rules is essential to get what you expect. The rules (a length cap, Known/Suspected labels, no fixes) took the bug summary from about 20 lines with a root cause stated as fact to 5 honest lines.
+- When you add a required field, say what to do when the source doesn't cover it. Also repeat the format limit, because a new rule can push Claude to explain itself.
 
 ## Prompts that worked
+- Bug summary for a ticket (Task 1, v2, scored 5/5). Full log in [exercises/01-bug-summary/log.md](exercises/01-bug-summary/log.md).
+  ```
+  I'm a developer who just joined the e-commerce agent project, and I need to paste the summary into the ticket. Summarize the bug in the ticket below.
+  Rules: max 5 lines; label each line Known (shown in the ticket) or Suspected (a guess); no fixes yet.
+  <paste ticket>
+  ```
+  It works because it has a role and purpose, a task, and rules (a length cap, Known/Suspected labels, no fixes).
 
 ## Gotchas
+- A prompt with no rules gets a long answer: root cause stated as fact, an unrequested fix list and invented extras (v1).
+- Claude can pick a concrete detail it can't check, like "the second orphaned message" for `messages.[1]`. Check such details against the source.
+- A new rule can break an old one. The line 1 rule in v3 added a preamble, so the reply was six lines (4.5, lower than v2).
 
 ## Surprises
+- Good: the rules block alone took the score from 4 to 5. The role and purpose mattered less.
+- Bad: v3 scored lower than v2, because an extra rule added a preamble and a needless hedge.
 
 ## Kit candidates
 - `email-digest` skill (Gmail connector, weekdays at 08:30 and on demand) in `ai-kit/.claude/skills/`
