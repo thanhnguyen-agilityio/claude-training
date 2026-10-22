@@ -1,6 +1,6 @@
 # Day 01 exercises (developer)
 
-Source: [dojo/schedule/day-01.md](../../../dojo/schedule/day-01.md). The dojo exercise reads: "In Claude chat, get a useful answer to three real work questions (one bug summary, one 'explain this concept', one drafting task); note what prompt changes improved the answer."
+Source: [dojo/schedule/day-01.md](../../../resources/dojo/schedule/day-01.md). The dojo exercise reads: "In Claude chat, get a useful answer to three real work questions (one bug summary, one 'explain this concept', one drafting task); note what prompt changes improved the answer."
 
 ## Goal
 Practice the turn-by-turn shape (lesson 4) and the Stage / Task / Rules prompt (lessons 2 and 3). The output is not the answers. It is a record of which prompt change made each answer better.

@@ -1,6 +1,6 @@
 # Day 02 exercises (developer)
 
-Source: [dojo/schedule/day-02.md](../../../dojo/schedule/day-02.md). The dojo day has two halves. In the morning you analyze tickets. In the afternoon you reproduce a seeded bug, write exact repro steps, and turn the bug into a failing test.
+Source: [dojo/schedule/day-02.md](../../../resources/dojo/schedule/day-02.md). The dojo day has two halves. In the morning you analyze tickets. In the afternoon you reproduce a seeded bug, write exact repro steps, and turn the bug into a failing test.
 
 ## Goal
 Turn a vague ticket into a reproduce-ready report and a failing test. The Claude habit for the day is to paste the trace and the code, ask for hypotheses, and verify each one by running it, not by trusting it.
