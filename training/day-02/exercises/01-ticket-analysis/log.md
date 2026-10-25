@@ -6,37 +6,85 @@ Tickets from [resources/practice/issues/](../../../../resources/practice/issues/
 ### My analyses (before asking Claude)
 
 #### #1 Chatbot shows error in long conversations
-1. Asks:
-2. Ambiguous:
-3. First step:
+1. Asks: fix issue on error on long conversations.
+2. Ambiguous: user/thread detail to trace, error details, how many messages are there, could user continue to chat even see the error.
+3. First step: try to reproduce the issue. understand when how cut of on summary.
 
 #### #2 Old message cut off, bot doesn't remember
-1. Asks:
-2. Ambiguous:
-3. First step:
+1. Asks: bot should remember the overall information even the conversation long.
+2. Ambiguous: what is the user/thread got the issue to trace, what is the messsage bot not remember.
+3. First step: try to reproduce the issue. understand how the summarize content send to model after the summarize action happens.
 
 #### #6 Conversation freezes after Yes/No approval
-1. Asks:
-2. Ambiguous:
-3. First step:
+1. Asks: User should receive follow up message that they response for HITL is received and on process.
+2. Ambiguous: what is the user/thread got the issue to trace.
+3. First step: try to reproduce the issue. understanding the HITL for both case approve/reject action.
 
 #### #8 Chat messages disappear without warning
-1. Asks:
-2. Ambiguous:
-3. First step:
+1. Asks: the UI history message should not cut off even behind the scene the summarize happens.
+2. Ambiguous: how to know when the summarization happens?
+3. First step: try to reproduce the issue. define the solution/UX for the case.
 
 #### #3 Remove Thread ID input, add share/save
-1. Asks:
-2. Ambiguous:
-3. First step:
+1. Asks: replace input thread id with a button to share/save the conversation.
+2. Ambiguous: N/A
+3. First step: checkout where the input of thread id stand in the app and how to generate a share url link.
 
 ### Prompt to Claude
 ````
+I'm new AI developer who working on e-commerce chat agent build with LangChain/LangGraph. I need to analysis ticket of issues/improvement.
 
+**Analysis format:**
+Three sentences, one for each:
+1. What the ticket asks for.
+2. What is ambiguous or missing.
+3. The first step you would take.
+
+**Rules:**
+- Write in concise, max 20 words each.
+- No fixes.
+- Only use what ticket have. If not, say suspected.
+
+<issue-content>
 ````
 
 ### Claude's analyses
-(one block per issue)
+
+#### #1
+`````
+1. The ticket asks that the chatbot answer reliably in long conversations, and that the summary feature can be re-enabled without errors.
+2. Unclear which summary logic trims messages, what triggers the failure, and how often; the OpenAI 400 error suggests orphaned ToolMessages (suspected).
+3. First, reproduce the error with a long conversation and inspect the message list sent to OpenAI just before the 400.
+`````
+
+#### #2
+`````
+1. The ticket asks that long chats keep all messages visible in the UI and that the bot remembers earlier conversation details.
+2. Missing: what "long" means, which messages get cut, whether cutoff is UI or bot, reproduction steps, and whether memory should persist across sessions (suspected: token-limit truncation).
+3. Reproduce the issue with a long conversation, then check whether the UI, the stored history, or the model input drops messages.
+`````
+
+#### #6
+`````
+The ticket asks that Yes/No approval clicks continue the conversation with visible feedback, instead of freezing the chat.
+
+1. Missing: which UI framework and streaming method is used, whether the graph resumes after approval, and failure behavior.
+2. First, reproduce the bug in the browser, watching network responses and console logs after clicking Yes or No.
+`````
+
+#### #8
+`````
+1. The ticket asks to notify users clearly when older messages are summarized, optionally letting them view the summary.
+2. Unclear: summarization trigger (5-6 messages or ~1000 tokens?), summary-viewing scope, whether Issue #2 overlaps, and which UI shows notices.
+3. Reproduce the issue, then inspect the LangGraph summarization and trimming node to confirm where messages get removed.
+`````
+
+#### #3
+`````
+1. The ticket asks to remove the Thread ID input, default to session-based chats, and add a shareable-link feature to reopen conversations.
+2. Missing: link storage, expiry, privacy or access control, what "session-based" means technically, and whether shared links are view-only or editable.
+3. I would first trace how Thread ID currently flows from frontend input through the LangGraph checkpointer, to confirm what it controls.
+`````
 
 ### Comparison
 | Issue | A gap Claude found that I missed | A fact Claude invented | Which analysis was better |
