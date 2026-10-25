@@ -89,15 +89,43 @@ The ticket asks that Yes/No approval clicks continue the conversation with visib
 ### Comparison
 | Issue | A gap Claude found that I missed | A fact Claude invented | Which analysis was better |
 |---|---|---|---|
-| #1 | | | |
-| #2 | | | |
-| #6 | | | |
-| #8 | | | |
-| #3 | | | |
+| #1 | Trigger and frequency are unknown. The ask includes re-enabling the summary feature. | None in the final run. It marked the orphaned ToolMessages "(suspected)", but the dump already shows them, so it under-read the evidence. | Claude, on structure and first step. I asked whether the user can keep chatting after the error, which Claude missed. |
+| #2 | It split "UI drops messages" from "the bot forgets", and checks the UI, stored history and model input. It also asked about memory across sessions. | "(suspected: token-limit truncation)". Nothing in #2 points at tokens. | Claude, on structure. Mine is closer to the root cause (summary not reaching the prompt), but from Day 1 knowledge rather than the ticket. |
+| #6 | Whether the graph resumes after approval, failure behaviour, and the UI framework and streaming method. | None. It ignored the dev note ("backend working") instead of flagging it as a claim to verify. Format slipped (numbering). | Claude, on gaps and first step. My Yes/No split matches the ticket's Expected better. |
+| #8 | The trigger conflict: 5-6 messages or about 1000 tokens. Overlap with #2. Which UI shows the notice. | "LangGraph summarization and trimming node": the ticket names neither. "Reproduce" doesn't fit a UX ticket. | Claude, on the ask and the gaps. My first step (define the UX) fits better. Neither questioned "the bot retains context through summarization". |
+| #3 | Link storage, expiry, access control, view-only or editable links, and what "session-based" means. I wrote N/A. | "LangGraph checkpointer": not in the ticket. | Claude, clearly. "N/A" on a feature ticket was my biggest miss. |
 
 ### Gaps ranked by how much they block the first step
+Most blocking first, for each issue.
+
+- **#1**
+  1. No user/thread ID, so there is no real conversation to replay.
+  2. Unknown trigger (message count or tokens), so I can't force the cut on purpose.
+  3. Unknown summary/trim code location (findable in the repo, so it only slows me down).
+- **#2**
+  1. Which layer drops the messages: UI, stored history or model input. This decides where to look first.
+  2. No example of what the bot forgot, so there's nothing to test "remembers" against.
+  3. "Long" is undefined, and so is whether memory should last across sessions.
+- **#6**
+  1. Does the graph actually resume after approval? The dev note claims the backend works, and that is unverified.
+  2. The UI framework and streaming method, which decide where the response is dropped.
+  3. Expected behaviour on failure (only matters once the happy path works).
+- **#8**
+  1. Is "the bot retains context through summarization" true? If not, the proposed notice makes a false promise.
+  2. The trigger: 5-6 messages or about 1000 tokens. The UI needs a reliable signal for when to show the notice.
+  3. How much of the summary users can view, and where the notice appears (UX decisions, not blockers).
+- **#3**
+  1. Access control and privacy for shared links (who can open them, view-only or editable). It blocks the design.
+  2. Link storage and expiry.
+  3. What "session-based" means technically, and what happens to users with saved Thread IDs.
 
 ### Surprises
+- Claude never asked which user or thread to trace. I asked on every ticket.
+- Each rule fixed one problem and caused another. "No fixes" worked. "Say suspected" let guesses in with a label (tokens on #2) and made Claude under-read evidence the ticket did show (the orphans on #1). The 20-word cap squeezed out specifics.
+- My prompt's framing, "built with LangChain/LangGraph", leaked into the analyses as invented details: "node" on #8 and "checkpointer" on #3.
+- Neither of us questioned the dev notes. #6 says "backend working", and #8 says "retains context", which conflicts with my Day 1 finding. Dev notes read as facts, and they're claims.
+- On #3 I wrote "Ambiguous: N/A". Feature tickets hide the most gaps, which is exactly what the teacher's check warned about.
+- Next prompt to try: allow 30-35 words, and say "label what the trace/dump shows as fact and the cause as suspected; say 'not stated' otherwise".
 
 ---
 
