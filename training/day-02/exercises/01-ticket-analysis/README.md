@@ -10,15 +10,17 @@ Three sentences, one for each:
 3. The first step you would take.
 
 ## The five tickets
-The text below is how a reporter might write each ticket. Ticket 1 is a real file in the repo. Tickets 2 to 4 come from your Day 1 findings. Ticket 5 is deliberately vague.
+The tickets are real issues from the practice repo, saved in [resources/practice/issues/](../../../../resources/practice/issues/). Two are bugs, one is a UI bug with a dev note, one explains another ticket, and one is a feature request.
 
-| # | Ticket | Source |
-|---|---|---|
-| 1 | "Summary conversation sometime got error. Temp fix: disable feature." plus the traceback | `sample-project/assets/issue.md` |
-| 2 | "Old messages disappear after a while and the bot forgets what we said earlier." | Day 1 Task 2: the saved summary never reaches the prompt (`prompt.py:26-33`) |
-| 3 | "I set the history limit to 5 but I only ever see 4 messages kept." | Day 1 Task 2: the throwaway summary message counts as one of the N (`graph.py:117,121-124`) |
-| 4 | "Long chats sometimes start with a tool result and the model errors out." | Day 1 Task 2: `trim_messages` in `Assistant` has no `start_on` (`graph.py:44-50`) |
-| 5 | "Customers keep asking where their order is. Can the agent tell them?" | `training/ideas.md`, the order-status idea |
+| # | Issue | Title | Source |
+|---|---|---|---|
+| 1 | #1 | Chatbot shows error in long conversations (plus trace and state dump) | [issue-1.md](../../../../resources/practice/issues/issue-1.md) |
+| 2 | #2 | The old message cut off and the bot don't remember the previous conversation | [issue-2.md](../../../../resources/practice/issues/issue-2.md) |
+| 3 | #6 | Conversation freezes after clicking Yes/No approval buttons | [issue-6.md](../../../../resources/practice/issues/issue-6.md) |
+| 4 | #8 | Chat messages disappear without warning or explanation | [issue-8.md](../../../../resources/practice/issues/issue-8.md) |
+| 5 | #3 | Remove Thread ID input and add share/save conversation feature | [issue-3.md](../../../../resources/practice/issues/issue-3.md) |
+
+The first version of this task used five made-up tickets. That work is kept in the v1 section of the log.
 
 ## How to run it
 1. Write your own three-sentence analysis for all five. Do it before you ask Claude.
@@ -35,11 +37,11 @@ The text below is how a reporter might write each ticket. Ticket 1 is a real fil
 <details><summary>Teacher's check (open after you finish)</summary>
 
 What a good analysis notices:
-- Ticket 1: "sometime" gives no trigger, and it never says how long the chat was. The first step is to read the state dump, not to guess the cause.
-- Ticket 2: "forgets" can mean three different things. The first step is to check whether the summary is ever put into the prompt. It isn't, so this ticket describes a real gap.
-- Ticket 3: it asks for a limit of 5 and sees 4. The ticket doesn't say how it counted. The first step is to count the messages in the state.
-- Ticket 4: this one is a symptom of ticket 1, and it may have a different cause. Don't assume they are the same bug.
-- Ticket 5: it asks for a feature, but it doesn't say which orders, which data source, or whether the agent may change anything. Expect the most questions here.
+- #1: "sometimes" and "long" give no trigger or length. The first step is to read the state dump: the first two messages are `ToolMessage`s whose `AIMessage` is gone. Don't guess the cause before that.
+- #2: it asks for two different things, a UI that keeps every message and a bot that remembers. Treat them separately. "Remember" can mean three things, so check whether the summary is ever put into the prompt. On Day 1 you found it isn't (`prompt.py:26-33`).
+- #6: the dev note says the backend works and the UI ignores the response. That is a claim to check, not a fact. The first step is to watch the network calls when you click Yes or No.
+- #8: the dev note says the bot "still remembers everything" through the summary. That conflicts with your Day 1 finding for #2. "5-6 messages" and "about 1000 tokens" are two different triggers, and both need checking against config.
+- #3: a feature request that bundles three changes: remove the input, make sessions page-scoped, and add share links. It doesn't say who can open a shared link, how long it lasts, or what happens to existing thread IDs. Expect the most questions here.
 </details>
 
 ## Your log

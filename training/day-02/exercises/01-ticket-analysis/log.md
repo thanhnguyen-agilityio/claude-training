@@ -1,36 +1,92 @@
 # Task 1: Log
 
-## My analyses (before asking Claude)
+## v2: practice issues (#1, #2, #6, #8, #3)
+Tickets from [resources/practice/issues/](../../../../resources/practice/issues/). Reuse the best prompt from v1.
 
-### Ticket 1
+### My analyses (before asking Claude)
+
+#### #1 Chatbot shows error in long conversations
+1. Asks:
+2. Ambiguous:
+3. First step:
+
+#### #2 Old message cut off, bot doesn't remember
+1. Asks:
+2. Ambiguous:
+3. First step:
+
+#### #6 Conversation freezes after Yes/No approval
+1. Asks:
+2. Ambiguous:
+3. First step:
+
+#### #8 Chat messages disappear without warning
+1. Asks:
+2. Ambiguous:
+3. First step:
+
+#### #3 Remove Thread ID input, add share/save
+1. Asks:
+2. Ambiguous:
+3. First step:
+
+### Prompt to Claude
+````
+
+````
+
+### Claude's analyses
+(one block per issue)
+
+### Comparison
+| Issue | A gap Claude found that I missed | A fact Claude invented | Which analysis was better |
+|---|---|---|---|
+| #1 | | | |
+| #2 | | | |
+| #6 | | | |
+| #8 | | | |
+| #3 | | | |
+
+### Gaps ranked by how much they block the first step
+
+### Surprises
+
+---
+
+## v1: first ticket set (retired 2026-10-25)
+The first run used five made-up tickets. They were replaced by the practice repo issues. Kept here for the prompt experiment on ticket 1.
+
+### My analyses (before asking Claude)
+
+#### Ticket 1
 1. Asks: fix summary conversation feature not work
 2. Ambiguous: sometimes mean when? specific cases? trace back said 2 tools call and message cut off. If it not error, does the summary feature work?
 3. First step: understand the summary conversation feature, then reproduce the issue.
 
-### Ticket 2
+#### Ticket 2
 1. Asks: why the old message disappear. the issue of bot forget the conversation.
 2. Ambiguous: old messages mean how many messages lost? and the bot forget is it halluciation or the summary never come to it. Is it happen on all conversation or just conversation long enough?
 3. First step: check all context send to bot: system prompt, messages when do the summary on long conversation.
 
-### Ticket 3
+#### Ticket 3
 1. Asks: history limit config not work. the message always missing 1
 2. Ambiguous: where config, do you mean the const variable of app config? 4 message kept include summary message or not?
 3. First step: checkout the message list send to bot, on conversation short/long with summarization.
 
-### Ticket 4
+#### Ticket 4
 1. Asks: fix error on long chat show up related tool.
 2. Ambiguous: what is the error? which tool? long chat mean how many messages? is it happen on all conversation or just conversation long enough?
 3. First step: receive the error, try reproduce it with same conversation, check the tool call and message list.
 
-### Ticket 5
+#### Ticket 5
 1. Asks: ask about the order status feature.
 2. Ambiguous: which message customer send to bot? did they have any order?
 3. First step: ask the customer to provide the order number and check the order status feature with that order number.
 
-### Teacher's feedback on my analyses
+#### Teacher's feedback on my analyses
 (filled in after the review)
 
-## Prompt to Claude
+### Prompt to Claude
 I sent one ticket per prompt. The template is below. For ticket 1, the ticket text and the contents of `issue.md` (traceback, state dump and notes) went in place of the last line. I gave no format beyond the three questions, no "three sentences" and no "do not guess" rule.
 ````
 Do analysis this ticket, answer 3 question:
@@ -44,9 +100,9 @@ Rules: short/concise.
 <ticket title/source>
 ````
 
-## Claude's analyses
+### Claude's analyses
 
-### Ticket 1
+#### Ticket 1
 `````
 **1. What the ticket asks for**
 Fix the intermittent 400 error in the "summary conversation" feature, where OpenAI rejects the request. Until then, the temp fix is to disable the feature.
@@ -61,7 +117,7 @@ Fix the intermittent 400 error in the "summary conversation" feature, where Open
 Find the summarization/trim code in `server/agent/graph.py` (or wherever history is cut) and reproduce it locally with a short script. Feed it a history that contains an AIMessage with parallel `tool_calls` and its ToolMessages, lower the threshold so the cut lands inside that group, and confirm the same 400. Once reproduced, fix it by making the cut land only at safe boundaries: never start the kept history with a `ToolMessage`, and keep each AIMessage with its ToolMessages together. Either drop leading orphan ToolMessages or move the cut back to the preceding HumanMessage. In LangChain, `trim_messages(start_on="human")` does this.
 `````
 
-### Ticket 1 again, with three rules added
+#### Ticket 1 again, with three rules added
 The one change: `Rules: three sentences per answer; use only what the ticket says, and write "not stated" for anything it doesn't say; no fixes.`
 `````
 **1. What the ticket asks for.**
@@ -74,7 +130,7 @@ Not stated: what "summary conversation" does or when it triggers, what "sometime
 I would reproduce the failure in a conversation where the agent makes parallel tool calls, as in the "Compare Gilded Prowl Skirt with Khaki Mini Skirt" request. At the point of the error I would inspect `state["messages"]` and check whether the summary step removed or trimmed the AIMessage carrying the two `tool_calls`. The ticket does not state the summary logic or where it lives, so I would first locate that code before changing anything.
 `````
 
-### Ticket 1: first run against the run with rules
+#### Ticket 1: first run against the run with rules
 
 | | First run (no rules) | With the three rules |
 |---|---|---|
@@ -94,7 +150,7 @@ What they didn't fix, and what they added:
 
 Tickets 2 to 5: add your prompt and Claude's response here, in the same format.
 
-## Comparison
+### Comparison
 | Ticket | A gap Claude found that I missed | A fact Claude invented | Which analysis was better |
 |---|---|---|---|
 | 1 | | | |
@@ -103,9 +159,9 @@ Tickets 2 to 5: add your prompt and Claude's response here, in the same format.
 | 4 | | | |
 | 5 | | | |
 
-## Best prompt
+### Best prompt
 ```
 
 ```
 
-## Surprises
+### Surprises

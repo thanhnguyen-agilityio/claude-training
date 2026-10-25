@@ -1,12 +1,12 @@
 # Task 4: Reproduce and write a failing test
 
 ## Scenario
-This is the main exercise of the day. You take the seeded bug from `sample-project/assets/issue.md`, reproduce it in the running app, write exact repro steps, and turn it into a failing test. You do not fix it today.
+This is the main exercise of the day. You take the seeded bug from issue #1 ([resources/practice/issues/issue-1.md](../../../../resources/practice/issues/issue-1.md)), reproduce it in the running app, write exact repro steps, and turn it into a failing test. You do not fix it today.
 
 You already have a strong hypothesis from Day 1 Task 2: `handle_keep_recent_messages` (`sample-project/server/utils/utils.py:156-185`) can leave a `ToolMessage` without the `AIMessage` that called it. Treat it as a hypothesis until you have run it.
 
 ## Part A: hypotheses (20 min)
-1. Paste the stack trace from `issue.md` and the code for `summarize_conversation`, `handle_keep_recent_messages` and `Assistant` into a chat.
+1. Paste the error trace and state dump from `issue-1.md` and the code for `summarize_conversation`, `handle_keep_recent_messages` and `Assistant` into a chat.
 2. Ask Claude for a ranked list of hypotheses. For each one, ask what you would run to confirm or kill it.
 3. Write the list in your log. Mark each one confirmed, killed or untested after you run it.
 
