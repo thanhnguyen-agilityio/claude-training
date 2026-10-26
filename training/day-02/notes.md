@@ -23,13 +23,15 @@
 - Task 1 and Task 2 point at the same bug: `handle_keep_recent_messages` (`utils.py:156-185`) collects tool-call ids from the recent `AIMessage`s instead of the recent `ToolMessage`s, so a cut can leave an orphan `ToolMessage`. Second suspect: `trim_messages` in `Assistant` has no `start_on`. **Day 2 job:** reproduce with real LangChain and write the failing test.
 
 ## Learned
--
+- A repro test must put the cut exactly between tool call and result (N=2, not 3).
+- Collecting ids only from kept AIMessages misses kept ToolMessages: that is the bug.
 
 ## Prompts that worked
--
+- Give Claude the function + a hypothesis, ask for the smallest failing test, then run it myself.
 
 ## Gotchas
--
+- Practice repo has no pre-commit config: commit needs `PRE_COMMIT_ALLOW_NO_CONFIG=1`.
+- pytest not installed: `uv run --with pytest`.
 
 ## Kit candidates
 -

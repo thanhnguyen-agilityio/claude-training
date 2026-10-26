@@ -42,8 +42,8 @@ Legend: ⬜ todo · 🟨 doing · ✅ done · ❌ checkpoint failed (redo)
 Exercises: [training/day-02/exercises/](training/day-02/exercises/README.md)
 
 - [x] Ticket analysis (task 1 done; enough, no more tickets)
-- [ ] Session 1: run sample app → reproduce bug (steps / expected / actual) → failing test on own branch
-- [ ] Session 2: git `pull --rebase`, `log`, `diff`, conflict #1 · 5-line debrief in `training/day-02/notes.md`
+- [x] Session 1: run sample app → reproduce bug → failing test (`claude-training-practice`, branch `test/keep-recent-orphan-tool-message`)
+- [x] Git block skipped (pull --rebase/log/diff done; conflict #1 practice skipped, CP1 on Day 3 has a real conflict) · [x] debrief in `training/day-02/notes.md`
 - [ ] Course: Claude 101 lessons 8–13 + quiz + badge (20-min chunks on the side)
 - Skipped (optional): clarifying-questions task, detailed log templates. Logs = short paragraph + command + output.
 
