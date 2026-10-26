@@ -8,8 +8,8 @@ Detail per day: [PLAN.md](PLAN.md). Notes: [training/](training/).
 | Day | Theme | Status |
 |---|---|---|
 | 1 | Mental model + basics | ✅ |
-| 2 | Ticket analysis, repro | 🟨 |
-| 3 | Fix/review/merge **CP1** | ⬜ |
+| 2 | Ticket analysis, repro | ✅ (course 8–13 pending) |
+| 3 | Fix/review/merge **CP1** | ✅ |
 | 4 | Install, daily loop | ⬜ |
 | 5 | Memory & context | ⬜ |
 | 6 | Flagship + parallel **CP2** | ⬜ |
@@ -51,9 +51,9 @@ Exercises: [training/day-02/exercises/](training/day-02/exercises/README.md)
 - [x] Fix on branch, small commits, test included (repro by unit test only; not triggered in the running app)
 - [x] PR description (what/why/how tested) — PR merged
 - [x] Review a PR using checklist, ≥3 actionable comments (`training/day-03/review-pr11.md`, 4 comments; follow-up fix PR merged)
-- [ ] Resolve conflict, merge, delete branch
+- [x] Merge done · conflict skipped (already experienced)
 - [x] `review-checklist` skill in `ai-kit/` (already existed; used it for the review)
-- [ ] **CP1 pass**: repro ✔ fix+test ✔ PR ✔ review ✔ merge+conflict ✔
+- [x] **CP1 pass**: repro ✔ fix+test ✔ PR ✔ review ✔ merge ✔ (conflict waived)
 
 ## Week 2 — Dev track core
 
