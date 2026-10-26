@@ -8,7 +8,7 @@ Detail per day: [PLAN.md](PLAN.md). Notes: [training/](training/).
 | Day | Theme | Status |
 |---|---|---|
 | 1 | Mental model + basics | ✅ |
-| 2 | Ticket analysis, repro | ✅ (course 8–13 pending) |
+| 2 | Ticket analysis, repro | ✅ |
 | 3 | Fix/review/merge **CP1** | ✅ |
 | 4 | Install, daily loop | ⬜ |
 | 5 | Memory & context | ⬜ |
@@ -44,7 +44,7 @@ Exercises: [training/day-02/exercises/](training/day-02/exercises/README.md)
 - [x] Ticket analysis (task 1 done; enough, no more tickets)
 - [x] Session 1: run sample app → reproduce bug → failing test (`claude-training-practice`, branch `test/keep-recent-orphan-tool-message`)
 - [x] Git block skipped (pull --rebase/log/diff done; conflict #1 practice skipped, CP1 on Day 3 has a real conflict) · [x] debrief in `training/day-02/notes.md`
-- [ ] Course: Claude 101 lessons 8–13 + quiz + badge (20-min chunks on the side)
+- [x] Course: Claude 101 finished
 - Skipped (optional): clarifying-questions task, detailed log templates. Logs = short paragraph + command + output.
 
 ### Day 3 — CP1
@@ -58,8 +58,8 @@ Exercises: [training/day-02/exercises/](training/day-02/exercises/README.md)
 ## Week 2 — Dev track core
 
 ### Day 4
-- [ ] Courses: Claude Code 101, Claude Code in action
-- [ ] Docs: quickstart, desktop-quickstart, common-workflows, best-practices
+- [x] Course Claude Code 101 · [ ] Claude Code in action (optional, skip unless stuck)
+- [ ] Docs (optional, skim only): quickstart, common-workflows, best-practices
 - [ ] Code tab on repo; sessions/resume
 - [ ] Permission modes tour on throwaway change
 - [ ] Ex: explain feature X, verify 2 claims
