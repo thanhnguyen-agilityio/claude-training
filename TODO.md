@@ -48,8 +48,8 @@ Exercises: [training/day-02/exercises/](training/day-02/exercises/README.md)
 - Skipped (optional): clarifying-questions task, detailed log templates. Logs = short paragraph + command + output.
 
 ### Day 3 — CP1
-- [ ] Fix on branch, small commits, test included
-- [ ] PR description (what/why/how tested) — Claude draft, hand edit
+- [x] Fix on branch, small commits, test included (repro by unit test only; not triggered in the running app)
+- [x] PR description (what/why/how tested) — PR merged
 - [ ] Review a PR using checklist, ≥3 actionable comments
 - [ ] Resolve conflict, merge, delete branch
 - [ ] Build `review-checklist` skill → `ai-kit/`
