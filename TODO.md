@@ -50,9 +50,9 @@ Exercises: [training/day-02/exercises/](training/day-02/exercises/README.md)
 ### Day 3 — CP1
 - [x] Fix on branch, small commits, test included (repro by unit test only; not triggered in the running app)
 - [x] PR description (what/why/how tested) — PR merged
-- [ ] Review a PR using checklist, ≥3 actionable comments
+- [x] Review a PR using checklist, ≥3 actionable comments (`training/day-03/review-pr11.md`, 4 comments)
 - [ ] Resolve conflict, merge, delete branch
-- [ ] Build `review-checklist` skill → `ai-kit/`
+- [x] `review-checklist` skill in `ai-kit/` (already existed; used it for the review)
 - [ ] **CP1 pass**: repro ✔ fix+test ✔ PR ✔ review ✔ merge+conflict ✔
 
 ## Week 2 — Dev track core
