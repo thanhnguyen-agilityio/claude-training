@@ -9,4 +9,4 @@ Read the log and diff of this branch against the default branch. Write a PR desc
 - **Screenshots** (if UI; say if needed)
 - **Risks / follow-ups**
 
-Keep it short. Do not open the PR.
+Describe the branch's final state (title and body), not its first commit. Test commands and results must be ones you ran, not remembered. Keep it short. Do not open the PR.
