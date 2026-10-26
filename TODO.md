@@ -1,27 +1,27 @@
 # TODO / Progress
 
-Start 2026-10-12. Dates = flex targets; compress if ahead. Tell Claude "done day N" / "update todo" to tick items.
+Started 2026-10-12. No dates: go by day number, 80/20 only (checkpoints matter, extras optional). Tell Claude "done day N" / "update todo" to tick items.
 Detail per day: [PLAN.md](PLAN.md). Notes: [training/](training/).
 
 ## Progress
 
-| Day | Theme | Target | Status |
-|---|---|---|---|
-| 1 | Mental model + basics | 10-12 | ✅ |
-| 2 | Ticket analysis, repro | 10-13 | 🟨 |
-| 3 | Fix/review/merge **CP1** | 10-14 | ⬜ |
-| 4 | Install, daily loop | 10-15 | ⬜ |
-| 5 | Memory & context | 10-16 | ⬜ |
-| 6 | Flagship + parallel **CP2** | 10-19 | ⬜ |
-| 7 | Skills/commands/plugins | 10-20 | ⬜ |
-| 8 | MCP & connectors | 10-21 | ⬜ |
-| 9 | Hooks & automation | 10-22 | ⬜ |
-| 10 | Review & quality | 10-23 | ⬜ |
-| 11 | Role day **CP3** | 10-26 | ⬜ |
-| 12 | Capstone: kickoff | 10-27 | ⬜ |
-| 13 | Capstone: build | 10-28 | ⬜ |
-| 14 | Capstone: harden | 10-29 | ⬜ |
-| 15 | Capstone: ship **CP4** | 10-30 | ⬜ |
+| Day | Theme | Status |
+|---|---|---|
+| 1 | Mental model + basics | ✅ |
+| 2 | Ticket analysis, repro | 🟨 |
+| 3 | Fix/review/merge **CP1** | ⬜ |
+| 4 | Install, daily loop | ⬜ |
+| 5 | Memory & context | ⬜ |
+| 6 | Flagship + parallel **CP2** | ⬜ |
+| 7 | Skills/commands/plugins | ⬜ |
+| 8 | MCP & connectors | ⬜ |
+| 9 | Hooks & automation | ⬜ |
+| 10 | Review & quality | ⬜ |
+| 11 | Role day **CP3** | ⬜ |
+| 12 | Capstone: kickoff | ⬜ |
+| 13 | Capstone: build | ⬜ |
+| 14 | Capstone: harden | ⬜ |
+| 15 | Capstone: ship **CP4** | ⬜ |
 
 Legend: ⬜ todo · 🟨 doing · ✅ done · ❌ checkpoint failed (redo)
 
@@ -41,13 +41,11 @@ Legend: ⬜ todo · 🟨 doing · ✅ done · ❌ checkpoint failed (redo)
 ### Day 2
 Exercises: [training/day-02/exercises/](training/day-02/exercises/README.md)
 
-- [ ] 5 tickets → 3-sentence analysis (asks/ambiguous/first step); use `sample-project/assets/issue.md` as one
-- [ ] Draft clarifying questions with Claude
-- [ ] Run sample app from scratch (`make` targets, `.env.example` → `.env`)
-- [ ] Reproduce seeded bug, write repro steps (exact steps / expected / actual)
-- [ ] Failing test for bug
-- [ ] Git: `pull --rebase`, `log`, `diff`, resolve conflict #1
-- [ ] Course: finish Claude 101 — lessons 7–13 (Skills ✅ done, notes in `training/day-02/notes.md`; Connecting tools, Enterprise search, Research, Use-cases by role, Other ways, What's next) + quiz + badge; 7–8 = start of `email-digest` build
+- [x] Ticket analysis (task 1 done; enough, no more tickets)
+- [ ] Session 1: run sample app → reproduce bug (steps / expected / actual) → failing test on own branch
+- [ ] Session 2: git `pull --rebase`, `log`, `diff`, conflict #1 · 5-line debrief in `training/day-02/notes.md`
+- [ ] Course: Claude 101 lessons 8–13 + quiz + badge (20-min chunks on the side)
+- Skipped (optional): clarifying-questions task, detailed log templates. Logs = short paragraph + command + output.
 
 ### Day 3 — CP1
 - [ ] Fix on branch, small commits, test included
