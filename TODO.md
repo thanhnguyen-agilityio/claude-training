@@ -58,6 +58,7 @@ Exercises: [training/day-02/exercises/](training/day-02/exercises/README.md)
 ## Week 2 — Dev track core
 
 ### Day 4
+_Tips: [colleague-tips](training/colleague-tips.md) — Day 4–5_
 - [x] Course Claude Code 101 · [ ] Claude Code in action (optional, skip unless stuck)
 - [ ] Docs (optional, skim only): quickstart, common-workflows, best-practices
 - [ ] Code tab on repo; sessions/resume
@@ -85,6 +86,7 @@ Exercises: [training/day-02/exercises/](training/day-02/exercises/README.md)
 - [ ] Install + evaluate 1 plugin
 
 ### Day 8
+_Tips: [colleague-tips](training/colleague-tips.md) — Day 8_
 - [ ] Course: Intro to MCP
 - [ ] GitHub connector + Playwright MCP
 - [ ] 1 MCP tool e2e (query/comment on PR)
@@ -92,12 +94,14 @@ Exercises: [training/day-02/exercises/](training/day-02/exercises/README.md)
 ## Week 3 — Extend, automate, review
 
 ### Day 9
+_Tips: [colleague-tips](training/colleague-tips.md) — Day 9_
 - [ ] 1 hook shipped by PR (format-on-edit / block-forbidden / notify)
 - [ ] `/goal` on bounded task
 - [ ] Desktop scheduled task (morning briefing)
 - [ ] Routines overview; GitHub Actions `@claude` review on a PR
 
 ### Day 10
+_Tips: [colleague-tips](training/colleague-tips.md) — Day 10_
 - [ ] `/code-review` on real branch
 - [ ] Seed buggy branch → `/code-review ultra`; compare
 - [ ] Security plugins (security-guidance, Claude Security)
