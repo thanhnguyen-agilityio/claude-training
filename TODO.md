@@ -72,6 +72,7 @@ _Tips: [colleague-tips](training/colleague-tips.md) — Day 4–5_
 - [ ] Ex: fresh vs primed session comparison
 
 ### Day 6 — CP2
+_Tips: [colleague-tips](training/colleague-tips.md) — Day 6_
 - [ ] Artifact: PR walkthrough
 - [ ] `/loop 15m` on PR; `/loop 5m` deploy check; write `loop.md`
 - [ ] Remote Control `/rc` + phone steer
