@@ -49,7 +49,7 @@ Exercises: [training/day-02/exercises/](training/day-02/exercises/README.md)
 
 ### Day 3 — CP1
 - [x] Fix on branch, small commits, test included (repro by unit test only; not triggered in the running app)
-- [x] PR description (what/why/how tested) — PR merged
+- [x] PR description (what/why/how tested): PR #11 first had a one-line stub, rewritten after a check; #13 was fine
 - [x] Review a PR using checklist, ≥3 actionable comments (`training/day-03/review-pr11.md`, 4 comments; follow-up fix PR merged)
 - [x] Merge done · conflict skipped (already experienced)
 - [x] `review-checklist` skill in `ai-kit/` (already existed; used it for the review)

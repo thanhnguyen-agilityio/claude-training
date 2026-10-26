@@ -24,6 +24,7 @@ Add to it as the plan goes on. Sources: `day-01/notes.md`, `day-02/notes.md`, `c
 ## Trust but verify
 - Claude states checkable details confidently and gets some wrong. Check one claim against the source line.
 - A hypothesis counts only after you ran something that confirms or kills it.
+- Read the PR body before ticking "PR description": a merged PR can still have a stub body. Self-contained = what / why / how tested / scope.
 - A passing test doesn't prove the fix is right. A repro test must cut exactly at the bug boundary.
 - Soft wording sticks ("roughly 2–3 days"): name the exact word to remove.
 
