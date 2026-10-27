@@ -11,7 +11,7 @@ Detail per day: [PLAN.md](PLAN.md). Notes: [training/](training/).
 | 2 | Ticket analysis, repro | ✅ |
 | 3 | Fix/review/merge **CP1** | ✅ |
 | 4 | Install, daily loop | ✅ |
-| 5 | Memory & context | ⬜ |
+| 5 | Memory & context | 🟨 |
 | 6 | Flagship + parallel **CP2** | ⬜ |
 | 7 | Skills/commands/plugins | ⬜ |
 | 8 | MCP & connectors | ⬜ |
