@@ -10,7 +10,7 @@ Detail per day: [PLAN.md](PLAN.md). Notes: [training/](training/).
 | 1 | Mental model + basics | ✅ |
 | 2 | Ticket analysis, repro | ✅ |
 | 3 | Fix/review/merge **CP1** | ✅ |
-| 4 | Install, daily loop | ⬜ |
+| 4 | Install, daily loop | ✅ |
 | 5 | Memory & context | ⬜ |
 | 6 | Flagship + parallel **CP2** | ⬜ |
 | 7 | Skills/commands/plugins | ⬜ |
@@ -61,10 +61,10 @@ Exercises: [training/day-02/exercises/](training/day-02/exercises/README.md)
 _Tips: [colleague-tips](training/colleague-tips.md) — Day 4–5_
 - [x] Course Claude Code 101 · [ ] Claude Code in action (optional, skip unless stuck)
 - [ ] Docs (optional, skim only): quickstart, common-workflows, best-practices
-- [ ] Code tab on repo; sessions/resume
-- [ ] Permission modes tour on throwaway change
-- [ ] Ex: explain feature X, verify 2 claims
-- [ ] Ex: ticket → plan → implement → diff comment → tests → PR (×2, 2nd unaided)
+- [x] Code tab on repo; sessions/resume
+- [x] Permission modes tour on throwaway change
+- [x] Ex: explain feature X, verify 2 claims
+- [x] Ex: ticket → plan → implement → diff comment → tests → PR (×2, 2nd unaided)
   - [x] #1: issue #2, PR #16 merged (failing test first, `/pr` description, manual check with screenshot)
   - [x] #2: unaided, issue #3, PR #19
 
