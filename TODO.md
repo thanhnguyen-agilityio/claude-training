@@ -66,7 +66,7 @@ _Tips: [colleague-tips](training/colleague-tips.md) — Day 4–5_
 - [ ] Ex: explain feature X, verify 2 claims
 - [ ] Ex: ticket → plan → implement → diff comment → tests → PR (×2, 2nd unaided)
   - [x] #1: issue #2, PR #16 merged (failing test first, `/pr` description, manual check with screenshot)
-  - [ ] #2: unaided, another issue
+  - [x] #2: unaided, issue #3, PR #19
 
 ### Day 5
 - [ ] Write `CLAUDE.md` for sample-project (<1 screen) → refine `ai-kit/CLAUDE.md.template`
