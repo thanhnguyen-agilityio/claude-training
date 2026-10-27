@@ -15,6 +15,7 @@ Installs: `CLAUDE.md` (from template — fill `<…>`), `.claude/settings.json`,
 | `.claude/settings.json` | Safe permissions (deny secrets, force-push) |
 | `commands/analyze-ticket` | `/analyze-ticket <text>` → 3-sentence analysis + gaps + questions |
 | `commands/pr` | `/pr` → PR description from current branch diff |
+| `commands/do-issue` | `/do-issue <n>` → plan (gate) → build → test → review → PR for a GitHub issue |
 | `skills/review-checklist` | Review order: correctness → tests → readability → security → scope |
 | `skills/repro-bug` | Reproduce-ready bug report + failing test first |
 | `skills/optimize-skill` | Shrink a skill's tokens without changing its output: baseline runs, cut in order, re-run, report before/after |

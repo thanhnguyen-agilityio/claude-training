@@ -12,6 +12,7 @@
 - `<dir>` — <purpose>
 
 ## Conventions
+- Save cost. Opus advisor. Sonnet/Haiku code. Haiku mechanical tasks. Remember!
 - One ticket per branch; small commits; PR always, never push to main.
 - Every change ships with a test. Keep diffs minimal.
 - PR body: run `/pr` first and use its output. Never open a PR with a one-line body.
