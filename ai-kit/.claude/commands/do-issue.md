@@ -7,11 +7,11 @@ Work GitHub issue #$ARGUMENTS end to end. Stop only at the **GATE** or when a ru
 ## 1. Plan (no code)
 - `gh issue view $ARGUMENTS --comments`, then run `/analyze-ticket` on the issue text.
 - Read the code the issue touches and trace the real flow before planning. Mark each claim Known (read in code) or Assumed.
-- Post the analysis on the issue: `gh issue comment $ARGUMENTS --body-file <tmp file>`. Max ~25 lines, sections:
+- Draft the analysis comment and show it with the plan. Max ~25 lines, sections:
   - **Flow**: mermaid `flowchart LR` of the real path, ≤8 nodes, colored with the classes below. Use an ASCII block only if mermaid can't show it.
   - **Key pieces**: `path:line` · role, one line each.
   - **Findings**: one line each, tagged Known or Assumed.
-  - **Solutions**: 1-3 options, one line each, mark the recommended one.
+  - **Solutions**: 1-3 options, one line each, mark the recommended one (the approved one once posted).
   ```
   classDef entry fill:#ddf4ff,stroke:#0969da,color:#0a3069
   classDef step  fill:#f6f8fa,stroke:#8c959f,color:#24292f
@@ -23,6 +23,7 @@ Work GitHub issue #$ARGUMENTS end to end. Stop only at the **GATE** or when a ru
 - **GATE:** wait for my approval before writing code.
 
 ## 2. Build
+- Post the analysis comment, updated to the approved plan: `gh issue comment $ARGUMENTS --body-file <tmp file>`.
 - `git switch main && git pull --ff-only`, then branch `<fix|feat>/issue-$ARGUMENTS-<short-slug>`.
 - Bug: use the `repro-bug` skill, so the failing test is committed first. Feature: add the test with the change.
 - Small commits, each with passing tests. Message: conventional prefix + one sentence, max 20 words, no body.
