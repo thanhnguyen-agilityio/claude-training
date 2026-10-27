@@ -7,6 +7,17 @@ Work GitHub issue #$ARGUMENTS end to end. Stop only at the **GATE** or when a ru
 ## 1. Plan (no code)
 - `gh issue view $ARGUMENTS --comments`, then run `/analyze-ticket` on the issue text.
 - Read the code the issue touches and trace the real flow before planning. Mark each claim Known (read in code) or Assumed.
+- Post the analysis on the issue: `gh issue comment $ARGUMENTS --body-file <tmp file>`. Max ~25 lines, sections:
+  - **Flow**: mermaid `flowchart LR` of the real path, ≤8 nodes, colored with the classes below. Use an ASCII block only if mermaid can't show it.
+  - **Key pieces**: `path:line` · role, one line each.
+  - **Findings**: one line each, tagged Known or Assumed.
+  - **Solutions**: 1-3 options, one line each, mark the recommended one.
+  ```
+  classDef entry fill:#ddf4ff,stroke:#0969da,color:#0a3069
+  classDef step  fill:#f6f8fa,stroke:#8c959f,color:#24292f
+  classDef bug   fill:#ffebe9,stroke:#cf222e,color:#82071e
+  classDef fix   fill:#dafbe1,stroke:#1a7f37,color:#0a3622
+  ```
 - Use the `grilling` skill to settle open questions with me. Decide routine ones yourself and say so.
 - Output the plan, max 1 screen: smallest change that meets the issue's Expected section, files to change, tests to add, how to verify. List anything beyond that as follow-ups; do not build it.
 - **GATE:** wait for my approval before writing code.
