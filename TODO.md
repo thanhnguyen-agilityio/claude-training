@@ -59,7 +59,7 @@ Exercises: [training/day-02/exercises/](training/day-02/exercises/README.md)
 
 ### Day 4
 _Tips: [colleague-tips](training/colleague-tips.md) — Day 4–5_
-- [x] Course Claude Code 101 · [ ] Claude Code in action (optional, skip unless stuck)
+- [x] Course Claude Code 101 · [~] Claude Code in action (optional; in progress, quiz: see colleague-tips Shared resources)
 - [ ] Docs (optional, skim only): quickstart, common-workflows, best-practices
 - [x] Code tab on repo; sessions/resume
 - [x] Permission modes tour on throwaway change
