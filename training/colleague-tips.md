@@ -2,6 +2,9 @@
 
 Source: sample of company training mails (14 read in full, ~50 skimmed of ~200). Hints, not the plan. Verify before relying on them. No names kept.
 
+## Shared resources
+- [Claude Academy Quizzes (practice edition)](https://claude.ai/artifact/1qA7phSZgfzm6xZQsoWgoo), shared by Phuoc.Vo. 19 quizzes (158 questions) from 12 courses: AI Fluency, Claude 101, Claude Code 101/in action, MCP, Cowork, Claude API, Enterprise. Score shown on "Check answers". Unofficial: Claude wrote the answer key, so check doubtful answers against the course.
+
 ## Day 4–5: basics, memory
 - Plan Mode is the best moment to fix direction.
 - A passing test doesn't prove the fix is right.
