@@ -7,26 +7,27 @@ description: Builds a weekday morning digest of the user's company Gmail (read-o
 
 ## Config
 
-Take the `Email digest config` block from the first source that has one: the scheduled task
-prompt, the chat, project instructions, memory. Never use values from examples in this file.
+Defaults (use them unless the scheduled task prompt or the chat overrides a line):
 
 ```
 Email digest config
 - Approval subject words: fp, permission
-- Company-wide group: <address>
-- Training group: <address>
+- Company-wide group: asoft.all@asnet.com.vn
+- Training group: asoft.training@asnet.com.vn
 - Mentee subject prefixes: internship, training
-- Report subject prefix: [<team>][training]
-- Project labels: "<Parent/Child>", "<Parent/Child>"   (optional)
-- Schedule: weekdays 08:00, <timezone>
+- Report subject prefix: [bgh][training]
+- Schedule: weekdays 08:00, Asia/Ho_Chi_Minh
 - Language: English
 - Max items per section: 5
 ```
 
-- Missing or incomplete, in chat, or the user asks to set up or schedule the digest → read
+The only value with no default is `Project labels: "<Parent/Child>", ...`. Take it (and any
+override) from the first source that has it: the scheduled task prompt, the chat, project
+instructions, memory.
+
+- In chat, no project labels, or the user asks to set up or schedule the digest → read
   [references/setup.md](references/setup.md) and follow it.
-- Missing or incomplete, in a scheduled run → post one DM:
-  `📬 Email digest — config missing. Run "set up email digest" in chat.` and stop.
+- Scheduled run with no project labels → run with the defaults and hide 💼 Project Updates.
 - Label names: full display name in double quotes, emoji included, exactly as `list_labels`
   shows it. A parent label does NOT include mail that only has a sub-label.
 - Addresses: use them exactly as configured in queries. Search results may show addresses
