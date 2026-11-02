@@ -88,8 +88,9 @@ label:"🔥 Projects/🌸 Smoliv" -from:me after:<day>
 ## Step 3 — Build each item
 
 One line per thread: **sender · gist · link**.
-- Sender: display name, or the part before `@`, of the latest in-window message not from the
-  user.
+- Sender: the part before `@` of the `sender` field of the latest in-window message not from
+  the user. The connector returns the address only (no display name), even in
+  `get_thread` METADATA_ONLY — do not make extra calls to look up names.
 - Gist: max ~12 words, in English, saying what it is and what's needed. It MUST keep the
   proper names and dates from the subject (e.g. "[Smoliv] half-day leave request, Nov 2").
 - Link: the thread's `viewUrl`.

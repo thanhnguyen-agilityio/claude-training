@@ -148,3 +148,20 @@ Then do task 8: dry run "up to now", posted as a Slack DM to me.
   message's time.
 - **Next time:** ask for verification evidence (query + count) for every claim, not just a
   verdict.
+
+### 7. Dry-run review and sender format
+
+```text
+Dry run looks good: formatting renders, the dedup works, and it reads in well under 3 minutes.
+
+Before I accept the sender format: does get_thread METADATA_ONLY include the From header
+(e.g. "Name <address>")? If yes, use the display name from it — no extra calls. If no, keep the
+address part. Show me the header for one message as evidence (name only, no body).
+
+I'll also verify completeness myself against a manual Gmail search for the same window.
+Then give me the final SKILL.md.
+```
+
+- **Result:** the connector returns the address only, so the sender stays as the part before
+  `@`. Manual Gmail check matched the digest. Final SKILL.md delivered.
+- **Next time:** keep asking for evidence before accepting "not possible" claims.
