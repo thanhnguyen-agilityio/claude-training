@@ -132,14 +132,14 @@ Never quote report text beyond the ≤12-word lines.
 
 ## Step 3 — Build each item
 
-One line per thread, **what first, then who**: `• [<gist>](<viewUrl>) — <sender>`.
+One line per thread, **what first, then who**: `• <gist> - <sender> · [open](<viewUrl>)`.
 - Gist: max ~12 words, English, starting with what it is (e.g. "Leave request: Smoliv
   half-day (Nov 2)", "Smoliv: Goodwin weekly report (Oct 30)"). MUST keep the proper names
   and dates from the subject. Drop prefixes like `[fp]` or `[bgh][training]` (keep a project
   name without brackets) and hashtags. Short dates, no year: "Nov 2".
 - Sender: the part before `@` of the latest in-window message not from the user (no display
   names; don't look them up).
-- Link: the gist is the link text, pointing to the thread's `viewUrl`. Order: newest first.
+- Link: `[open](<viewUrl>)` at the end of the line (no period after it). Order: newest first.
 - Never copy email bodies into the digest.
 
 ## Step 4 — Slack message format
