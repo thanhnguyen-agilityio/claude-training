@@ -8,8 +8,9 @@ Backlog source: `training/ideas.md` → `[work][kit] email-digest`.
 
 ## Idea
 
-A skill plus a scheduled task that summarizes my company Gmail every work day at 08:30
-(`30 8 * * 1-5`) or on demand. It uses the Gmail connector with **read-only** access.
+A skill plus a scheduled task that summarizes my company Gmail every weekday at 08:00
+(Asia/Saigon) and posts the digest to Slack. It uses the Gmail connector with **read-only**
+access. Agreed spec and decision (build) are in [plan.md](plan.md).
 
 ## Starting point: the claude.ai "Inbox triage" template
 
@@ -53,6 +54,6 @@ Later (out of scope): the digest flags replies from training supporters to feed 
 
 | File | Lesson | Status |
 | --- | --- | --- |
-| [plan.md](plan.md) | 7: vision, task breakdown, delegation | to do |
+| [plan.md](plan.md) | 7: vision, task breakdown, delegation | done |
 | `spec.md` | 11: built with the describe → check → refine loop | not started |
 | `diligence.md` | 12: diligence statement | not started |
