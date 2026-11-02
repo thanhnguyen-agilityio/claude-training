@@ -50,7 +50,30 @@ My own findings (match the list):
   - Why (Lesson 3): fine-tuning pushes it to be maximally helpful, and in training data analyses are usually followed by fixes.
   - Fix: say it directly, "Analysis only. Don't propose fixes yet." (Steerability.)
 
-## Lesson 2:
+## Lesson 2: What We Mean by AI
+
+### Exercise: Generative or not?
+
+**1–2. Five AI features I used this week, and my call**
+
+| Feature | My call | Check (with Claude) |
+| --- | --- | --- |
+| Autocomplete | Ranking | ⚠️ Depends: a phone keyboard ranks known words; Smart Compose / code completion generate new text. Same next-word idea as a chatbot, at smaller scale. |
+| Spam filter | Classifying | ✅ |
+| Chatbot | New content | ✅ |
+| Translation | New content | ✅ Modern translation is a transformer writing a new sentence. |
+| Recommendations | Ranking | ✅ |
+
+**3. Most likely to fail in a way this course covers:** translation. The output always reads smoothly but I often can't check it ("true vs. sounds true"). Rare words, slang and company terms may also be thin in the model's knowledge (EN ↔ VI).
+
+**4. Tag my Lesson 1 tasks with a property question** — to do.
+- Where do the answers come from? (Next Token Prediction)
+- What does it know? (Knowledge)
+- What's it paying attention to? (Working Memory)
+- How much am I in control? (Steerability)
+
+### Reflection
+- To do.
 
 ## Lesson 3:
 
