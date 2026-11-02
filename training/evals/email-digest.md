@@ -34,8 +34,10 @@ For the run's window, search Gmail by hand and count threads not from me:
 | 8 | Intern permission | `[internship] Ask for permission` in window | In 👀, not in 🎓 |
 | 9 | Re-surfacing | a direct request to me, unanswered, 2–7 days old | Listed under ⏳ |
 | 10 | Pulse numbers | normal weekday | Report count matches the manual count (±0) |
-| 16 | Pulse issues | reports with a blocker, a question, and "None" | Blocker and question listed; "None" skipped; ≤5 lines |
-| 17 | Pulse plans | normal weekday | 3–5 themes with counts that add up; a new-course start shows as notable |
+| 16 | Help lists | reports with a blocker, a "waiting for review", a worked-around issue, and "None" | 🙋: blocker + waiting item; 🧩: worked-around issue; "None" skipped; both in 🤝, not 🎓 |
+| 17 | Pulse plans | normal weekday | 📅 3–5 themes, count first; ⭐ ≤3 milestones; pulse in a quote block |
+| 18 | Summary line | normal weekday | Top line counts match the sections; 0 parts dropped |
+| 19 | Supporter-only asks | a report asks its supporter for the next plan | Not in 🙋; a technical blocker is |
 | 11 | Empty day | window with no mail | One "nothing new" line |
 | 12 | Missing config (scheduled) | run with no config block | One "config missing" DM, nothing read |
 | 13 | First-run setup | new chat, no config | Asks once, verifies each value with a count, never creates labels |
@@ -60,6 +62,9 @@ Pass/fail checks per run:
 | Date | Case(s) | 👀 key / got | 📊 key / got | Read-only | ≤3 min | Notes (1 line, no email content) |
 |---|---|---|---|---|---|---|
 | 2026-11-02 | dry run (Lesson 11, 👀 + 🍀 only) | 1 / 1 | — | ✅ | ✅ | Manual Gmail check matched |
+| 2026-11-02 | full dry run, Monday window | 1 / 1 | ~50 / 40 ❌ | ✅ | ✅ | Pulse stopped early (40 = 2×20 pages?); 🙋 listed a solved item; vague plan theme |
+| 2026-11-02 | dry run 2 (older layout uploaded) | 1 / 1 | ~62 / 61 ✅ | ✅ | ✅ | Paging fixed; no false 🙋; capstone split into 3 themes; long dates + hashtags in gists |
+| 2026-11-02 | dry run 3 (action first) | 1 / 1 | ~62 / 61 ✅ | ✅ | ❌ | 🙋 had 9 items in 🎓, 3 were next-plan asks for their own supporter; "10 needs you"; periods after links |
 | | | | | | | |
 
 ## 5. Refine and retest
@@ -75,3 +80,19 @@ Pass/fail checks per run:
   the scheduled task prompt, first-run setup, missing-config DM. 📊 is counts only.
 - 2026-11-02: icons 👀 Approvals, 🍀 Projects. 📊 now reads report bodies: 🙋 blockers +
   questions (max 5), plan themes + notable items, skips people already in 🎓.
+- 2026-11-02 (full dry run): pageSize 50 + follow every page; 🙋 unresolved asks only (skip
+  workarounds); plan themes by topic with exact counts, no "continue"; notable max 3; no period
+  after links.
+- 2026-11-02: pulse layout → 📅 "What people are working on" + ⭐ "Milestones", one item per
+  line, counts first (the inline Plans/Notable lines were confusing).
+- 2026-11-02: "action first" design: summary line under the title, 👀 Needs you / 🍀 Projects /
+  🎓 My people, items as "what — who · open", pulse in a grey quote block.
+- 2026-11-02 (dry run 2): merge plan days of one stage into one theme; gists drop hashtags,
+  use short dates without the year.
+- 2026-11-02: 🙋 Can you help? moved from the pulse into 🎓 My people; it counts toward
+  "needs you" in the summary line.
+- 2026-11-02: 🙋 adds IN PROGRESS items waiting on someone; new 🧩 Issues reported (≤3, incl.
+  worked-around issues). Both shown in 🎓 My people.
+- 2026-11-02 (dry run 3): help lists moved to their own section 🤝 Others you could help;
+  skip next-plan/admin asks for the trainee's own supporter and status changes; summary line
+  counts them as "could use help", not "needs you"; no period at the end of any line.
