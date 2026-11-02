@@ -2,6 +2,7 @@
 
 Create on claude.ai (Gmail and Slack connectors are connected there). SKILL.md holds the
 company defaults; the prompt carries only my project labels.
+Step-by-step guide for colleagues: [Email Digest Guide](https://claude.ai/artifact/49dYkj3dBrg13cqAK9HSeo).
 
 ## Task settings
 

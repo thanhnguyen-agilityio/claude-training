@@ -6,6 +6,10 @@ Lesson 11, add a diligence statement in Lesson 12.
 
 Backlog source: `training/ideas.md` → `[work][kit] email-digest`.
 
+**User guide:** [Email Digest Guide](https://claude.ai/artifact/49dYkj3dBrg13cqAK9HSeo)
+(interactive artifact: install, run on demand or schedule, Slack DM or Claude reply, prompt
+generator, live preview; private until shared).
+
 ## Idea
 
 A skill plus a scheduled task that summarizes my company Gmail every weekday at 08:00
