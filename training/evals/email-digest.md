@@ -32,11 +32,11 @@ For the run's window, search Gmail by hand and count threads not from me:
 | 6 | Bracket check | a subject has "fp" but no `[fp]` prefix | Not in 🎯 |
 | 7 | Dedup | an `[fp]` also has a project label | Shown once, in 🎯 only (order 🎯 → 💼 → 🫂 → 📊) |
 | 8 | Intern permission | `[internship] Ask for permission` in window | In 🎯, not in 🫂 |
-| 9 | Re-surfacing | a direct request to me, unanswered, 2–7 days old | Listed under ⏳ |
+| 9 | Re-surfacing | a direct request to me, unanswered, 2–7 days old | Listed in 🎯 Needs Attention as a plain line, no "Still waiting" prefix |
 | 10 | Pulse numbers | normal weekday | Report count matches the manual count (±0) |
 | 16 | Help lists | reports with a blocker, a "waiting for review", a worked-around issue, and "None" | 🙋: blocker + waiting item; 🧩: worked-around issue; "None" skipped; merged into 👀 Training Issues (🙋 first), not 🫂 |
 | 17 | Pulse plans | normal weekday | Current Focus 3–5 themes as `theme: n`, biggest first; Milestones ≤3 as `who — what` |
-| 18 | Summary line | normal weekday | `:clock8:` line counts match the sections (updates = 💼 + 🫂, actions = 🎯); 0 parts dropped; singular for 1 |
+| 18 | Summary line | normal weekday | `:clock8:` line counts match the sections (updates = 🫂, actions = 🎯 incl. ⏳); 0 parts dropped; singular for 1 |
 | 19 | Supporter-only asks | a report asks its supporter for the next plan | Not in 🙋; a technical blocker is |
 | 11 | Empty day | window with no mail | One "nothing new" line |
 | 12 | Missing config (scheduled) | run with no config block | One "config missing" DM, nothing read |
@@ -102,3 +102,4 @@ Pass/fail checks per run:
   🎯 Needs Attention / 💼 Project Updates / 🫂 My People / 👀 Training Issues (🙋 + 🧩 merged),
   pulse no longer a quote block (Current Focus + Milestones), gist is the link text, closing
   line. Older rows above use the old icons (👀 = approvals then).
+- 2026-11-02: ⏳ items shown as plain lines in 🎯 (no prefix); "updates" = 🫂 My People only.

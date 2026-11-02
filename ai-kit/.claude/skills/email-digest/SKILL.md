@@ -171,7 +171,6 @@ Use Slack emoji shortcodes exactly as below. The two divider lines are 85 `-` ch
 
 :dart: Needs Attention (<count>)
 • [<gist>](<viewUrl>) — <sender>
-• ⏳ Still waiting: [<gist>](<viewUrl>) — <sender>
 
 :briefcase: Project Updates (<count>)
 • [<gist>](<viewUrl>) — <sender>
@@ -196,9 +195,10 @@ Milestones
   next weekday's date (the digest this content would land in) plus ` (Preview)`.
 - `<window>`: one day → `Mon, Nov 2 · 08:00–21:20`; more than one day (Monday) →
   `Fri, Oct 30 08:00 – Mon, Nov 2 08:00`.
-- Counts: `u` = 💼 + 🫂 items, `a` = 🎯 items (incl. ⏳), `c` = pulse reports. Use the
+- Counts: `u` = 🫂 items, `a` = 🎯 items (incl. ⏳), `c` = pulse reports. Use the
   singular for 1 ("1 action", "1 update"). Drop a part that is 0.
-- 🎯 Needs Attention = approvals and admin; 🫂 My People = only my own mentees and
+- 🎯 Needs Attention = approvals and admin, then the ⏳ items as plain `•` lines (no
+  separate heading or prefix); 🫂 My People = only my own mentees and
   supportees; 👀 Training Issues = the merged 🙋 + 🧩 lists from the pulse reports.
 - Current Focus: the 3–5 themes, biggest first, `<theme>: <count>`. Milestones: at most 3,
   `<sender> — <milestone>`.
