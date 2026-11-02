@@ -1,11 +1,11 @@
 # Day 5: Memory & context
 
 ## AI Fluency (15 lessons)
-Progress: 9/15 at start of day → _/15
+Progress: 9/15 at start of day → 10/15. Full notes for lessons 1–10: [ai-fluency.md](../courses/ai-fluency.md)
 
 | Lesson | 3-line note |
 |---|---|
-| 10 | |
+| 10 | Discernment = product (output quality) · process (how AI approached it) · performance (how it behaved in the session). Mirrors Description: describe all 3 up front, check all 3 after. |
 | 11 | |
 | 12 | |
 | 13 | |
