@@ -1,7 +1,7 @@
 # Email digest: Slack message format
 
 Use Slack emoji shortcodes exactly as below. The two divider lines are 85 `-` characters.
-As the run's own reply (no Slack), use the same layout with Unicode emoji: 📬 🎯 💼 🫂 (same order as the shortcodes).
+As the run's own reply (no Slack), use the same layout with Unicode emoji: 📬 🎯 💼 🫂 📊 (same order as the shortcodes).
 
 ```
 :mailbox_with_mail: Daily Email Digest | <Ddd, Mon D>[ (Preview)] | <u> updates · <a> actions · <c> training reports
@@ -18,7 +18,7 @@ _+<N> more_
 :people_hugging: My People (<count>)
 • <gist> - <sender> · [open](<viewUrl>)
 
-Training Pulse | <c> Reports
+:bar_chart: Training Pulse | <c> Reports
 
 Issues (<count>)
 • <blocker, question, waiting item, or issue> - <sender> · [open](<viewUrl>)
@@ -29,7 +29,7 @@ Current Focus
 Milestones
 • <sender> - <milestone>
 -------------------------------------------------------------------------------------
-End of digest. <closing>
+🍀 End of digest. <closing>
 ```
 
 - Never use an em dash (`—`) anywhere in the message; use ` - ` between what and who.
