@@ -85,4 +85,4 @@ Reflection (my own words):
 | [plan.md](plan.md) | 7: vision, task breakdown, delegation | done |
 | [prompts.md](prompts.md) | all: prompts used, result, what to change | ongoing |
 | [SKILL.md](../../../ai-kit/.claude/skills/email-digest/SKILL.md) | 11: built with the describe → check → refine loop | Lesson 11 done: Approvals + Projects, dry run passed |
-| `diligence.md` | 12: diligence statement | not started |
+| [diligence.md](diligence.md) | 12: diligence statement | done |

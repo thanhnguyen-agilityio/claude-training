@@ -1,6 +1,6 @@
 # AI Fluency: human-AI collaboration — notes
 
-Course: [Claude Academy](https://academy.claude.com/) · Day 1 (optional), continued Day 5 · Progress: 10/15
+Course: [Claude Academy](https://academy.claude.com/) · Day 1 (optional), continued Day 5 · Progress: 15/15 · ✅ Completed, badge earned
 
 ## Lesson 1: What is AI Fluency
 - AI Fluency = working with AI systems effectively, efficiently, ethically and safely.
@@ -35,7 +35,7 @@ Deciding what to do yourself, what to collaborate on with AI, and how to split t
 3. **Task delegation:** divide work between you and AI strategically.
 
 ## Lesson 7: Project planning and delegation
-- TODO: needs more practice on a real project.
+- Practiced on a real project: [email-digest plan](../../resources/practice/email-digest/plan.md).
 
 ## Lesson 8: Description competency
 1. **Product description:** clearly define what you want AI to create.
@@ -57,3 +57,19 @@ Deciding what to do yourself, what to collaborate on with AI, and how to split t
 
 Note: Description and Discernment mirror each other (product / process / performance):
 describe each one up front, then check each one afterwards.
+
+## Lesson 11: The Description-Discernment loop
+- Practiced on the email-digest project: describe → check on real data → refine.
+  See [Lesson 11 — execution](../../resources/practice/email-digest/README.md#lesson-11--execution).
+
+## Lesson 12: Diligence competency
+Diligence focuses on responsible and ethical AI collaboration.
+1. **Creation diligence:** be thoughtful about which AI systems you choose and how you work
+   with them.
+2. **Transparency diligence:** be open about AI's role in your work.
+3. **Deployment diligence:** take ownership of AI-assisted outputs you share with others.
+
+## Lessons 13–14 and final quiz
+- Completed the course and earned the completion badge.
+- Course project: [email-digest](../../resources/practice/email-digest/README.md) (plan,
+  skill, prompt log, diligence statement).
