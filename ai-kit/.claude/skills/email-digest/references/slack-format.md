@@ -1,6 +1,7 @@
 # Email digest: Slack message format
 
 Use Slack emoji shortcodes exactly as below. The two divider lines are 85 `-` characters.
+As the run's own reply (no Slack), use the same layout with Unicode emoji: 📬 🎯 💼 🫂 (same order as the shortcodes).
 
 ```
 :mailbox_with_mail: Daily Email Digest | <Ddd, Mon D>[ (Preview)] | <u> updates · <a> actions · <c> training reports
