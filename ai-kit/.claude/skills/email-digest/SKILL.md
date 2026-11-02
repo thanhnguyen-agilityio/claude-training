@@ -110,7 +110,7 @@ Keep threads whose search `date` is in the window and that are not in 🫂. Read
 10. Extract only the ISSUES / IN PROGRESS / NEXT PLAN parts (variants: `ISSUES / QUESTIONS`)
 and discard the rest from your notes.
 
-The 🙋 and 🧩 lists below form one section, 👀 **Training Issues** (🙋 first, then 🧩), one
+The 🙋 and 🧩 lists below form one list, **Issues**, inside Training Pulse (🙋 first, then 🧩), one
 line each as in Step 3:
 
 - **🙋 Can you help?** Technical blockers and open questions anyone could help with (stuck,
