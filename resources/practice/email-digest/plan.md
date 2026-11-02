@@ -59,7 +59,7 @@ what success looks like and why this matters to me. Then we'll break it into tas
   - Re-surfaces unreplied approvals for up to 7 days
   - Posts to Slack instead of drafting in Gmail
 
-- **Decision: build** — because my requirements are specific (the `Projects` label tree,
+- **Decision: build** — because my requirements are specific (the `Projects` sub-labels,
   `[fp]` / `[internship]` / `[training]` prefixes, `asoft.all@` and `asoft.training@`,
   unreplied-approval tracking) and a generic template doesn't know them. Building also shows the
   delegation and discernment process for the course.
@@ -67,14 +67,15 @@ what success looks like and why this matters to me. Then we'll break it into tas
 ### Agreed spec
 
 - **Schedule:** every weekday, 08:00 (Asia/Saigon)
-- **Output:** one Slack message, sent as a DM to myself from day 1 (testing and real use)
+- **Output:** one Slack message as a DM to myself (private by design; nobody can be added),
+  used for both testing and real use
 - **Language:** English only; email subjects kept as original
 - **Sections** (in priority order):
 
   | Section | Source |
   |---|---|
   | 🔴 Approvals & Admin | Subject contains `[fp]` or "permission"; emails to `asoft.all@asnet.com.vn` |
-  | 🔥 Projects | All sub-labels under the `Projects` label |
+  | 🔥 Projects | Emails under the active `Projects` sub-labels listed in Config |
   | 🎓 My training & support | Replies to my reports; `[internship]` / `[training]` emails to/cc me |
   | 📊 Company training pulse | Emails cc'd to `asoft.training@asnet.com.vn` — shown as stats: number of trainees, topics, who has issues |
 
@@ -92,14 +93,20 @@ what success looks like and why this matters to me. Then we'll break it into tas
   | Training group | Search query (address) | `asoft.training@asnet.com.vn` |
   | Mentee prefixes | Search query (subject) | `[internship]`, `[training]` |
   | Report subject prefix (to find replies to my reports) | Search query (subject, replies not `from:me`) | `[<team>][training]` from `writing-training-reports`; the team prefix (e.g. `bgh`) is the config value |
-  | Project label (optional) | Gmail label | `Projects` |
+  | Project sub-labels (optional) | Gmail label (one per project) | TBD — my active sub-labels under `Projects` |
   | Schedule + timezone | — | Weekdays 08:00, Asia/Saigon |
   | Language | — | English |
   | Slack target | — | DM to myself |
 
 - **Search queries over labels/filters:** every section is matched by search query (subject
-  prefix, group address); users don't need to create labels or filters. Only Projects uses a
-  label.
+  prefix, group address); users don't need to create labels or filters. Only Projects uses labels: my
+  filters catch project mail from any sender (clients, tools, teammates), which an address list
+  would miss.
+- **Project sub-labels (test in task 4):** Config lists only the active sub-labels under
+  `Projects`, so old or cc-only projects stay out. Searching the parent `label:Projects` likely
+  does not include mail that only has a sub-label, so each sub-label gets its own query. Gmail
+  writes nested labels with hyphens (e.g. `label:projects-a`); check how emoji in names are
+  written. Empty list → scan every sub-label.
 - **Bracket prefixes (test in task 4):** Gmail search ignores brackets, so `subject:[fp]` likely
   matches any subject containing "fp", and `[training]` also matches my own
   `[<team>][training]` report threads. Possible fix: exclusions in the query
@@ -108,11 +115,11 @@ what success looks like and why this matters to me. Then we'll break it into tas
 - **No email address needed:** the Gmail connector runs as the user, so searches use `me`
   (`to:me`, `cc:me`, `from:me`)
 - **First-run setup** (interactive, in chat — never in the scheduled task; Day 7–9):
-  1. Ask for each config value; the project label is optional: "Which label holds your projects?"
+  1. Ask for each config value; project sub-labels are optional: list the user's labels and ask
+     "Which project labels should I follow?"
   2. Verify each value with a read-only search and confirm with the user (e.g. "found 12 emails
      to `asoft.training@` in the last 7 days — correct?")
-  3. If the user has no project label: hide the 🔥 Projects section; all other sections work
-     without labels
+  3. If the user has no project labels: hide the 🔥 Projects section
   4. Save the config
 - **Open question:** where is the config stored so the scheduled task (a fresh session each run)
   can read it? Test in Day 7–9.
@@ -124,19 +131,19 @@ what success looks like and why this matters to me. Then we'll break it into tas
 | 1 | Reconnect Slack connector | Me — ✅ done | Needs my account; digest goes to a DM to myself | Done |
 | 2 | Review the Inbox triage template | Me — ✅ done | Only visible in my account; finding: it drafts replies, so not read-only | Done |
 | 3 | Review `writing-training-reports` and identify what to reuse (structure, safety rules, evals) | Together | Claude reads the skill and proposes what to reuse; I decide, since it's my own conventions | Day 7–9 |
-| 4 | Test read-only Gmail searches per section; check how search matches the `Projects` label tree (labels contain emoji) | Together | Claude runs the searches; only I can judge whether the results are the right emails | Lesson 11 (1–2 sections); rest Day 7–9 |
+| 4 | Test read-only Gmail searches per section; check the queries for each active `Projects` sub-label (nested labels, emoji names) | Together | Claude runs the searches; only I can judge whether the results are the right emails | Lesson 11 (1–2 sections); rest Day 7–9 |
 | 5 | Test the "unreplied approval" logic (check the thread for a message from me after the request) | Claude | Mechanical thread check; I spot-check a few results | Day 7–9 |
 | 6 | Write SKILL.md: `Config` section (my values hardcoded), section queries, time-window logic, Slack format, safety rules | Together | Claude drafts from the agreed spec; I review against how my inbox actually works | Lesson 11 (Config section + 1–2 sections + read-only safety rules); rest Day 7–9 |
 | 7 | Write evals: the 3 success criteria + technical evals (pulse numbers correct, no noise, no Gmail write tools called) | Together | I provide ground truth (which emails really arrived); Claude turns it into eval cases | Day 7–9 |
 | 8 | Manual dry run in chat → DM to myself → refine | Together | Claude runs it; only I can judge whether it reads in ~3 minutes | Lesson 11 (1–2 sections); full digest Day 7–9 |
 | 9 | Create the weekday scheduled task | Claude | Claude creates it; I approve it and check its approval setting | Day 7–9 |
 | 10 | Run for 2 weeks and measure the 3 success criteria | Me | Only I can judge reading time and whether I still needed Gmail | Starts after Day 9 (2 weeks) |
-| 11 | Build the first-run setup: config questions, optional project label, read-only verification | Together | Claude drafts the flow; I test it as if I were a new user | Day 7–9 |
+| 11 | Build the first-run setup: config questions, optional project sub-labels, read-only verification | Together | Claude drafts the flow; I test it as if I were a new user | Day 7–9 |
 | 12 | Test where the config is stored so the scheduled task can read it | Claude | Each scheduled run starts a fresh session, so this needs a real test run; I confirm the result | Day 7–9 |
 
 **Lesson 11 loop (~1h):** tasks 4 → 6 → 8 for **🔴 Approvals & Admin** and **🔥 Projects**,
 with my values hardcoded in the `Config` section. Approvals is the top priority; Projects tests
-the emoji-label risk early. The unreplied-approval logic (task 5) stays out of this loop, so
+the sub-label queries (nested labels, emoji names) early. The unreplied-approval logic (task 5) stays out of this loop, so
 Approvals uses only the fixed window for now. Shareable setup (tasks 11–12) is not part of this
 loop.
 
