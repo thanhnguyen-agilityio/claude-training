@@ -103,3 +103,8 @@ Pass/fail checks per run:
   pulse no longer a quote block (Current Focus + Milestones), gist is the link text, closing
   line. Older rows above use the old icons (👀 = approvals then).
 - 2026-11-02: ⏳ items shown as plain lines in 🎯 (no prefix); "updates" = 🫂 My People only.
+- 2026-11-02 (optimize-skill): one OR query per section (approvals + ⏳ share a 7-day query),
+  `get_thread` only when the search row can't decide, parallel calls, pulse bodies in batches
+  of ~10. Setup/scheduling → `references/setup.md`, Slack template → `references/slack-format.md`.
+  Clarified: company-wide mail needs no `[fp]` check; window format when dates differ.
+  Dry simulation on a fixture: 21 → 11 tool calls, same message.
