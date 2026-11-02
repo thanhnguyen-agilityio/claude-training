@@ -55,5 +55,6 @@ Later (out of scope): the digest flags replies from training supporters to feed 
 | File | Lesson | Status |
 | --- | --- | --- |
 | [plan.md](plan.md) | 7: vision, task breakdown, delegation | done |
+| [prompts.md](prompts.md) | all: prompts used, result, what to change | ongoing |
 | `spec.md` | 11: built with the describe → check → refine loop | not started |
 | `diligence.md` | 12: diligence statement | not started |
