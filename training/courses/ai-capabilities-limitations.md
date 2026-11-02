@@ -1,6 +1,6 @@
 # AI Capabilities & Limitations — notes
 
-Course: [Claude Academy](https://academy.claude.com/) · Optional · Progress: 1/5 · In progress
+Course: [Claude Academy](https://academy.claude.com/) · Optional · Progress: 4/13 · In progress
 
 ## Lesson 1: Intro to AI Capabilities & Limitations
 - **2 training stages:** pre-training, then fine-tuning.
