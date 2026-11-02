@@ -44,7 +44,7 @@ All checks are read-only. Never create labels or filters.
 2. Verify each value with a search over the last 14 days and show the count, e.g.
    "`cc:<training group>` → 62 threads on Oct 30, correct?". A value with 0 results →
    say so and ask again (a wrong dot in an address returns nothing).
-3. No project labels → the 🍀 Projects section stays hidden.
+3. No project labels → the 💼 Project Updates section stays hidden.
 4. Show the complete block, then the scheduled task prompt to paste (see Scheduling).
 
 ## Step 0 — The user's address
@@ -72,9 +72,9 @@ The Gmail connector does NOT support epoch-seconds `after:`/`before:` (they retu
 
 Use `search_threads` (`THREAD_VIEW_MINIMAL` unless noted) with `pageSize: 50`, and follow
 `nextPageToken` until there is none. Never stop at the first page or at a round number. Each
-thread appears once, in the highest section: 👀 → 🍀 → 🎓. 📊 skips threads already in 🎓.
+thread appears once, in the highest section: 🎯 → 💼 → 🫂. 📊 skips threads already in 🫂.
 
-### 👀 Approvals & Admin (back-office: leave / WFH requests and company notifications)
+### 🎯 Needs Attention (back-office: leave / WFH requests and company notifications)
 
 ```
 subject:<approval word 1> -from:me after:<day>        (one query per approval word)
@@ -92,12 +92,12 @@ Gmail ignores brackets). `permission` needs no extra check (180 days: all real
 (subject:fp OR subject:permission) -from:me after:<7 days before start>
 ```
 
-List a thread here if: it is not already in today's 👀 list; the user's address is in the
+List a thread here if: it is not already in today's 🎯 list; the user's address is in the
 **To** of its first message (direct requests only — `to:` in search also matches Cc); and the
 user has sent no message in the thread after that one. Most `[fp]` mail is FYI to a project
 manager, so this list is usually empty.
 
-### 🍀 Projects
+### 💼 Project Updates
 
 ```
 label:"<project label>" -from:me after:<day>        (one query per label)
@@ -105,7 +105,7 @@ label:"<project label>" -from:me after:<day>        (one query per label)
 
 Apply Step 1. Hide the section if Config has no project labels.
 
-### 🎓 My training & support
+### 🫂 My People (my own mentees and supportees)
 
 ```
 subject:<mentee prefix> (to:me OR cc:me) -from:me after:<day>   (one query per prefix)
@@ -116,19 +116,19 @@ report prefix (team prefix, optional space, `[training]`, e.g. `[bgh] [training]
 - first message from the user → "reply to your report"
 - otherwise → the sender's report or request (e.g. "daily report Oct 30, #reading")
 
-### 📊 Company training pulse (plans and issues, so the user can help)
+### 📊 Training Pulse (plans and issues, so the user can help)
 
 ```
 cc:<training group> subject:training -from:me after:<day>
 ```
 
 Use `THREAD_VIEW_MINIMAL`; keep threads whose search `date` is in the window and that are not
-in 🎓. Read each kept report with `get_thread` (`messageFormat: PLAIN_TEXT`), only its first
+in 🫂. Read each kept report with `get_thread` (`messageFormat: PLAIN_TEXT`), only its first
 message. Look in three sections (headings vary: `ISSUES`, `ISSUES / QUESTIONS`, `IN PROGRESS`,
 `NEXT PLAN`):
 
-Show both lists below in their own section, 🤝 **Others you could help** (not in 🎓, not in
-the pulse), one line each as in Step 3:
+Merge the 🙋 and 🧩 lists below into one section, 👀 **Training Issues** (🙋 items first, then
+🧩; not in 🫂, not in the pulse), one line each as in Step 3:
 
 - **🙋 Can you help?** Technical blockers and open questions anyone could help with (stuck,
   asks for help, feedback or an answer), plus IN PROGRESS items waiting for a review. Skip
@@ -137,11 +137,11 @@ the pulse), one line each as in Step 3:
 - **🧩 Issues reported:** other technical problems in ISSUES that aren't "None", "N/A" or
   empty, including ones already worked around ("used X instead"). Skip status changes
   (paused, joined a project, on leave). Max 3. Never repeat a 🙋 item here.
-- **📅 What people are working on:** group every NEXT PLAN into the top 3–5 themes by topic,
+- **Current Focus:** group every NEXT PLAN into the top 3–5 themes by topic,
   course or stage, with exact counts, biggest first. Merge plan days of the same stage into
   one theme (e.g. "Capstone, Days 12–15"). No vague themes like "continue in-progress
   items" — put those under their topic, or leave them out. No "~".
-- **⭐ Milestones:** at most 3, one person each: starting a new course or capstone, passing a
+- **Milestones:** at most 3, one person each: starting a new course or capstone, passing a
   checkpoint, a demo or presentation done.
 - **Count:** number of reports.
 
@@ -149,54 +149,64 @@ Never quote report text beyond the ≤12-word lines.
 
 ## Step 3 — Build each item
 
-One line per thread, **what first, then who**: `<gist> — <sender> · [open](<viewUrl>)`.
-- Gist: max ~12 words, English, starting with what it is (e.g. "Half-day leave, Nov 2",
-  "Smoliv: Goodwin weekly report"). MUST keep the proper names and dates from the subject.
-  Drop subject prefixes like `[fp]` or `[bgh][training]` (keep a project name without
-  brackets) and hashtags. Short dates, no year: "Nov 2", "Oct 30".
+One line per thread, **what first, then who**: `• [<gist>](<viewUrl>) — <sender>`.
+- Gist: max ~12 words, English, starting with what it is (e.g. "Leave request: Smoliv
+  half-day (Nov 2)", "Smoliv: Goodwin weekly report (Oct 30)"). MUST keep the proper names
+  and dates from the subject. Drop subject prefixes like `[fp]` or `[bgh][training]` (keep a
+  project name without brackets) and hashtags. Short dates, no year: "Nov 2", "Oct 30".
 - Sender: the part before `@` of the latest in-window message not from the user. The
   connector returns no display names; don't make extra calls to look them up.
-- Link: the thread's `viewUrl`, as the last thing on the line (no period after it).
+- Link: the gist is the link text, pointing to the thread's `viewUrl` (no separate "open").
   Order: newest first.
 - Never copy email bodies into the digest.
 
-## Step 4 — Slack message format (action first)
+## Step 4 — Slack message format
+
+Use Slack emoji shortcodes exactly as below. The two divider lines are 85 `-` characters.
 
 ```
-📬 **Email digest** · <Weekday D Mon>
-_<start> → <end> · <a> needs you · <b> updates · <h> could use help · <c> reports_
+:mailbox_with_mail: Daily Email Digest | <Ddd, Mon D>[ (Preview)]
+:clock8: <window> | <u> updates · <a> actions · <c> training reports
+-------------------------------------------------------------------------------------
 
-👀 **Needs you** (<count>)
-• <gist> — <sender> · [open](<viewUrl>)
-⏳ Still waiting: <gist> — <sender> · [open](<viewUrl>)
+:dart: Needs Attention (<count>)
+• [<gist>](<viewUrl>) — <sender>
+• ⏳ Still waiting: [<gist>](<viewUrl>) — <sender>
 
-🍀 **Projects** (<count>)
-• <gist> — <sender> · [open](<viewUrl>)
+:briefcase: Project Updates (<count>)
+• [<gist>](<viewUrl>) — <sender>
 _+<N> more_
 
-🎓 **My people** (<count>)
-• <gist> — <sender> · [open](<viewUrl>)
+:people_hugging: My People (<count>)
+• [<gist>](<viewUrl>) — <sender>
 
-🤝 **Others you could help** (<count>)
-🙋 Can you help?
-• <blocker, question, or waiting item> — <sender> · [open](<viewUrl>)
-🧩 Issues reported
-• <issue> — <sender> · [open](<viewUrl>)
+:eyes: Training Issues (<count>)
+• [<blocker, question, waiting item, or issue>](<viewUrl>) — <sender>
 
-> 📊 **Training pulse** · <n> reports
-> 📅 <n> <theme> · <n> <theme> · <n> <theme>
-> ⭐ <sender> <milestone> · <sender> <milestone>
+:bar_chart: Training Pulse | <c> Reports
+Current Focus
+• <theme>: <n>
+Milestones
+• <sender> — <milestone>
+-------------------------------------------------------------------------------------
+:dart: End of digest. Have a productive day!
 ```
 
-- Summary line: `a` = 👀 items (incl. ⏳), `b` = 🍀 + 🎓 items, `h` = 🤝 items, `c` = pulse
-  reports. Drop a part that is 0.
-- 👀 **Needs you** = the Approvals & Admin section; 🎓 **My people** = My training & support
-  (only my own mentees and supportees); 🤝 = help lists from the pulse reports.
-- No line ends with a period, including headings and link lines.
-- The pulse is a quote block (every line starts with `> `), so it reads as background.
+- Title date: scheduled run → today (e.g. `Tue, Nov 3`). Manual run with `end` = now → the
+  next weekday's date (the digest this content would land in) plus ` (Preview)`.
+- `<window>`: one day → `Mon, Nov 2 · 08:00–21:20`; more than one day (Monday) →
+  `Fri, Oct 30 08:00 – Mon, Nov 2 08:00`.
+- Counts: `u` = 💼 + 🫂 items, `a` = 🎯 items (incl. ⏳), `c` = pulse reports. Use the
+  singular for 1 ("1 action", "1 update"). Drop a part that is 0.
+- 🎯 Needs Attention = approvals and admin; 🫂 My People = only my own mentees and
+  supportees; 👀 Training Issues = the merged 🙋 + 🧩 lists from the pulse reports.
+- Current Focus: the 3–5 themes, biggest first, `<theme>: <count>`. Milestones: at most 3,
+  `<sender> — <milestone>`.
+- No line ends with a period, except the closing line.
 - Max items per section from Config, then `_+N more_`. Hide empty sections, and hide an empty
-  🙋, 🧩, 📅 or ⭐ list (no "nothing today" lines).
-- Every section empty → one line: `📬 Email digest · <date> · nothing new since <start>`
+  Current Focus or Milestones list (no "nothing today" lines).
+- Every section empty → title line, window line (counts dropped), then
+  `Nothing new since <start>` and the closing line.
 
 ## Step 5 — Post
 
