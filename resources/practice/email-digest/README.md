@@ -56,5 +56,5 @@ Later (out of scope): the digest flags replies from training supporters to feed 
 | --- | --- | --- |
 | [plan.md](plan.md) | 7: vision, task breakdown, delegation | done |
 | [prompts.md](prompts.md) | all: prompts used, result, what to change | ongoing |
-| `spec.md` | 11: built with the describe → check → refine loop | not started |
+| [SKILL.md](../../../ai-kit/.claude/skills/email-digest/SKILL.md) | 11: built with the describe → check → refine loop | draft: Approvals + Projects; dry run (task 8) next |
 | `diligence.md` | 12: diligence statement | not started |

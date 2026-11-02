@@ -116,9 +116,35 @@ How I want us to work:
 Start with task 4: Approvals queries first.
 ```
 
-- **Result:** TBD
-- **Next time:** TBD
+- **Result:** task 4 tests caught the bracket issue (`[training]` matched 639 threads) and
+  showed the parent label doesn't include sub-label mail. Claude wrongly claimed dots matter in
+  group addresses; I corrected it. SKILL.md draft followed, with 3 choices marked "recommended".
+- **Next time:** give the real config values (addresses, sub-labels) up front so Claude doesn't
+  guess them.
 
 ## Lesson 11 — follow-up prompts
 
 <!-- Add prompts used during the loop here: feedback, refinements, corrections. -->
+
+### 6. Verdict on the SKILL.md draft
+
+```text
+Verdict on the 3 choices: 1 ok, 2 ok, 3 ok (gist must keep names and dates).
+
+Fix these in SKILL.md before task 8:
+1. Group address is unverified: both to:asoft.all@ and to:asoftall@ returned 0 in 14d.
+   Re-test both over 180d and keep the one that returns mail. Remove the guess in the notes.
+2. Count subject:permission hits over 180d that are not real requests (Drive access,
+   "permission denied", etc.). If there is noise, tighten the query or the post-check.
+3. Replace the sender name in the format example with a placeholder like <Sender>.
+4. Make the description neutral for sharing: no personal name, "the user" instead of a pronoun.
+5. Line 8 says "since the last run" — change to the fixed 24h/72h window.
+
+Then do task 8: dry run "up to now", posted as a Slack DM to me.
+```
+
+- **Result:** all 5 fixed. Re-testing found `asoft.all@` is correct, and that the connector
+  doesn't support epoch `after:`/`before:`, so the skill now fetches by day and checks each
+  message's time.
+- **Next time:** ask for verification evidence (query + count) for every claim, not just a
+  verdict.
