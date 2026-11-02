@@ -21,13 +21,17 @@ Email digest config
 - Max items per section: 5
 ```
 
-The only value with no default is `Project labels: "<Parent/Child>", ...`. Take it (and any
-override) from the first source that has it: the scheduled task prompt, the chat, project
-instructions, memory.
+Optional, no default: `Project labels: "<Parent/Child>", ...`. Take it (and any override) from
+the first source that has it: the scheduled task prompt, the chat, project instructions,
+memory. `Project labels:` with an empty value (or `none`) means no projects.
 
-- In chat, no project labels, or the user asks to set up or schedule the digest → read
+- Run in chat with no `Project labels` line anywhere → before Step 1, run `list_labels` and ask
+  once: "Which project labels should I include (e.g. `Projects/Smoliv`)? Leave empty for no
+  projects." Empty answer → hide 💼 Project Updates.
+- Scheduled run with no `Project labels` line → don't ask (nobody can answer); run with
+  💼 Project Updates hidden.
+- The user asks to set up or schedule the digest → read
   [references/setup.md](references/setup.md) and follow it.
-- Scheduled run with no project labels → run with the defaults and hide 💼 Project Updates.
 - Label names: full display name in double quotes, emoji included, exactly as `list_labels`
   shows it. A parent label does NOT include mail that only has a sub-label.
 - Addresses: use them exactly as configured in queries. Search results may show addresses
