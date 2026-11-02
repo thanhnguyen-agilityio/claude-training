@@ -27,13 +27,13 @@ Training report profile
 
 ```
 Hi An and Binh,
-Today, I continued training the [MCP training plan](https://docs.google.com/document/d/EXAMPLE) by implementing the Database MCP Server practice.
+Today, I continued the [MCP training plan](https://docs.google.com/document/d/EXAMPLE) with a practice.
 Please find more detail in content below:
 FINISHED
 
 * Implement Database MCP Server ([#12](https://gitlab.asoft-python.com/minh.le/mcp-training/-/issues/12))
-   * Resources (database://connection, database://schema) give the model read-only context; tools perform actions
-   * SQL tools (list_database_tables, execute_sql_query) are read-only to avoid unsafe queries
+   * Resources give the model read-only context; tools perform actions
+   * Keep SQL tools read-only to avoid unsafe queries
 * For more details, please refer to the [board](https://gitlab.asoft-python.com/minh.le/mcp-training/-/boards)
 * Source code:
    * Git repository: [mcp-training](https://gitlab.asoft-python.com/minh.le/mcp-training)
@@ -44,7 +44,8 @@ FINISHED
 ISSUES
 
 * Issues
-   * SQLite connection closes between tool calls; tried a connection pool, still failing. Has anyone handled SQLite connections in an async MCP server?
+   * SQLite connection closes between tool calls; a connection pool did not help
+   * Help needed: has anyone handled SQLite in an async MCP server?
 
 NEXT PLAN
 

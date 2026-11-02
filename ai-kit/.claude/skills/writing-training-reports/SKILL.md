@@ -40,8 +40,18 @@ Training report profile
 - Omit empty sections and sub-groups.
 - Never invent. Missing hash or link → ask; still missing → `<TODO: ...>` and say so.
 - Never include secrets (passwords, tokens, keys, `.env` values) or customer data; drop them and tell the user.
+- ★ Length: every sentence, bullet, and takeaway ≤100 characters. Over → cut to the key point or split. Check each line before showing the report.
 - Tone: slightly formal, concise, clear without context. Sign "Best regards," + sender name only. Never reuse names from [example.md](example.md).
 
 ## Gmail draft
 
 ToolSearch `gmail draft`, then `create_draft` with `to`, `cc`, `subject`, `htmlBody` (`<a href>`, nested `<ul><li>`, `<b>` headers), text identical to the approved report. **Never send.** Gmail missing or failing → show the body as rendered Markdown, say to select the formatted text and copy it (the code-block Copy button gives raw Markdown), and give one line why (connect via Settings → Connectors).
+
+## Future expansion (not built)
+
+A full version would need:
+
+- Template, with custom templates allowed.
+- Scan Claude sessions (local first).
+- Check which MCPs/plugins were called in the day's sessions.
+- Write the report from the scan.
