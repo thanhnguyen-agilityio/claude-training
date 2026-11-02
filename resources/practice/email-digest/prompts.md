@@ -96,8 +96,8 @@ Chỉ output các section thay đổi: spec, tasks, risks.
 This is Lesson 11 of my AI Fluency course: executing my project with Description-Discernment
 loops. The attached plan.md is my agreed plan for an "email digest" skill.
 
-Scope for this session (~1h): tasks 4 → 6 → 8 for two sections only, 🔴 Approvals & Admin and
-🔥 Projects, with my values hardcoded in a Config section. Nothing else from the plan.
+Scope for this session (~1h): tasks 4 → 6 → 8 for two sections only, 👀 Approvals & Admin and
+🍀 Projects, with my values hardcoded in a Config section. Nothing else from the plan.
 My active Projects sub-labels: <list them here>
 
 How I want us to work:

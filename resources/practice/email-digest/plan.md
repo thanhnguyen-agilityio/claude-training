@@ -74,10 +74,10 @@ what success looks like and why this matters to me. Then we'll break it into tas
 
   | Section | Source |
   |---|---|
-  | 🔴 Approvals & Admin | Subject contains `[fp]` or "permission"; emails to `asoft.all@asnet.com.vn` |
-  | 🔥 Projects | Emails under the active `Projects` sub-labels listed in Config |
+  | 👀 Approvals & Admin | Subject contains `[fp]` or "permission"; emails to `asoft.all@asnet.com.vn` |
+  | 🍀 Projects | Emails under the active `Projects` sub-labels listed in Config |
   | 🎓 My training & support | Replies to my reports; `[internship]` / `[training]` emails to/cc me |
-  | 📊 Company training pulse | Emails cc'd to `asoft.training@asnet.com.vn` — shown as stats: number of trainees, topics, who has issues |
+  | 📊 Company training pulse | Emails cc'd to `asoft.training@asnet.com.vn` — 🙋 blockers and questions I could help with (max 5), plan themes with counts + notable items, report count (reads ~60 report bodies a day) |
 
 - **What counts as "new":** fixed window of the last 24h (Monday: last 72h, covering
   Fri 08:00 → Mon 08:00), plus approvals I haven't replied to, re-surfaced for up to 7 days
@@ -93,7 +93,7 @@ what success looks like and why this matters to me. Then we'll break it into tas
   | Training group | Search query (address) | `asoft.training@asnet.com.vn` |
   | Mentee prefixes | Search query (subject) | `[internship]`, `[training]` |
   | Report subject prefix (to find replies to my reports) | Search query (subject, replies not `from:me`) | `[<team>][training]` from `writing-training-reports`; the team prefix (e.g. `bgh`) is the config value |
-  | Project sub-labels (optional) | Gmail label (one per project) | TBD — my active sub-labels under `Projects` |
+  | Project sub-labels (optional) | Gmail label (one per project) | `"🔥 Projects/🌸 Smoliv"` |
   | Schedule + timezone | — | Weekdays 08:00, Asia/Saigon |
   | Language | — | English |
   | Slack target | — | DM to myself |
@@ -119,10 +119,11 @@ what success looks like and why this matters to me. Then we'll break it into tas
      "Which project labels should I follow?"
   2. Verify each value with a read-only search and confirm with the user (e.g. "found 12 emails
      to `asoft.training@` in the last 7 days — correct?")
-  3. If the user has no project labels: hide the 🔥 Projects section
+  3. If the user has no project labels: hide the 🍀 Projects section
   4. Save the config
-- **Open question:** where is the config stored so the scheduled task (a fresh session each run)
-  can read it? Test in Day 7–9.
+- **Config storage (decided, test pending):** the config block lives in the scheduled task
+  prompt, so each run (a fresh session) reads it and SKILL.md holds no personal values. A run
+  with no config posts a "config missing" DM. Test steps: [schedule.md](schedule.md).
 
 ## 3. Task breakdown and delegation
 
@@ -141,11 +142,26 @@ what success looks like and why this matters to me. Then we'll break it into tas
 | 11 | Build the first-run setup: config questions, optional project sub-labels, read-only verification | Together | Claude drafts the flow; I test it as if I were a new user | Day 7–9 |
 | 12 | Test where the config is stored so the scheduled task can read it | Claude | Each scheduled run starts a fresh session, so this needs a real test run; I confirm the result | Day 7–9 |
 
-**Lesson 11 loop (~1h):** tasks 4 → 6 → 8 for **🔴 Approvals & Admin** and **🔥 Projects**,
+**Lesson 11 loop (~1h):** tasks 4 → 6 → 8 for **👀 Approvals & Admin** and **🍀 Projects**,
 with my values hardcoded in the `Config` section. Approvals is the top priority; Projects tests
 the sub-label queries (nested labels, emoji names) early. The unreplied-approval logic (task 5) stays out of this loop, so
 Approvals uses only the fixed window for now. Shareable setup (tasks 11–12) is not part of this
 loop.
+
+**Build status (2026-11-02, Day 7–9 work):**
+
+| # | Status | Output |
+|---|---|---|
+| 3 | ✅ | Reused: profile block → `Email digest config` block, safety rules, eval format |
+| 4 | ✅ | All 4 sections tested; values verified in [schedule.md](schedule.md) |
+| 5 | ✅ | ⏳ list: direct **To** requests only, no reply from me, up to 7 days (~1 a month) |
+| 6 | ✅ | [SKILL.md](../../../ai-kit/.claude/skills/email-digest/SKILL.md): all 4 sections |
+| 7 | ✅ | [evals](../../../training/evals/email-digest.md): 15 cases + answer-key method |
+| 8 | ⏳ | Full-digest dry run on claude.ai (me) |
+| 9 | ⏳ | Create the task on claude.ai with the prompt in [schedule.md](schedule.md) (me) |
+| 10 | ⏳ | 2-week run, log results in the evals file (me) |
+| 11 | ✅ | First-run setup in SKILL.md; test it in a new chat as a new user (me) |
+| 12 | ⏳ | Run now + no-config run, steps in [schedule.md](schedule.md) (me) |
 
 ## 4. Risks to remember for Diligence
 
@@ -165,7 +181,7 @@ loop.
   - My config (company group addresses, prefixes) must not ship inside the shared kit; each user
     fills in their own during setup
   - The config storage location (open question) must not expose one user's values to another:
-    TBD until tested in Day 7–9
+    each user's config stays in their own scheduled task prompt, never in the shared SKILL.md
 
 ## Reflection
 

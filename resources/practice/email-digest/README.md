@@ -52,7 +52,7 @@ Later (out of scope): the digest flags replies from training supporters to feed 
 
 ## Lesson 11 — execution
 
-Loop run: tasks 4 → 6 → 8 for 🔴 Approvals & Admin and 🔥 Projects. Dry run posted to my Slack
+Loop run: tasks 4 → 6 → 8 for 👀 Approvals & Admin and 🍀 Projects. Dry run posted to my Slack
 DM; completeness checked against a manual Gmail search for the same window.
 
 Changes from the plan, found by testing on real mail:
@@ -84,5 +84,7 @@ Reflection (my own words):
 | --- | --- | --- |
 | [plan.md](plan.md) | 7: vision, task breakdown, delegation | done |
 | [prompts.md](prompts.md) | all: prompts used, result, what to change | ongoing |
-| [SKILL.md](../../../ai-kit/.claude/skills/email-digest/SKILL.md) | 11: built with the describe → check → refine loop | Lesson 11 done: Approvals + Projects, dry run passed |
+| [SKILL.md](../../../ai-kit/.claude/skills/email-digest/SKILL.md) | 11: built with the describe → check → refine loop | all 4 sections + setup; full dry run next |
 | [diligence.md](diligence.md) | 12: diligence statement | done |
+| [schedule.md](schedule.md) | Day 7–9: scheduled task prompt + config test | ready to create |
+| [evals](../../../training/evals/email-digest.md) | Day 7–9: test cases and run log | ready |
