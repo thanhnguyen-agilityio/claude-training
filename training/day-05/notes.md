@@ -13,7 +13,7 @@ Progress: 9/15 at start of day → _/15
 | 15 | |
 
 ## 1. CLAUDE.md (ecommerce-agent)
-- Baseline `/context`: 
+- Baseline `/context` (Sonnet 5.5, 1M window): 93.7k/1M (9%) in a long session. Fixed overhead ~32k = system prompt 2.8k + system tools 16.2k + MCP instructions 1.1k + memory files 1.6k (4 files) + skills 10k (139 skills). Messages 62k (this session, not baseline). Autocompact buffer 33k.
 - Lines in final file: 
 - Sections kept: commands / conventions / never-do
 - What I cut from Claude's draft, and why: 
@@ -54,7 +54,7 @@ Phone away, Slack closed. One topic per session: new session per block. Write th
 
 | Done | Time | Block | Finish line |
 |---|---|---|---|
-| [ ] | 0:00–0:10 | **Setup.** Open `ecommerce-agent` clone (not the training repo). Run `/context` for baseline. | Baseline context size noted |
+| [x] | 0:00–0:10 | **Setup.** Open `ecommerce-agent` clone (not the training repo). Run `/context` for baseline. | Baseline context size noted |
 | [ ] | 0:10–0:55 | **AI Fluency lessons 10–15 (45 min).** 3 lines of notes per lesson. | 15/15, or ≥3 lessons with notes |
 | [ ] | 0:55–1:45 | **Write `CLAUDE.md` for the app (50 min).** Commands (build/run/test), conventions, "never do" list. Let Claude draft from the code, then you cut. Refine `ai-kit/CLAUDE.md.template`. | File under ~40 lines, template updated |
 | [ ] | 1:45–1:55 | **Break.** Away from screen. | |
