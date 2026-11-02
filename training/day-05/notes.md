@@ -14,6 +14,7 @@ Progress: 9/15 at start of day → _/15
 
 ## 1. CLAUDE.md (ecommerce-agent)
 - Baseline `/context` (Sonnet 5.5, 1M window): 93.7k/1M (9%) in a long session. Fixed overhead ~32k = system prompt 2.8k + system tools 16.2k + MCP instructions 1.1k + memory files 1.6k (4 files) + skills 10k (139 skills). Messages 62k (this session, not baseline). Autocompact buffer 33k.
+- Fresh session baseline: 34.2k/1m (3%). System prompt 2.8k, system tools 15.6k, MCP tools 0.6k, MCP instructions 1.1k, memory 1.6k, skills 10k, messages 2.6k. Use ~34k as the start line for fresh vs primed.
 - Lines in final file: 
 - Sections kept: commands / conventions / never-do
 - What I cut from Claude's draft, and why: 
