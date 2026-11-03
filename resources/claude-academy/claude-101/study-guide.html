@@ -1,0 +1,743 @@
+<title>Claude 101 Study Guide</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: fixed module rail on the left, one reading column on the right; each course section owns a hue (Meet Claude, Organizing work, Expanding reach, Putting it together). */
+:root{
+  --bg:#f4f6f9; --surface:#ffffff; --sunken:#eaeef4; --ink:#18202d; --muted:#596476; --line:#d9dfe8;
+  --accent:#2c56c9; --accent-ink:#ffffff;
+  --p0:#56607a; --p1:#5a48d4; --p2:#0e8576; --p3:#b8700c; --p4:#c03a66;
+  --good:#1e7d4a; --good-bg:#e3f4ea; --bad:#b4322c; --bad-bg:#fbe8e6; --warn:#8a5a00; --warn-bg:#fdf2d8;
+  --f-display:"Bricolage Grotesque", "Avenir Next", "Segoe UI", sans-serif;
+  --f-body:"Atkinson Hyperlegible", "Segoe UI", system-ui, sans-serif;
+  --f-mono:"JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+  --r:10px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0f131a; --surface:#161b24; --sunken:#1d2330; --ink:#e5e9f0; --muted:#9ba5b6; --line:#2a3242;
+  --accent:#7d9dff; --accent-ink:#0f131a;
+  --p0:#a3abc0; --p1:#a093ff; --p2:#3cc5b0; --p3:#e7a845; --p4:#f27ba1;
+  --good:#5fd394; --good-bg:#15301f; --bad:#ff8a80; --bad-bg:#3a1c1a; --warn:#f0c160; --warn-bg:#352a12;
+  color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f131a; --surface:#161b24; --sunken:#1d2330; --ink:#e5e9f0; --muted:#9ba5b6; --line:#2a3242;
+  --accent:#7d9dff; --accent-ink:#0f131a;
+  --p0:#a3abc0; --p1:#a093ff; --p2:#3cc5b0; --p3:#e7a845; --p4:#f27ba1;
+  --good:#5fd394; --good-bg:#15301f; --bad:#ff8a80; --bad-bg:#3a1c1a; --warn:#f0c160; --warn-bg:#352a12;
+  color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.55}
+button{font:inherit;color:inherit}
+a{color:var(--accent)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
+h1,h2,h3{font-family:var(--f-display);line-height:1.15;text-wrap:balance;margin:0}
+.app{display:grid;grid-template-columns:270px minmax(0,1fr);min-height:100vh}
+/* Sidebar */
+.side{position:sticky;top:0;height:100vh;overflow-y:auto;border-right:1px solid var(--line);background:var(--surface);
+  padding-block:20px;padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:16px;display:flex;flex-direction:column;gap:18px}
+.brand{font-family:var(--f-display);font-weight:700;font-size:19px;line-height:1.2}
+.brand small{display:block;font-family:var(--f-body);font-weight:400;font-size:13px;color:var(--muted);margin-top:4px}
+.search{position:relative}
+.search input{width:100%;padding:9px 12px 9px 34px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);font:inherit;font-size:15px}
+.search svg{position:absolute;left:10px;top:50%;transform:translateY(-50%);width:16px;height:16px;stroke:var(--muted);fill:none}
+.prog{font-size:13px;color:var(--muted)}
+.prog .bar{height:6px;border-radius:3px;background:var(--sunken);margin-top:6px;overflow:hidden}
+.prog .bar i{display:block;height:100%;background:var(--accent);width:0;transition:width .3s}
+.navlabel{font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);margin:0 0 6px}
+.nav{display:flex;flex-direction:column;gap:2px;list-style:none;margin:0;padding:0}
+.nav button{width:100%;text-align:left;background:none;border:0;padding:8px 10px;border-radius:8px;cursor:pointer;display:grid;grid-template-columns:10px 1fr auto;gap:10px;align-items:center;font-size:15px}
+.nav button:hover{background:var(--sunken)}
+.nav button[aria-current="true"]{background:var(--sunken);font-weight:700}
+.nav .dot{width:10px;height:10px;border-radius:50%;background:var(--c)}
+.nav .sub{display:block;font-size:12px;color:var(--muted);font-weight:400}
+.nav .chk{font-size:13px;color:var(--good)}
+/* Main */
+main{min-width:0;padding-block:28px 64px;padding-left:max(16px, 4vw);padding-right:max(16px, env(safe-area-inset-right, 0px), 4vw)}
+.wrap{max-width:860px;margin:0 auto;display:flex;flex-direction:column;gap:32px}
+.eyebrow{font-size:12px;letter-spacing:.09em;text-transform:uppercase;color:var(--c, var(--muted));font-weight:700}
+.mhead{display:flex;flex-direction:column;gap:10px}
+.mhead h1{font-size:clamp(28px,4vw,40px)}
+.question{font-size:19px;color:var(--muted);font-style:italic;margin:0}
+.headrow{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between}
+.btn{border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:8px 14px;cursor:pointer;font-size:14px}
+.btn:hover{border-color:var(--accent)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink);font-weight:700}
+.btn.done{background:var(--good-bg);border-color:var(--good);color:var(--good);font-weight:700}
+/* Continuum */
+.continuum{display:grid;grid-template-columns:1fr 1fr;gap:0;border-radius:var(--r);overflow:hidden;border:1px solid var(--line)}
+.continuum .rail{grid-column:1/-1;height:8px;background:linear-gradient(90deg,var(--c),color-mix(in srgb,var(--c) 15%,var(--surface)))}
+.continuum div.z{padding:12px 14px;background:var(--surface);font-size:15px}
+.continuum div.z+div.z{border-left:1px dashed var(--line);text-align:right}
+.continuum b{display:block;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+section h2{font-size:21px;margin-bottom:12px;display:flex;align-items:baseline;gap:10px}
+section h2 .count{font-family:var(--f-mono);font-size:13px;color:var(--muted);font-weight:400}
+/* Takeaway cards */
+.cards{display:flex;flex-direction:column;gap:8px}
+details.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r)}
+details.card[open]{border-color:color-mix(in srgb,var(--c) 45%,var(--line))}
+details.card summary{cursor:pointer;list-style:none;padding:13px 16px;display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:start;font-weight:700}
+details.card summary::-webkit-details-marker{display:none}
+details.card summary .n{font-family:var(--f-mono);font-size:13px;color:var(--c);padding-top:2px;font-weight:500}
+details.card summary .chev{transition:transform .2s;color:var(--muted)}
+details.card[open] summary .chev{transform:rotate(90deg)}
+details.card .body{padding:0 16px 14px 46px;display:flex;flex-direction:column;gap:8px}
+details.card .body p{margin:0;max-width:65ch}
+.src{font-family:var(--f-mono);font-size:12px;color:var(--muted);text-decoration:none;align-self:flex-start;border-bottom:1px dotted var(--muted)}
+.src:hover{color:var(--accent);border-color:var(--accent)}
+.flash{animation:flash 1.6s ease-out}
+@keyframes flash{0%{box-shadow:0 0 0 3px var(--accent)}100%{box-shadow:0 0 0 0 transparent}}
+/* Concepts */
+dl.concepts{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px;margin:0}
+dl.concepts div{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:12px 14px}
+dl.concepts dt{font-weight:700;margin-bottom:2px}
+dl.concepts dd{margin:0;color:var(--muted);font-size:15px}
+/* Diagram */
+.diagram{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px;overflow-x:auto}
+.diagram svg{display:block;min-width:600px;width:100%;height:auto}
+.diagram figcaption{font-size:14px;color:var(--muted);margin-top:8px}
+svg .bx{fill:var(--sunken);stroke:var(--line)}
+svg .bxc{fill:color-mix(in srgb,var(--c) 14%,var(--surface));stroke:var(--c)}
+svg .t{fill:var(--ink);font-family:var(--f-body);font-size:14px}
+svg .tb{fill:var(--ink);font-family:var(--f-body);font-size:14px;font-weight:700}
+svg .tm{fill:var(--muted);font-family:var(--f-body);font-size:12px}
+svg .ln{stroke:var(--muted);stroke-width:1.5;fill:none}
+svg .lc{stroke:var(--c);stroke-width:2.5;fill:none}
+svg .dash{stroke-dasharray:5 4}
+svg .ac{fill:var(--muted)}
+svg .acc{fill:var(--c)}
+/* Snippets */
+.snips{display:flex;flex-direction:column;gap:10px}
+.snip{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.snip header{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:8px 12px;border-bottom:1px solid var(--line);font-size:13px;color:var(--muted);flex-wrap:wrap}
+.snip pre{margin:0;padding:12px 14px;font-family:var(--f-mono);font-size:13.5px;white-space:pre-wrap;word-break:break-word;background:var(--sunken)}
+.copy{font-size:12px;padding:4px 10px}
+/* Pitfalls & gaps */
+ul.pit{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:8px}
+ul.pit li{padding:10px 14px;border-radius:8px;background:var(--bad-bg);color:var(--ink);display:grid;grid-template-columns:auto 1fr;gap:10px}
+ul.pit li::before{content:"✕";color:var(--bad);font-weight:700}
+.gap{background:var(--warn-bg);color:var(--ink);border-radius:8px;padding:10px 14px;font-size:15px}
+.gap b{color:var(--warn)}
+/* Quiz */
+.quiz{display:flex;flex-direction:column;gap:14px}
+.q{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px}
+.q p.stem{margin:0 0 10px;font-weight:700}
+.opts{display:flex;flex-direction:column;gap:6px}
+.opts button{text-align:left;border:1px solid var(--line);background:var(--bg);border-radius:8px;padding:9px 12px;cursor:pointer;font-size:15px}
+.opts button:hover:not(:disabled){border-color:var(--accent)}
+.opts button:disabled{cursor:default}
+.opts button.right{background:var(--good-bg);border-color:var(--good)}
+.opts button.wrong{background:var(--bad-bg);border-color:var(--bad)}
+.expl{margin-top:10px;font-size:15px;padding:10px 12px;border-radius:8px;background:var(--sunken)}
+.score{font-family:var(--f-mono);font-size:13px;color:var(--muted)}
+/* Flashcards */
+.fc-tools{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.fc-tools select{padding:8px 10px;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font:inherit;font-size:14px}
+.fcard{perspective:1200px;cursor:pointer;min-height:260px}
+.fcard .inner{position:relative;width:100%;min-height:260px;transition:transform .5s;transform-style:preserve-3d}
+.fcard.flipped .inner{transform:rotateY(180deg)}
+.fcard .face{position:absolute;inset:0;backface-visibility:hidden;border-radius:14px;border:1px solid var(--line);background:var(--surface);display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:28px;gap:10px}
+.fcard .face.back{transform:rotateY(180deg);background:var(--sunken)}
+.fcard .term{font-family:var(--f-display);font-size:clamp(26px,5vw,36px);font-weight:700}
+.fcard .def{font-size:18px;max-width:46ch}
+.fcard .tag{font-size:12px;letter-spacing:.09em;text-transform:uppercase;font-weight:700;color:var(--c)}
+.fc-nav{display:flex;justify-content:space-between;align-items:center;gap:10px}
+/* Cheat sheet */
+.tbl{overflow-x:auto;border:1px solid var(--line);border-radius:var(--r);background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:720px;font-size:14.5px}
+th,td{padding:10px 12px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line)}
+th{font-size:12px;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);background:var(--sunken)}
+tr:last-child td{border-bottom:0}
+td .pname{font-weight:700;color:var(--c);display:block}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px}
+.panel h3{font-size:16px;margin-bottom:8px}
+.panel ul{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:4px;font-size:15px}
+/* Search results */
+.res{display:flex;flex-direction:column;gap:8px}
+.res button{text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:12px 14px;cursor:pointer;display:flex;flex-direction:column;gap:4px}
+.res button:hover{border-color:var(--accent)}
+.res .kind{font-size:12px;color:var(--c);font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+mark{background:color-mix(in srgb,var(--accent) 25%,transparent);color:inherit;border-radius:2px}
+.intro p{max-width:65ch;margin:0}
+.overview{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+.ovc{text-align:left;background:var(--surface);border:1px solid var(--line);border-top:4px solid var(--c);border-radius:var(--r);padding:14px 16px;cursor:pointer;display:flex;flex-direction:column;gap:6px}
+.ovc:hover{border-color:var(--c)}
+.ovc h3{font-size:18px}
+.ovc span{font-size:14px;color:var(--muted)}
+@media (max-width:860px){
+  .app{grid-template-columns:minmax(0,1fr)}
+  .side{position:static;height:auto;border-right:0;border-bottom:1px solid var(--line);padding-right:max(16px, env(safe-area-inset-right, 0px))}
+  .nav{flex-direction:row;overflow-x:auto;gap:6px;padding-bottom:4px}
+  .nav li{flex:0 0 auto}
+  .nav button{grid-template-columns:10px auto auto;white-space:nowrap;border:1px solid var(--line)}
+  .nav .sub{display:none}
+  .continuum{grid-template-columns:1fr}
+  .continuum div.z+div.z{border-left:0;border-top:1px dashed var(--line);text-align:left}
+  details.card .body{padding-left:16px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+
+<div class="app">
+  <aside class="side">
+    <div class="brand">Claude 101<small>Claude Academy · study guide</small></div>
+    <div class="search">
+      <svg viewBox="0 0 24 24" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>
+      <input id="q" type="search" placeholder="Search the course…" aria-label="Search the course" autocomplete="off">
+    </div>
+    <div class="prog"><span id="progtxt">0 of 8 modules done</span><div class="bar"><i id="progbar"></i></div></div>
+    <div>
+      <p class="navlabel">Modules</p>
+      <ul class="nav" id="navm"></ul>
+    </div>
+    <div>
+      <p class="navlabel">Practice &amp; review</p>
+      <ul class="nav" id="navp"></ul>
+    </div>
+  </aside>
+  <main><div class="wrap" id="view"></div></main>
+</div>
+
+<script>
+const STORE="c101";
+/* ---------- storage ---------- */
+function load(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}}
+function save(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
+let done=new Set(load(STORE+"-done",[]));
+
+/* ---------- helpers ---------- */
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+function srcLink(m,lesson){
+  if(typeof lesson==="string") return `<span class="src">${esc(lesson)}</span>`;
+  const [name,slug]=LESSONS[lesson];
+  return `<a class="src" href="${BASE+slug}" target="_blank" rel="noopener" title="Local notes: ${m.file}">${m.file} · L${lesson} ${esc(name)} ↗</a>`;
+}
+function cvar(m){return `--c:var(${m.c})`}
+
+/* ---------- diagrams ---------- */
+const AR=`<defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" class="ac"/></marker><marker id="ahc" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" class="acc"/></marker></defs>`;
+const BASE="https://academy.claude.com/courses/claude-101/";
+const LESSONS={1:["What is Claude?","what-is-claude"],2:["Your first conversation with Claude","your-first-conversation-with-claude"],3:["Getting better results","getting-better-results"],4:["How you'll work with Claude on your desktop","claude-desktop-app-chat-cowork-code"],5:["Introduction to projects","introduction-to-projects"],6:["Creating with artifacts","creating-with-artifacts"],7:["Working with skills","working-with-skills"],8:["Connecting your tools","connecting-your-tools"],9:["Enterprise search","enterprise-search"],10:["Research for deep dives","research-mode-for-deep-dives"],11:["Claude in action: use-cases by role","claude-in-action-use-cases-by-role"],12:["Other ways to work with Claude","other-ways-to-work-with-claude"],13:["What's next?","what-s-next"]};
+const NOTES={d1:"your notes · training/day-01/notes.md",d2:"your notes · training/day-02/notes.md",cs:"your notes · training/cheatsheet.md",readme:"claude-101/README.md · course in one page"};
+
+const M=[
+{id:"start",c:"--p1",short:"Getting started",sub:"Meet Claude · L1–2",eyebrow:"Lessons 1–2 · Meet Claude",title:"What Claude is and your first conversation",file:"01-meet-claude.md",
+ question:"What is Claude, and how do I talk to it?",
+ take:[
+  ["A thinking partner, not only a chatbot","Claude is an AI assistant for life and work, trained with Constitutional AI. It summarizes, searches, writes, answers, codes and analyzes, and it is steerable: you direct its personality, tone and behavior.",1],
+  ["You bring context, Claude brings intelligence","Talk to it like a coworker: natural, short, conversational.",2],
+  ["Good prompt = stage + task + rules","Set the stage (role, goal, context), define the task (write, analyze, build), specify the rules (style, tone, format, length, examples).",2],
+  ["Add context and pick the right power","Upload files (PDF, DOCX, CSV, TXT, PNG, JPEG), turn on web search or connected sources, choose a model (Opus for the most complex tasks, Sonnet as everyday default), and use extended thinking only for hard problems.",2],
+  ["The real power is the back-and-forth","Ask follow-ups, give feedback, redirect, edit and resend your message, or restart in a new chat. Memory and skills personalize it over time.",2],
+  ["From your notes: rules matter most","A Rules block with a hard cap and a format gave the biggest jump in every Day 1 task (e.g. Task 1 went from ~20 lines with the cause stated as fact to 5 honest lines).",NOTES.d1]
+ ],
+ concepts:[
+  ["Constitutional AI","Training with principles that help Claude avoid harmful or unethical output and behave safely and transparently.",1],
+  ["Thinking","Lets Claude reason step by step before answering; slower, for hard problems.",1],
+  ["Learning mode","Guides your reasoning instead of giving answers.",1],
+  ["Context window","200K+ tokens (about 500 pages), up to 1M on some paid plans and models.",1],
+  ["Opus vs. Sonnet","Opus for the most complex tasks; Sonnet is the recommended everyday default. Changing model starts a new chat.",2],
+  ["Memory","Saves role, preferences and decisions across chats; on by default on Free/Pro/Max, off by default on Team/Enterprise.",2],
+  ["Instructions for Claude","Settings > Account preference applied to every chat.",2]
+ ],
+ snips:[
+  ["Stage · Task · Rules template (Lesson 2)","I'm [role] working on [goal]. Context: [what Claude should know].\nTask: [write / analyze / build ...].\nRules: [tone], [format], [length cap], [example if useful].",2,"The three parts of a good prompt."],
+  ["From your notes: bug summary (Day 1, 5/5)","I'm a developer who just joined the e-commerce agent project, and I need to paste the summary into the ticket. Summarize the bug in the ticket below.\nRules: max 5 lines; label each line Known (shown in the ticket) or Suspected (a guess); no fixes yet.\n<paste ticket>",NOTES.d1,"Rules block + reader + purpose."],
+  ["Settings path","Settings > Account > Instructions for Claude",2,"Preferences for every chat."],
+  ["Settings path","Settings > Memory",2,"Manage what Claude remembers."]
+ ],
+ pit:[
+  "Treating Claude like a search box when the task needs a thinking partner.",
+  "Leaving extended thinking on for simple tasks: it's slower.",
+  "Switching model mid-chat and expecting the context to carry over (it starts a new chat).",
+  "Relying on the deprecated “Use style” menu shown in the video."
+ ],
+ gaps:["Lesson 1's interactive (search box vs. thinking partner) is only summarized.","Videos were not read."],
+ diagram:"start",
+ quiz:[
+  ["What does the course say you bring to a conversation with Claude?",["The intelligence","Context and expertise","Only the question","Nothing; Claude knows your work"],1,"Claude brings the intelligence; you bring the context and expertise.",2],
+  ["The three parts of a good prompt are…",["Role, model, length","Set the stage, define the task, specify the rules","Upload, search, think","Ask, wait, accept"],1,"Lesson 2.",2],
+  ["Which model is the recommended everyday default?",["Opus","Sonnet","Haiku","Any; there is no default"],1,"Opus is for the most complex tasks.",2],
+  ["When should you leave extended thinking off?",["For hard math","For simple tasks","For multi-step analysis","Never"],1,"It helps hard problems but is slower.",2],
+  ["Memory on Team/Enterprise plans is…",["On by default","Off by default; an Owner must allow it","Not available","Only on mobile"],1,"On by default on Free/Pro/Max.",2]
+ ]},
+{id:"better",c:"--p1",short:"Better results",sub:"Meet Claude · L3",eyebrow:"Lesson 3 · Meet Claude",title:"Getting better results",file:"01-meet-claude.md",
+ question:"How do I fix a weak answer and know when to trust Claude?",
+ take:[
+  ["Five common problems, five fixes","Too generic → add audience, role, constraints. Too long/short → state the length. Wrong format → show an example. Confident but wrong → verify, ask for sources, use web search. Wrong tone → describe it or give a sample.",3],
+  ["First draft is a starting point","Give specific feedback (“cut the first two paragraphs”), not only “shorter”. If the chat is off track, start a new one with a clearer prompt.",3],
+  ["Evals: simple tests on your own work","Collect 5–10 examples of a task, write prompts with your usual context, compare Claude's output with yours, then refine, add examples, or decide human review is needed.",3],
+  ["The delegation-diligence loop","Re-run work you already understand and check each answer against known results. If Claude matches them, trust it for similar work; if not after several tries, don't delegate that task. You stay accountable and open about AI's role.",3],
+  ["From your notes: check one claim against the source","Claude said “every message in your dump has an id”, but the AIMessage at issue-1.md:31 has none. You caught it by reading the line, not by the tone.",NOTES.d1]
+ ],
+ concepts:[
+  ["Eval","A simple test: run Claude on examples you already did and compare.",3],
+  ["Delegation-diligence loop","Validate AI on known results before delegating similar work; stay accountable.",3],
+  ["4D Framework","Delegation, Description, Discernment, Diligence. The 3-part prompt is Description; troubleshooting is Discernment and Diligence.",3]
+ ],
+ snips:[
+  ["Length rule (Lesson 3)","Keep it under 100 words.",3,"Claude guesses length unless you state it."],
+  ["From your notes: evidence rule (cheatsheet)","For each claim, point to the line that supports it, or label it \"general\"; if unsure, say so.",NOTES.cs,"Makes Claude separate evidence from textbook."],
+  ["Eval steps (Lesson 3)","1. Collect 5–10 examples of a task I do often.\n2. Write prompts with the context I'd normally have.\n3. Compare Claude's output with mine: key info? tone? missing?\n4. Refine, add examples, or decide human review is needed.",3,"Test before you trust."]
+ ],
+ pit:[
+  "Saying only “shorter” or “better” instead of specific feedback.",
+  "Trusting confident niche facts without verifying.",
+  "Adding a new rule and forgetting to repeat the length cap (your Day 1 v3 drafts all went over).",
+  "Delegating a task Claude couldn't match on known results after several tries."
+ ],
+ gaps:["Videos were not read; the program-director example comes from the notes' summary."],
+ diagram:"better",
+ quiz:[
+  ["The answer is too generic. Best fix?",["Ask again","Add audience, role and constraints","Switch to Opus","Turn on Memory"],1,"Lesson 3 problems table.",3],
+  ["Claude returns the right content in the wrong structure. Fix?",["Show an example or describe the structure","Ask for sources","Start a new chat","Make it shorter"],0,"It knows what, not how.",3],
+  ["How many examples does the course suggest collecting for an eval?",["1","5–10","50+","None"],1,"Lesson 3 evals.",3],
+  ["Claude can't match your known results after several tries. What then?",["Delegate anyway","Don't delegate that task","Use a longer prompt forever","Hide AI's role"],1,"The delegation-diligence loop.",3],
+  ["The chat has drifted off track. What does the course suggest?",["Keep adding corrections","Start a new chat with a clearer prompt","Switch models mid-chat","Accept it"],1,"Lesson 3 iteration mindset.",3]
+ ]},
+{id:"desktop",c:"--p1",short:"Desktop: Chat · Cowork · Code",sub:"Meet Claude · L4",eyebrow:"Lesson 4 · Meet Claude",title:"Three shapes of work on your desktop",file:"01-meet-claude.md",
+ question:"Which shape is this work, before I start?",
+ take:[
+  ["Work comes in three shapes","Turn by turn (Chat), hand off (Cowork), build software (Code tab). Know which one you're in before you start. In the new Claude experience both turn-by-turn and hand-off happen in any conversation.",4],
+  ["Turn by turn when the answer changes the next question","Stay hands-on for drafting, editing, thinking aloud, or quick tasks. Desktop extras: quick entry, screenshots/window sharing, dictation, desktop connectors.",4],
+  ["Hand off for multi-step, finished files, many tools or a schedule","Claude asks scoping questions, shows a plan you can steer, and asks approval for actions like sending email.",4],
+  ["Cowork features","Local folder access, scheduled tasks, subagents (parallel workers, one deliverable), projects, Claude in Chrome, computer use (research preview), plugins. Pro, Max, Team, Enterprise.",4],
+  ["Code tab: local or cloud","A folder on your machine or a GitHub repo (cloud sessions continue when the app is closed). Permission modes: manually approve, accept edits, plan.",4]
+ ],
+ concepts:[
+  ["Turn by turn","You and Claude go back and forth; thinking happens in the exchange (Chat).",4],
+  ["Hand off","You describe an outcome; Claude plans, works and returns a result (Cowork).",4],
+  ["Subagents","Parallel background workers producing one final deliverable.",4],
+  ["Plugins","Role bundles of skills, connectors and agents (Customize > Plugins).",4],
+  ["Permission modes","Code tab: manually approve, accept edits, plan.",4]
+ ],
+ snips:[
+  ["Quick entry (Mac)","Double-tap Option",4,"Opens Claude quick entry on the desktop app."],
+  ["Plugins path","Customize > Plugins",4,"Install role bundles."],
+  ["Hand-off outcome (Lesson 4 reflection)","Outcome: [the finished result I want, e.g. a file saved in this folder]. Steps you may need: [tools, sources]. Ask me scoping questions first, then show me your plan.",4,"Write the outcome, not one question at a time."]
+ ],
+ pit:[
+  "Feeding a whole task to Claude one question at a time instead of handing it off.",
+  "Handing off quick, exploratory work that needs your thinking in the loop.",
+  "Expecting scheduled tasks that need local files to run with the app closed."
+ ],
+ gaps:["Code tab details are deferred to the Claude Code in Action course."],
+ diagram:"desktop",
+ quiz:[
+  ["The answer changes your next question. Which shape?",["Hand off","Turn by turn","Build software","Scheduled task"],1,"Use turn-by-turn (Chat).",4],
+  ["You want finished files saved in a folder after many steps. Which shape?",["Turn by turn","Hand off (Cowork)","Code tab","Memory"],1,"Lesson 4.",4],
+  ["What are subagents?",["Extra models","Parallel background workers with one final deliverable","Connectors","Skills"],1,"Cowork feature.",4],
+  ["Which is NOT a Code tab permission mode?",["Manually approve","Accept edits","Plan","Auto-publish"],3,"The three: manual, accept edits, plan.",4],
+  ["Does Cowork send an email without asking?",["Yes, always","No, it asks approval for actions like sending email","Only on Free","Only with Memory on"],1,"You stay in control.",4]
+ ]},
+{id:"projects",c:"--p2",short:"Projects",sub:"Organizing · L5",eyebrow:"Lesson 5 · Organizing work",title:"Projects",file:"02-organizing-work.md",
+ question:"Where does ongoing context live?",
+ take:[
+  ["A self-contained workspace for ongoing work","Its own chats, knowledge base, instructions and memory. Not for one-off questions.",5],
+  ["Knowledge and instructions apply to every chat","Project knowledge is considered in every chat so you don't re-upload. Context uploaded in a single chat stays out of the knowledge base.",5],
+  ["Scales with RAG","Near the context limit, Claude searches the files and pulls only what's relevant (up to about 10x capacity); an indicator shows when RAG is on.",5],
+  ["Share on Team and Enterprise","Can view (use, chat, no changes), Can edit (instructions, knowledge, members), Owner (everything, including visibility).",5],
+  ["Best practices","Start focused, keep knowledge current, write specific instructions, name files descriptively, refer to documents by name.",5]
+ ],
+ concepts:[
+  ["Project knowledge","Files Claude considers in every chat of the project.",5],
+  ["Project instructions","Rules applied to every chat, alongside user preferences.",5],
+  ["RAG (in projects)","Searching project files and pulling only relevant parts when knowledge nears the context limit.",5],
+  ["Project description","For people only; Claude does not see it.",5]
+ ],
+ snips:[
+  ["Create path","Sidebar > Projects > + New Project",5,"Name, short description, private or shared."],
+  ["Instruction automation (Lesson 5)","When I upload a transcript, make a summary with this template: [template].",5,"Project instructions can automate repeat steps."],
+  ["Instruction rule example (Lesson 5)","Always end with a call to action.",5,"Specific requirements belong in instructions."]
+ ],
+ pit:[
+  "Uploading a file in one chat and expecting other project chats to see it.",
+  "Letting old documents sit in knowledge: old docs give old answers.",
+  "Naming files “report.pdf” instead of “Q4-2025-Sales-Report.pdf”.",
+  "Writing the project description for Claude (it can't see it)."
+ ],
+ gaps:["Exact RAG thresholds beyond “about 10x capacity” are not in the sources."],
+ diagram:"projects",
+ quiz:[
+  ["Who sees the project description?",["Claude","People only","Nobody","Only the Owner"],1,"Claude does not see it.",5],
+  ["A file uploaded inside one project chat is…",["Added to knowledge","Kept out of the knowledge base","Shared org-wide","Deleted"],1,"Use the files menu to add knowledge.",5],
+  ["What happens when knowledge nears the context limit?",["Upload fails","Claude switches to RAG and pulls relevant parts","Older files are deleted","The project splits"],1,"Up to about 10x capacity.",5],
+  ["Which permission can change instructions and manage members?",["Can view","Can edit","Guest","Nobody"],1,"Owner can also control visibility.",5],
+  ["When is a project a good fit?",["One-off question","Reference material used repeatedly, fixed rules, or a shared team base","A quick fact","A single image description"],1,"Lesson 5.",5]
+ ]},
+{id:"artifacts",c:"--p2",short:"Artifacts",sub:"Organizing · L6",eyebrow:"Lesson 6 · Organizing work",title:"Creating with artifacts",file:"02-organizing-work.md",
+ question:"Where do outputs I keep and share live?",
+ take:[
+  ["Standalone outputs, saved in the Artifacts tab","Documents, decks, designs, dashboards, prototypes. The chat is where you create; the tab is where outputs live. Say “Create this as an artifact” to be sure.",6],
+  ["Four types, convertible","Claude Design (pages, mockups, prototypes), Slides (present, export), Docs (co-edit, comments, charts from connected data), other artifacts (charts, interactive pages, code). “Turn this doc into a deck” works.",6],
+  ["Artifact vs. file creation","An artifact opens, updates and is shared by link inside Claude; file creation gives a downloadable Word, Excel, PowerPoint or PDF.",6],
+  ["Change it three ways","Edit directly, comment on the exact element (@-mention Claude in a doc), or just ask in the conversation.",6],
+  ["Private until shared","Share with view/comment/edit or by link. Recipients need a Claude account; Team/Enterprise links stay inside the org unless External sharing is on. Only the artifact is shared, not your chat.",6],
+  ["From your notes: only when someone else reads it","A daily status artifact wasn't worth it; notes files stay the source of truth. Make an artifact when someone else reads it.",NOTES.d1]
+ ],
+ concepts:[
+  ["Artifact","A standalone output in a window next to the chat, saved in the Artifacts tab.",6],
+  ["Artifacts tab","Where all artifacts live.",6],
+  ["File creation","Downloadable Word, Excel, PowerPoint or PDF files (powered by skills).",6],
+  ["External sharing","An Owner setting that lets Team/Enterprise links leave the org.",6]
+ ],
+ snips:[
+  ["Make sure it's an artifact (Lesson 6)","Create this as an artifact.",6,""],
+  ["Ask for the deliverable (Lesson 6 tip)","Turn the Q3 results into a one-page doc for [end user], with [inputs, charts, warnings].",6,"Deliverable + specifics + end user."],
+  ["Convert (Lesson 6)","Turn this doc into a deck.",6,""]
+ ],
+ pit:[
+  "Asking for content when you want a deliverable.",
+  "Building before Claude understands the problem: build after the conversation.",
+  "Expecting connected-data charts to update themselves (they're snapshots; ask for a refresh).",
+  "Trying to change sharing on mobile (needs desktop or web)."
+ ],
+ gaps:["Admin settings for artifacts are summarized only."],
+ diagram:"artifacts",
+ quiz:[
+  ["Where are all artifacts saved?",["Downloads folder","The Artifacts tab","Project knowledge","Memory"],1,"Lesson 6.",6],
+  ["You need a .xlsx file to email. Artifact or file creation?",["Artifact","File creation","Either, no difference","Neither"],1,"File creation gives downloadable files.",6],
+  ["What does sharing an artifact share?",["The whole chat","Only the artifact","Your memory","Your project"],1,"Not your chat.",6],
+  ["Charts in a Doc from connected data are…",["Live forever","Snapshots; ask to refresh","Static images only","Not possible"],1,"Lesson 6.",6],
+  ["Which is NOT a way to change an artifact?",["Edit directly","Comment on an element","Ask in the conversation","Email it to Claude"],3,"Three ways, mix freely.",6]
+ ]},
+{id:"skills",c:"--p2",short:"Skills",sub:"Organizing · L7",eyebrow:"Lesson 7 · Organizing work",title:"Working with skills",file:"02-organizing-work.md",
+ question:"How do I make Claude do a task the same way every time?",
+ take:[
+  ["A folder Claude loads when needed","Instructions, scripts and resources for a specialized task done the same way every time. Document creation (Excel, Word, PowerPoint, PDF) runs on skills.",7],
+  ["Anthropic skills and custom skills","Anthropic skills are built in and used automatically; custom skills are yours or your organization's (brand rules, note formats, analysis methods).",7],
+  ["Create a custom skill by chatting","Tell Claude the skill, answer its interview, upload templates and samples, click Save skill, check it under Customize.",7],
+  ["Security: skills can contain code","Install only from trusted sources and review outside skills first. Custom skills stay private until you share.",7],
+  ["Projects = what, skills = how","Projects store knowledge; skills define a process. They work together.",7],
+  ["From your notes: skill + project together","writing-training-reports is the skill (does the task); a “Training Report” project would hold past reports (the knowledge).",NOTES.d2]
+ ],
+ concepts:[
+  ["Skill","A folder of instructions, scripts and resources Claude loads for a specialized task.",7],
+  ["Anthropic skills","Built and maintained by Anthropic; used automatically.",7],
+  ["Custom skills","Your or your organization's own skills.",7],
+  ["Code execution and file creation","The capability setting that skills need.",7]
+ ],
+ snips:[
+  ["Enable capability","Settings > Capabilities > Code execution and file creation",7,"Team/Enterprise: an Owner controls this."],
+  ["Manage skills","Customize > Skills",7,"Toggle each skill on or off."],
+  ["Upload a skill","Customize > Skills > Add > Upload skill",7,"If a saved skill doesn't appear."],
+  ["Use a skill (Lesson 7)","Create an Excel sheet with monthly expenses and totals.",7,"Just ask; the skill shows in Claude's reasoning."]
+ ],
+ pit:[
+  "Installing skills from untrusted sources without reviewing them.",
+  "Expecting an upload to edit the original file (it creates a new version).",
+  "Putting knowledge in a skill that belongs in a project, or vice versa."
+ ],
+ gaps:["Skill file format details are ⚠ not covered in sources."],
+ diagram:"skills",
+ quiz:[
+  ["What is a skill?",["A chat history","A folder of instructions, scripts and resources loaded when needed","A connector","A model"],1,"Lesson 7.",7],
+  ["Which setting must be on to use skills?",["Memory","Code execution and file creation","Web search","Extended thinking"],1,"Settings > Capabilities.",7],
+  ["Projects vs. skills, in short?",["Same thing","Projects = what (knowledge), skills = how (process)","Skills store files","Projects run code"],1,"They work together.",7],
+  ["Why review outside skills first?",["They're slow","They can contain code","They cost money","They delete chats"],1,"Security.",7],
+  ["Who sees your custom skills?",["Everyone in the org","Nobody until you share","Anthropic staff","All Claude users"],1,"Lesson 7.",7]
+ ]},
+{id:"reach",c:"--p3",short:"Connectors · Search · Research",sub:"Expanding reach · L8–10",eyebrow:"Lessons 8–10 · Expanding reach",title:"Connectors, Enterprise search and Research",file:"03-expanding-reach.md",
+ question:"How do I bring my tools, company knowledge and the web in?",
+ take:[
+  ["Connectors reach where work lives","Powered by MCP, an open standard (“like USB-C for AI”). Web connectors for cloud services; desktop extensions for local files, browser and native apps.",8],
+  ["A connection gives Claude somewhere to look","It doesn't make Claude search by itself, and Claude only sees what you can see. Permissions are scoped and you can disconnect any time.",8],
+  ["Enterprise search: “Ask {Your Org}”","Team/Enterprise, admin-enabled. A ready-made company project for finding and combining knowledge across tools, with cited sources. Data isn't indexed or stored separately.",9],
+  ["Research: a systematic investigator","Paid plans. Plans, searches many times, synthesizes web and connected sources, cites every claim. Minutes, not seconds.",10],
+  ["Pick the right tool","Quick fact → web search. Hard reasoning without outside info → Thinking. Multi-source report → Research. Company knowledge → Enterprise search.",10]
+ ],
+ concepts:[
+  ["MCP","Model Context Protocol: the open standard behind connectors.",8],
+  ["Web connector","Links cloud services (Drive, Gmail, Slack, Notion...).",8],
+  ["Desktop extension","Runs locally via the Desktop app for local files, browser control, native apps.",8],
+  ["Custom connector","Added when the directory has no entry; install only from trusted sources.",8],
+  ["Enterprise search","An org-wide “Ask {Org}” project over company sources, with citations.",9],
+  ["Research","Multi-step, multi-source investigation ending in a cited report.",10]
+ ],
+ snips:[
+  ["Connect a web connector","Customize > Connectors  (or + in a chat > Connectors)",8,"Connect > sign in > grant permissions."],
+  ["Test a connector (Lesson 8)","Can you access my [tool]?",8,"Step 5 of setup."],
+  ["Desktop extension","Desktop app > Settings > Extensions > Install",8,""],
+  ["Research prompt shape (Lesson 10)","Goal: [specific question]. Structure: [sections]. Constraints: [budget, time, region]. Pull context from my Google Drive and include my recent emails. First, help me improve this prompt.",10,"Specific goal, structure, constraints, steering."]
+ ],
+ pit:[
+  "Assuming a connected tool means Claude will search it without being asked.",
+  "Using Research for a single quick fact (web search is enough).",
+  "Installing custom connectors from untrusted sources.",
+  "Vague Research prompts like “tell me about EVs”."
+ ],
+ gaps:["Lesson 8 and 10 interactives are only summarized.","Enterprise search is Team/Enterprise only; setup steps weren't tested."],
+ diagram:"reach",
+ quiz:[
+  ["What protocol powers connectors?",["HTTP","MCP","SMTP","OAuth only"],1,"Model Context Protocol, “like USB-C for AI”.",8],
+  ["After connecting Gmail, what can Claude see?",["Everyone's mail","Only what you can see","Nothing","Only attachments"],1,"Scoped to your permissions.",8],
+  ["One quick fact from one source. Which tool?",["Research","Web search","Enterprise search","Thinking"],1,"Lesson 10 picker.",10],
+  ["Deep reasoning on a logic bug with no outside info. Which tool?",["Research","Web search","Thinking","Enterprise search"],2,"Lesson 10 picker.",10],
+  ["Enterprise search answers come with…",["No sources","Cited sources","Only links to Google","A PDF"],1,"Lesson 9.",9]
+ ]},
+{id:"together",c:"--p4",short:"Putting it together",sub:"L11–13",eyebrow:"Lessons 11–13 · Putting it together",title:"Use cases, other surfaces and what's next",file:"04-putting-it-together.md",
+ question:"Where else can I use Claude, and what do I try first?",
+ take:[
+  ["Pick 2–3 role use cases to try now","General (status reports, feedback patterns, brand skill), Sales, Marketing, Finance, HR, Legal, Research. Each has a guide in the Use Case Gallery.",11],
+  ["Claude is the intelligence; Claude.ai is one place","Claude Code (software), Claude Tag (Slack), Claude Design (UI prototypes), Claude for Excel/PowerPoint/Word/Outlook (sidebars), Claude in Chrome (browser).",12],
+  ["Claude in Chrome: low-risk tasks on trusted sites","Paid plans only. It asks before high-risk actions (buying, sharing personal data); financial and adult sites are blocked by default.",12],
+  ["Start simple","Pick one recurring task this week (an email, meeting notes, a spreadsheet), try it, iterate, learn what works.",13],
+  ["A collaborator, not a replacement","Bring your expertise, context and judgment. Next courses: AI Fluency, AI Capabilities and Limitations, Claude Code in Action, Introduction to Claude Cowork.",13]
+ ],
+ concepts:[
+  ["Claude Code","Agentic coding: build features, debug, explore codebases, automate chores.",12],
+  ["Claude Tag","Claude inside Slack: draft, summarize, prep, hand bugs to Claude Code.",12],
+  ["Claude Design","Brief, sketch or screenshot to UI prototype; hand off to Claude Code.",12],
+  ["Claude for Microsoft 365","Sidebars in Excel, PowerPoint, Word and Outlook (beta).",12],
+  ["Claude in Chrome","Browser sidebar: summarize, draft, fill forms, test sites; paid plans.",12],
+  ["Use Case Gallery","Step-by-step guides for role use cases.",11]
+ ],
+ snips:[],
+ pit:[
+  "Using Claude in Chrome for high-risk tasks or untrusted sites.",
+  "Trying everything at once instead of one recurring task this week.",
+  "Treating Claude as a replacement rather than a collaborator."
+ ],
+ gaps:["Lesson 11 lists use cases only; the Use Case Gallery guides were not read.","Lesson 12 has no exercise or reflection.","The course quiz is on the course page and not covered.","Your own notes for Lessons 8–13 are still a TODO in training/cheatsheet.md."],
+ diagram:"together",
+ quiz:[
+  ["How many use cases does Lesson 11 suggest trying right away?",["All of them","2–3","None","10"],1,"Lesson 11.",11],
+  ["Which surface drafts replies and summarizes threads in Slack?",["Claude Design","Claude Tag","Claude for Word","Claude in Chrome"],1,"Lesson 12.",12],
+  ["Claude in Chrome is available on…",["Free only","Paid plans only","Enterprise only","Every plan"],1,"Not Free.",12],
+  ["Tracing #REF! and circular errors fits best in…",["Claude for Excel","Claude Tag","Claude Design","Research"],0,"Lesson 12.",12],
+  ["The course's final advice is to…",["Automate everything now","Start simple with one recurring task this week","Wait for better models","Only use Research"],1,"Lesson 13.",13]
+ ]}
+];
+
+const PRACTICE=[["overview","Overview","Start here","--p0"],["flashcards","Flashcards","Key terms","--accent"],["cheatsheet","Cheat sheet","One-page summary","--accent"]];
+
+const box=(x,y,w,h,t,s,cls)=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="8" class="${cls||"bx"}"/><text x="${x+w/2}" y="${y+h/2-(s?3:-5)}" text-anchor="middle" class="tb">${t}</text>${s?`<text x="${x+w/2}" y="${y+h/2+15}" text-anchor="middle" class="tm">${s}</text>`:""}`;
+const arr=(d,dash)=>`<path d="${d}" class="ln${dash?" dash":""}" marker-end="url(#ah)"/>`;
+const D={
+start:`<svg viewBox="0 0 720 210" role="img" aria-label="Prompt is stage plus task plus rules, then iterate">${AR}
+ ${box(20,30,170,64,"Set the stage","role · goal · context","bxc")}<text x="205" y="68" class="tb">+</text>
+ ${box(225,30,150,64,"Define the task","write · analyze · build","bxc")}<text x="390" y="68" class="tb">+</text>
+ ${box(410,30,150,64,"Specify rules","tone · format · length","bxc")}
+ ${arr("M560 62H595")}${box(600,30,105,64,"Answer","first draft")}
+ ${arr("M652 94V140H120V100",true)}
+ <text x="380" y="132" text-anchor="middle" class="t">iterate: follow up · feedback · redirect · edit & resend · new chat</text>
+ <text x="20" y="182" class="tm">Add context: uploads · web search · connected sources · model (Opus / Sonnet) · extended thinking</text>
+</svg><figcaption>Lesson 2: the 3-part prompt, then the back-and-forth.</figcaption>`,
+better:`<svg viewBox="0 0 720 240" role="img" aria-label="Delegation-diligence loop">${AR}
+ ${box(20,30,150,60,"Known work","5–10 examples")}${arr("M170 60H200")}
+ ${box(205,30,150,60,"Prompt Claude","your usual context","bxc")}${arr("M355 60H385")}
+ ${box(390,30,150,60,"Compare","key info · tone · gaps","bxc")}${arr("M540 60H570")}
+ <path d="M640 30L705 60L640 90L575 60Z" class="bx"/><text x="640" y="64" text-anchor="middle" class="tb">Match?</text>
+ ${arr("M640 90V140")}<text x="652" y="122" class="tm">yes</text>
+ ${box(560,145,150,56,"Trust for similar","stay accountable")}
+ ${arr("M610 78Q470 140 285 92",true)}<text x="430" y="150" text-anchor="middle" class="tm">no: refine, add examples (several tries)</text>
+ ${box(20,145,200,56,"Still no?","don't delegate it")}
+</svg><figcaption>Lesson 3: test Claude on work you already know before you delegate.</figcaption>`,
+desktop:`<svg viewBox="0 0 720 230" role="img" aria-label="Three shapes of work">${AR}
+ ${box(250,14,220,48,"What shape is this work?","","bxc")}
+ ${arr("M300 62L120 100")}${arr("M360 62V100")}${arr("M420 62L600 100")}
+ ${box(20,105,200,60,"Turn by turn","answer changes next question")}
+ ${box(260,105,200,60,"Hand off","many steps · files · schedule")}
+ ${box(500,105,200,60,"Build software","read · write · test · run")}
+ <text x="120" y="190" text-anchor="middle" class="tb">Chat</text><text x="360" y="190" text-anchor="middle" class="tb">Cowork</text><text x="600" y="190" text-anchor="middle" class="tb">Code tab</text>
+ <text x="360" y="212" text-anchor="middle" class="tm">plan you can steer · approval before sending</text><text x="600" y="212" text-anchor="middle" class="tm">local or cloud · 3 permission modes</text>
+</svg><figcaption>Lesson 4: pick the shape before you start.</figcaption>`,
+projects:`<svg viewBox="0 0 720 240" role="img" aria-label="Project anatomy">${AR}
+ <rect x="20" y="20" width="440" height="200" rx="12" class="bxc"/><text x="40" y="46" class="tb">Project</text>
+ ${box(40,62,190,56,"Knowledge","files in every chat")}${box(250,62,190,56,"Instructions","rules for every chat")}
+ ${box(40,138,190,56,"Chats","single-chat uploads stay out")}${box(250,138,190,56,"Memory","project-scoped")}
+ ${arr("M460 90H500")}${box(505,62,200,56,"Near the limit → RAG","pulls relevant parts (~10x)")}
+ ${arr("M460 166H500")}<rect x="505" y="138" width="200" height="82" rx="8" class="bx"/><text x="605" y="160" text-anchor="middle" class="tb">Sharing (Team/Ent.)</text><text x="605" y="180" text-anchor="middle" class="tm">Can view · Can edit · Owner</text>
+</svg><figcaption>Lesson 5: what a project holds and how it scales.</figcaption>`,
+artifacts:`<svg viewBox="0 0 720 230" role="img" aria-label="Artifact lifecycle and artifact vs file">${AR}
+ ${box(20,30,150,60,"Create","in chat or Artifacts tab","bxc")}${arr("M170 60H200")}
+ ${box(205,30,200,60,"Change","edit · comment · ask","bxc")}${arr("M405 60H435")}
+ ${box(440,30,130,60,"Share","view · comment · edit","bxc")}${arr("M570 60H600")}
+ ${box(605,30,100,60,"Live in","Artifacts tab")}
+ <text x="20" y="130" class="tb">Artifact or file?</text>
+ ${box(20,145,330,60,"Artifact","opens, updates, shared by link in Claude")}
+ ${box(375,145,330,60,"File creation","download Word · Excel · PowerPoint · PDF")}
+</svg><figcaption>Lesson 6: artifacts for things you keep and share, files for downloads.</figcaption>`,
+skills:`<svg viewBox="0 0 720 230" role="img" aria-label="Projects plus skills; creating a skill">${AR}
+ ${box(20,24,200,64,"Project = what","knowledge, long-term","bxc")}<text x="240" y="62" class="tb">+</text>
+ ${box(260,24,200,64,"Skill = how","repeatable process","bxc")}${arr("M460 56H500")}
+ ${box(505,24,200,64,"Same result","every time")}
+ <text x="20" y="128" class="tb">Create a custom skill by chatting</text>
+ ${box(20,142,120,56,"1. Describe","")}${box(155,142,120,56,"2. Interview","")}${box(290,142,130,56,"3. Upload","templates")}${box(435,142,130,56,"4. Save skill","")}${box(580,142,125,56,"5. Check","Customize")}
+ ${arr("M140 170H152")}${arr("M275 170H287")}${arr("M420 170H432")}${arr("M565 170H577")}
+</svg><figcaption>Lesson 7: projects store knowledge; skills define process.</figcaption>`,
+reach:`<svg viewBox="0 0 720 290" role="img" aria-label="Tool picker and connector types">${AR}
+ <text x="20" y="24" class="tb">Pick the right tool (L10)</text>
+ ${box(20,36,160,56,"Quick fact","→ Web search")}${box(196,36,160,56,"Hard reasoning","→ Thinking")}${box(372,36,160,56,"Many sources","→ Research","bxc")}${box(548,36,160,56,"Company know.","→ Enterprise search")}
+ <text x="20" y="134" class="tb">Connectors (L8)</text>
+ ${box(270,150,180,60,"Claude","sees only what you see","bxc")}
+ ${box(20,150,200,60,"Web connectors","Drive · Gmail · Slack · Notion")}${box(500,150,200,60,"Desktop extensions","local files · browser · apps")}
+ <path d="M220 180H268M450 180H498" class="ln"/><text x="245" y="172" text-anchor="middle" class="tm">MCP</text><text x="475" y="172" text-anchor="middle" class="tm">MCP</text>
+ <text x="360" y="250" text-anchor="middle" class="t">A connection gives Claude somewhere to look; it does not search by itself.</text>
+</svg><figcaption>Lessons 8–10: route each question, and connect the places Claude may look.</figcaption>`,
+together:`<svg viewBox="0 0 720 250" role="img" aria-label="Claude at the center with surfaces">
+ ${box(270,95,180,60,"Claude","the intelligence","bxc")}
+ ${box(20,20,180,52,"Claude.ai","web · desktop · mobile")}${box(270,14,180,52,"Claude Code","software, git")}${box(520,20,180,52,"Claude Tag","Slack")}
+ ${box(20,180,180,52,"Claude Design","UI prototypes")}${box(270,186,180,52,"Microsoft 365","Excel · PPT · Word · Outlook")}${box(520,180,180,52,"Claude in Chrome","browser")}
+ <path d="M200 60L270 105M360 66V95M520 60L450 105M200 196L270 145M360 186V155M520 196L450 145" class="ln"/>
+</svg><figcaption>Lesson 12: one intelligence, many places to use it.</figcaption>`
+};
+
+function viewOverview(){
+  return `<div class="mhead" style="--c:var(--accent)"><span class="eyebrow">Claude Academy · 13 lessons</span><h1>Claude 101</h1>
+  <p class="question">From talking to Claude, to organizing knowledge, to connecting tools, to using Claude in other apps.</p></div>
+  <div class="intro"><p>Claude is an AI thinking partner. You bring context and judgment; Claude brings the intelligence. Note from the course pages: “Claude Cowork is now just Claude”, so turn-by-turn and hand-off work both happen in any conversation; the lessons still use the names Chat and Cowork.</p></div>
+  <div class="overview">${M.map(m=>`<button class="ovc" data-go="${m.id}" style="${cvar(m)}"><span class="eyebrow">${m.eyebrow}</span><h3>${esc(m.short)}</h3><span>${esc(m.question)}</span><span>${done.has(m.id)?"✓ Done":m.take.length+" takeaways · "+m.quiz.length+" quiz questions"}</span></button>`).join("")}</div>
+  <div class="gap"><b>About the sources.</b> Built only from the local lesson notes (README.md, 01–05 lesson files) and your own notes (Day 1, Day 2, cheatsheet). Interactives in Lessons 1, 8 and 10 are only summarized; videos, the Use Case Gallery and the course quiz were not read. Gaps are flagged per module with ⚠.</div>`;
+}
+
+function viewCheat(){
+  const S=[["Chat","Turn-by-turn; uploads, web search, models, Thinking, Memory","Brainstorm, draft, explain, quick tasks","1–3"],["Cowork","Hand off a whole task; folders, schedules, subagents, plugins","Multi-step work, finished files, many tools","4"],["Code tab","Claude in a codebase, local or cloud","Writing and testing code","4, 12"],["Projects","Knowledge + instructions + sharing","Ongoing work, repeated reference, teams","5"],["Artifacts","Standalone outputs in the Artifacts tab","Things you keep and share","6"],["Skills","Reusable instructions loaded for a task","Repeatable workflows","7"],["Connectors (MCP)","Web connectors + desktop extensions","Your real email, files, tickets, chats","8"],["Enterprise search","“Ask {Org}” project, cited (Team/Ent.)","Company knowledge","9"],["Research","Multi-step, multi-source, cited (paid)","Reports, comparisons","10"],["Other surfaces","Code, Tag, Design, Microsoft 365, Chrome","Claude inside other tools","11–12"]];
+  return `<div class="mhead" style="--c:var(--accent)"><span class="eyebrow">Review</span><h1>Cheat sheet</h1><p class="question">The whole course on one page.</p></div>
+  <section><h2>Surfaces and features</h2><div class="tbl"><table><thead><tr><th>Surface / feature</th><th>What it is</th><th>Use it when</th><th>Lesson</th></tr></thead><tbody>
+  ${S.map(r=>`<tr><td><b>${r[0]}</b></td><td>${r[1]}</td><td>${r[2]}</td><td>${r[3]}</td></tr>`).join("")}
+  </tbody></table></div></section>
+  <div class="grid2">
+   <div class="panel"><h3>Rules of thumb</h3><ul><li><b>Prompt</b> = stage + task + rules, then iterate</li><li><b>Projects</b> store knowledge; <b>skills</b> define process</li><li><b>Artifacts</b> to keep and share; <b>file creation</b> to download</li><li>Connectors only give Claude somewhere to look</li></ul></div>
+   <div class="panel"><h3>Pick the tool</h3><ul><li>Quick fact → web search</li><li>Hard reasoning → Thinking</li><li>Many sources → Research</li><li>Company knowledge → Enterprise search</li></ul></div>
+   <div class="panel"><h3>Fix weak answers (L3)</h3><ul><li>Generic → audience, role, constraints</li><li>Length → state it</li><li>Format → show an example</li><li>Wrong facts → verify, sources, web search</li><li>Tone → describe it or give a sample</li></ul></div>
+   <div class="panel"><h3>Shapes of work (L4)</h3><ul><li>Turn by turn → Chat</li><li>Hand off → Cowork</li><li>Build software → Code tab (manual · accept edits · plan)</li></ul></div>
+   <div class="panel"><h3>Paths to remember</h3><ul><li>Settings > Account > Instructions for Claude</li><li>Settings > Capabilities > Code execution and file creation</li><li>Customize > Skills · Connectors · Plugins</li><li>Sidebar > Projects > + New Project</li></ul></div>
+   <div class="panel"><h3>Test before you trust</h3><ul><li>Eval on 5–10 tasks you already did</li><li>Check one claim against the source</li><li>Repeat the length cap when adding a rule</li><li>Stay accountable (4D)</li></ul></div>
+  </div>
+  <div class="gap"><b>⚠ Not covered in sources:</b> course quiz content; Use Case Gallery guides; skill file format; exact RAG thresholds.</div>`;
+}
+
+/* ---------- nav ---------- */
+function renderNav(cur){
+  $("#navm").innerHTML=M.map(m=>`<li><button data-go="${m.id}" style="${cvar(m)}" aria-current="${cur===m.id}"><span class="dot"></span><span>${esc(m.short)}<span class="sub">${m.sub}</span></span><span class="chk">${done.has(m.id)?"✓":""}</span></button></li>`).join("");
+  $("#navp").innerHTML=PRACTICE.map(p=>`<li><button data-go="${p[0]}" style="--c:var(${p[3]})" aria-current="${cur===p[0]}"><span class="dot"></span><span>${p[1]}<span class="sub">${p[2]}</span></span><span></span></button></li>`).join("");
+  const n=M.filter(m=>done.has(m.id)).length;
+  $("#progtxt").textContent=`${n} of ${M.length} modules done`;
+  $("#progbar").style.width=(n/M.length*100)+"%";
+}
+
+/* ---------- views ---------- */
+function viewModule(m){
+  const z=m.zone?`<div class="continuum"><span class="rail"></span><div class="z"><b>${(m.zl||["Capability zone","Limitation zone"])[0]}</b>${esc(m.zone[0])}</div><div class="z"><b>${(m.zl||["Capability zone","Limitation zone"])[1]}</b>${esc(m.zone[1])}</div></div>`:"";
+  const isDone=done.has(m.id);
+  return `<div class="mhead"><span class="eyebrow">${m.eyebrow}</span>
+   <div class="headrow"><h1>${esc(m.title)}</h1><button class="btn ${isDone?"done":"primary"}" data-done="${m.id}" id="donebtn">${isDone?"✓ Done":"Mark as done"}</button></div>
+   <p class="question">${esc(m.question)}</p></div>${z}
+  <section><h2>Key takeaways <span class="count">${m.take.length}</span></h2><div class="cards">
+   ${m.take.map((t,i)=>`<details class="card" id="${m.id}-t${i}"${i===0?" open":""}><summary><span class="n">${String(i+1).padStart(2,"0")}</span><span>${esc(t[0])}</span><span class="chev">›</span></summary><div class="body"><p>${esc(t[1])}</p>${srcLink(m,t[2])}</div></details>`).join("")}
+  </div></section>
+  <section><h2>How it fits together</h2><figure class="diagram" style="margin:0">${D[m.diagram]}</figure></section>
+  <section><h2>Core concepts <span class="count">${m.concepts.length}</span></h2><dl class="concepts">
+   ${m.concepts.map((c,i)=>`<div id="${m.id}-c${i}"><dt>${esc(c[0])}</dt><dd>${esc(c[1])}</dd></div>`).join("")}</dl></section>
+  <section><h2>Prompts worth keeping</h2>
+   <div class="gap" style="margin-bottom:10px"><b>⚠ Code and commands: not covered in sources.</b> This course has no code. These are the copyable prompts and menu paths from the lessons.</div>
+   <div class="snips">${m.snips.length?"":`<div class="gap"><b>⚠</b> No prompts in this module's sources.</div>`}${m.snips.map((s,i)=>`<div class="snip" id="${m.id}-s${i}"><header><span>${esc(s[0])}</span><button class="btn copy" data-copy="${m.id}-s${i}">Copy</button></header><pre>${esc(s[1])}</pre><header style="border:0;border-top:1px solid var(--line)"><span>${esc(s[3])}</span>${srcLink(m,s[2])}</header></div>`).join("")}</div></section>
+  <section><h2>Common pitfalls</h2><ul class="pit">${m.pit.map((p,i)=>`<li id="${m.id}-p${i}"><span>${esc(p)}</span></li>`).join("")}</ul></section>
+  <section><h2>Check yourself <span class="score" id="score-${m.id}"></span></h2><div class="quiz">
+   ${m.quiz.map((q,i)=>`<div class="q" data-q="${m.id}:${i}"><p class="stem">${i+1}. ${esc(q[0])}</p><div class="opts">${q[1].map((o,j)=>`<button data-opt="${j}">${esc(o)}</button>`).join("")}</div><div class="expl" hidden></div></div>`).join("")}
+   <button class="btn" data-reset="${m.id}" style="align-self:flex-start">Reset quiz</button></div></section>
+  <section><h2>Gaps in the sources</h2><div style="display:flex;flex-direction:column;gap:8px">${m.gaps.map(g=>`<div class="gap"><b>⚠</b> ${esc(g)}</div>`).join("")}</div></section>
+  <div class="headrow"><span class="prog">Source file: ${m.file}</span><button class="btn ${isDone?"done":"primary"}" data-done="${m.id}">${isDone?"✓ Done":"Mark as done"}</button></div>`;
+}
+
+let FC={deck:[],i:0,filter:"all"};
+function buildDeck(){
+  const all=[];M.forEach(m=>m.concepts.forEach(c=>all.push({m,term:c[0],def:c[1],l:c[2]})));
+  FC.deck=FC.filter==="all"?all:all.filter(x=>x.m.id===FC.filter);FC.i=0;
+}
+function viewFlash(){
+  if(!FC.deck.length) buildDeck();
+  const x=FC.deck[FC.i];
+  return `<div class="mhead" style="--c:var(--accent)"><span class="eyebrow">Practice</span><h1>Flashcards</h1><p class="question">Tap the card (or press Space) to flip. Arrow keys move.</p></div>
+  <div class="fc-tools"><label for="fcf" class="prog">Deck</label><select id="fcf"><option value="all">All modules (${M.reduce((a,m)=>a+m.concepts.length,0)})</option>${M.map(m=>`<option value="${m.id}"${FC.filter===m.id?" selected":""}>${esc(m.short)} (${m.concepts.length})</option>`).join("")}</select><button class="btn" id="fcshuf">Shuffle</button></div>
+  <div class="fcard" id="fcard" tabindex="0" role="button" aria-label="Flip card" style="${cvar(x.m)}"><div class="inner">
+   <div class="face"><span class="tag">${esc(x.m.short)}</span><span class="term">${esc(x.term)}</span><span class="prog">tap to reveal</span></div>
+   <div class="face back"><span class="tag">${esc(x.term)}</span><span class="def">${esc(x.def)}</span>${srcLink(x.m,x.l)}</div></div></div>
+  <div class="fc-nav"><button class="btn" id="fcprev">← Previous</button><span class="score">${FC.i+1} / ${FC.deck.length}</span><button class="btn primary" id="fcnext">Next →</button></div>`;
+}
+
+/* ---------- search ---------- */
+function searchIndex(){
+  const out=[];
+  M.forEach(m=>{
+    m.take.forEach((t,i)=>out.push({m,kind:"Takeaway",title:t[0],text:t[1],el:`${m.id}-t${i}`}));
+    m.concepts.forEach((c,i)=>out.push({m,kind:"Concept",title:c[0],text:c[1],el:`${m.id}-c${i}`}));
+    m.snips.forEach((s,i)=>out.push({m,kind:"Prompt",title:s[0],text:s[1]+" "+s[3],el:`${m.id}-s${i}`}));
+    m.pit.forEach((p,i)=>out.push({m,kind:"Pitfall",title:p,text:"",el:`${m.id}-p${i}`}));
+  });
+  return out;
+}
+const IDX=searchIndex();
+function hl(s,q){return esc(s).replace(new RegExp("("+q.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")+")","ig"),"<mark>$1</mark>")}
+function viewSearch(q){
+  const ql=q.toLowerCase();
+  const hits=IDX.filter(x=>(x.title+" "+x.text).toLowerCase().includes(ql));
+  return `<div class="mhead"><span class="eyebrow">Search</span><h1>${hits.length} result${hits.length===1?"":"s"} for “${esc(q)}”</h1></div>
+  <div class="res">${hits.map(x=>`<button data-jump="${x.m.id}|${x.el}" style="${cvar(x.m)}"><span class="kind">${x.kind} · ${esc(x.m.short)}</span><b>${hl(x.title,q)}</b>${x.text?`<span class="prog">${hl(x.text.slice(0,180),q)}${x.text.length>180?"…":""}</span>`:""}</button>`).join("")||`<p>No matches. Try a property name, “citation”, “cutoff” or “goal”.</p>`}</div>`;
+}
+
+/* ---------- router ---------- */
+let cur="overview";
+function go(id,opts={}){
+  cur=id;save(STORE+"-view",id);
+  const m=M.find(x=>x.id===id);
+  const v=$("#view");
+  if(m){v.style.cssText=cvar(m);v.innerHTML=viewModule(m);restoreQuiz(m)}
+  else if(id==="flashcards"){v.style.cssText="";v.innerHTML=viewFlash()}
+  else if(id==="cheatsheet"){v.style.cssText="";v.innerHTML=viewCheat()}
+  else {cur="overview";v.style.cssText="";v.innerHTML=viewOverview()}
+  renderNav(cur);
+  try{history.replaceState(null,"","#"+cur)}catch(e){}
+  if(!opts.keepScroll) window.scrollTo({top:0});
+}
+
+/* ---------- quiz state (per browser) ---------- */
+let QA=load(STORE+"-quiz",{});
+function answer(qel,j,persist=true){
+  const [mid,i]=qel.dataset.q.split(":");const m=M.find(x=>x.id===mid);const q=m.quiz[+i];
+  qel.querySelectorAll(".opts button").forEach((b,k)=>{b.disabled=true;if(k===q[2])b.classList.add("right");else if(k===j)b.classList.add("wrong")});
+  const e=qel.querySelector(".expl");e.hidden=false;
+  e.innerHTML=`<b>${j===q[2]?"Correct.":"Not quite."}</b> ${esc(q[3])} ${srcLink(m,q[4])}`;
+  if(persist){QA[qel.dataset.q]=j;save(STORE+"-quiz",QA)}
+  updScore(m);
+}
+function updScore(m){
+  const ans=m.quiz.map((q,i)=>QA[m.id+":"+i]);const n=ans.filter(a=>a!==undefined).length;
+  const r=ans.filter((a,i)=>a===m.quiz[i][2]).length;
+  const el=$("#score-"+m.id);if(el)el.textContent=n?`${r}/${n} correct`:`${m.quiz.length} questions`;
+}
+function restoreQuiz(m){m.quiz.forEach((q,i)=>{const a=QA[m.id+":"+i];if(a!==undefined)answer(document.querySelector(`[data-q="${m.id}:${i}"]`),a,false)});updScore(m)}
+
+/* ---------- events ---------- */
+document.addEventListener("click",e=>{
+  const g=e.target.closest("[data-go]");if(g){$("#q").value="";go(g.dataset.go);return}
+  const d=e.target.closest("[data-done]");if(d){const id=d.dataset.done;done.has(id)?done.delete(id):done.add(id);save(STORE+"-done",[...done]);go(id,{keepScroll:true});return}
+  const o=e.target.closest("[data-opt]");if(o&&!o.disabled){answer(o.closest(".q"),+o.dataset.opt);return}
+  const r=e.target.closest("[data-reset]");if(r){const m=M.find(x=>x.id===r.dataset.reset);m.quiz.forEach((q,i)=>delete QA[m.id+":"+i]);save(STORE+"-quiz",QA);go(m.id,{keepScroll:true});return}
+  const c=e.target.closest("[data-copy]");if(c){const txt=document.querySelector("#"+c.dataset.copy+" pre").textContent;
+    const ok=()=>{c.textContent="Copied";setTimeout(()=>c.textContent="Copy",1500)};
+    const fb=()=>{const pre=document.querySelector("#"+c.dataset.copy+" pre");const s=getSelection();const rg=document.createRange();rg.selectNodeContents(pre);s.removeAllRanges();s.addRange(rg);c.textContent="Selected — press ⌘/Ctrl+C"};
+    try{navigator.clipboard.writeText(txt).then(ok,fb)}catch(err){fb()}return}
+  const j=e.target.closest("[data-jump]");if(j){const [mid,el]=j.dataset.jump.split("|");$("#q").value="";go(mid);const t=document.getElementById(el);if(t){if(t.tagName==="DETAILS")t.open=true;t.scrollIntoView({block:"center"});t.classList.add("flash")}return}
+  if(e.target.closest("#fcard")){$("#fcard").classList.toggle("flipped");return}
+  if(e.target.closest("#fcnext")){FC.i=(FC.i+1)%FC.deck.length;go("flashcards",{keepScroll:true});return}
+  if(e.target.closest("#fcprev")){FC.i=(FC.i-1+FC.deck.length)%FC.deck.length;go("flashcards",{keepScroll:true});return}
+  if(e.target.closest("#fcshuf")){for(let i=FC.deck.length-1;i>0;i--){const k=Math.floor(Math.random()*(i+1));[FC.deck[i],FC.deck[k]]=[FC.deck[k],FC.deck[i]]}FC.i=0;go("flashcards",{keepScroll:true});return}
+});
+document.addEventListener("change",e=>{if(e.target.id==="fcf"){FC.filter=e.target.value;buildDeck();go("flashcards",{keepScroll:true})}});
+document.addEventListener("keydown",e=>{
+  if(cur!=="flashcards"||e.target.tagName==="INPUT"||e.target.tagName==="SELECT")return;
+  if(e.key===" "){e.preventDefault();$("#fcard").classList.toggle("flipped")}
+  if(e.key==="ArrowRight")$("#fcnext").click();
+  if(e.key==="ArrowLeft")$("#fcprev").click();
+});
+$("#q").addEventListener("input",e=>{const q=e.target.value.trim();if(q.length>=2){$("#view").style.cssText="";$("#view").innerHTML=viewSearch(q)}else go(cur,{keepScroll:true})});
+
+/* ---------- boot ---------- */
+const h=(location.hash||"").slice(1);
+const valid=id=>M.some(m=>m.id===id)||["overview","flashcards","cheatsheet"].includes(id);
+go(valid(h)?h:(valid(load(STORE+"-view","overview"))?load(STORE+"-view","overview"):"overview"));
+</script>

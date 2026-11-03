@@ -4,6 +4,8 @@ Personal study notes for the Claude Academy course
 [Claude 101](https://academy.claude.com/courses/claude-101)
 (13 lessons, 1 quiz, completion badge).
 
+Study guide (interactive review): [Claude 101 Study Guide](https://claude.ai/artifact/1AAJmYVCNZSfiPuW2j1cqz#overview)
+
 These are my own summaries, not a copy of the course. Open the lesson links for the videos,
 transcripts, full exercise text and the interactive exercises.
 
