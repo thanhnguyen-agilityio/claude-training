@@ -1,0 +1,707 @@
+<title>AI Fluency Study Guide</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: fixed module rail on the left, one reading column on the right; each of the 4Ds owns a hue; the Generative AI module opens on a strengths→limitations bar. */
+:root{
+  --bg:#f4f6f9; --surface:#ffffff; --sunken:#eaeef4; --ink:#18202d; --muted:#596476; --line:#d9dfe8;
+  --accent:#2c56c9; --accent-ink:#ffffff;
+  --p0:#56607a; --p1:#5a48d4; --p2:#0e8576; --p3:#b8700c; --p4:#c03a66;
+  --good:#1e7d4a; --good-bg:#e3f4ea; --bad:#b4322c; --bad-bg:#fbe8e6; --warn:#8a5a00; --warn-bg:#fdf2d8;
+  --f-display:"Bricolage Grotesque", "Avenir Next", "Segoe UI", sans-serif;
+  --f-body:"Atkinson Hyperlegible", "Segoe UI", system-ui, sans-serif;
+  --f-mono:"JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+  --r:10px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0f131a; --surface:#161b24; --sunken:#1d2330; --ink:#e5e9f0; --muted:#9ba5b6; --line:#2a3242;
+  --accent:#7d9dff; --accent-ink:#0f131a;
+  --p0:#a3abc0; --p1:#a093ff; --p2:#3cc5b0; --p3:#e7a845; --p4:#f27ba1;
+  --good:#5fd394; --good-bg:#15301f; --bad:#ff8a80; --bad-bg:#3a1c1a; --warn:#f0c160; --warn-bg:#352a12;
+  color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f131a; --surface:#161b24; --sunken:#1d2330; --ink:#e5e9f0; --muted:#9ba5b6; --line:#2a3242;
+  --accent:#7d9dff; --accent-ink:#0f131a;
+  --p0:#a3abc0; --p1:#a093ff; --p2:#3cc5b0; --p3:#e7a845; --p4:#f27ba1;
+  --good:#5fd394; --good-bg:#15301f; --bad:#ff8a80; --bad-bg:#3a1c1a; --warn:#f0c160; --warn-bg:#352a12;
+  color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.55}
+button{font:inherit;color:inherit}
+a{color:var(--accent)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
+h1,h2,h3{font-family:var(--f-display);line-height:1.15;text-wrap:balance;margin:0}
+.app{display:grid;grid-template-columns:270px minmax(0,1fr);min-height:100vh}
+/* Sidebar */
+.side{position:sticky;top:0;height:100vh;overflow-y:auto;border-right:1px solid var(--line);background:var(--surface);
+  padding-block:20px;padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:16px;display:flex;flex-direction:column;gap:18px}
+.brand{font-family:var(--f-display);font-weight:700;font-size:19px;line-height:1.2}
+.brand small{display:block;font-family:var(--f-body);font-weight:400;font-size:13px;color:var(--muted);margin-top:4px}
+.search{position:relative}
+.search input{width:100%;padding:9px 12px 9px 34px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);font:inherit;font-size:15px}
+.search svg{position:absolute;left:10px;top:50%;transform:translateY(-50%);width:16px;height:16px;stroke:var(--muted);fill:none}
+.prog{font-size:13px;color:var(--muted)}
+.prog .bar{height:6px;border-radius:3px;background:var(--sunken);margin-top:6px;overflow:hidden}
+.prog .bar i{display:block;height:100%;background:var(--accent);width:0;transition:width .3s}
+.navlabel{font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);margin:0 0 6px}
+.nav{display:flex;flex-direction:column;gap:2px;list-style:none;margin:0;padding:0}
+.nav button{width:100%;text-align:left;background:none;border:0;padding:8px 10px;border-radius:8px;cursor:pointer;display:grid;grid-template-columns:10px 1fr auto;gap:10px;align-items:center;font-size:15px}
+.nav button:hover{background:var(--sunken)}
+.nav button[aria-current="true"]{background:var(--sunken);font-weight:700}
+.nav .dot{width:10px;height:10px;border-radius:50%;background:var(--c)}
+.nav .sub{display:block;font-size:12px;color:var(--muted);font-weight:400}
+.nav .chk{font-size:13px;color:var(--good)}
+/* Main */
+main{min-width:0;padding-block:28px 64px;padding-left:max(16px, 4vw);padding-right:max(16px, env(safe-area-inset-right, 0px), 4vw)}
+.wrap{max-width:860px;margin:0 auto;display:flex;flex-direction:column;gap:32px}
+.eyebrow{font-size:12px;letter-spacing:.09em;text-transform:uppercase;color:var(--c, var(--muted));font-weight:700}
+.mhead{display:flex;flex-direction:column;gap:10px}
+.mhead h1{font-size:clamp(28px,4vw,40px)}
+.question{font-size:19px;color:var(--muted);font-style:italic;margin:0}
+.headrow{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between}
+.btn{border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:8px 14px;cursor:pointer;font-size:14px}
+.btn:hover{border-color:var(--accent)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink);font-weight:700}
+.btn.done{background:var(--good-bg);border-color:var(--good);color:var(--good);font-weight:700}
+/* Continuum */
+.continuum{display:grid;grid-template-columns:1fr 1fr;gap:0;border-radius:var(--r);overflow:hidden;border:1px solid var(--line)}
+.continuum .rail{grid-column:1/-1;height:8px;background:linear-gradient(90deg,var(--c),color-mix(in srgb,var(--c) 15%,var(--surface)))}
+.continuum div.z{padding:12px 14px;background:var(--surface);font-size:15px}
+.continuum div.z+div.z{border-left:1px dashed var(--line);text-align:right}
+.continuum b{display:block;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+section h2{font-size:21px;margin-bottom:12px;display:flex;align-items:baseline;gap:10px}
+section h2 .count{font-family:var(--f-mono);font-size:13px;color:var(--muted);font-weight:400}
+/* Takeaway cards */
+.cards{display:flex;flex-direction:column;gap:8px}
+details.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r)}
+details.card[open]{border-color:color-mix(in srgb,var(--c) 45%,var(--line))}
+details.card summary{cursor:pointer;list-style:none;padding:13px 16px;display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:start;font-weight:700}
+details.card summary::-webkit-details-marker{display:none}
+details.card summary .n{font-family:var(--f-mono);font-size:13px;color:var(--c);padding-top:2px;font-weight:500}
+details.card summary .chev{transition:transform .2s;color:var(--muted)}
+details.card[open] summary .chev{transform:rotate(90deg)}
+details.card .body{padding:0 16px 14px 46px;display:flex;flex-direction:column;gap:8px}
+details.card .body p{margin:0;max-width:65ch}
+.src{font-family:var(--f-mono);font-size:12px;color:var(--muted);text-decoration:none;align-self:flex-start;border-bottom:1px dotted var(--muted)}
+.src:hover{color:var(--accent);border-color:var(--accent)}
+.flash{animation:flash 1.6s ease-out}
+@keyframes flash{0%{box-shadow:0 0 0 3px var(--accent)}100%{box-shadow:0 0 0 0 transparent}}
+/* Concepts */
+dl.concepts{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px;margin:0}
+dl.concepts div{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:12px 14px}
+dl.concepts dt{font-weight:700;margin-bottom:2px}
+dl.concepts dd{margin:0;color:var(--muted);font-size:15px}
+/* Diagram */
+.diagram{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px;overflow-x:auto}
+.diagram svg{display:block;min-width:600px;width:100%;height:auto}
+.diagram figcaption{font-size:14px;color:var(--muted);margin-top:8px}
+svg .bx{fill:var(--sunken);stroke:var(--line)}
+svg .bxc{fill:color-mix(in srgb,var(--c) 14%,var(--surface));stroke:var(--c)}
+svg .t{fill:var(--ink);font-family:var(--f-body);font-size:14px}
+svg .tb{fill:var(--ink);font-family:var(--f-body);font-size:14px;font-weight:700}
+svg .tm{fill:var(--muted);font-family:var(--f-body);font-size:12px}
+svg .ln{stroke:var(--muted);stroke-width:1.5;fill:none}
+svg .lc{stroke:var(--c);stroke-width:2.5;fill:none}
+svg .dash{stroke-dasharray:5 4}
+svg .ac{fill:var(--muted)}
+svg .acc{fill:var(--c)}
+/* Snippets */
+.snips{display:flex;flex-direction:column;gap:10px}
+.snip{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.snip header{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:8px 12px;border-bottom:1px solid var(--line);font-size:13px;color:var(--muted);flex-wrap:wrap}
+.snip pre{margin:0;padding:12px 14px;font-family:var(--f-mono);font-size:13.5px;white-space:pre-wrap;word-break:break-word;background:var(--sunken)}
+.copy{font-size:12px;padding:4px 10px}
+/* Pitfalls & gaps */
+ul.pit{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:8px}
+ul.pit li{padding:10px 14px;border-radius:8px;background:var(--bad-bg);color:var(--ink);display:grid;grid-template-columns:auto 1fr;gap:10px}
+ul.pit li::before{content:"✕";color:var(--bad);font-weight:700}
+.gap{background:var(--warn-bg);color:var(--ink);border-radius:8px;padding:10px 14px;font-size:15px}
+.gap b{color:var(--warn)}
+/* Quiz */
+.quiz{display:flex;flex-direction:column;gap:14px}
+.q{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px}
+.q p.stem{margin:0 0 10px;font-weight:700}
+.opts{display:flex;flex-direction:column;gap:6px}
+.opts button{text-align:left;border:1px solid var(--line);background:var(--bg);border-radius:8px;padding:9px 12px;cursor:pointer;font-size:15px}
+.opts button:hover:not(:disabled){border-color:var(--accent)}
+.opts button:disabled{cursor:default}
+.opts button.right{background:var(--good-bg);border-color:var(--good)}
+.opts button.wrong{background:var(--bad-bg);border-color:var(--bad)}
+.expl{margin-top:10px;font-size:15px;padding:10px 12px;border-radius:8px;background:var(--sunken)}
+.score{font-family:var(--f-mono);font-size:13px;color:var(--muted)}
+/* Flashcards */
+.fc-tools{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.fc-tools select{padding:8px 10px;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font:inherit;font-size:14px}
+.fcard{perspective:1200px;cursor:pointer;min-height:260px}
+.fcard .inner{position:relative;width:100%;min-height:260px;transition:transform .5s;transform-style:preserve-3d}
+.fcard.flipped .inner{transform:rotateY(180deg)}
+.fcard .face{position:absolute;inset:0;backface-visibility:hidden;border-radius:14px;border:1px solid var(--line);background:var(--surface);display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:28px;gap:10px}
+.fcard .face.back{transform:rotateY(180deg);background:var(--sunken)}
+.fcard .term{font-family:var(--f-display);font-size:clamp(26px,5vw,36px);font-weight:700}
+.fcard .def{font-size:18px;max-width:46ch}
+.fcard .tag{font-size:12px;letter-spacing:.09em;text-transform:uppercase;font-weight:700;color:var(--c)}
+.fc-nav{display:flex;justify-content:space-between;align-items:center;gap:10px}
+/* Cheat sheet */
+.tbl{overflow-x:auto;border:1px solid var(--line);border-radius:var(--r);background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:720px;font-size:14.5px}
+th,td{padding:10px 12px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line)}
+th{font-size:12px;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);background:var(--sunken)}
+tr:last-child td{border-bottom:0}
+td .pname{font-weight:700;color:var(--c);display:block}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px}
+.panel h3{font-size:16px;margin-bottom:8px}
+.panel ul{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:4px;font-size:15px}
+/* Search results */
+.res{display:flex;flex-direction:column;gap:8px}
+.res button{text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:12px 14px;cursor:pointer;display:flex;flex-direction:column;gap:4px}
+.res button:hover{border-color:var(--accent)}
+.res .kind{font-size:12px;color:var(--c);font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+mark{background:color-mix(in srgb,var(--accent) 25%,transparent);color:inherit;border-radius:2px}
+.intro p{max-width:65ch;margin:0}
+.overview{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+.ovc{text-align:left;background:var(--surface);border:1px solid var(--line);border-top:4px solid var(--c);border-radius:var(--r);padding:14px 16px;cursor:pointer;display:flex;flex-direction:column;gap:6px}
+.ovc:hover{border-color:var(--c)}
+.ovc h3{font-size:18px}
+.ovc span{font-size:14px;color:var(--muted)}
+@media (max-width:860px){
+  .app{grid-template-columns:minmax(0,1fr)}
+  .side{position:static;height:auto;border-right:0;border-bottom:1px solid var(--line);padding-right:max(16px, env(safe-area-inset-right, 0px))}
+  .nav{flex-direction:row;overflow-x:auto;gap:6px;padding-bottom:4px}
+  .nav li{flex:0 0 auto}
+  .nav button{grid-template-columns:10px auto auto;white-space:nowrap;border:1px solid var(--line)}
+  .nav .sub{display:none}
+  .continuum{grid-template-columns:1fr}
+  .continuum div.z+div.z{border-left:0;border-top:1px dashed var(--line);text-align:left}
+  details.card .body{padding-left:16px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+
+<div class="app">
+  <aside class="side">
+    <div class="brand">AI Fluency<small>Framework &amp; Foundations · Claude Academy · study guide</small></div>
+    <div class="search">
+      <svg viewBox="0 0 24 24" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>
+      <input id="q" type="search" placeholder="Search the course…" aria-label="Search the course" autocomplete="off">
+    </div>
+    <div class="prog"><span id="progtxt">0 of 7 modules done</span><div class="bar"><i id="progbar"></i></div></div>
+    <div>
+      <p class="navlabel">Modules</p>
+      <ul class="nav" id="navm"></ul>
+    </div>
+    <div>
+      <p class="navlabel">Practice &amp; review</p>
+      <ul class="nav" id="navp"></ul>
+    </div>
+  </aside>
+  <main><div class="wrap" id="view"></div></main>
+</div>
+
+<script>
+const STORE="af";
+/* ---------- storage ---------- */
+function load(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}}
+function save(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
+let done=new Set(load(STORE+"-done",[]));
+
+/* ---------- helpers ---------- */
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+function srcLink(m,lesson){
+  if(typeof lesson==="string") return `<span class="src">${esc(lesson)}</span>`;
+  const [name,slug]=LESSONS[lesson];
+  return `<a class="src" href="${BASE+slug}" target="_blank" rel="noopener" title="Local notes: ${m.file}">${m.file} · L${lesson} ${esc(name)} ↗</a>`;
+}
+function cvar(m){return `--c:var(${m.c})`}
+
+/* ---------- diagrams ---------- */
+const AR=`<defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" class="ac"/></marker><marker id="ahc" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" class="acc"/></marker></defs>`;
+const BASE="https://academy.claude.com/courses/ai-fluency-framework-foundations/";
+const LESSONS={1:["Introduction to AI Fluency","introduction-to-ai-fluency"],2:["Why do we need AI Fluency?","why-do-we-need-ai-fluency"],3:["The 4D Framework","the-4d-framework"],4:["Generative AI fundamentals","generative-ai-fundamentals"],5:["Capabilities & limitations","capabilities-limitations"],6:["A closer look at Delegation","a-closer-look-at-delegation"],7:["Project planning and Delegation","project-planning-and-delegation"],8:["A closer look at Description","a-closer-look-at-description"],9:["Effective prompting techniques","effective-prompting-techniques"],10:["A closer look at Discernment","a-closer-look-at-discernment"],11:["The Description-Discernment loop","the-description-discernment-loop"],12:["A closer look at Diligence","a-closer-look-at-diligence"],13:["Conclusion","conclusion"],14:["Additional activities","additional-activities"]};
+const NOTES={plan:"your project · practice/email-digest/plan.md",readme:"your project · practice/email-digest/README.md",dil:"your project · practice/email-digest/diligence.md",notes:"your notes · training/courses/ai-fluency.md"};
+
+const M=[
+{id:"intro",c:"--p0",short:"Foundations",sub:"Lessons 1–3",eyebrow:"Lessons 1–3 · Foundations",title:"AI Fluency, three modes and the 4Ds",file:"01-introduction.md",
+ question:"What does it mean to be fluent with AI?",
+ take:[
+  ["Collaboration, not technology","The course is about collaborating with AI, not about how the technology works. It aims for skills that outlast today's tools, not quick prompt tricks.",1],
+  ["The definition","AI Fluency is the ability to work with AI effectively, efficiently, ethically and safely. It takes practical skills and a change in how you think about working with AI.",1],
+  ["Three modes of engagement","Automation: AI runs a specific task from your instructions. Augmentation: you and AI co-think and co-create. Agency: you set up how the AI knows and behaves so it can act on its own for you.",2],
+  ["The 4D Framework","Delegation (choose what AI does vs. you), Description (communicate clearly), Discernment (judge output and behavior critically), Diligence (use AI responsibly).",3],
+  ["All 4Ds apply in all three modes","Whether you automate, augment or set up agents, every D still applies, and practicing them prepares you for future AI capabilities.",3]
+ ],
+ concepts:[
+  ["AI Fluency","Working with AI effectively, efficiently, ethically and safely.",1],
+  ["Automation","AI does a specific task you defined.",2],
+  ["Augmentation","You and AI think and work together as partners.",2],
+  ["Agency","You set up the AI's knowledge and behavior so it works on its own for you.",2],
+  ["Delegation","Choosing what to do with AI and what to do yourself.",3],
+  ["Description","Communicating clearly with the AI.",3],
+  ["Discernment","Judging AI output and behavior critically.",3],
+  ["Diligence","Using AI responsibly.",3]
+ ],
+ snips:[
+  ["4D scenario check (Lesson 3 exercise)","Scenario: [drafting a marketing email series / analyzing a dataset / building story characters]\nDelegation: what do I keep, what do I share with AI?\nDescription: what context and success criteria does the AI need?\nDiscernment: how will I check the result?\nDiligence: what disclosure or responsibility issues come up?",3,"One question per D, for any task."]
+ ],
+ pit:[
+  "Chasing quick prompt tricks instead of skills that outlast today's tools.",
+  "Treating the 4Ds as only for chat: they apply to automation and agents too.",
+  "Focusing only on effectiveness and forgetting the ethical and safe parts of the definition."
+ ],
+ gaps:["Lesson 2 has no exercise or reflection in the sources.","Videos and transcripts were not read; notes come from the lesson page text."],
+ diagram:"intro",
+ quiz:[
+  ["AI Fluency is defined as working with AI…",["Quickly and cheaply","Effectively, efficiently, ethically and safely","With the best prompts","Without human review"],1,"Lesson 1 definition.",1],
+  ["You configure an AI's knowledge and behavior so it acts on its own for you. Which mode?",["Automation","Augmentation","Agency","Delegation"],2,"Agency: you set up how it knows and behaves, instead of one task at a time.",2],
+  ["Which D is about judging AI output and behavior critically?",["Delegation","Description","Discernment","Diligence"],2,"Discernment.",3],
+  ["Do the 4Ds apply when you only use AI for automation?",["No, only for augmentation","Yes, all 4Ds apply in all three modes","Only Diligence applies","Only Description applies"],1,"Lesson 3.",3],
+  ["What does the course focus on?",["How transformers work","Collaborating with AI, with skills that outlast today's tools","Memorizing prompt tricks","Building AI models"],1,"Lesson 1.",1]
+ ]},
+{id:"genai",c:"--accent",short:"Generative AI",sub:"Deep Dive 1 · L4–5",eyebrow:"Lessons 4–5 · Deep Dive 1",title:"What is generative AI?",file:"02-generative-ai.md",
+ question:"What do I need to know about the technology to delegate well?",
+ zone:["Many language tasks, tracks the conversation, switches tasks without retraining, connects to tools","Knowledge cutoff, hallucinations, context window limits, weak multi-step reasoning"],zl:["Strengths","Limitations"],
+ take:[
+  ["Generative AI creates new content","Text, images and code. Older AI mostly classified or analyzed existing data.",4],
+  ["Three things came together","Algorithm breakthroughs (especially the transformer architecture), huge amounts of digital training data, and much more computing power.",4],
+  ["Two training stages","Pre-training learns patterns from a massive amount of text; fine-tuning teaches it to follow instructions and give helpful answers.",4],
+  ["Context window and emergent capabilities","The context window is how much the model can “see” at once. Emergent capabilities are skills that show up at scale without being trained directly.",4],
+  ["Combine strengths","The field changes fast. The best results come from combining strengths: humans bring critical thinking, judgment, creativity and ethical oversight.",5]
+ ],
+ concepts:[
+  ["Generative AI","AI that creates new content such as text, images and code.",4],
+  ["LLM","Large language model, such as Claude.",4],
+  ["Transformer","The algorithm architecture behind the LLM breakthrough.",4],
+  ["Pre-training","Learning patterns from a massive amount of text.",4],
+  ["Fine-tuning","Learning to follow instructions and give helpful answers.",4],
+  ["Context window","How much the model can “see” at once; long inputs can be cut off or lose detail.",4],
+  ["Emergent capabilities","Skills that appear at scale without being trained directly.",4],
+  ["Knowledge cutoff","The model knows nothing after its training data ends.",5],
+  ["Hallucination","Confident but false output.",5]
+ ],
+ snips:[],
+ pit:[
+  "Asking about events after the knowledge cutoff and trusting the answer.",
+  "Taking confident output as true (hallucination).",
+  "Pasting very long inputs and assuming nothing was cut off or lost.",
+  "Trusting complex multi-step reasoning without checking it."
+ ],
+ gaps:["Lesson 4 has no video length, exercise or reflection in the sources.","⚠ Code and prompts: none in this module's sources.","How emergent capabilities arise is ⚠ not covered in sources."],
+ diagram:"genai",
+ quiz:[
+  ["Which three things made LLMs possible?",["Robots, sensors, cloud","Transformer architecture, huge training data, more computing power","Search engines, databases, APIs","Rules, logic, expert systems"],1,"Lesson 4.",4],
+  ["What does fine-tuning add?",["Raw language patterns","Following instructions and giving helpful answers","A bigger context window","Live web access"],1,"Pre-training learns patterns; fine-tuning teaches helpful instruction-following.",4],
+  ["Skills that appear at scale without direct training are called…",["Hallucinations","Emergent capabilities","Fine-tunes","Context windows"],1,"Lesson 4.",4],
+  ["Which is listed as a limitation?",["Switching tasks without retraining","Connecting to external tools","Knowledge cutoff","Tracking the conversation"],2,"The others are strengths.",5],
+  ["According to Lesson 5, what do humans bring to the combination?",["Speed","Critical thinking, judgment, creativity and ethical oversight","Memory of all data","Nothing once models are good enough"],1,"Combine strengths.",5]
+ ]},
+{id:"deleg",c:"--p1",short:"Delegation",sub:"D1 · L6–7",eyebrow:"Lessons 6–7 · Delegation",title:"Delegation",file:"03-delegation.md",
+ question:"What should AI do, and what should I do?",
+ take:[
+  ["Decide and split the work","Delegation is deciding what work stays with you, what you do together with AI, and what AI does on its own, then splitting the work.",6],
+  ["Three parts","Problem Awareness (know your goal and the work before bringing in AI), Platform Awareness (know what each AI system can and cannot do), Task Delegation (split work so each side does what it's best at).",6],
+  ["Expertise + AI understanding","Good delegation needs domain expertise plus an understanding of AI capabilities. The goal is not to automate everything; it's the best partnership for this task.",6],
+  ["Plan a real project","Choose a multi-step project of about 1 hour you care about; let Claude ask questions until success is clear; break it into tasks and ask where human strengths, AI and collaboration fit. Push back on assumptions.",7],
+  ["From your project: ask for recommendations","Claude first gave questions and options without picking one. Asking it to mark its recommended option made delegation faster, and its picks were almost always right.",NOTES.plan]
+ ],
+ concepts:[
+  ["Problem Awareness","Knowing your goal and the work it takes before bringing in AI.",6],
+  ["Platform Awareness","Knowing what each AI system can and cannot do.",6],
+  ["Task Delegation","Splitting work so humans and AI each do what they're best at.",6],
+  ["Course project","A multi-step, ~1 hour project carried through the later lessons.",7]
+ ],
+ snips:[
+  ["Delegation plan (Lesson 6 exercise)","Help me build a delegation plan for [small task]. Let's discuss:\n- What does a good result look like?\n- Which pieces of work are needed to get there?\n- Which pieces need human expertise, creativity or judgment?",6,"Discuss it with Claude instead of just listing answers."],
+  ["Vision and goals (Lesson 7)","I want to do [project]. Ask me questions, one at a time, until we both know what success looks like and why it matters to me.",7,"Step 2 of the project plan."],
+  ["From your project: get a pick","For each option, mark the one you recommend and say why.",NOTES.plan,"Your Lesson 7 reflection."]
+ ],
+ pit:[
+  "Bringing in AI before you know the goal and the work (no Problem Awareness).",
+  "Trying to automate everything instead of finding the best partnership.",
+  "Accepting the AI's task split without pushing back on its assumptions.",
+  "Picking a tool without knowing what it can and cannot do."
+ ],
+ gaps:["Videos and transcripts were not read."],
+ diagram:"deleg",
+ quiz:[
+  ["Which part of Delegation means knowing your goal before bringing in AI?",["Platform Awareness","Problem Awareness","Task Delegation","Transparency"],1,"Lesson 6.",6],
+  ["What is the goal of Delegation?",["Automate everything","The best human–AI partnership for this task","Use the newest model","Avoid AI for important work"],1,"Lesson 6.",6],
+  ["Good delegation needs…",["Only prompt skill","Domain expertise plus an understanding of AI capabilities","A paid plan","An agent framework"],1,"Lesson 6.",6],
+  ["The Lesson 7 course project should be…",["A 5-minute task","Multi-step, about 1 hour, something you care about","A full product launch","Fully automated"],1,"Lesson 7.",7],
+  ["Knowing what each AI system can and cannot do is…",["Platform Awareness","Problem Awareness","Performance description","Deployment"],0,"Lesson 6.",6]
+ ]},
+{id:"desc",c:"--p2",short:"Description",sub:"D2 · L8–9",eyebrow:"Lessons 8–9 · Description",title:"Description",file:"04-description.md",
+ question:"How do I tell AI what I need?",
+ take:[
+  ["More than writing a prompt","Description sets up a working relationship where you and the AI can collaborate well. The AI can't read your mind; being clear up front saves rework.",8],
+  ["Product, Process, Performance","Product: what to create (output, format, audience, style). Process: how to approach it (steps, method). Performance: how the AI should behave with you (concise vs. detailed, challenging vs. supportive).",8],
+  ["A partner, not a vending machine","Treat the AI as an interactive partner, not a database or a vending machine.",8],
+  ["Six prompting techniques","Give context, show examples, set constraints, split complex tasks into steps, ask the AI to think first, set a role or tone.",9],
+  ["Prompting is iterative","Secret weapon: ask the AI to help improve your prompt. Working prompts usually include a task overview, format spec, explicit constraints and background.",9]
+ ],
+ concepts:[
+  ["Product description","Defining what to create: output, format, audience, style.",8],
+  ["Process description","Guiding how the AI approaches the work: steps, method, what to consider first.",8],
+  ["Performance description","How the AI should behave while working with you.",8],
+  ["Prompt engineering","Designing good instructions for an AI: normal communication plus AI-specific habits.",9],
+  ["Bad Prompt Makeover","Rewriting weak prompts with product, process and performance details.",8]
+ ],
+ snips:[
+  ["Product · Process · Performance template (Lesson 8)","Product: [what to create — output, format, audience, style]\nProcess: [how to approach it — steps, method, what to consider first]\nPerformance: [how to work with me — concise or detailed, challenging or supportive]",8,"Covers all three parts of Description."],
+  ["Six techniques checklist (Lesson 9)","Context: [what I want, why, background]\nExamples: [sample of the style/format]\nConstraints: [format, length, requirements]\nSteps: [break the task down]\nThink first before you answer.\nRole/tone: [how to communicate]",9,"Working prompts: task overview, format spec, constraints, background."],
+  ["Secret weapon (Lesson 9)","Here is my prompt: [prompt]. Help me improve it before we start.",9,"Ask the AI to help improve your prompt."]
+ ],
+ pit:[
+  "Expecting the AI to read your mind instead of stating context and success criteria.",
+  "Describing only the product and skipping process and performance.",
+  "Treating the AI like a vending machine: one shot, no iteration.",
+  "Giving no examples or constraints when format matters."
+ ],
+ gaps:["Videos and transcripts were not read."],
+ diagram:"desc",
+ quiz:[
+  ["“Be concise and challenge my assumptions” describes which part?",["Product","Process","Performance","Platform"],2,"Performance: how the AI behaves with you.",8],
+  ["“Use a three-step method: outline, draft, review” describes…",["Product","Process","Performance","Diligence"],1,"Process: how to approach it.",8],
+  ["Which is the course's “secret weapon”?",["Using capital letters","Asking the AI to help improve your prompt","Very long prompts","Never iterating"],1,"Lesson 9.",9],
+  ["Which is NOT one of the six techniques?",["Show examples","Ask the AI to think first","Hide the goal to test it","Set a role or tone"],2,"The six: context, examples, constraints, steps, think first, role/tone.",9],
+  ["The course says to treat the AI as…",["A database","A vending machine","An interactive partner","A search engine"],2,"Lesson 8.",8]
+ ]},
+{id:"disc",c:"--p3",short:"Discernment",sub:"D3 · L10–11",eyebrow:"Lessons 10–11 · Discernment",title:"Discernment and the loop",file:"05-discernment.md",
+ question:"Is what I got good enough?",
+ take:[
+  ["The other side of Description","Description sends your intent; Discernment checks whether what comes back meets your needs. They form an ongoing feedback loop.",10],
+  ["Product, Process, Performance again","Product: accuracy, fit, coherence, relevance. Process: logic errors, missed points, bad reasoning. Performance: was its style useful, did it follow your feedback.",10],
+  ["Domain knowledge drives discernment","Judging three explanations of a topic you know well shows how much expertise matters, and how a non-expert would struggle.",10],
+  ["The loop","Describe → Discern → Refine → Integrate. You bring your own expertise; you decide what stays and you own the result.",11],
+  ["From your project: Discernment took more effort","On the email digest, checking each task against real Gmail data and making your own call was more work than writing the descriptions.",NOTES.readme]
+ ],
+ concepts:[
+  ["Product discernment","Evaluating the output: accuracy, fit, coherence, relevance.",10],
+  ["Process discernment","Evaluating how the AI got there: logic, gaps, reasoning.",10],
+  ["Performance discernment","Evaluating how the AI behaved: useful style, followed feedback.",10],
+  ["Description-Discernment loop","Describe, discern, refine, integrate; repeat per task.",11],
+  ["Integrate","You add your expertise, decide what stays, and own the result.",11]
+ ],
+ snips:[
+  ["Expert discernment (Lesson 10 exercise)","Give me three different explanations of [one aspect of a topic I know well].",10,"Judge product, process and performance; tell Claude why the best works and fix the weakest together."],
+  ["Agree the Description up front (Lesson 11)","Before we start: product = [outputs, format, length, detail]; process = [methods, steps]; performance = [concise/detailed, challenging/supportive]. Confirm or suggest changes.",11,"Step 2 of the loop exercise."]
+ ],
+ pit:[
+  "Judging only the final product and ignoring the reasoning behind it.",
+  "Evaluating output in a field you don't know without extra checks.",
+  "Accepting the first result instead of refining.",
+  "Letting the AI decide what stays: you integrate and own the result."
+ ],
+ gaps:["The sources don't list concrete warning signs that an output needs a closer look (it's a reflection question) — ⚠ not covered in sources."],
+ diagram:"disc",
+ quiz:[
+  ["Checking for logic errors and missed points is…",["Product discernment","Process discernment","Performance discernment","Deployment"],1,"Lesson 10.",10],
+  ["What drives good discernment, per the Lesson 10 exercise?",["Model size","Domain knowledge","Prompt length","Temperature"],1,"Domain knowledge drives good discernment.",10],
+  ["The loop steps in order are…",["Discern, Describe, Deploy, Delete","Describe, Discern, Refine, Integrate","Delegate, Describe, Discern, Diligence","Plan, Prompt, Publish, Pause"],1,"Lesson 11.",11],
+  ["In the Integrate step, who owns the result?",["The AI","You","The platform","Nobody"],1,"You decide what stays and own the result.",11],
+  ["“Did it follow my feedback?” is which kind of check?",["Product","Process","Performance","Creation"],2,"Performance: how the AI behaved with you.",10]
+ ]},
+{id:"dil",c:"--p4",short:"Diligence",sub:"D4 · L12",eyebrow:"Lesson 12 · Diligence",title:"Diligence",file:"06-diligence.md",
+ question:"Am I using AI responsibly?",
+ take:[
+  ["The ethics and safety side","Delegation, Description and Discernment are mostly about effectiveness and efficiency. Diligence is about taking responsibility for how you use AI.",12],
+  ["Creation, Transparency, Deployment","Creation: choose AI systems carefully (data shared, privacy, security). Transparency: be honest about AI's role with everyone who needs to know. Deployment: check the output and stand behind it before using or sharing it.",12],
+  ["Context sets expectations","Disclosure and checking expectations differ between personal, academic and professional settings. It's your job to know which apply.",12],
+  ["Write a diligence statement","Say which AI systems you used, what they contributed, how you reviewed the output, your responsibility for the result, and any context rules. Attach it to the work.",12],
+  ["From your project: privacy by design","The email digest uses read-only Gmail, posts only to your private Slack DM, stores no real email content, and strips your config before the kit is shared.",NOTES.dil]
+ ],
+ concepts:[
+  ["Creation diligence","Choosing AI systems carefully and thinking about data, privacy and security.",12],
+  ["Transparency diligence","Being honest about AI's role with everyone who needs to know.",12],
+  ["Deployment diligence","Checking AI-assisted output and standing behind it before using or sharing it.",12],
+  ["Diligence statement","A note on how AI was used, stating that you take responsibility for the result.",12]
+ ],
+ snips:[
+  ["Diligence statement template (Lesson 12 notes)","I used [AI tool] to help with [tasks]. I reviewed and checked everything it produced, and the final result reflects my own understanding and intent. I take full responsibility for its content and accuracy.",12,"Attach it as a footer, appendix or metadata."],
+  ["Reflect before drafting (Lesson 12 exercise)","Creation: Which AI did I use and why? What data did I share? Privacy concerns?\nTransparency: Who is the audience, what disclosure do they expect? What did the AI contribute?\nDeployment: How did I check accuracy? What responsibility am I taking?",12,"Step 1 of the exercise."]
+ ],
+ pit:[
+  "Sharing sensitive data with an AI system without thinking about privacy and security.",
+  "Hiding AI's role from people who need to know.",
+  "Sharing AI-assisted output you haven't checked or can't stand behind.",
+  "Assuming one disclosure standard fits personal, academic and professional settings."
+ ],
+ gaps:["The course's own diligence statement is only on the course page and was not read.","Specific disclosure rules per setting are ⚠ not covered in sources."],
+ diagram:"dil",
+ quiz:[
+  ["Which part of Diligence covers being honest about AI's role?",["Creation","Transparency","Deployment","Discernment"],1,"Lesson 12.",12],
+  ["Checking output and standing behind it before sharing is…",["Creation","Transparency","Deployment","Delegation"],2,"Lesson 12.",12],
+  ["Thinking about what data you share and privacy belongs to…",["Creation","Transparency","Deployment","Performance"],0,"Lesson 12.",12],
+  ["Disclosure expectations…",["Are the same everywhere","Differ between personal, academic and professional settings","Only apply to students","Are set by the AI"],1,"It's your job to know which apply.",12],
+  ["Which is NOT required in a diligence statement?",["Which AI systems you used","How you reviewed the output","Your responsibility for the result","The model's parameter count"],3,"Lesson 12 lists systems, contribution, review, responsibility, context rules.",12]
+ ]},
+{id:"concl",c:"--p0",short:"Conclusion",sub:"L13–14 · Practice",eyebrow:"Lessons 13–14 · Conclusion and activities",title:"Conclusion and additional activities",file:"07-conclusion-and-activities.md",
+ question:"How do I keep building fluency after the course?",
+ take:[
+  ["Fluency comes from practice over time","Not quick mastery. The 4Ds work across Automation, Augmentation and Agency.",13],
+  ["One line per D","Delegation: your expertise stays the foundation. Description: connects your intent to what AI can do. Discernment: critical evaluation within the system's limits. Diligence: accountability, transparency, responsibility.",13],
+  ["Powerful but not magic","AI is only as useful and safe as the way we use it. The best outcomes come when humans and AI build on each other's strengths.",13],
+  ["Personal AI fluency plan","Rate yourself on each D (novice / developing / confident), pick 1–2 competencies to focus on, then plan activities, schedule, resources and how to measure progress.",14],
+  ["Prompt and pattern library + game night","Write reusable templates for 5–10 recurring tasks and note which techniques and checks work. Practice Description and Discernment cheaply with riddles, crosswords and word association.",14]
+ ],
+ concepts:[
+  ["Personal AI fluency plan","A self-rating per D plus a focused practice plan.",14],
+  ["Prompt and pattern library","Reusable prompt templates with placeholders for recurring tasks, plus which checks work.",14],
+  ["Game night","Low-cost games that train precise Description and sharp Discernment.",14]
+ ],
+ snips:[
+  ["Self-rating (Lesson 14)","Help me build a personal AI fluency plan. For each D (Delegation, Description, Discernment, Diligence) I rate myself novice / developing / confident: [ratings]. Modes I use most/least: [modes]. Help me pick 1–2 to focus on, then plan activities, a schedule, resources and how to measure progress.",14,"Personal AI fluency plan."],
+  ["Discuss the course (Lesson 13)","How do the 4Ds apply to my job as [role]? Judging from this conversation, which Ds am I strong or weak in?",13,"Optionally upload the framework document."]
+ ],
+ pit:[
+  "Expecting quick mastery instead of practicing over time.",
+  "Treating AI as magic: it is only as useful and safe as the way you use it.",
+  "Rewriting the same prompts from scratch instead of keeping a library."
+ ],
+ gaps:["Lesson 14 is self-directed; there is no expected output to check against.","The final quiz is on the course page and not covered here.","The framework document (ringling.libguides.com/ai/framework) was not read."],
+ diagram:"concl",
+ quiz:[
+  ["Where does fluency come from, per the Conclusion?",["Quick mastery","Practice over time","Buying better tools","Memorizing the framework"],1,"Lesson 13.",13],
+  ["In the fluency plan, the self-rating scale is…",["1–10","Novice / developing / confident","Pass / fail","Bronze / silver / gold"],1,"Lesson 14.",14],
+  ["How many competencies should you focus on first?",["All four","1–2","None","Only Diligence"],1,"Lesson 14.",14],
+  ["What is game night practice for?",["Entertainment only","Precise Description and sharp Discernment","Testing model speed","Diligence statements"],1,"Lesson 14.",14],
+  ["“AI is powerful but not magic” means…",["AI is useless","It is only as useful and safe as the way we use it","Only experts should use it","It will replace judgment"],1,"Lesson 13.",13]
+ ]}
+];
+
+const PRACTICE=[["overview","Overview","Start here","--p0"],["flashcards","Flashcards","Key terms","--accent"],["cheatsheet","Cheat sheet","One-page summary","--accent"]];
+
+const D={
+intro:`<svg viewBox="0 0 720 270" role="img" aria-label="Three modes of engagement, each covered by all four Ds">${AR}
+ <text x="20" y="24" class="tb">Three modes of engagement</text>
+ <rect x="20" y="36" width="215" height="62" rx="8" class="bx"/><text x="127" y="62" text-anchor="middle" class="tb">Automation</text><text x="127" y="82" text-anchor="middle" class="tm">AI runs a task you defined</text>
+ <rect x="252" y="36" width="215" height="62" rx="8" class="bx"/><text x="360" y="62" text-anchor="middle" class="tb">Augmentation</text><text x="360" y="82" text-anchor="middle" class="tm">co-think and co-create</text>
+ <rect x="485" y="36" width="215" height="62" rx="8" class="bx"/><text x="592" y="62" text-anchor="middle" class="tb">Agency</text><text x="592" y="82" text-anchor="middle" class="tm">you set it up to act for you</text>
+ <path d="M360 104V130" class="ln" marker-end="url(#ah)"/><text x="372" y="122" class="tm">all 4Ds apply in every mode</text>
+ <rect x="20" y="140" width="160" height="110" rx="8" style="fill:color-mix(in srgb,var(--p1) 14%,var(--surface));stroke:var(--p1)"/><text x="100" y="180" text-anchor="middle" class="tb">Delegation</text><text x="100" y="202" text-anchor="middle" class="tm">what AI does vs. me</text>
+ <rect x="195" y="140" width="160" height="110" rx="8" style="fill:color-mix(in srgb,var(--p2) 14%,var(--surface));stroke:var(--p2)"/><text x="275" y="180" text-anchor="middle" class="tb">Description</text><text x="275" y="202" text-anchor="middle" class="tm">tell it what I need</text>
+ <rect x="370" y="140" width="160" height="110" rx="8" style="fill:color-mix(in srgb,var(--p3) 14%,var(--surface));stroke:var(--p3)"/><text x="450" y="180" text-anchor="middle" class="tb">Discernment</text><text x="450" y="202" text-anchor="middle" class="tm">is it good enough?</text>
+ <rect x="545" y="140" width="155" height="110" rx="8" style="fill:color-mix(in srgb,var(--p4) 14%,var(--surface));stroke:var(--p4)"/><text x="622" y="180" text-anchor="middle" class="tb">Diligence</text><text x="622" y="202" text-anchor="middle" class="tm">am I responsible?</text>
+ <path d="M355 228H370" class="ln"/><text x="362" y="244" text-anchor="middle" class="tm">loop</text>
+</svg><figcaption>Lessons 2–3: the 4Ds apply across Automation, Augmentation and Agency.</figcaption>`,
+genai:`<svg viewBox="0 0 720 230" role="img" aria-label="Transformer, data and compute lead to LLMs, trained by pre-training then fine-tuning">${AR}
+ <rect x="20" y="20" width="170" height="44" rx="8" class="bx"/><text x="105" y="47" text-anchor="middle" class="t">Transformer architecture</text>
+ <rect x="20" y="76" width="170" height="44" rx="8" class="bx"/><text x="105" y="103" text-anchor="middle" class="t">Huge training data</text>
+ <rect x="20" y="132" width="170" height="44" rx="8" class="bx"/><text x="105" y="159" text-anchor="middle" class="t">More computing power</text>
+ <path d="M190 42L240 92M190 98H240M190 154L240 104" class="ln"/>
+ <rect x="245" y="70" width="110" height="56" rx="8" class="bxc"/><text x="300" y="103" text-anchor="middle" class="tb">LLM</text>
+ <path d="M355 98H385" class="ln" marker-end="url(#ah)"/>
+ <rect x="390" y="70" width="140" height="56" rx="8" class="bx"/><text x="460" y="94" text-anchor="middle" class="tb">Pre-training</text><text x="460" y="112" text-anchor="middle" class="tm">patterns from text</text>
+ <path d="M530 98H560" class="ln" marker-end="url(#ah)"/>
+ <rect x="565" y="70" width="140" height="56" rx="8" class="bxc"/><text x="635" y="94" text-anchor="middle" class="tb">Fine-tuning</text><text x="635" y="112" text-anchor="middle" class="tm">follow instructions</text>
+ <text x="245" y="170" class="tm">Context window: how much it can “see” at once</text>
+ <text x="245" y="192" class="tm">Emergent capabilities: skills that appear at scale</text>
+ <text x="245" y="214" class="tm">Knowledge cutoff: nothing after training data ends</text>
+</svg><figcaption>Lessons 4–5: why LLMs became possible, and how they are trained.</figcaption>`,
+deleg:`<svg viewBox="0 0 720 250" role="img" aria-label="Problem awareness, platform awareness, then task delegation into me, together and AI">${AR}
+ <rect x="20" y="20" width="200" height="60" rx="8" class="bxc"/><text x="120" y="46" text-anchor="middle" class="tb">Problem Awareness</text><text x="120" y="65" text-anchor="middle" class="tm">goal + work, before AI</text>
+ <rect x="260" y="20" width="200" height="60" rx="8" class="bxc"/><text x="360" y="46" text-anchor="middle" class="tb">Platform Awareness</text><text x="360" y="65" text-anchor="middle" class="tm">what each system can do</text>
+ <rect x="500" y="20" width="200" height="60" rx="8" class="bxc"/><text x="600" y="46" text-anchor="middle" class="tb">Task Delegation</text><text x="600" y="65" text-anchor="middle" class="tm">split by strengths</text>
+ <path d="M220 50H255" class="ln" marker-end="url(#ah)"/><path d="M460 50H495" class="ln" marker-end="url(#ah)"/>
+ <path d="M600 80V110H120V135M600 110V135M360 110V135" class="ln" marker-end="url(#ah)"/>
+ <rect x="20" y="140" width="200" height="80" rx="8" class="bx"/><text x="120" y="170" text-anchor="middle" class="tb">Stays with me</text><text x="120" y="190" text-anchor="middle" class="tm">expertise, creativity, judgment</text>
+ <rect x="260" y="140" width="200" height="80" rx="8" class="bx"/><text x="360" y="170" text-anchor="middle" class="tb">Together</text><text x="360" y="190" text-anchor="middle" class="tm">where collaboration helps most</text>
+ <rect x="500" y="140" width="200" height="80" rx="8" class="bx"/><text x="600" y="170" text-anchor="middle" class="tb">AI on its own</text><text x="600" y="190" text-anchor="middle" class="tm">where AI is a good fit</text>
+</svg><figcaption>Lessons 6–7: the three parts of Delegation and the split they produce.</figcaption>`,
+desc:`<svg viewBox="0 0 720 220" role="img" aria-label="Product, process and performance description">
+ <rect x="20" y="20" width="215" height="110" rx="10" class="bxc"/><text x="127" y="52" text-anchor="middle" class="tb">Product</text><text x="127" y="74" text-anchor="middle" class="t">what to create</text><text x="127" y="100" text-anchor="middle" class="tm">output · format · audience · style</text>
+ <rect x="252" y="20" width="215" height="110" rx="10" class="bxc"/><text x="360" y="52" text-anchor="middle" class="tb">Process</text><text x="360" y="74" text-anchor="middle" class="t">how to approach it</text><text x="360" y="100" text-anchor="middle" class="tm">steps · method · what first</text>
+ <rect x="485" y="20" width="215" height="110" rx="10" class="bxc"/><text x="592" y="52" text-anchor="middle" class="tb">Performance</text><text x="592" y="74" text-anchor="middle" class="t">how to behave with me</text><text x="592" y="100" text-anchor="middle" class="tm">concise/detailed · challenging/supportive</text>
+ <text x="20" y="168" class="tb">Six techniques</text>
+ <text x="20" y="194" class="tm">context · examples · constraints · steps · think first · role/tone   +   ask the AI to improve your prompt</text>
+</svg><figcaption>Lessons 8–9: the three parts of Description and the techniques that fill them.</figcaption>`,
+disc:`<svg viewBox="0 0 720 280" role="img" aria-label="Describe, discern, refine, integrate loop">${AR}
+ <rect x="60" y="30" width="180" height="60" rx="30" style="fill:color-mix(in srgb,var(--p2) 14%,var(--surface));stroke:var(--p2)"/><text x="150" y="56" text-anchor="middle" class="tb">Describe</text><text x="150" y="74" text-anchor="middle" class="tm">product · process · performance</text>
+ <rect x="480" y="30" width="180" height="60" rx="30" class="bxc"/><text x="570" y="56" text-anchor="middle" class="tb">Discern</text><text x="570" y="74" text-anchor="middle" class="tm">product · process · behavior</text>
+ <rect x="480" y="190" width="180" height="60" rx="30" class="bx"/><text x="570" y="216" text-anchor="middle" class="tb">Refine</text><text x="570" y="234" text-anchor="middle" class="tm">feedback + better description</text>
+ <rect x="60" y="190" width="180" height="60" rx="30" class="bx"/><text x="150" y="216" text-anchor="middle" class="tb">Integrate</text><text x="150" y="234" text-anchor="middle" class="tm">my expertise; I own it</text>
+ <path d="M240 60H475" class="ln" marker-end="url(#ah)"/><path d="M570 90V185" class="ln" marker-end="url(#ah)"/><path d="M480 220H245" class="ln" marker-end="url(#ah)"/><path d="M150 190V95" class="ln dash" marker-end="url(#ah)"/>
+ <text x="360" y="150" text-anchor="middle" class="tm">repeat for each task</text>
+</svg><figcaption>Lesson 11: Description and Discernment as one loop.</figcaption>`,
+dil:`<svg viewBox="0 0 720 230" role="img" aria-label="Creation, transparency, deployment, then diligence statement steps">${AR}
+ <rect x="20" y="20" width="215" height="90" rx="10" class="bxc"/><text x="127" y="50" text-anchor="middle" class="tb">Creation</text><text x="127" y="72" text-anchor="middle" class="tm">which system, what data,</text><text x="127" y="90" text-anchor="middle" class="tm">privacy, security</text>
+ <rect x="252" y="20" width="215" height="90" rx="10" class="bxc"/><text x="360" y="50" text-anchor="middle" class="tb">Transparency</text><text x="360" y="72" text-anchor="middle" class="tm">honest about AI's role</text><text x="360" y="90" text-anchor="middle" class="tm">with who needs to know</text>
+ <rect x="485" y="20" width="215" height="90" rx="10" class="bxc"/><text x="592" y="50" text-anchor="middle" class="tb">Deployment</text><text x="592" y="72" text-anchor="middle" class="tm">check it and stand</text><text x="592" y="90" text-anchor="middle" class="tm">behind it before sharing</text>
+ <text x="20" y="150" class="tb">Diligence statement</text>
+ <rect x="20" y="164" width="200" height="46" rx="8" class="bx"/><text x="120" y="192" text-anchor="middle" class="t">1. Reflect (C · T · D)</text>
+ <rect x="260" y="164" width="200" height="46" rx="8" class="bx"/><text x="360" y="192" text-anchor="middle" class="t">2. Draft with Claude</text>
+ <rect x="500" y="164" width="200" height="46" rx="8" class="bx"/><text x="600" y="192" text-anchor="middle" class="t">3. Attach to the work</text>
+ <path d="M220 187H255" class="ln" marker-end="url(#ah)"/><path d="M460 187H495" class="ln" marker-end="url(#ah)"/>
+</svg><figcaption>Lesson 12: the three parts of Diligence and the statement exercise.</figcaption>`,
+concl:`<svg viewBox="0 0 720 200" role="img" aria-label="Personal AI fluency plan steps">${AR}
+ <text x="20" y="24" class="tb">Personal AI fluency plan</text>
+ <rect x="20" y="40" width="210" height="70" rx="8" class="bxc"/><text x="125" y="68" text-anchor="middle" class="tb">1. Rate each D</text><text x="125" y="88" text-anchor="middle" class="tm">novice · developing · confident</text>
+ <rect x="255" y="40" width="210" height="70" rx="8" class="bxc"/><text x="360" y="68" text-anchor="middle" class="tb">2. Pick 1–2 to focus</text><text x="360" y="88" text-anchor="middle" class="tm">strengths, gaps, modes</text>
+ <rect x="490" y="40" width="210" height="70" rx="8" class="bxc"/><text x="595" y="68" text-anchor="middle" class="tb">3. Plan practice</text><text x="595" y="88" text-anchor="middle" class="tm">activities · schedule · measure</text>
+ <path d="M230 75H250" class="ln" marker-end="url(#ah)"/><path d="M465 75H485" class="ln" marker-end="url(#ah)"/>
+ <text x="20" y="150" class="t">Keep practicing: prompt and pattern library (5–10 recurring tasks)</text>
+ <text x="20" y="176" class="t">Cheap practice: game night (riddles, crosswords, word association, Twenty Questions)</text>
+</svg><figcaption>Lessons 13–14: practice over time, not quick mastery.</figcaption>`
+};
+
+function viewOverview(){
+  return `<div class="mhead" style="--c:var(--accent)"><span class="eyebrow">Claude Academy · 14 lessons · ~4h</span><h1>AI Fluency: Framework &amp; Foundations</h1>
+  <p class="question">Working with AI effectively, efficiently, ethically and safely.</p></div>
+  <div class="intro"><p>Three modes of engagement (Automation, Augmentation, Agency) and four competencies, the 4Ds: Delegation, Description, Discernment and Diligence. Description and Discernment form a loop: describe → evaluate → refine → repeat.</p></div>
+  <div class="overview">${M.map(m=>`<button class="ovc" data-go="${m.id}" style="${cvar(m)}"><span class="eyebrow">${m.eyebrow}</span><h3>${esc(m.short)}</h3><span>${esc(m.question)}</span><span>${done.has(m.id)?"✓ Done":m.take.length+" takeaways · "+m.quiz.length+" quiz questions"}</span></button>`).join("")}</div>
+  <div class="gap"><b>About the sources.</b> Built only from the local lesson notes (README.md, 01–07 lesson files), your course notes and your email-digest course project. Videos, transcripts, the framework document, the course's own diligence statement and the final quiz were not read. Gaps are flagged per module with ⚠. Course © 2025 Rick Dakan, Joseph Feller and Anthropic, CC BY-NC-SA 4.0.</div>`;
+}
+
+function viewCheat(){
+  const D4=[["Delegation","--p1","What should AI do, what should I do?","Problem · Platform · Task awareness","Expertise stays the foundation; best partnership, not full automation"],
+   ["Description","--p2","How do I tell AI what I need?","Product · Process · Performance","Context, examples, constraints, steps, think first, role/tone"],
+   ["Discernment","--p3","Is what I got good enough?","Product · Process · Performance","Domain knowledge drives discernment; you own the result"],
+   ["Diligence","--p4","Am I using AI responsibly?","Creation · Transparency · Deployment","Know your setting's disclosure rules; write a diligence statement"]];
+  return `<div class="mhead" style="--c:var(--accent)"><span class="eyebrow">Review</span><h1>Cheat sheet</h1><p class="question">The whole course on one page.</p></div>
+  <div class="intro"><p><b>AI Fluency</b> = working with AI effectively, efficiently, ethically and safely. Skills that outlast today's tools, built by practice over time.</p></div>
+  <section><h2>The 4Ds</h2><div class="tbl"><table><thead><tr><th>Competency</th><th>Question</th><th>Parts</th><th>Remember</th></tr></thead><tbody>
+  ${D4.map(p=>`<tr style="--c:var(${p[1]})"><td><span class="pname">${p[0]}</span></td><td>${p[2]}</td><td>${p[3]}</td><td>${p[4]}</td></tr>`).join("")}
+  </tbody></table></div></section>
+  <div class="grid2">
+   <div class="panel"><h3>Three modes (L2)</h3><ul><li><b>Automation</b>: AI does a task you defined</li><li><b>Augmentation</b>: think and work together</li><li><b>Agency</b>: set up its knowledge and behavior to act for you</li></ul></div>
+   <div class="panel"><h3>Generative AI (L4–5)</h3><ul><li>Transformer + data + compute → LLMs</li><li>Pre-training → fine-tuning</li><li>Limits: knowledge cutoff, hallucination, context window, multi-step reasoning</li></ul></div>
+   <div class="panel"><h3>The loop (L11)</h3><ul><li><b>Describe</b> product, process, performance</li><li><b>Discern</b> product, process, behavior</li><li><b>Refine</b> with feedback</li><li><b>Integrate</b> your expertise; you own it</li></ul></div>
+   <div class="panel"><h3>Diligence statement (L12)</h3><ul><li>Which AI systems you used</li><li>What they contributed</li><li>How you reviewed the output</li><li>Your responsibility + context rules</li></ul></div>
+   <div class="panel"><h3>Keep practicing (L14)</h3><ul><li>Rate each D; focus on 1–2</li><li>Prompt and pattern library for 5–10 tasks</li><li>Game night for Description + Discernment</li></ul></div>
+   <div class="panel"><h3>Secret weapon (L9)</h3><ul><li>Ask the AI to help improve your prompt</li><li>Treat it as a partner, not a vending machine</li><li>Expect to iterate</li></ul></div>
+  </div>
+  <div class="gap"><b>⚠ Not covered in sources:</b> final quiz content; the course's own diligence statement; specific disclosure rules per setting; how emergent capabilities arise.</div>`;
+}
+
+/* ---------- nav ---------- */
+function renderNav(cur){
+  $("#navm").innerHTML=M.map(m=>`<li><button data-go="${m.id}" style="${cvar(m)}" aria-current="${cur===m.id}"><span class="dot"></span><span>${esc(m.short)}<span class="sub">${m.sub}</span></span><span class="chk">${done.has(m.id)?"✓":""}</span></button></li>`).join("");
+  $("#navp").innerHTML=PRACTICE.map(p=>`<li><button data-go="${p[0]}" style="--c:var(${p[3]})" aria-current="${cur===p[0]}"><span class="dot"></span><span>${p[1]}<span class="sub">${p[2]}</span></span><span></span></button></li>`).join("");
+  const n=M.filter(m=>done.has(m.id)).length;
+  $("#progtxt").textContent=`${n} of ${M.length} modules done`;
+  $("#progbar").style.width=(n/M.length*100)+"%";
+}
+
+/* ---------- views ---------- */
+function viewModule(m){
+  const z=m.zone?`<div class="continuum"><span class="rail"></span><div class="z"><b>${(m.zl||["Capability zone","Limitation zone"])[0]}</b>${esc(m.zone[0])}</div><div class="z"><b>${(m.zl||["Capability zone","Limitation zone"])[1]}</b>${esc(m.zone[1])}</div></div>`:"";
+  const isDone=done.has(m.id);
+  return `<div class="mhead"><span class="eyebrow">${m.eyebrow}</span>
+   <div class="headrow"><h1>${esc(m.title)}</h1><button class="btn ${isDone?"done":"primary"}" data-done="${m.id}" id="donebtn">${isDone?"✓ Done":"Mark as done"}</button></div>
+   <p class="question">${esc(m.question)}</p></div>${z}
+  <section><h2>Key takeaways <span class="count">${m.take.length}</span></h2><div class="cards">
+   ${m.take.map((t,i)=>`<details class="card" id="${m.id}-t${i}"${i===0?" open":""}><summary><span class="n">${String(i+1).padStart(2,"0")}</span><span>${esc(t[0])}</span><span class="chev">›</span></summary><div class="body"><p>${esc(t[1])}</p>${srcLink(m,t[2])}</div></details>`).join("")}
+  </div></section>
+  <section><h2>How it fits together</h2><figure class="diagram" style="margin:0">${D[m.diagram]}</figure></section>
+  <section><h2>Core concepts <span class="count">${m.concepts.length}</span></h2><dl class="concepts">
+   ${m.concepts.map((c,i)=>`<div id="${m.id}-c${i}"><dt>${esc(c[0])}</dt><dd>${esc(c[1])}</dd></div>`).join("")}</dl></section>
+  <section><h2>Prompts worth keeping</h2>
+   <div class="gap" style="margin-bottom:10px"><b>⚠ Code and commands: not covered in sources.</b> This course has no code. These are the copyable prompts the lessons and exercises use.</div>
+   <div class="snips">${m.snips.length?"":`<div class="gap"><b>⚠</b> No prompts in this module's sources.</div>`}${m.snips.map((s,i)=>`<div class="snip" id="${m.id}-s${i}"><header><span>${esc(s[0])}</span><button class="btn copy" data-copy="${m.id}-s${i}">Copy</button></header><pre>${esc(s[1])}</pre><header style="border:0;border-top:1px solid var(--line)"><span>${esc(s[3])}</span>${srcLink(m,s[2])}</header></div>`).join("")}</div></section>
+  <section><h2>Common pitfalls</h2><ul class="pit">${m.pit.map((p,i)=>`<li id="${m.id}-p${i}"><span>${esc(p)}</span></li>`).join("")}</ul></section>
+  <section><h2>Check yourself <span class="score" id="score-${m.id}"></span></h2><div class="quiz">
+   ${m.quiz.map((q,i)=>`<div class="q" data-q="${m.id}:${i}"><p class="stem">${i+1}. ${esc(q[0])}</p><div class="opts">${q[1].map((o,j)=>`<button data-opt="${j}">${esc(o)}</button>`).join("")}</div><div class="expl" hidden></div></div>`).join("")}
+   <button class="btn" data-reset="${m.id}" style="align-self:flex-start">Reset quiz</button></div></section>
+  <section><h2>Gaps in the sources</h2><div style="display:flex;flex-direction:column;gap:8px">${m.gaps.map(g=>`<div class="gap"><b>⚠</b> ${esc(g)}</div>`).join("")}</div></section>
+  <div class="headrow"><span class="prog">Source file: ${m.file}</span><button class="btn ${isDone?"done":"primary"}" data-done="${m.id}">${isDone?"✓ Done":"Mark as done"}</button></div>`;
+}
+
+let FC={deck:[],i:0,filter:"all"};
+function buildDeck(){
+  const all=[];M.forEach(m=>m.concepts.forEach(c=>all.push({m,term:c[0],def:c[1],l:c[2]})));
+  FC.deck=FC.filter==="all"?all:all.filter(x=>x.m.id===FC.filter);FC.i=0;
+}
+function viewFlash(){
+  if(!FC.deck.length) buildDeck();
+  const x=FC.deck[FC.i];
+  return `<div class="mhead" style="--c:var(--accent)"><span class="eyebrow">Practice</span><h1>Flashcards</h1><p class="question">Tap the card (or press Space) to flip. Arrow keys move.</p></div>
+  <div class="fc-tools"><label for="fcf" class="prog">Deck</label><select id="fcf"><option value="all">All modules (${M.reduce((a,m)=>a+m.concepts.length,0)})</option>${M.map(m=>`<option value="${m.id}"${FC.filter===m.id?" selected":""}>${esc(m.short)} (${m.concepts.length})</option>`).join("")}</select><button class="btn" id="fcshuf">Shuffle</button></div>
+  <div class="fcard" id="fcard" tabindex="0" role="button" aria-label="Flip card" style="${cvar(x.m)}"><div class="inner">
+   <div class="face"><span class="tag">${esc(x.m.short)}</span><span class="term">${esc(x.term)}</span><span class="prog">tap to reveal</span></div>
+   <div class="face back"><span class="tag">${esc(x.term)}</span><span class="def">${esc(x.def)}</span>${srcLink(x.m,x.l)}</div></div></div>
+  <div class="fc-nav"><button class="btn" id="fcprev">← Previous</button><span class="score">${FC.i+1} / ${FC.deck.length}</span><button class="btn primary" id="fcnext">Next →</button></div>`;
+}
+
+/* ---------- search ---------- */
+function searchIndex(){
+  const out=[];
+  M.forEach(m=>{
+    m.take.forEach((t,i)=>out.push({m,kind:"Takeaway",title:t[0],text:t[1],el:`${m.id}-t${i}`}));
+    m.concepts.forEach((c,i)=>out.push({m,kind:"Concept",title:c[0],text:c[1],el:`${m.id}-c${i}`}));
+    m.snips.forEach((s,i)=>out.push({m,kind:"Prompt",title:s[0],text:s[1]+" "+s[3],el:`${m.id}-s${i}`}));
+    m.pit.forEach((p,i)=>out.push({m,kind:"Pitfall",title:p,text:"",el:`${m.id}-p${i}`}));
+  });
+  return out;
+}
+const IDX=searchIndex();
+function hl(s,q){return esc(s).replace(new RegExp("("+q.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")+")","ig"),"<mark>$1</mark>")}
+function viewSearch(q){
+  const ql=q.toLowerCase();
+  const hits=IDX.filter(x=>(x.title+" "+x.text+" "+x.m.short).toLowerCase().includes(ql));
+  return `<div class="mhead"><span class="eyebrow">Search</span><h1>${hits.length} result${hits.length===1?"":"s"} for “${esc(q)}”</h1></div>
+  <div class="res">${hits.map(x=>`<button data-jump="${x.m.id}|${x.el}" style="${cvar(x.m)}"><span class="kind">${x.kind} · ${esc(x.m.short)}</span><b>${hl(x.title,q)}</b>${x.text?`<span class="prog">${hl(x.text.slice(0,180),q)}${x.text.length>180?"…":""}</span>`:""}</button>`).join("")||`<p>No matches. Try a property name, “citation”, “cutoff” or “goal”.</p>`}</div>`;
+}
+
+/* ---------- router ---------- */
+let cur="overview";
+function go(id,opts={}){
+  cur=id;save(STORE+"-view",id);
+  const m=M.find(x=>x.id===id);
+  const v=$("#view");
+  if(m){v.style.cssText=cvar(m);v.innerHTML=viewModule(m);restoreQuiz(m)}
+  else if(id==="flashcards"){v.style.cssText="";v.innerHTML=viewFlash()}
+  else if(id==="cheatsheet"){v.style.cssText="";v.innerHTML=viewCheat()}
+  else {cur="overview";v.style.cssText="";v.innerHTML=viewOverview()}
+  renderNav(cur);
+  try{history.replaceState(null,"","#"+cur)}catch(e){}
+  if(!opts.keepScroll) window.scrollTo({top:0});
+}
+
+/* ---------- quiz state (per browser) ---------- */
+let QA=load(STORE+"-quiz",{});
+function answer(qel,j,persist=true){
+  const [mid,i]=qel.dataset.q.split(":");const m=M.find(x=>x.id===mid);const q=m.quiz[+i];
+  qel.querySelectorAll(".opts button").forEach((b,k)=>{b.disabled=true;if(k===q[2])b.classList.add("right");else if(k===j)b.classList.add("wrong")});
+  const e=qel.querySelector(".expl");e.hidden=false;
+  e.innerHTML=`<b>${j===q[2]?"Correct.":"Not quite."}</b> ${esc(q[3])} ${srcLink(m,q[4])}`;
+  if(persist){QA[qel.dataset.q]=j;save(STORE+"-quiz",QA)}
+  updScore(m);
+}
+function updScore(m){
+  const ans=m.quiz.map((q,i)=>QA[m.id+":"+i]);const n=ans.filter(a=>a!==undefined).length;
+  const r=ans.filter((a,i)=>a===m.quiz[i][2]).length;
+  const el=$("#score-"+m.id);if(el)el.textContent=n?`${r}/${n} correct`:`${m.quiz.length} questions`;
+}
+function restoreQuiz(m){m.quiz.forEach((q,i)=>{const a=QA[m.id+":"+i];if(a!==undefined)answer(document.querySelector(`[data-q="${m.id}:${i}"]`),a,false)});updScore(m)}
+
+/* ---------- events ---------- */
+document.addEventListener("click",e=>{
+  const g=e.target.closest("[data-go]");if(g){$("#q").value="";go(g.dataset.go);return}
+  const d=e.target.closest("[data-done]");if(d){const id=d.dataset.done;done.has(id)?done.delete(id):done.add(id);save(STORE+"-done",[...done]);go(id,{keepScroll:true});return}
+  const o=e.target.closest("[data-opt]");if(o&&!o.disabled){answer(o.closest(".q"),+o.dataset.opt);return}
+  const r=e.target.closest("[data-reset]");if(r){const m=M.find(x=>x.id===r.dataset.reset);m.quiz.forEach((q,i)=>delete QA[m.id+":"+i]);save(STORE+"-quiz",QA);go(m.id,{keepScroll:true});return}
+  const c=e.target.closest("[data-copy]");if(c){const txt=document.querySelector("#"+c.dataset.copy+" pre").textContent;
+    const ok=()=>{c.textContent="Copied";setTimeout(()=>c.textContent="Copy",1500)};
+    const fb=()=>{const pre=document.querySelector("#"+c.dataset.copy+" pre");const s=getSelection();const rg=document.createRange();rg.selectNodeContents(pre);s.removeAllRanges();s.addRange(rg);c.textContent="Selected — press ⌘/Ctrl+C"};
+    try{navigator.clipboard.writeText(txt).then(ok,fb)}catch(err){fb()}return}
+  const j=e.target.closest("[data-jump]");if(j){const [mid,el]=j.dataset.jump.split("|");$("#q").value="";go(mid);const t=document.getElementById(el);if(t){if(t.tagName==="DETAILS")t.open=true;t.scrollIntoView({block:"center"});t.classList.add("flash")}return}
+  if(e.target.closest("#fcard")){$("#fcard").classList.toggle("flipped");return}
+  if(e.target.closest("#fcnext")){FC.i=(FC.i+1)%FC.deck.length;go("flashcards",{keepScroll:true});return}
+  if(e.target.closest("#fcprev")){FC.i=(FC.i-1+FC.deck.length)%FC.deck.length;go("flashcards",{keepScroll:true});return}
+  if(e.target.closest("#fcshuf")){for(let i=FC.deck.length-1;i>0;i--){const k=Math.floor(Math.random()*(i+1));[FC.deck[i],FC.deck[k]]=[FC.deck[k],FC.deck[i]]}FC.i=0;go("flashcards",{keepScroll:true});return}
+});
+document.addEventListener("change",e=>{if(e.target.id==="fcf"){FC.filter=e.target.value;buildDeck();go("flashcards",{keepScroll:true})}});
+document.addEventListener("keydown",e=>{
+  if(cur!=="flashcards"||e.target.tagName==="INPUT"||e.target.tagName==="SELECT")return;
+  if(e.key===" "){e.preventDefault();$("#fcard").classList.toggle("flipped")}
+  if(e.key==="ArrowRight")$("#fcnext").click();
+  if(e.key==="ArrowLeft")$("#fcprev").click();
+});
+$("#q").addEventListener("input",e=>{const q=e.target.value.trim();if(q.length>=2){$("#view").style.cssText="";$("#view").innerHTML=viewSearch(q)}else go(cur,{keepScroll:true})});
+
+/* ---------- boot ---------- */
+const h=(location.hash||"").slice(1);
+const valid=id=>M.some(m=>m.id===id)||["overview","flashcards","cheatsheet"].includes(id);
+go(valid(h)?h:(valid(load(STORE+"-view","overview"))?load(STORE+"-view","overview"):"overview"));
+</script>

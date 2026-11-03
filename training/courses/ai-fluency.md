@@ -2,6 +2,8 @@
 
 Course: [Claude Academy](https://academy.claude.com/) · Day 1 (optional), continued Day 5 · Progress: 15/15 · ✅ Completed, badge earned
 
+Study guide (interactive review): [AI Fluency Study Guide](https://claude.ai/artifact/1bocoy7AXJRV2vNNe9k63M#overview)
+
 ## Lesson 1: What is AI Fluency
 - AI Fluency = working with AI systems effectively, efficiently, ethically and safely.
 - Framework: the **4Ds** = Delegation + Description + Discernment + Diligence.

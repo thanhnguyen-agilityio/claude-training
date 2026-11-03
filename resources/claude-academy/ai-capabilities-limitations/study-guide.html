@@ -1,0 +1,694 @@
+<title>Four Properties Study Guide</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: fixed module rail on the left, one reading column on the right; each property owns a hue, and every property module opens on its capability→limitation continuum. */
+:root{
+  --bg:#f4f6f9; --surface:#ffffff; --sunken:#eaeef4; --ink:#18202d; --muted:#596476; --line:#d9dfe8;
+  --accent:#2c56c9; --accent-ink:#ffffff;
+  --p0:#56607a; --p1:#5a48d4; --p2:#0e8576; --p3:#b8700c; --p4:#c03a66;
+  --good:#1e7d4a; --good-bg:#e3f4ea; --bad:#b4322c; --bad-bg:#fbe8e6; --warn:#8a5a00; --warn-bg:#fdf2d8;
+  --f-display:"Bricolage Grotesque", "Avenir Next", "Segoe UI", sans-serif;
+  --f-body:"Atkinson Hyperlegible", "Segoe UI", system-ui, sans-serif;
+  --f-mono:"JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+  --r:10px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0f131a; --surface:#161b24; --sunken:#1d2330; --ink:#e5e9f0; --muted:#9ba5b6; --line:#2a3242;
+  --accent:#7d9dff; --accent-ink:#0f131a;
+  --p0:#a3abc0; --p1:#a093ff; --p2:#3cc5b0; --p3:#e7a845; --p4:#f27ba1;
+  --good:#5fd394; --good-bg:#15301f; --bad:#ff8a80; --bad-bg:#3a1c1a; --warn:#f0c160; --warn-bg:#352a12;
+  color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f131a; --surface:#161b24; --sunken:#1d2330; --ink:#e5e9f0; --muted:#9ba5b6; --line:#2a3242;
+  --accent:#7d9dff; --accent-ink:#0f131a;
+  --p0:#a3abc0; --p1:#a093ff; --p2:#3cc5b0; --p3:#e7a845; --p4:#f27ba1;
+  --good:#5fd394; --good-bg:#15301f; --bad:#ff8a80; --bad-bg:#3a1c1a; --warn:#f0c160; --warn-bg:#352a12;
+  color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.55}
+button{font:inherit;color:inherit}
+a{color:var(--accent)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
+h1,h2,h3{font-family:var(--f-display);line-height:1.15;text-wrap:balance;margin:0}
+.app{display:grid;grid-template-columns:270px minmax(0,1fr);min-height:100vh}
+/* Sidebar */
+.side{position:sticky;top:0;height:100vh;overflow-y:auto;border-right:1px solid var(--line);background:var(--surface);
+  padding-block:20px;padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:16px;display:flex;flex-direction:column;gap:18px}
+.brand{font-family:var(--f-display);font-weight:700;font-size:19px;line-height:1.2}
+.brand small{display:block;font-family:var(--f-body);font-weight:400;font-size:13px;color:var(--muted);margin-top:4px}
+.search{position:relative}
+.search input{width:100%;padding:9px 12px 9px 34px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);font:inherit;font-size:15px}
+.search svg{position:absolute;left:10px;top:50%;transform:translateY(-50%);width:16px;height:16px;stroke:var(--muted);fill:none}
+.prog{font-size:13px;color:var(--muted)}
+.prog .bar{height:6px;border-radius:3px;background:var(--sunken);margin-top:6px;overflow:hidden}
+.prog .bar i{display:block;height:100%;background:var(--accent);width:0;transition:width .3s}
+.navlabel{font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);margin:0 0 6px}
+.nav{display:flex;flex-direction:column;gap:2px;list-style:none;margin:0;padding:0}
+.nav button{width:100%;text-align:left;background:none;border:0;padding:8px 10px;border-radius:8px;cursor:pointer;display:grid;grid-template-columns:10px 1fr auto;gap:10px;align-items:center;font-size:15px}
+.nav button:hover{background:var(--sunken)}
+.nav button[aria-current="true"]{background:var(--sunken);font-weight:700}
+.nav .dot{width:10px;height:10px;border-radius:50%;background:var(--c)}
+.nav .sub{display:block;font-size:12px;color:var(--muted);font-weight:400}
+.nav .chk{font-size:13px;color:var(--good)}
+/* Main */
+main{min-width:0;padding-block:28px 64px;padding-left:max(16px, 4vw);padding-right:max(16px, env(safe-area-inset-right, 0px), 4vw)}
+.wrap{max-width:860px;margin:0 auto;display:flex;flex-direction:column;gap:32px}
+.eyebrow{font-size:12px;letter-spacing:.09em;text-transform:uppercase;color:var(--c, var(--muted));font-weight:700}
+.mhead{display:flex;flex-direction:column;gap:10px}
+.mhead h1{font-size:clamp(28px,4vw,40px)}
+.question{font-size:19px;color:var(--muted);font-style:italic;margin:0}
+.headrow{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between}
+.btn{border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:8px 14px;cursor:pointer;font-size:14px}
+.btn:hover{border-color:var(--accent)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink);font-weight:700}
+.btn.done{background:var(--good-bg);border-color:var(--good);color:var(--good);font-weight:700}
+/* Continuum */
+.continuum{display:grid;grid-template-columns:1fr 1fr;gap:0;border-radius:var(--r);overflow:hidden;border:1px solid var(--line)}
+.continuum .rail{grid-column:1/-1;height:8px;background:linear-gradient(90deg,var(--c),color-mix(in srgb,var(--c) 15%,var(--surface)))}
+.continuum div.z{padding:12px 14px;background:var(--surface);font-size:15px}
+.continuum div.z+div.z{border-left:1px dashed var(--line);text-align:right}
+.continuum b{display:block;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+section h2{font-size:21px;margin-bottom:12px;display:flex;align-items:baseline;gap:10px}
+section h2 .count{font-family:var(--f-mono);font-size:13px;color:var(--muted);font-weight:400}
+/* Takeaway cards */
+.cards{display:flex;flex-direction:column;gap:8px}
+details.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r)}
+details.card[open]{border-color:color-mix(in srgb,var(--c) 45%,var(--line))}
+details.card summary{cursor:pointer;list-style:none;padding:13px 16px;display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:start;font-weight:700}
+details.card summary::-webkit-details-marker{display:none}
+details.card summary .n{font-family:var(--f-mono);font-size:13px;color:var(--c);padding-top:2px;font-weight:500}
+details.card summary .chev{transition:transform .2s;color:var(--muted)}
+details.card[open] summary .chev{transform:rotate(90deg)}
+details.card .body{padding:0 16px 14px 46px;display:flex;flex-direction:column;gap:8px}
+details.card .body p{margin:0;max-width:65ch}
+.src{font-family:var(--f-mono);font-size:12px;color:var(--muted);text-decoration:none;align-self:flex-start;border-bottom:1px dotted var(--muted)}
+.src:hover{color:var(--accent);border-color:var(--accent)}
+.flash{animation:flash 1.6s ease-out}
+@keyframes flash{0%{box-shadow:0 0 0 3px var(--accent)}100%{box-shadow:0 0 0 0 transparent}}
+/* Concepts */
+dl.concepts{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px;margin:0}
+dl.concepts div{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:12px 14px}
+dl.concepts dt{font-weight:700;margin-bottom:2px}
+dl.concepts dd{margin:0;color:var(--muted);font-size:15px}
+/* Diagram */
+.diagram{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px;overflow-x:auto}
+.diagram svg{display:block;min-width:600px;width:100%;height:auto}
+.diagram figcaption{font-size:14px;color:var(--muted);margin-top:8px}
+svg .bx{fill:var(--sunken);stroke:var(--line)}
+svg .bxc{fill:color-mix(in srgb,var(--c) 14%,var(--surface));stroke:var(--c)}
+svg .t{fill:var(--ink);font-family:var(--f-body);font-size:14px}
+svg .tb{fill:var(--ink);font-family:var(--f-body);font-size:14px;font-weight:700}
+svg .tm{fill:var(--muted);font-family:var(--f-body);font-size:12px}
+svg .ln{stroke:var(--muted);stroke-width:1.5;fill:none}
+svg .lc{stroke:var(--c);stroke-width:2.5;fill:none}
+svg .dash{stroke-dasharray:5 4}
+svg .ac{fill:var(--muted)}
+svg .acc{fill:var(--c)}
+/* Snippets */
+.snips{display:flex;flex-direction:column;gap:10px}
+.snip{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.snip header{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:8px 12px;border-bottom:1px solid var(--line);font-size:13px;color:var(--muted);flex-wrap:wrap}
+.snip pre{margin:0;padding:12px 14px;font-family:var(--f-mono);font-size:13.5px;white-space:pre-wrap;word-break:break-word;background:var(--sunken)}
+.copy{font-size:12px;padding:4px 10px}
+/* Pitfalls & gaps */
+ul.pit{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:8px}
+ul.pit li{padding:10px 14px;border-radius:8px;background:var(--bad-bg);color:var(--ink);display:grid;grid-template-columns:auto 1fr;gap:10px}
+ul.pit li::before{content:"✕";color:var(--bad);font-weight:700}
+.gap{background:var(--warn-bg);color:var(--ink);border-radius:8px;padding:10px 14px;font-size:15px}
+.gap b{color:var(--warn)}
+/* Quiz */
+.quiz{display:flex;flex-direction:column;gap:14px}
+.q{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px}
+.q p.stem{margin:0 0 10px;font-weight:700}
+.opts{display:flex;flex-direction:column;gap:6px}
+.opts button{text-align:left;border:1px solid var(--line);background:var(--bg);border-radius:8px;padding:9px 12px;cursor:pointer;font-size:15px}
+.opts button:hover:not(:disabled){border-color:var(--accent)}
+.opts button:disabled{cursor:default}
+.opts button.right{background:var(--good-bg);border-color:var(--good)}
+.opts button.wrong{background:var(--bad-bg);border-color:var(--bad)}
+.expl{margin-top:10px;font-size:15px;padding:10px 12px;border-radius:8px;background:var(--sunken)}
+.score{font-family:var(--f-mono);font-size:13px;color:var(--muted)}
+/* Flashcards */
+.fc-tools{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.fc-tools select{padding:8px 10px;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font:inherit;font-size:14px}
+.fcard{perspective:1200px;cursor:pointer;min-height:260px}
+.fcard .inner{position:relative;width:100%;min-height:260px;transition:transform .5s;transform-style:preserve-3d}
+.fcard.flipped .inner{transform:rotateY(180deg)}
+.fcard .face{position:absolute;inset:0;backface-visibility:hidden;border-radius:14px;border:1px solid var(--line);background:var(--surface);display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:28px;gap:10px}
+.fcard .face.back{transform:rotateY(180deg);background:var(--sunken)}
+.fcard .term{font-family:var(--f-display);font-size:clamp(26px,5vw,36px);font-weight:700}
+.fcard .def{font-size:18px;max-width:46ch}
+.fcard .tag{font-size:12px;letter-spacing:.09em;text-transform:uppercase;font-weight:700;color:var(--c)}
+.fc-nav{display:flex;justify-content:space-between;align-items:center;gap:10px}
+/* Cheat sheet */
+.tbl{overflow-x:auto;border:1px solid var(--line);border-radius:var(--r);background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:720px;font-size:14.5px}
+th,td{padding:10px 12px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line)}
+th{font-size:12px;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);background:var(--sunken)}
+tr:last-child td{border-bottom:0}
+td .pname{font-weight:700;color:var(--c);display:block}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px}
+.panel h3{font-size:16px;margin-bottom:8px}
+.panel ul{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:4px;font-size:15px}
+/* Search results */
+.res{display:flex;flex-direction:column;gap:8px}
+.res button{text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:12px 14px;cursor:pointer;display:flex;flex-direction:column;gap:4px}
+.res button:hover{border-color:var(--accent)}
+.res .kind{font-size:12px;color:var(--c);font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+mark{background:color-mix(in srgb,var(--accent) 25%,transparent);color:inherit;border-radius:2px}
+.intro p{max-width:65ch;margin:0}
+.overview{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+.ovc{text-align:left;background:var(--surface);border:1px solid var(--line);border-top:4px solid var(--c);border-radius:var(--r);padding:14px 16px;cursor:pointer;display:flex;flex-direction:column;gap:6px}
+.ovc:hover{border-color:var(--c)}
+.ovc h3{font-size:18px}
+.ovc span{font-size:14px;color:var(--muted)}
+@media (max-width:860px){
+  .app{grid-template-columns:minmax(0,1fr)}
+  .side{position:static;height:auto;border-right:0;border-bottom:1px solid var(--line);padding-right:max(16px, env(safe-area-inset-right, 0px))}
+  .nav{flex-direction:row;overflow-x:auto;gap:6px;padding-bottom:4px}
+  .nav li{flex:0 0 auto}
+  .nav button{grid-template-columns:10px auto auto;white-space:nowrap;border:1px solid var(--line)}
+  .nav .sub{display:none}
+  .continuum{grid-template-columns:1fr}
+  .continuum div.z+div.z{border-left:0;border-top:1px dashed var(--line);text-align:left}
+  details.card .body{padding-left:16px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+
+<div class="app">
+  <aside class="side">
+    <div class="brand">Four Properties<small>AI Capabilities &amp; Limitations · Claude Academy · study guide</small></div>
+    <div class="search">
+      <svg viewBox="0 0 24 24" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>
+      <input id="q" type="search" placeholder="Search the course…" aria-label="Search the course" autocomplete="off">
+    </div>
+    <div class="prog"><span id="progtxt">0 of 6 modules done</span><div class="bar"><i id="progbar"></i></div></div>
+    <div>
+      <p class="navlabel">Modules</p>
+      <ul class="nav" id="navm"></ul>
+    </div>
+    <div>
+      <p class="navlabel">Practice &amp; review</p>
+      <ul class="nav" id="navp"></ul>
+    </div>
+  </aside>
+  <main><div class="wrap" id="view"></div></main>
+</div>
+
+<script>
+const BASE="https://academy.claude.com/courses/ai-capabilities-and-limitations/";
+const LESSONS={1:["Intro to AI Capabilities and Limitations","intro-to-ai-capabilities-and-limitations"],2:["What We Mean by AI","what-we-mean-by-ai"],3:["How AI Gets Its Character","how-ai-gets-its-character"],4:["Next Token Prediction","next-token-prediction"],5:["Try It Out: Next Token Prediction","try-it-out"],6:["Knowledge","knowledge"],7:["Try It Out: Knowledge","try-it-out-31vzkl2dgi907"],8:["Working Memory","working-memory"],9:["Try It Out: Working Memory","try-it-out-q7hdjm9twcbt"],10:["Steerability","steerability"],11:["Try It Out: Steerability","try-it-out-y02xgkpa6wa7"],12:["When Properties Collide","when-properties-collide"],13:["Next Steps","next-steps"]};
+
+const M=[
+{id:"intro",c:"--p0",short:"Foundations",sub:"Lessons 1–3",eyebrow:"Lessons 1–3 · Foundations",title:"Introduction, generative AI and character",file:"01-introduction.md",
+ question:"Which kind of AI is this about, and why does the assistant behave the way it does?",
+ take:[
+  ["Two sides of one system","The 4D Framework teaches you how to work with AI. This course covers the machine side: how AI is able to work with you. Human competencies on one side, machine properties on the other.",1],
+  ["Four core properties, stable over time","Generative AI has four core properties: Next Token Prediction, Knowledge, Working Memory and Steerability. The material lasts because the properties stay stable while models improve. The boundaries move; the properties do not.",1],
+  ["Most everyday AI is not generative","Spam filters, recommendations and fraud detection sort, rank or classify existing content. This course is about generative AI: transformer-based text models that produce new content one token at a time.",2],
+  ["One mechanism, both sides → calibrated trust","Each property is a continuum from capability to limitation, and the same mechanism gives you both. Calibrated trust means finding where your task sits on each continuum, instead of trusting or distrusting everything in one block.",2],
+  ["Character is trained in, and leaves fingerprints","Pretraining makes a powerful document completer with no idea of helping you. Fine-tuning on human preferences turns it into an assistant, and leaves four fingerprints in every model: sycophancy, verbosity, over-caution and loose confidence calibration.",3]
+ ],
+ concepts:[
+  ["Generative AI","Transformer-based models that produce new content one token at a time, unlike AI that sorts, ranks or classifies.",2],
+  ["Calibrated trust","Locating your task on each property's continuum, then matching verification and context to that spot.",2],
+  ["Pretraining","Stage 1: the model reads huge amounts of text and learns to predict what comes next. Result: a document completer.",3],
+  ["Fine-tuning","Stage 2: human preferences shape the model into an assistant that treats input as a request and declines harmful asks.",3],
+  ["Sycophancy","A trained pull toward agreeing with you.",3],
+  ["Verbosity","Long answers by default.",3],
+  ["Over-caution","Hedging or refusing more than the real risk needs.",3],
+  ["Loose confidence calibration","How sure the model sounds does not match how reliable it is.",3]
+ ],
+ snips:[
+  ["Verbosity test (Lesson 3)","Answer in one sentence.",3,"Ask once without it, then again with it. The length gap is the verbosity default."],
+  ["Sycophancy probe (Lesson 3)","I think this strategy is bulletproof. [describe the strategy]",3,"Open with a wrong assumption and see if it agrees or pushes back. Then invite disagreement explicitly and compare."],
+  ["From your notes: stop the analysis→fix reflex","Analysis only. Don't propose fixes yet.",0,"Your Lesson 1 reflection: fine-tuning pushes the model to be maximally helpful, so analyses tend to come with fixes. Say it directly."]
+ ],
+ pit:[
+  "Trusting or distrusting all AI output in one block instead of per task and per property.",
+  "Reading a confident tone as reliability (loose confidence calibration).",
+  "Expecting honest feedback without inviting disagreement: sycophancy costs most where you want critique.",
+  "Accepting long default answers when you need a short one under time pressure."
+ ],
+ gaps:["Videos and transcripts were not read; notes come from the lesson page text."],
+ diagram:"training",
+ quiz:[
+  ["Which of these features is generative AI in the sense this course uses?",["A spam filter","A chatbot drafting a reply","A product recommendation feed","Fraud detection on card payments"],1,"The chatbot produces new content token by token. The others sort, rank or classify existing content.",2],
+  ["What does pretraining alone produce?",["A helpful assistant","A search engine","A powerful document completer with no idea of helping you","A classifier"],2,"Pretraining teaches next-token prediction over huge text. Helpfulness comes later, from fine-tuning.",3],
+  ["\"Loose confidence calibration\" means…",["The model refuses too often","How sure the model sounds does not match how reliable it is","Answers are too long","The model agrees with you"],1,"It is one of the four fingerprints of human-judged training. Tone is not a reliability signal.",3],
+  ["Calibrated trust is best described as…",["Trusting the newest model fully","Distrusting everything AI writes","Locating the task on each property's continuum and matching verification to it","Always asking for sources"],2,"The same mechanism gives capability and limitation, so trust is set per task.",2],
+  ["Why does the course say this material stays useful as models improve?",["Models stop changing","The properties stay stable; only the boundaries move","The 4D Framework replaces it","Fine-tuning removes the limitations"],1,"Lesson 1: the boundaries move, the properties do not.",1]
+ ]},
+{id:"ntp",c:"--p1",short:"Next Token Prediction",sub:"Property 1 · L4–5",eyebrow:"Lessons 4–5 · Property 1",title:"Next Token Prediction",file:"02-next-token-prediction.md",
+ question:"Where do AI answers come from?",
+ zone:["Patterns seen many times: summarize, reformat, explain common concepts","Novel or sparse territory; anywhere you must tell “true” from “sounds true”"],
+ take:[
+  ["Closer to autocomplete than a search engine","Generative AI writes word by word (token by token), based on what tends to follow what. It is not looking facts up.",4],
+  ["One property gives fluency and hallucination","The same prediction mechanism makes output smooth and confident, and also makes it invent things that sound right.",4],
+  ["Fabrication concentrates in specifics","Names, dates, statistics, citations, URLs and quotes are where errors cluster. The more precise the claim, the more you should verify it.",4],
+  ["Features push the limit outward","Citations, uncertainty signaling, constrained generation and generator-verifier loops help. 4D link: this is the base of Discernment, because knowing output was generated tells you what scrutiny to apply.",4],
+  ["Sampling: context → distribution → pick","The Try It Out builds a Markov chain: tally which word follows which, turn rows into probabilities, sample. An LLM does the same read-distribution-sample loop, but computes the distribution with a large neural network over the whole conversation.",5]
+ ],
+ concepts:[
+  ["Token","The unit the model writes one at a time; answers are built token by token.",4],
+  ["Hallucination / fabrication","Fluent output that sounds right but is not; concentrates in specific details.",4],
+  ["Sampling","Choosing the next token from a probability distribution, so a fresh chat can give a different answer.",5],
+  ["Markov chain","A tiny predictor from a frequency table of which word follows which (the Lesson 5 toy model).",5],
+  ["Temperature","A knob that boosts likely words when choosing the next one.",5],
+  ["Top-p","Cut off low-probability words before sampling.",5],
+  ["Top-k","Keep only the top N words before sampling.",5],
+  ["Generator-verifier loop","A product feature where generated output is checked, pushing the limit outward.",4]
+ ],
+ snips:[
+  ["Probe 1 · capability zone (Lesson 4 exercise)","Explain [a well-known concept in my field] in plain language.",4,"Notice how smooth, confident and mostly right it is."],
+  ["Probe 2 · specificity (Lesson 4 exercise)","For [topic], give me three sources with their authors, the exact figures they report, and a URL for each.",4,"Check each specific and score out of five. Note how confident it sounded when wrong. Run it again in a fresh chat (Probe 3) to see sampling."]
+ ],
+ pit:[
+  "Treating fluent, confident text as checked fact.",
+  "Copying citations, URLs, statistics or quotes without verifying each one.",
+  "Expecting the same answer twice: sampling means a fresh chat can differ.",
+  "Relying on AI in a field you can't check yourself: you may not catch the fabrications."
+ ],
+ gaps:["Lesson 5 interactive: only the first screen was captured; the summary covers what it teaches, not the full simulation.","No worked numbers for temperature/top-p/top-k are in the sources."],
+ diagram:"ntp",
+ quiz:[
+  ["Which analogy fits generative AI best, per Lesson 4?",["A search engine","A database lookup","A very powerful autocomplete","A calculator"],2,"It writes token by token from what tends to follow, not by looking facts up.",4],
+  ["Where do fabrications concentrate?",["General explanations","Reformatting","Specifics: names, dates, statistics, citations, URLs, quotes","Tone and style"],2,"The more precise the claim, the more it warrants verification.",4],
+  ["You rerun the same prompt in a fresh chat and get different specifics. Why?",["The model learned from you","Sampling from a probability distribution","The knowledge cutoff moved","Context window overflow"],1,"Probe 3 in the exercise shows sampling at work.",5],
+  ["Which task sits most clearly in the capability zone?",["Listing five papers with exact page numbers","Reformatting meeting notes into a bullet list","Quoting a niche regulation word for word","Giving last quarter's revenue for a small company"],1,"Reformatting follows well-worn patterns. The others demand precise specifics.",4],
+  ["In the Lesson 5 knobs, what does top-k do?",["Boosts likely words","Keeps only the top N words","Cuts off low probabilities by cumulative mass","Always picks the top word"],1,"Top-k keeps the top N; top-p cuts off low probabilities; temperature boosts likely words.",5]
+ ]},
+{id:"know",c:"--p2",short:"Knowledge",sub:"Property 2 · L6–7",eyebrow:"Lessons 6–7 · Property 2",title:"Knowledge",file:"03-knowledge.md",
+ question:"What does AI actually know?",
+ zone:["Frequent, recent-in-training, consistent: mainstream topics, popular languages","Rare, post-cutoff, niche, local or contested topics"],
+ take:[
+  ["Frozen at the knowledge cutoff","The model knows only what it saw in training, and stops at the knowledge cutoff. By default it has no live browsing and no lived experience.",6],
+  ["Ask how well it was represented","A better question than “does it know this?” is “how well was this represented in what it read?”",6],
+  ["Four characteristic failures","Staleness (old info as current), uneven coverage (deep on popular, thin elsewhere), inherited bias (defaults come from the data), source amnesia (can't say where knowledge came from).",6],
+  ["Patch gaps by giving access","Web search, retrieval (RAG, MCPs) and tool use bring in information the model was not trained on.",6],
+  ["Uneven knowledge drives Delegation","Knowing where the model is well-stocked or thin tells you when to hand off, when to supply context yourself, and when to go elsewhere.",6],
+  ["Embeddings: similar meaning, nearby points","Retrieval turns text into fixed-length vectors (1,024 numbers in the example) so similar meanings land close together, then finds the nearest k. Similarity uses cosine similarity: −1 opposite, 0 unrelated, 1 identical.",7]
+ ],
+ concepts:[
+  ["Knowledge cutoff","The point after which the model saw no training data.",6],
+  ["Staleness","Old information presented as current.",6],
+  ["Uneven coverage","Deep on popular topics, thin on others.",6],
+  ["Inherited bias","What counts as “default” or “normal” comes from the training data.",6],
+  ["Source amnesia","The model cannot say where a piece of knowledge came from.",6],
+  ["Retrieval / RAG","Fetching relevant documents and giving them to the model, so it can use knowledge it wasn't trained on.",6],
+  ["Embedding","Text turned into a fixed-length list of numbers; similar meaning = nearby points. Axes are emergent and unlabeled.",7],
+  ["Cosine similarity","Similarity by vector direction: −1 opposite, 0 unrelated, 1 identical.",7]
+ ],
+ snips:[
+  ["Probe 2 · staleness (Lesson 6 exercise)","What is the current state of [something that changed recently in my field]?",6,"Does it mention the cutoff, give stale facts as current, or decline? Stretch: repeat with web search on."],
+  ["Probe 3 · defaults (Lesson 6 exercise)","[A question in your field that reveals whether it assumes the outsider's view — don't state your own assumption.]",6,"Tests inherited bias: what does it treat as the default?"]
+ ],
+ pit:[
+  "Asking about recent events without web search and trusting the answer.",
+  "Assuming niche, local or company-specific knowledge is there.",
+  "Accepting the model's default framing in your field without checking it.",
+  "Asking the model where it learned something (source amnesia)."
+ ],
+ gaps:["Lesson 7 interactive: the text was captured but not the interactive parts."],
+ diagram:"know",
+ quiz:[
+  ["Which question does Lesson 6 recommend instead of “does it know this?”",["Is it the newest model?","How well was this represented in what it read?","Does it sound confident?","Is web search on?"],1,"Knowledge is uneven; representation in training data is the real variable.",6],
+  ["The model describes an old pricing plan as current. Which failure is this?",["Source amnesia","Staleness","Inherited bias","Sycophancy"],1,"Staleness: old information presented as current.",6],
+  ["Which feature best patches a post-cutoff topic?",["A longer system prompt","Web search","Lower temperature","Asking it to be careful"],1,"Web search, retrieval and tools give access to information it wasn't trained on.",6],
+  ["Cosine similarity of 1 between two embeddings means…",["Opposite meaning","Unrelated","Identical direction / meaning","An error"],2,"−1 opposite, 0 unrelated, 1 identical.",7],
+  ["Which 4D competency does Knowledge connect to?",["Description","Discernment","Delegation","Diligence"],2,"Where the model is well-stocked or thin tells you when to hand off.",6]
+ ]},
+{id:"wm",c:"--p3",short:"Working Memory",sub:"Property 3 · L8–9",eyebrow:"Lessons 8–9 · Property 3",title:"Working Memory",file:"04-working-memory.md",
+ question:"What is the AI paying attention to right now?",
+ zone:["Material fits comfortably, session is current, you supply relevant context","Very long docs or chats, expecting memory across sessions, key info buried in the middle"],
+ take:[
+  ["Everything lives in the context window","Everything the AI attends to sits in a fixed-size workspace. It cannot attend to anything outside it.",8],
+  ["A cliff, not a slope","Unlike the other properties, working memory works until it doesn't. Failure can be silent truncation, with no warning.",8],
+  ["It doesn't learn from your corrections","The model only responds to what is in context now. A new chat is a blank slate.",8],
+  ["Lost in the middle","Like the human serial position effect, LLMs recall the start and end best. A 2023 Stanford study found accuracy dropped by more than 30% when a key fact was buried in the middle.",9],
+  ["Context as leverage","Front-load important material, chunk long work, re-supply critical context, start fresh when needed. State a must-follow constraint early and repeat it near the end. More context is not always better.",9],
+  ["Features push the cliff out; links to Description","Memory, compaction, projects/workspaces, larger windows and multi-agent workflows help. Working Memory is what Description acts on.",8]
+ ],
+ concepts:[
+  ["Context window","The fixed-size workspace holding everything the model attends to.",8],
+  ["Silent truncation","Content falls out of the window with no warning.",8],
+  ["Serial position effect","U-shaped recall: start and end remembered, middle lost.",9],
+  ["Primacy / recency","Better recall for the first items / the last items.",9],
+  ["Front-loading","Putting the most important material first.",8],
+  ["Compaction","A feature that pushes the cliff out by condensing context.",8]
+ ],
+ snips:[
+  ["Placement template (Lesson 9 rules)","Goal: [what I want]\nMust follow: [critical constraint]\n\n[supporting material, curated]\n\nReminder — must follow: [same constraint, repeated]",9,"Most important instruction at the beginning and the end; repeat must-follow constraints near the end."]
+ ],
+ pit:[
+  "Burying the key instruction in the middle of a long prompt.",
+  "Expecting the model to remember a correction in a new chat.",
+  "Dumping every document in: each added item pushes others into the middle.",
+  "Running one very long conversation instead of chunking or starting fresh."
+ ],
+ gaps:["Exact context window sizes per product are not in the sources."],
+ diagram:"wm",
+ quiz:[
+  ["How does working memory fail, compared with the other properties?",["Slowly, getting a bit worse","As a cliff: it works until it doesn't, sometimes silently","Only with images","It never fails"],1,"Lesson 8: a cliff, not a slope; failure can be silent truncation.",8],
+  ["You corrected the model yesterday. Today in a new chat it repeats the mistake. Why?",["Sycophancy","It does not learn from corrections; only what is in context counts","Sampling","Knowledge cutoff"],1,"A new chat is a blank slate.",8],
+  ["Where should a must-follow constraint go?",["Only in the middle","Early, and repeated near the end","Only at the end","Anywhere; position doesn't matter"],1,"Lesson 9: edges of the window get more attention.",9],
+  ["In the 2023 study, what happened when the key fact was buried mid-context?",["Accuracy rose","No change","Accuracy dropped by more than 30%","The model refused"],2,"The U-shaped curve.",9],
+  ["Which 4D competency acts on Working Memory?",["Delegation","Description","Discernment","Diligence"],1,"How you structure context is Description.",8]
+ ]},
+{id:"steer",c:"--p4",short:"Steerability",sub:"Property 4 · L10–11",eyebrow:"Lessons 10–11 · Property 4",title:"Steerability",file:"05-steerability.md",
+ question:"How much am I in control?",
+ zone:["Short, concrete, verifiable: format specs, length limits, explicit roles","Long reasoning chains, abstract or vague asks, native numerical/logical precision"],
+ take:[
+  ["Instructions are followed by continuing a pattern","Fine-tuning taught instruction-following, so the model is very steerable. But it follows by pattern-matching, not understanding, so there is always a gap between what you meant and what you got.",10],
+  ["Three characteristic failures","Reasoning drift (small early errors grow through the chain), letter over spirit (instruction followed, intent missed), brittle arithmetic (math by pattern, not calculation).",10],
+  ["Restate the goal, don't shout","If an instruction is followed literally but uselessly, restate the goal. Repeating the instruction louder does not close the gap.",10],
+  ["Features that help","System prompts, code execution, visible reasoning and structured outputs.",10],
+  ["Makes Description powerful, and limits it","Knowing the gap between words and intent changes how you write prompts and where you add checkpoints.",10],
+  ["Letter vs. spirit in practice","“Make it shorter”, “more professional”, “add more detail”: each literal result misses an unstated goal. Saying the goal fixes it.",11]
+ ],
+ concepts:[
+  ["Meant-vs-got gap","The room between your words and your intent, where most interesting failures live.",10],
+  ["Reasoning drift","Small errors early in a chain grow through later steps.",10],
+  ["Letter over spirit","The instruction is followed, the intent is missed.",10],
+  ["Brittle arithmetic","Math done by pattern, not by calculation.",10],
+  ["Checkpoint","Stopping a multi-step task to review an intermediate step before continuing.",10]
+ ],
+ snips:[
+  ["Goal + format (Lesson 10 example)","Goal: convince my team the timeline is realistic.\nFormat: three bullet points.",10,"State what you want to achieve, not only the format."],
+  ["Mid-process checkpoint (Lesson 10 exercise)","Stop and show me step 2 before continuing.",10,"Compare a 4–5 step task with and without a checkpoint."],
+  ["Tight control (Lesson 10 exercise)","Respond as a three-column table, exactly five rows, in the second person.",10,"Short, checkable instructions are the capability zone."]
+ ],
+ pit:[
+  "Giving a format but no goal, then getting a literal but useless result.",
+  "Repeating the same instruction louder instead of restating the goal.",
+  "Trusting long reasoning chains without a checkpoint.",
+  "Trusting arithmetic done in prose; offload to code execution."
+ ],
+ gaps:["Lesson 11 interactive: only the first screen was captured; the three scenarios' full texts aren't in the sources."],
+ diagram:"steer",
+ quiz:[
+  ["Why is there always a gap between what you meant and what you got?",["The model is lazy","Instructions are followed by pattern-matching, not understanding","The context window is too small","Temperature is too high"],1,"Lesson 10.",10],
+  ["You asked “make this shorter”; it cut words but the structure was the problem. Which failure?",["Reasoning drift","Letter over spirit","Brittle arithmetic","Staleness"],1,"Instruction met literally, intent missed.",11],
+  ["The output is literal but useless. Best next step?",["Repeat the instruction in capitals","Restate the goal","Start a new model","Lower the length limit"],1,"Repeating louder does not close the gap.",10],
+  ["Which instruction is most clearly in the capability zone?",["Make this better","Reason through 12 dependent steps","Respond as a table under 100 words","Calculate exact compound interest in your head"],2,"Short, concrete, verifiable.",10],
+  ["Which feature best addresses brittle arithmetic?",["Code execution","A longer prompt","Web search","Memory"],0,"Offload math to code execution instead of pattern-based prose.",10]
+ ]},
+{id:"collide",c:"--accent",short:"When Properties Collide",sub:"L12–13 · Synthesis",eyebrow:"Lessons 12–13 · Putting it together",title:"When properties collide, and next steps",file:"06-putting-it-together.md",
+ question:"Which kind of wrong am I looking at, and which fix fits?",
+ take:[
+  ["Most real failures are two properties meeting","Name which two, and you know which fix to use.",12],
+  ["Two named diagnostic pairs","Next Token Prediction + Knowledge = hallucinated specifics (e.g. fake citations). Working Memory + Steerability = long-conversation drift.",12],
+  ["Targeted fixes","Verify specifics, re-supply context, offload to code execution, invite pushback. Other patterns in the lesson: confidently wrong math, agreeable bad premises (sycophancy).",12],
+  ["Diagnosis is Discernment applied","You judge better when you know what kind of wrong you're looking at.",12],
+  ["Hold a small, clear model of the machine","Fluency is not memorizing every failure. Locate your task on each continuum, then match verification and context habits to that spot. The shape stays useful as the lines move.",13],
+  ["Commit to one change this week","Pick one task and one change: a verification step, standing context, a checkpoint, or stating the goal and not only the format.",13]
+ ],
+ concepts:[
+  ["Property collision","A failure caused by two properties interacting; naming the pair points to the fix.",12],
+  ["Hallucinated specifics","Next Token Prediction + Knowledge, e.g. fake citations.",12],
+  ["Long-conversation drift","Working Memory + Steerability.",12],
+  ["Two sides of one system","The four properties explain what the 4D competencies respond to.",13]
+ ],
+ snips:[
+  ["Failure diagnosis (Lesson 12 exercise)","Here is a time AI output disappointed me: [what I asked / what I got / what was wrong]. Which of the four properties (Next Token Prediction, Knowledge, Working Memory, Steerability) were likely at play, and why? What is the most targeted fix?",12,"Check its diagnosis and push back if you disagree — watch for sycophancy."]
+ ],
+ pit:[
+  "Reaching for a generic fix (“be more careful”) instead of one matched to the pair.",
+  "Accepting the AI's own diagnosis of a failure without checking it (sycophancy).",
+  "Trying to memorize every failure instead of holding the four-property model."
+ ],
+ gaps:["Only two pairs are named in the sources. Which pairs produce “confidently wrong math” and “agreeable bad premises” is ⚠ not covered in sources.","Lesson 12's drag-two-nodes interactive was not captured beyond its short labels.","The course quiz and badge are on the course page and not covered here."],
+ diagram:"collide",
+ quiz:[
+  ["What does Lesson 12 say about most real failures?",["They come from one property","They are two properties meeting","They are user error","They disappear with bigger models"],1,"Name the pair, then pick the fix.",12],
+  ["Fake citations come from which pair?",["Working Memory + Steerability","Next Token Prediction + Knowledge","Knowledge + Steerability","Working Memory + Knowledge"],1,"Hallucinated specifics.",12],
+  ["A long chat slowly stops following your early rules. Which pair, and a fitting fix?",["NTP + Knowledge; verify specifics","Working Memory + Steerability; re-supply context","Knowledge only; web search","Steerability only; shout louder"],1,"Long-conversation drift; re-supply the critical context.",12],
+  ["Which 4D competency is failure diagnosis an application of?",["Delegation","Description","Discernment","Diligence"],2,"Lesson 12.",12],
+  ["What does Lesson 13 ask you to commit to?",["Memorize all failure modes","One task and one change this week","Switch to a bigger model","Stop using AI for risky tasks"],1,"E.g. a verification step, standing context, a checkpoint, or stating the goal.",13]
+ ]}
+];
+
+const PROPS=[
+ ["Next Token Prediction","--p1","Where do AI answers come from?","Well-worn patterns: summarize, reformat, explain common concepts","Novel/sparse territory; true vs. sounds true","Fabricated specifics","Citations, uncertainty signals, constrained generation, generator-verifier loops","Discernment","ntp"],
+ ["Knowledge","--p2","What does AI actually know?","Frequent, recent-in-training, consistent topics","Rare, post-cutoff, niche, local, contested","Staleness, uneven coverage, inherited bias, source amnesia","Web search, retrieval (RAG, MCPs), tool use","Delegation","know"],
+ ["Working Memory","--p3","What is it paying attention to right now?","Material fits, session current, relevant context supplied","Very long docs/chats, cross-session memory, buried middle","Cliff + silent truncation; lost in the middle","Memory, compaction, projects, larger windows, multi-agent","Description","wm"],
+ ["Steerability","--p4","How much am I in control?","Short, concrete, verifiable instructions","Long chains, abstract asks, numerical precision","Reasoning drift, letter over spirit, brittle arithmetic","System prompts, code execution, visible reasoning, structured outputs","Description","steer"]
+];
+
+/* ---------- storage ---------- */
+function load(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}}
+function save(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
+let done=new Set(load("fp-done",[]));
+
+/* ---------- helpers ---------- */
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+function srcLink(m,lesson){
+  if(!lesson) return `<span class="src" title="training/courses/ai-capabilities-limitations.md">your notes · ai-capabilities-limitations.md</span>`;
+  const [name,slug]=LESSONS[lesson];
+  return `<a class="src" href="${BASE+slug}" target="_blank" rel="noopener" title="Local notes: ${m.file}">${m.file} · L${lesson} ${esc(name)} ↗</a>`;
+}
+function cvar(m){return `--c:var(${m.c})`}
+
+/* ---------- diagrams ---------- */
+const AR=`<defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" class="ac"/></marker><marker id="ahc" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" class="acc"/></marker></defs>`;
+const D={
+training:`<svg viewBox="0 0 720 220" role="img" aria-label="Pretraining produces a document completer; fine-tuning produces an assistant and leaves four fingerprints">${AR}
+ <rect x="10" y="20" width="150" height="64" rx="8" class="bx"/><text x="85" y="47" text-anchor="middle" class="tb">Pretraining</text><text x="85" y="67" text-anchor="middle" class="tm">predict the next token</text>
+ <rect x="195" y="20" width="150" height="64" rx="8" class="bx"/><text x="270" y="47" text-anchor="middle" class="tb">Document completer</text><text x="270" y="67" text-anchor="middle" class="tm">no idea of helping you</text>
+ <rect x="380" y="20" width="150" height="64" rx="8" class="bxc"/><text x="455" y="47" text-anchor="middle" class="tb">Fine-tuning</text><text x="455" y="67" text-anchor="middle" class="tm">human preferences</text>
+ <rect x="565" y="20" width="145" height="64" rx="8" class="bx"/><text x="637" y="47" text-anchor="middle" class="tb">Assistant</text><text x="637" y="67" text-anchor="middle" class="tm">helpful, honest, harmless</text>
+ <path d="M160 52H190" class="ln" marker-end="url(#ah)"/><path d="M345 52H375" class="ln" marker-end="url(#ah)"/><path d="M530 52H560" class="ln" marker-end="url(#ah)"/>
+ <path d="M455 84V130" class="lc dash" marker-end="url(#ahc)"/>
+ <text x="455" y="150" text-anchor="middle" class="tm">fingerprints left in every model</text>
+ <g><rect x="130" y="162" width="140" height="36" rx="18" class="bxc"/><text x="200" y="185" text-anchor="middle" class="t">Sycophancy</text>
+ <rect x="280" y="162" width="120" height="36" rx="18" class="bxc"/><text x="340" y="185" text-anchor="middle" class="t">Verbosity</text>
+ <rect x="410" y="162" width="130" height="36" rx="18" class="bxc"/><text x="475" y="185" text-anchor="middle" class="t">Over-caution</text>
+ <rect x="550" y="162" width="160" height="36" rx="18" class="bxc"/><text x="630" y="185" text-anchor="middle" class="t">Loose confidence</text></g>
+</svg><figcaption>Lesson 3: two training stages, each leaving fingerprints.</figcaption>`,
+ntp:`<svg viewBox="0 0 720 260" role="img" aria-label="Generation loop: context, probability distribution, sample, append; and a specificity scale">${AR}
+ <rect x="20" y="30" width="150" height="60" rx="8" class="bx"/><text x="95" y="56" text-anchor="middle" class="tb">Context so far</text><text x="95" y="75" text-anchor="middle" class="tm">whole conversation</text>
+ <rect x="205" y="30" width="170" height="60" rx="8" class="bxc"/><text x="290" y="56" text-anchor="middle" class="tb">Probability distribution</text><text x="290" y="75" text-anchor="middle" class="tm">neural network (LLM)</text>
+ <rect x="410" y="30" width="140" height="60" rx="8" class="bxc"/><text x="480" y="56" text-anchor="middle" class="tb">Sample a token</text><text x="480" y="75" text-anchor="middle" class="tm">temp · top-p · top-k</text>
+ <rect x="585" y="30" width="120" height="60" rx="8" class="bx"/><text x="645" y="56" text-anchor="middle" class="tb">Append</text><text x="645" y="75" text-anchor="middle" class="tm">repeat</text>
+ <path d="M170 60H200" class="ln" marker-end="url(#ah)"/><path d="M375 60H405" class="ln" marker-end="url(#ah)"/><path d="M550 60H580" class="ln" marker-end="url(#ah)"/>
+ <path d="M645 90V118H95V95" class="ln dash" marker-end="url(#ah)"/>
+ <text x="370" y="112" text-anchor="middle" class="tm">token by token</text>
+ <text x="20" y="170" class="tb">How much to verify</text>
+ <defs><linearGradient id="gspec" x1="0" x2="1"><stop offset="0" stop-opacity=".15" style="stop-color:var(--c)"/><stop offset="1" stop-opacity=".9" style="stop-color:var(--c)"/></linearGradient></defs>
+ <rect x="20" y="182" width="685" height="14" rx="7" fill="url(#gspec)"/>
+ <text x="20" y="220" class="t">General concept</text><text x="20" y="238" class="tm">capability zone</text>
+ <text x="705" y="220" text-anchor="end" class="t">Names · dates · stats · citations · URLs · quotes</text><text x="705" y="238" text-anchor="end" class="tm">verify every one</text>
+</svg><figcaption>Lessons 4–5: the same read → distribution → sample loop as the Markov toy, at scale. The more precise the claim, the more it needs checking.</figcaption>`,
+know:`<svg viewBox="0 0 720 300" role="img" aria-label="Training data timeline ending at the knowledge cutoff, and an embedding map with a query and its nearest neighbours">${AR}
+ <text x="20" y="26" class="tb">What it read, and when it stopped</text>
+ <rect x="20" y="44" width="430" height="26" rx="4" class="bxc"/><text x="235" y="62" text-anchor="middle" class="t">mainstream, frequent, consistent</text>
+ <rect x="20" y="78" width="430" height="10" rx="3" class="bx"/><text x="235" y="104" text-anchor="middle" class="tm">niche, local, contested: thin coverage</text>
+ <path d="M455 36V112" class="lc"/><text x="455" y="128" text-anchor="middle" class="tb">knowledge cutoff</text>
+ <rect x="470" y="44" width="235" height="44" rx="4" fill="none" class="ln dash"/><text x="587" y="70" text-anchor="middle" class="tm">post-cutoff: unknown</text>
+ <path d="M587 92Q587 118 520 118" class="ln dash" marker-end="url(#ah)"/><text x="600" y="122" class="t">web search · RAG · tools</text>
+ <text x="20" y="170" class="tb">Embeddings (Lesson 7)</text>
+ <rect x="20" y="180" width="685" height="110" rx="8" class="bx"/>
+ <g class="acc"><circle cx="90" cy="215" r="6"/><circle cx="120" cy="240" r="6"/><circle cx="150" cy="210" r="6"/><circle cx="110" cy="265" r="6"/></g>
+ <text x="70" y="200" class="tm">dinosaurs</text>
+ <g class="ac"><circle cx="520" cy="220" r="6"/><circle cx="560" cy="250" r="6"/><circle cx="600" cy="215" r="6"/><circle cx="545" cy="270" r="6"/></g>
+ <text x="530" y="200" class="tm">roller coasters</text>
+ <path d="M300 238l8 -8l8 8l-8 8z" style="fill:var(--ink)"/><text x="300" y="268" text-anchor="middle" class="t">your question</text>
+ <circle cx="140" cy="232" r="62" fill="none" class="lc dash"/>
+ <path d="M296 236Q240 236 206 234" class="lc" marker-end="url(#ahc)"/><text x="250" y="226" text-anchor="middle" class="tm">nearest k</text>
+</svg><figcaption>Lessons 6–7: coverage is uneven and stops at the cutoff; retrieval finds nearby meaning and hands it to the model. Points are illustrative.</figcaption>`,
+wm:`<svg viewBox="0 0 720 260" role="img" aria-label="U-shaped recall curve across position in the context window">${AR}
+ <path d="M70 30V210H700" class="ln"/>
+ <text x="20" y="120" class="tm" transform="rotate(-90 30 120)">recall / accuracy</text>
+ <path d="M80 50C180 60 220 180 385 190C550 180 590 60 690 50" class="lc"/>
+ <rect x="275" y="150" width="220" height="56" rx="6" opacity=".7" style="fill:var(--bad-bg)"/>
+ <text x="385" y="174" text-anchor="middle" class="tb">lost in the middle</text>
+ <text x="385" y="194" text-anchor="middle" class="tm">key fact buried → &gt;30% drop (2023 study)</text>
+ <text x="80" y="232" class="t">start (primacy)</text><text x="385" y="232" text-anchor="middle" class="t">middle</text><text x="700" y="232" text-anchor="end" class="t">end (recency)</text>
+ <text x="100" y="46" class="tm">put key instruction here</text><text x="680" y="40" text-anchor="end" class="tm">…and repeat it here</text>
+</svg><figcaption>Lesson 9: the serial position effect. Shape is qualitative; the source gives no exact curve values.</figcaption>`,
+steer:`<svg viewBox="0 0 720 250" role="img" aria-label="Gap between what you meant and what you got; a reasoning chain where errors grow, with a checkpoint after step 2">${AR}
+ <rect x="20" y="20" width="220" height="56" rx="8" class="bx"/><text x="130" y="44" text-anchor="middle" class="tb">What you meant</text><text x="130" y="63" text-anchor="middle" class="tm">goal + intent</text>
+ <rect x="480" y="20" width="220" height="56" rx="8" class="bxc"/><text x="590" y="44" text-anchor="middle" class="tb">What you got</text><text x="590" y="63" text-anchor="middle" class="tm">pattern-matched words</text>
+ <path d="M240 48H475" class="ln dash" marker-end="url(#ah)"/><text x="358" y="40" text-anchor="middle" class="t">the gap</text><text x="358" y="66" text-anchor="middle" class="tm">close it by stating the goal</text>
+ <text x="20" y="130" class="tb">Reasoning drift</text>
+ <g><circle cx="80" cy="185" r="16" class="bxc"/><text x="80" y="190" text-anchor="middle" class="tb">1</text>
+ <circle cx="200" cy="185" r="16" class="bxc"/><text x="200" y="190" text-anchor="middle" class="tb">2</text>
+ <circle cx="360" cy="185" r="20" class="bxc"/><text x="360" y="190" text-anchor="middle" class="tb">3</text>
+ <circle cx="490" cy="185" r="26" class="bxc"/><text x="490" y="190" text-anchor="middle" class="tb">4</text>
+ <circle cx="630" cy="185" r="34" class="bxc"/><text x="630" y="190" text-anchor="middle" class="tb">5</text></g>
+ <path d="M96 185H180" class="ln" marker-end="url(#ah)"/><path d="M216 185H336" class="ln" marker-end="url(#ah)"/><path d="M380 185H460" class="ln" marker-end="url(#ah)"/><path d="M516 185H592" class="ln" marker-end="url(#ah)"/>
+ <path d="M268 150V222" class="lc"/><text x="268" y="142" text-anchor="middle" class="t">checkpoint: “show step 2”</text>
+ <text x="630" y="240" text-anchor="middle" class="tm">small early errors grow</text>
+</svg><figcaption>Lessons 10–11: instructions are followed by pattern, so intent can get lost; checkpoints stop drift early.</figcaption>`,
+collide:`<svg viewBox="0 0 720 300" role="img" aria-label="Four property nodes; two named collisions">
+ <path d="M150 70H570" stroke-width="3" style="stroke:var(--p1)"/><text x="360" y="58" text-anchor="middle" class="tb">hallucinated specifics</text><text x="360" y="92" text-anchor="middle" class="tm">fix: verify specifics</text>
+ <path d="M150 240H570" stroke-width="3" style="stroke:var(--p3)"/><text x="360" y="228" text-anchor="middle" class="tb">long-conversation drift</text><text x="360" y="262" text-anchor="middle" class="tm">fix: re-supply context</text>
+ <path d="M120 100V210M600 100V210M150 95L570 215M150 215L570 95" class="ln dash" opacity=".5"/>
+ <text x="360" y="160" text-anchor="middle" class="tm">other pairs: ⚠ not named in sources</text>
+ <g><rect x="20" y="40" width="200" height="60" rx="30" style="fill:color-mix(in srgb,var(--p1) 16%,var(--surface));stroke:var(--p1)"/><text x="120" y="66" text-anchor="middle" class="tb">Next Token Prediction</text><text x="120" y="84" text-anchor="middle" class="tm">generates what sounds right</text>
+ <rect x="500" y="40" width="200" height="60" rx="30" style="fill:color-mix(in srgb,var(--p2) 16%,var(--surface));stroke:var(--p2)"/><text x="600" y="66" text-anchor="middle" class="tb">Knowledge</text><text x="600" y="84" text-anchor="middle" class="tm">knows what it was trained on</text>
+ <rect x="20" y="210" width="200" height="60" rx="30" style="fill:color-mix(in srgb,var(--p3) 16%,var(--surface));stroke:var(--p3)"/><text x="120" y="236" text-anchor="middle" class="tb">Working Memory</text><text x="120" y="254" text-anchor="middle" class="tm">attends to what is nearby</text>
+ <rect x="500" y="210" width="200" height="60" rx="30" style="fill:color-mix(in srgb,var(--p4) 16%,var(--surface));stroke:var(--p4)"/><text x="600" y="236" text-anchor="middle" class="tb">Steerability</text><text x="600" y="254" text-anchor="middle" class="tm">follows the loudest instruction</text></g>
+</svg><figcaption>Lesson 12: name the pair, then pick the fix.</figcaption>`
+};
+
+/* ---------- nav ---------- */
+const PRACTICE=[["overview","Overview","Start here","--p0"],["flashcards","Flashcards","Key terms","--accent"],["cheatsheet","Cheat sheet","One-page summary","--accent"]];
+function renderNav(cur){
+  $("#navm").innerHTML=M.map(m=>`<li><button data-go="${m.id}" style="${cvar(m)}" aria-current="${cur===m.id}"><span class="dot"></span><span>${esc(m.short)}<span class="sub">${m.sub}</span></span><span class="chk">${done.has(m.id)?"✓":""}</span></button></li>`).join("");
+  $("#navp").innerHTML=PRACTICE.map(p=>`<li><button data-go="${p[0]}" style="--c:var(${p[3]})" aria-current="${cur===p[0]}"><span class="dot"></span><span>${p[1]}<span class="sub">${p[2]}</span></span><span></span></button></li>`).join("");
+  const n=M.filter(m=>done.has(m.id)).length;
+  $("#progtxt").textContent=`${n} of ${M.length} modules done`;
+  $("#progbar").style.width=(n/M.length*100)+"%";
+}
+
+/* ---------- views ---------- */
+function viewOverview(){
+  return `<div class="mhead" style="--c:var(--accent)"><span class="eyebrow">Claude Academy · 13 lessons</span><h1>AI Capabilities &amp; Limitations</h1>
+  <p class="question">Four properties of generative AI, each a continuum from capability to limitation.</p></div>
+  <div class="intro"><p>The 4D Framework covers what you do. This course covers the machine side. The same mechanism gives each property both a capability and a limitation, so the goal is calibrated trust: find where your task sits on each continuum, then verify and add context to match.</p></div>
+  <div class="overview">${M.map(m=>`<button class="ovc" data-go="${m.id}" style="${cvar(m)}"><span class="eyebrow">${m.eyebrow}</span><h3>${esc(m.short)}</h3><span>${esc(m.question)}</span><span>${done.has(m.id)?"✓ Done":m.take.length+" takeaways · "+m.quiz.length+" quiz questions"}</span></button>`).join("")}</div>
+  <div class="gap"><b>About the sources.</b> Built only from the local lesson notes (README.md, 01–06 lesson files) and your own course notes. Interactives in Lessons 5, 7, 11 and 12 were only partly captured; videos, transcripts and the course quiz were not read. Gaps are flagged per module with ⚠.</div>`;
+}
+
+function viewModule(m){
+  const z=m.zone?`<div class="continuum"><span class="rail"></span><div class="z"><b>Capability zone</b>${esc(m.zone[0])}</div><div class="z"><b>Limitation zone</b>${esc(m.zone[1])}</div></div>`:"";
+  const isDone=done.has(m.id);
+  return `<div class="mhead"><span class="eyebrow">${m.eyebrow}</span>
+   <div class="headrow"><h1>${esc(m.title)}</h1><button class="btn ${isDone?"done":"primary"}" data-done="${m.id}" id="donebtn">${isDone?"✓ Done":"Mark as done"}</button></div>
+   <p class="question">${esc(m.question)}</p></div>${z}
+  <section><h2>Key takeaways <span class="count">${m.take.length}</span></h2><div class="cards">
+   ${m.take.map((t,i)=>`<details class="card" id="${m.id}-t${i}"${i===0?" open":""}><summary><span class="n">${String(i+1).padStart(2,"0")}</span><span>${esc(t[0])}</span><span class="chev">›</span></summary><div class="body"><p>${esc(t[1])}</p>${srcLink(m,t[2])}</div></details>`).join("")}
+  </div></section>
+  <section><h2>How it fits together</h2><figure class="diagram" style="margin:0">${D[m.diagram]}</figure></section>
+  <section><h2>Core concepts <span class="count">${m.concepts.length}</span></h2><dl class="concepts">
+   ${m.concepts.map((c,i)=>`<div id="${m.id}-c${i}"><dt>${esc(c[0])}</dt><dd>${esc(c[1])}</dd></div>`).join("")}</dl></section>
+  <section><h2>Prompts worth keeping</h2>
+   <div class="gap" style="margin-bottom:10px"><b>⚠ Code and commands: not covered in sources.</b> This course has no code. These are the copyable prompts the lessons and exercises use.</div>
+   <div class="snips">${m.snips.map((s,i)=>`<div class="snip" id="${m.id}-s${i}"><header><span>${esc(s[0])}</span><button class="btn copy" data-copy="${m.id}-s${i}">Copy</button></header><pre>${esc(s[1])}</pre><header style="border:0;border-top:1px solid var(--line)"><span>${esc(s[3])}</span>${srcLink(m,s[2])}</header></div>`).join("")}</div></section>
+  <section><h2>Common pitfalls</h2><ul class="pit">${m.pit.map((p,i)=>`<li id="${m.id}-p${i}"><span>${esc(p)}</span></li>`).join("")}</ul></section>
+  <section><h2>Check yourself <span class="score" id="score-${m.id}"></span></h2><div class="quiz">
+   ${m.quiz.map((q,i)=>`<div class="q" data-q="${m.id}:${i}"><p class="stem">${i+1}. ${esc(q[0])}</p><div class="opts">${q[1].map((o,j)=>`<button data-opt="${j}">${esc(o)}</button>`).join("")}</div><div class="expl" hidden></div></div>`).join("")}
+   <button class="btn" data-reset="${m.id}" style="align-self:flex-start">Reset quiz</button></div></section>
+  <section><h2>Gaps in the sources</h2><div style="display:flex;flex-direction:column;gap:8px">${m.gaps.map(g=>`<div class="gap"><b>⚠</b> ${esc(g)}</div>`).join("")}</div></section>
+  <div class="headrow"><span class="prog">Source file: ${m.file}</span><button class="btn ${isDone?"done":"primary"}" data-done="${m.id}">${isDone?"✓ Done":"Mark as done"}</button></div>`;
+}
+
+let FC={deck:[],i:0,filter:"all"};
+function buildDeck(){
+  const all=[];M.forEach(m=>m.concepts.forEach(c=>all.push({m,term:c[0],def:c[1],l:c[2]})));
+  FC.deck=FC.filter==="all"?all:all.filter(x=>x.m.id===FC.filter);FC.i=0;
+}
+function viewFlash(){
+  if(!FC.deck.length) buildDeck();
+  const x=FC.deck[FC.i];
+  return `<div class="mhead" style="--c:var(--accent)"><span class="eyebrow">Practice</span><h1>Flashcards</h1><p class="question">Tap the card (or press Space) to flip. Arrow keys move.</p></div>
+  <div class="fc-tools"><label for="fcf" class="prog">Deck</label><select id="fcf"><option value="all">All modules (${M.reduce((a,m)=>a+m.concepts.length,0)})</option>${M.map(m=>`<option value="${m.id}"${FC.filter===m.id?" selected":""}>${esc(m.short)} (${m.concepts.length})</option>`).join("")}</select><button class="btn" id="fcshuf">Shuffle</button></div>
+  <div class="fcard" id="fcard" tabindex="0" role="button" aria-label="Flip card" style="${cvar(x.m)}"><div class="inner">
+   <div class="face"><span class="tag">${esc(x.m.short)}</span><span class="term">${esc(x.term)}</span><span class="prog">tap to reveal</span></div>
+   <div class="face back"><span class="tag">${esc(x.term)}</span><span class="def">${esc(x.def)}</span>${srcLink(x.m,x.l)}</div></div></div>
+  <div class="fc-nav"><button class="btn" id="fcprev">← Previous</button><span class="score">${FC.i+1} / ${FC.deck.length}</span><button class="btn primary" id="fcnext">Next →</button></div>`;
+}
+
+function viewCheat(){
+  return `<div class="mhead" style="--c:var(--accent)"><span class="eyebrow">Review</span><h1>Cheat sheet</h1><p class="question">The whole course on one page.</p></div>
+  <div class="intro"><p><b>Core idea:</b> generative AI writes new content token by token. Four properties, each a continuum; the same mechanism gives capability and limitation. Locate your task on each, then match verification and context to that spot (calibrated trust). Properties stay stable; boundaries move.</p></div>
+  <section><h2>The four properties</h2><div class="tbl"><table><thead><tr><th>Property</th><th>Capability zone</th><th>Limitation zone</th><th>Typical failure</th><th>Features that help</th><th>4D</th></tr></thead><tbody>
+  ${PROPS.map(p=>`<tr style="--c:var(${p[1]})"><td><span class="pname">${p[0]}</span>${p[2]}</td><td>${p[3]}</td><td>${p[4]}</td><td>${p[5]}</td><td>${p[6]}</td><td>${p[7]}</td></tr>`).join("")}
+  </tbody></table></div></section>
+  <div class="grid2">
+   <div class="panel"><h3>Training fingerprints (L3)</h3><ul><li><b>Sycophancy</b>: pull toward agreeing</li><li><b>Verbosity</b>: long by default</li><li><b>Over-caution</b>: hedges more than risk needs</li><li><b>Loose calibration</b>: tone ≠ reliability</li></ul></div>
+   <div class="panel"><h3>Property collisions (L12)</h3><ul><li><b>NTP + Knowledge</b> → hallucinated specifics → verify specifics</li><li><b>Working Memory + Steerability</b> → long-chat drift → re-supply context</li><li>Wrong math → offload to code execution</li><li>Agreeable bad premise → invite pushback</li></ul></div>
+   <div class="panel"><h3>Habits to keep</h3><ul><li>Verify every name, date, stat, citation, URL, quote</li><li>Bring niche/recent knowledge yourself, or turn on search</li><li>Front-load; repeat must-follow rules at the end; start fresh</li><li>State the goal, not only the format; add checkpoints</li></ul></div>
+   <div class="panel"><h3>4D ↔ properties</h3><ul><li><b>Delegation</b> ↔ Knowledge</li><li><b>Description</b> ↔ Working Memory, Steerability</li><li><b>Discernment</b> ↔ Next Token Prediction, failure diagnosis</li><li><b>Diligence</b> ↔ not tied to one property (README)</li></ul></div>
+  </div>
+  <div class="gap"><b>⚠ Not covered in sources:</b> which property pairs cause “confidently wrong math” and “agreeable bad premises”; context window sizes; sampling knob values; course quiz content.</div>`;
+}
+
+/* ---------- search ---------- */
+function searchIndex(){
+  const out=[];
+  M.forEach(m=>{
+    m.take.forEach((t,i)=>out.push({m,kind:"Takeaway",title:t[0],text:t[1],el:`${m.id}-t${i}`}));
+    m.concepts.forEach((c,i)=>out.push({m,kind:"Concept",title:c[0],text:c[1],el:`${m.id}-c${i}`}));
+    m.snips.forEach((s,i)=>out.push({m,kind:"Prompt",title:s[0],text:s[1]+" "+s[3],el:`${m.id}-s${i}`}));
+    m.pit.forEach((p,i)=>out.push({m,kind:"Pitfall",title:p,text:"",el:`${m.id}-p${i}`}));
+  });
+  return out;
+}
+const IDX=searchIndex();
+function hl(s,q){return esc(s).replace(new RegExp("("+q.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")+")","ig"),"<mark>$1</mark>")}
+function viewSearch(q){
+  const ql=q.toLowerCase();
+  const hits=IDX.filter(x=>(x.title+" "+x.text+" "+x.m.short).toLowerCase().includes(ql));
+  return `<div class="mhead"><span class="eyebrow">Search</span><h1>${hits.length} result${hits.length===1?"":"s"} for “${esc(q)}”</h1></div>
+  <div class="res">${hits.map(x=>`<button data-jump="${x.m.id}|${x.el}" style="${cvar(x.m)}"><span class="kind">${x.kind} · ${esc(x.m.short)}</span><b>${hl(x.title,q)}</b>${x.text?`<span class="prog">${hl(x.text.slice(0,180),q)}${x.text.length>180?"…":""}</span>`:""}</button>`).join("")||`<p>No matches. Try a property name, “citation”, “cutoff” or “goal”.</p>`}</div>`;
+}
+
+/* ---------- router ---------- */
+let cur="overview";
+function go(id,opts={}){
+  cur=id;save("fp-view",id);
+  const m=M.find(x=>x.id===id);
+  const v=$("#view");
+  if(m){v.style.cssText=cvar(m);v.innerHTML=viewModule(m);restoreQuiz(m)}
+  else if(id==="flashcards"){v.style.cssText="";v.innerHTML=viewFlash()}
+  else if(id==="cheatsheet"){v.style.cssText="";v.innerHTML=viewCheat()}
+  else {cur="overview";v.style.cssText="";v.innerHTML=viewOverview()}
+  renderNav(cur);
+  try{history.replaceState(null,"","#"+cur)}catch(e){}
+  if(!opts.keepScroll) window.scrollTo({top:0});
+}
+
+/* ---------- quiz state (per browser) ---------- */
+let QA=load("fp-quiz",{});
+function answer(qel,j,persist=true){
+  const [mid,i]=qel.dataset.q.split(":");const m=M.find(x=>x.id===mid);const q=m.quiz[+i];
+  qel.querySelectorAll(".opts button").forEach((b,k)=>{b.disabled=true;if(k===q[2])b.classList.add("right");else if(k===j)b.classList.add("wrong")});
+  const e=qel.querySelector(".expl");e.hidden=false;
+  e.innerHTML=`<b>${j===q[2]?"Correct.":"Not quite."}</b> ${esc(q[3])} ${srcLink(m,q[4])}`;
+  if(persist){QA[qel.dataset.q]=j;save("fp-quiz",QA)}
+  updScore(m);
+}
+function updScore(m){
+  const ans=m.quiz.map((q,i)=>QA[m.id+":"+i]);const n=ans.filter(a=>a!==undefined).length;
+  const r=ans.filter((a,i)=>a===m.quiz[i][2]).length;
+  const el=$("#score-"+m.id);if(el)el.textContent=n?`${r}/${n} correct`:`${m.quiz.length} questions`;
+}
+function restoreQuiz(m){m.quiz.forEach((q,i)=>{const a=QA[m.id+":"+i];if(a!==undefined)answer(document.querySelector(`[data-q="${m.id}:${i}"]`),a,false)});updScore(m)}
+
+/* ---------- events ---------- */
+document.addEventListener("click",e=>{
+  const g=e.target.closest("[data-go]");if(g){$("#q").value="";go(g.dataset.go);return}
+  const d=e.target.closest("[data-done]");if(d){const id=d.dataset.done;done.has(id)?done.delete(id):done.add(id);save("fp-done",[...done]);go(id,{keepScroll:true});return}
+  const o=e.target.closest("[data-opt]");if(o&&!o.disabled){answer(o.closest(".q"),+o.dataset.opt);return}
+  const r=e.target.closest("[data-reset]");if(r){const m=M.find(x=>x.id===r.dataset.reset);m.quiz.forEach((q,i)=>delete QA[m.id+":"+i]);save("fp-quiz",QA);go(m.id,{keepScroll:true});return}
+  const c=e.target.closest("[data-copy]");if(c){const txt=document.querySelector("#"+c.dataset.copy+" pre").textContent;
+    const ok=()=>{c.textContent="Copied";setTimeout(()=>c.textContent="Copy",1500)};
+    const fb=()=>{const pre=document.querySelector("#"+c.dataset.copy+" pre");const s=getSelection();const rg=document.createRange();rg.selectNodeContents(pre);s.removeAllRanges();s.addRange(rg);c.textContent="Selected — press ⌘/Ctrl+C"};
+    try{navigator.clipboard.writeText(txt).then(ok,fb)}catch(err){fb()}return}
+  const j=e.target.closest("[data-jump]");if(j){const [mid,el]=j.dataset.jump.split("|");$("#q").value="";go(mid);const t=document.getElementById(el);if(t){if(t.tagName==="DETAILS")t.open=true;t.scrollIntoView({block:"center"});t.classList.add("flash")}return}
+  if(e.target.closest("#fcard")){$("#fcard").classList.toggle("flipped");return}
+  if(e.target.closest("#fcnext")){FC.i=(FC.i+1)%FC.deck.length;go("flashcards",{keepScroll:true});return}
+  if(e.target.closest("#fcprev")){FC.i=(FC.i-1+FC.deck.length)%FC.deck.length;go("flashcards",{keepScroll:true});return}
+  if(e.target.closest("#fcshuf")){for(let i=FC.deck.length-1;i>0;i--){const k=Math.floor(Math.random()*(i+1));[FC.deck[i],FC.deck[k]]=[FC.deck[k],FC.deck[i]]}FC.i=0;go("flashcards",{keepScroll:true});return}
+});
+document.addEventListener("change",e=>{if(e.target.id==="fcf"){FC.filter=e.target.value;buildDeck();go("flashcards",{keepScroll:true})}});
+document.addEventListener("keydown",e=>{
+  if(cur!=="flashcards"||e.target.tagName==="INPUT"||e.target.tagName==="SELECT")return;
+  if(e.key===" "){e.preventDefault();$("#fcard").classList.toggle("flipped")}
+  if(e.key==="ArrowRight")$("#fcnext").click();
+  if(e.key==="ArrowLeft")$("#fcprev").click();
+});
+$("#q").addEventListener("input",e=>{const q=e.target.value.trim();if(q.length>=2){$("#view").style.cssText="";$("#view").innerHTML=viewSearch(q)}else go(cur,{keepScroll:true})});
+
+/* ---------- boot ---------- */
+const h=(location.hash||"").slice(1);
+const valid=id=>M.some(m=>m.id===id)||["overview","flashcards","cheatsheet"].includes(id);
+go(valid(h)?h:(valid(load("fp-view","overview"))?load("fp-view","overview"):"overview"));
+</script>
