@@ -69,7 +69,7 @@ _Tips: [colleague-tips](training/colleague-tips.md) — Day 4–5_
   - [x] #2: unaided, issue #3, PR #19
 
 ### Day 5
-- [ ] Write `CLAUDE.md` for sample-project (<1 screen) → refine `ai-kit/CLAUDE.md.template`
+- [x] Write `CLAUDE.md` for sample-project (<1 screen) → refine `ai-kit/CLAUDE.md.template`
 - [x] Compaction experiment; `/rewind` bad edit
 - [x] Ex: fresh vs primed session comparison
 

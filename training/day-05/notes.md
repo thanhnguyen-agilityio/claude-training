@@ -45,9 +45,10 @@ First run, from `/cost`: A $0.39, B $0.33 (B cheaper). The re-run estimate says 
 Verdict (1 line): Same fix either way; priming cost ~9k context and only made the checks more complete (all 3 suites), not the fix better.
 
 ## Take-away (copy to training/take-away.md)
-- 
-- 
-- 
+- CLAUDE.md: short (~40 lines) = commands, layout, conventions, never-do; only commands checked in the repo; grow it from real corrections
+- CLAUDE.md can be wrong and Claude follows it (#48: `--env-file ../.env` with no `.env`), so test its commands like code
+- Fresh vs primed (#48): same fix either way; priming cost ~9k context and only made checks more complete, so skip priming for small tickets and rely on CLAUDE.md
+- `/context` first: a fresh session already starts at ~34k (tools + skills + memory), so turn off unused skills/MCP before blaming the task
 
 ---
 
@@ -58,9 +59,9 @@ Phone away, Slack closed. One topic per session: new session per block. Write th
 | Done | Time | Block | Finish line |
 |---|---|---|---|
 | [x] | 0:00–0:10 | **Setup.** Open `ecommerce-agent` clone (not the training repo). Run `/context` for baseline. | Baseline context size noted |
-| [ ] | 0:10–0:55 | **AI Fluency lessons 10–15 (45 min).** 3 lines of notes per lesson. | 15/15, or ≥3 lessons with notes |
-| [ ] | 0:55–1:45 | **Write `CLAUDE.md` for the app (50 min).** Commands (build/run/test), conventions, "never do" list. Let Claude draft from the code, then you cut. Refine `ai-kit/CLAUDE.md.template`. | File under ~40 lines, template updated |
-| [ ] | 1:45–1:55 | **Break.** Away from screen. | |
+| [x] | 0:10–0:55 | **AI Fluency lessons 10–15 (45 min).** 3 lines of notes per lesson. | 15/15, or ≥3 lessons with notes |
+| [x] | 0:55–1:45 | **Write `CLAUDE.md` for the app (50 min).** Commands (build/run/test), conventions, "never do" list. Let Claude draft from the code, then you cut. Refine `ai-kit/CLAUDE.md.template`. | File under ~40 lines, template updated |
+| [x] | 1:45–1:55 | **Break.** Away from screen. | |
 | [x] | 1:55–2:45 | **Compaction and `/rewind` (50 min).** Long session on a real task → `/compact` → ask what it remembers, list what was lost. Make a deliberately bad edit → Esc Esc to rewind. Read `/memory`. | 5-line note: survived / died / restored |
 | [x] | 2:45–3:45 | **Fresh vs primed (60 min).** One ticket, same prompt. A: fresh, no CLAUDE.md, no reading. B: CLAUDE.md + codebase read. Compare quality, questions, tokens (`/context`, `/cost`). | Table filled + 1-line verdict |
-| [ ] | 3:45–4:00 | **Wrap-up (15 min).** Tick Day 5 in `TODO.md`, add Day 5 lines to `training/take-away.md`, commit to `main`, push. | Pushed |
+| [x] | 3:45–4:00 | **Wrap-up (15 min).** Tick Day 5 in `TODO.md`, add Day 5 lines to `training/take-away.md`, commit to `main`, push. | Pushed |
