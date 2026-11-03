@@ -7,6 +7,7 @@ Claude training plan (https://dojo.agilityio.dev/) — Dev track, 15 days. Goal:
 | [PLAN.md](PLAN.md) | Course plan condensed (days, checkpoints, courses) |
 | [TODO.md](TODO.md) | Daily checklist + progress tracker |
 | [training/](training/) | `day-NN/notes.md` learnings + `day-NN/exercises/`; `ideas.md` backlog |
+| [resources/claude-academy/](resources/claude-academy/) | Course notes + interactive study guides; all four in the [Study Hub](https://claude.ai/artifact/VeJAUjaMTCCGD9vCHLcTKy) |
 | [ai-kit/](ai-kit/) | Reusable Claude Code kit (CLAUDE.md, commands, skills, settings) — copy into any project |
 | [sample-project/](sample-project/) | Practice repo (LangGraph agent + FastAPI + Streamlit) |
 

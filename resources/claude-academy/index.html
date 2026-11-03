@@ -1,0 +1,109 @@
+<title>Claude Academy Study Hub</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Atkinson+Hyperlegible:wght@400;700&family=JetBrains+Mono:wght@400&display=swap">
+<style>
+/* Layout: one column shelf of course cards, grouped by what the course is about; same palette and type as the four study guides. */
+:root{
+  --bg:#f4f6f9; --surface:#ffffff; --sunken:#eaeef4; --ink:#18202d; --muted:#596476; --line:#d9dfe8; --accent:#2c56c9;
+  --p1:#5a48d4; --p2:#0e8576; --p3:#b8700c; --p4:#c03a66;
+  --f-display:"Bricolage Grotesque","Avenir Next","Segoe UI",sans-serif;
+  --f-body:"Atkinson Hyperlegible","Segoe UI",system-ui,sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0f131a; --surface:#161b24; --sunken:#1d2330; --ink:#e5e9f0; --muted:#9ba5b6; --line:#2a3242; --accent:#7d9dff;
+  --p1:#a093ff; --p2:#3cc5b0; --p3:#e7a845; --p4:#f27ba1; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f131a; --surface:#161b24; --sunken:#1d2330; --ink:#e5e9f0; --muted:#9ba5b6; --line:#2a3242; --accent:#7d9dff;
+  --p1:#a093ff; --p2:#3cc5b0; --p3:#e7a845; --p4:#f27ba1; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.55}
+.wrap{max-width:900px;margin:0 auto;padding-block:40px 64px;padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px));display:flex;flex-direction:column;gap:36px}
+h1,h2,h3{font-family:var(--f-display);line-height:1.15;text-wrap:balance;margin:0}
+header{display:flex;flex-direction:column;gap:10px}
+.eyebrow{font-size:12px;letter-spacing:.09em;text-transform:uppercase;font-weight:700;color:var(--muted)}
+h1{font-size:clamp(30px,5vw,44px)}
+header p{margin:0;max-width:62ch;color:var(--muted);font-size:17px}
+section{display:flex;flex-direction:column;gap:14px}
+h2{font-size:20px}
+.shelf{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,380px),1fr));gap:14px}
+a.course{display:flex;flex-direction:column;gap:12px;text-decoration:none;color:inherit;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:18px 20px;transition:border-color .15s,transform .15s}
+a.course:hover{border-color:var(--c);transform:translateY(-2px)}
+a.course:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.top{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+.course h3{font-size:22px}
+.go{color:var(--c);font-weight:700;white-space:nowrap}
+.q{margin:0;color:var(--muted);font-style:italic}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{font-size:13px;padding:3px 10px;border-radius:999px;background:var(--sunken);color:var(--ink)}
+.chip b{color:var(--c)}
+.mods{font-size:14px;color:var(--muted);margin:0}
+.bar{display:flex;height:6px;border-radius:3px;overflow:hidden;gap:2px}
+.bar i{flex:1;background:var(--c);opacity:.75}
+.path{font-family:var(--f-mono);font-size:12px;color:var(--muted)}
+.how{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px 20px}
+.how ul{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px}
+@media (prefers-reduced-motion:reduce){a.course{transition:none}a.course:hover{transform:none}}
+</style>
+
+<div class="wrap">
+  <header>
+    <span class="eyebrow">Claude Academy · 4 courses · 52 lessons</span>
+    <h1>Study Hub</h1>
+    <p>One place for all four interactive study guides. Each guide has takeaways per module, diagrams, copyable prompts, quizzes, flashcards and a one-page cheat sheet.</p>
+  </header>
+
+  <section>
+    <h2>Working with AI</h2>
+    <div class="shelf">
+      <a class="course" style="--c:var(--p1)" href="https://claude.ai/artifact/1bocoy7AXJRV2vNNe9k63M#overview" target="_blank" rel="noopener">
+        <div class="top"><h3>AI Fluency</h3><span class="go">Open ↗</span></div>
+        <p class="q">Delegation, Description, Discernment, Diligence.</p>
+        <div class="bar" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        <div class="chips"><span class="chip"><b>14</b> lessons</span><span class="chip"><b>7</b> modules</span><span class="chip"><b>35</b> quiz questions</span><span class="chip"><b>38</b> flashcards</span></div>
+        <p class="mods">Foundations · Generative AI · Delegation · Description · Discernment · Diligence · Conclusion</p>
+        <span class="path">resources/claude-academy/ai-fluency/</span>
+      </a>
+      <a class="course" style="--c:var(--p2)" href="https://claude.ai/artifact/CXqzzmSwhqH9QrqJV96aoK#overview" target="_blank" rel="noopener">
+        <div class="top"><h3>AI Capabilities &amp; Limitations</h3><span class="go">Open ↗</span></div>
+        <p class="q">Four properties of generative AI, each a capability-to-limitation continuum.</p>
+        <div class="bar" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        <div class="chips"><span class="chip"><b>13</b> lessons</span><span class="chip"><b>6</b> modules</span><span class="chip"><b>30</b> quiz questions</span><span class="chip"><b>39</b> flashcards</span></div>
+        <p class="mods">Foundations · Next Token Prediction · Knowledge · Working Memory · Steerability · When Properties Collide</p>
+        <span class="path">resources/claude-academy/ai-capabilities-limitations/</span>
+      </a>
+    </div>
+  </section>
+
+  <section>
+    <h2>Using Claude</h2>
+    <div class="shelf">
+      <a class="course" style="--c:var(--p3)" href="https://claude.ai/artifact/1AAJmYVCNZSfiPuW2j1cqz#overview" target="_blank" rel="noopener">
+        <div class="top"><h3>Claude 101</h3><span class="go">Open ↗</span></div>
+        <p class="q">Prompts, projects, artifacts, skills, connectors, Research and other surfaces.</p>
+        <div class="bar" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        <div class="chips"><span class="chip"><b>13</b> lessons</span><span class="chip"><b>8</b> modules</span><span class="chip"><b>40</b> quiz questions</span><span class="chip"><b>39</b> flashcards</span></div>
+        <p class="mods">Getting started · Better results · Desktop · Projects · Artifacts · Skills · Connectors &amp; Research · Putting it together</p>
+        <span class="path">resources/claude-academy/claude-101/</span>
+      </a>
+      <a class="course" style="--c:var(--p4)" href="https://claude.ai/artifact/DMm3h57Kha8uBPhb294Ngg#overview" target="_blank" rel="noopener">
+        <div class="top"><h3>Claude Code 101</h3><span class="go">Open ↗</span></div>
+        <p class="q">Agentic loop, explore → plan → code → commit, context, review, and customizing.</p>
+        <div class="bar" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        <div class="chips"><span class="chip"><b>12</b> lessons</span><span class="chip"><b>9</b> modules</span><span class="chip"><b>45</b> quiz questions</span><span class="chip"><b>46</b> flashcards</span></div>
+        <p class="mods">Basics · Install · Workflow · Context · Code review · CLAUDE.md · Subagents &amp; skills · MCP · Hooks</p>
+        <span class="path">resources/claude-academy/claude-code-101/</span>
+      </a>
+    </div>
+  </section>
+
+  <section>
+    <h2>How to use the guides</h2>
+    <div class="how"><ul>
+      <li>Progress (modules marked done, quiz answers) is saved in your browser, per guide.</li>
+      <li>Every takeaway links back to its lesson on the Claude Academy site.</li>
+      <li>Items marked ⚠ are not covered in the source notes; check those on the course page.</li>
+      <li>The guides are built from personal study notes, not the official course; quiz questions are self-written, not the course quiz.</li>
+    </ul></div>
+  </section>
+</div>
