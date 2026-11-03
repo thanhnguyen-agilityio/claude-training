@@ -77,6 +77,19 @@ My own findings (match the list):
 
 ## Lesson 3:
 
-## Lesson 4:
+## Lesson 4: Next Token Prediction
+Generative AI writes its answer word by word, based on what tends to follow.
+- **Capability zone:** tasks that resemble patterns the model has seen many times (summarizing, reformatting, explaining common concepts).
+- **Limitation zone:** novel or sparse territory, and anywhere the task requires telling "true" from "sounds true".
+- **Fabrication concentrates in specifics:** names, dates, statistics, citations, URLs, quotes. The more precise a claim, the more it needs verification.
+- **Product features:** to do.
 
 ## Lesson 5:
+
+## Lesson 6: Knowledge
+What generative AI knows comes from its training data and is frozen at the knowledge cutoff.
+- **Capability zone:** topics that appeared frequently, recently and consistently in the training data.
+- **Limitation zone:** rare, post-cutoff, niche, local or contested topics.
+- **Characteristic failures:** staleness, bias.
+- **Web search / RAG and tools:** patch the gap by giving the model access to information.
+- **4D connection:** uneven knowledge is core to Delegation. Knowing where the model is well-stocked vs. thin tells me when to hand off, when to supply context myself, and when to go elsewhere.
