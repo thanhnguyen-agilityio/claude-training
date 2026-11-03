@@ -2,6 +2,8 @@
 
 Course: [Claude Academy](https://academy.claude.com/) · Optional · Progress: 4/13 · In progress
 
+Study guide (interactive review): [Four Properties Study Guide](https://claude.ai/artifact/CXqzzmSwhqH9QrqJV96aoK#overview)
+
 ## Lesson 1: Intro to AI Capabilities & Limitations
 - **2 training stages:** pre-training, then fine-tuning.
 - **4 core properties of generative AI:**
