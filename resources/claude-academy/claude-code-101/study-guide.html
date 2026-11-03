@@ -1,0 +1,789 @@
+<title>Claude Code 101 Study Guide</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: fixed module rail on the left, one reading column on the right; each course section owns a hue (Getting started, Daily workflows, Customizing; hooks stand out as the only deterministic tool). */
+:root{
+  --bg:#f4f6f9; --surface:#ffffff; --sunken:#eaeef4; --ink:#18202d; --muted:#596476; --line:#d9dfe8;
+  --accent:#2c56c9; --accent-ink:#ffffff;
+  --p0:#56607a; --p1:#5a48d4; --p2:#0e8576; --p3:#b8700c; --p4:#c03a66;
+  --good:#1e7d4a; --good-bg:#e3f4ea; --bad:#b4322c; --bad-bg:#fbe8e6; --warn:#8a5a00; --warn-bg:#fdf2d8;
+  --f-display:"Bricolage Grotesque", "Avenir Next", "Segoe UI", sans-serif;
+  --f-body:"Atkinson Hyperlegible", "Segoe UI", system-ui, sans-serif;
+  --f-mono:"JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+  --r:10px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0f131a; --surface:#161b24; --sunken:#1d2330; --ink:#e5e9f0; --muted:#9ba5b6; --line:#2a3242;
+  --accent:#7d9dff; --accent-ink:#0f131a;
+  --p0:#a3abc0; --p1:#a093ff; --p2:#3cc5b0; --p3:#e7a845; --p4:#f27ba1;
+  --good:#5fd394; --good-bg:#15301f; --bad:#ff8a80; --bad-bg:#3a1c1a; --warn:#f0c160; --warn-bg:#352a12;
+  color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f131a; --surface:#161b24; --sunken:#1d2330; --ink:#e5e9f0; --muted:#9ba5b6; --line:#2a3242;
+  --accent:#7d9dff; --accent-ink:#0f131a;
+  --p0:#a3abc0; --p1:#a093ff; --p2:#3cc5b0; --p3:#e7a845; --p4:#f27ba1;
+  --good:#5fd394; --good-bg:#15301f; --bad:#ff8a80; --bad-bg:#3a1c1a; --warn:#f0c160; --warn-bg:#352a12;
+  color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.55}
+button{font:inherit;color:inherit}
+a{color:var(--accent)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
+h1,h2,h3{font-family:var(--f-display);line-height:1.15;text-wrap:balance;margin:0}
+.app{display:grid;grid-template-columns:270px minmax(0,1fr);min-height:100vh}
+/* Sidebar */
+.side{position:sticky;top:0;height:100vh;overflow-y:auto;border-right:1px solid var(--line);background:var(--surface);
+  padding-block:20px;padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:16px;display:flex;flex-direction:column;gap:18px}
+.brand{font-family:var(--f-display);font-weight:700;font-size:19px;line-height:1.2}
+.brand small{display:block;font-family:var(--f-body);font-weight:400;font-size:13px;color:var(--muted);margin-top:4px}
+.search{position:relative}
+.search input{width:100%;padding:9px 12px 9px 34px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);font:inherit;font-size:15px}
+.search svg{position:absolute;left:10px;top:50%;transform:translateY(-50%);width:16px;height:16px;stroke:var(--muted);fill:none}
+.prog{font-size:13px;color:var(--muted)}
+.prog .bar{height:6px;border-radius:3px;background:var(--sunken);margin-top:6px;overflow:hidden}
+.prog .bar i{display:block;height:100%;background:var(--accent);width:0;transition:width .3s}
+.navlabel{font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);margin:0 0 6px}
+.nav{display:flex;flex-direction:column;gap:2px;list-style:none;margin:0;padding:0}
+.nav button{width:100%;text-align:left;background:none;border:0;padding:8px 10px;border-radius:8px;cursor:pointer;display:grid;grid-template-columns:10px 1fr auto;gap:10px;align-items:center;font-size:15px}
+.nav button:hover{background:var(--sunken)}
+.nav button[aria-current="true"]{background:var(--sunken);font-weight:700}
+.nav .dot{width:10px;height:10px;border-radius:50%;background:var(--c)}
+.nav .sub{display:block;font-size:12px;color:var(--muted);font-weight:400}
+.nav .chk{font-size:13px;color:var(--good)}
+/* Main */
+main{min-width:0;padding-block:28px 64px;padding-left:max(16px, 4vw);padding-right:max(16px, env(safe-area-inset-right, 0px), 4vw)}
+.wrap{max-width:860px;margin:0 auto;display:flex;flex-direction:column;gap:32px}
+.eyebrow{font-size:12px;letter-spacing:.09em;text-transform:uppercase;color:var(--c, var(--muted));font-weight:700}
+.mhead{display:flex;flex-direction:column;gap:10px}
+.mhead h1{font-size:clamp(28px,4vw,40px)}
+.question{font-size:19px;color:var(--muted);font-style:italic;margin:0}
+.headrow{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between}
+.btn{border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:8px 14px;cursor:pointer;font-size:14px}
+.btn:hover{border-color:var(--accent)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink);font-weight:700}
+.btn.done{background:var(--good-bg);border-color:var(--good);color:var(--good);font-weight:700}
+/* Continuum */
+.continuum{display:grid;grid-template-columns:1fr 1fr;gap:0;border-radius:var(--r);overflow:hidden;border:1px solid var(--line)}
+.continuum .rail{grid-column:1/-1;height:8px;background:linear-gradient(90deg,var(--c),color-mix(in srgb,var(--c) 15%,var(--surface)))}
+.continuum div.z{padding:12px 14px;background:var(--surface);font-size:15px}
+.continuum div.z+div.z{border-left:1px dashed var(--line);text-align:right}
+.continuum b{display:block;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+section h2{font-size:21px;margin-bottom:12px;display:flex;align-items:baseline;gap:10px}
+section h2 .count{font-family:var(--f-mono);font-size:13px;color:var(--muted);font-weight:400}
+/* Takeaway cards */
+.cards{display:flex;flex-direction:column;gap:8px}
+details.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r)}
+details.card[open]{border-color:color-mix(in srgb,var(--c) 45%,var(--line))}
+details.card summary{cursor:pointer;list-style:none;padding:13px 16px;display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:start;font-weight:700}
+details.card summary::-webkit-details-marker{display:none}
+details.card summary .n{font-family:var(--f-mono);font-size:13px;color:var(--c);padding-top:2px;font-weight:500}
+details.card summary .chev{transition:transform .2s;color:var(--muted)}
+details.card[open] summary .chev{transform:rotate(90deg)}
+details.card .body{padding:0 16px 14px 46px;display:flex;flex-direction:column;gap:8px}
+details.card .body p{margin:0;max-width:65ch}
+.src{font-family:var(--f-mono);font-size:12px;color:var(--muted);text-decoration:none;align-self:flex-start;border-bottom:1px dotted var(--muted)}
+.src:hover{color:var(--accent);border-color:var(--accent)}
+.flash{animation:flash 1.6s ease-out}
+@keyframes flash{0%{box-shadow:0 0 0 3px var(--accent)}100%{box-shadow:0 0 0 0 transparent}}
+/* Concepts */
+dl.concepts{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px;margin:0}
+dl.concepts div{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:12px 14px}
+dl.concepts dt{font-weight:700;margin-bottom:2px}
+dl.concepts dd{margin:0;color:var(--muted);font-size:15px}
+/* Diagram */
+.diagram{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px;overflow-x:auto}
+.diagram svg{display:block;min-width:600px;width:100%;height:auto}
+.diagram figcaption{font-size:14px;color:var(--muted);margin-top:8px}
+svg .bx{fill:var(--sunken);stroke:var(--line)}
+svg .bxc{fill:color-mix(in srgb,var(--c) 14%,var(--surface));stroke:var(--c)}
+svg .t{fill:var(--ink);font-family:var(--f-body);font-size:14px}
+svg .tb{fill:var(--ink);font-family:var(--f-body);font-size:14px;font-weight:700}
+svg .tm{fill:var(--muted);font-family:var(--f-body);font-size:12px}
+svg .ln{stroke:var(--muted);stroke-width:1.5;fill:none}
+svg .lc{stroke:var(--c);stroke-width:2.5;fill:none}
+svg .dash{stroke-dasharray:5 4}
+svg .ac{fill:var(--muted)}
+svg .acc{fill:var(--c)}
+/* Snippets */
+.snips{display:flex;flex-direction:column;gap:10px}
+.snip{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.snip header{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:8px 12px;border-bottom:1px solid var(--line);font-size:13px;color:var(--muted);flex-wrap:wrap}
+.snip pre{margin:0;padding:12px 14px;font-family:var(--f-mono);font-size:13.5px;white-space:pre-wrap;word-break:break-word;background:var(--sunken)}
+.copy{font-size:12px;padding:4px 10px}
+/* Pitfalls & gaps */
+ul.pit{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:8px}
+ul.pit li{padding:10px 14px;border-radius:8px;background:var(--bad-bg);color:var(--ink);display:grid;grid-template-columns:auto 1fr;gap:10px}
+ul.pit li::before{content:"✕";color:var(--bad);font-weight:700}
+.gap{background:var(--warn-bg);color:var(--ink);border-radius:8px;padding:10px 14px;font-size:15px}
+.gap b{color:var(--warn)}
+/* Quiz */
+.quiz{display:flex;flex-direction:column;gap:14px}
+.q{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px}
+.q p.stem{margin:0 0 10px;font-weight:700}
+.opts{display:flex;flex-direction:column;gap:6px}
+.opts button{text-align:left;border:1px solid var(--line);background:var(--bg);border-radius:8px;padding:9px 12px;cursor:pointer;font-size:15px}
+.opts button:hover:not(:disabled){border-color:var(--accent)}
+.opts button:disabled{cursor:default}
+.opts button.right{background:var(--good-bg);border-color:var(--good)}
+.opts button.wrong{background:var(--bad-bg);border-color:var(--bad)}
+.expl{margin-top:10px;font-size:15px;padding:10px 12px;border-radius:8px;background:var(--sunken)}
+.score{font-family:var(--f-mono);font-size:13px;color:var(--muted)}
+/* Flashcards */
+.fc-tools{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.fc-tools select{padding:8px 10px;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font:inherit;font-size:14px}
+.fcard{perspective:1200px;cursor:pointer;min-height:260px}
+.fcard .inner{position:relative;width:100%;min-height:260px;transition:transform .5s;transform-style:preserve-3d}
+.fcard.flipped .inner{transform:rotateY(180deg)}
+.fcard .face{position:absolute;inset:0;backface-visibility:hidden;border-radius:14px;border:1px solid var(--line);background:var(--surface);display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:28px;gap:10px}
+.fcard .face.back{transform:rotateY(180deg);background:var(--sunken)}
+.fcard .term{font-family:var(--f-display);font-size:clamp(26px,5vw,36px);font-weight:700}
+.fcard .def{font-size:18px;max-width:46ch}
+.fcard .tag{font-size:12px;letter-spacing:.09em;text-transform:uppercase;font-weight:700;color:var(--c)}
+.fc-nav{display:flex;justify-content:space-between;align-items:center;gap:10px}
+/* Cheat sheet */
+.tbl{overflow-x:auto;border:1px solid var(--line);border-radius:var(--r);background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:720px;font-size:14.5px}
+th,td{padding:10px 12px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line)}
+th{font-size:12px;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);background:var(--sunken)}
+tr:last-child td{border-bottom:0}
+td .pname{font-weight:700;color:var(--c);display:block}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px}
+.panel h3{font-size:16px;margin-bottom:8px}
+.panel ul{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:4px;font-size:15px}
+/* Search results */
+.res{display:flex;flex-direction:column;gap:8px}
+.res button{text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:12px 14px;cursor:pointer;display:flex;flex-direction:column;gap:4px}
+.res button:hover{border-color:var(--accent)}
+.res .kind{font-size:12px;color:var(--c);font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+mark{background:color-mix(in srgb,var(--accent) 25%,transparent);color:inherit;border-radius:2px}
+.intro p{max-width:65ch;margin:0}
+.overview{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+.ovc{text-align:left;background:var(--surface);border:1px solid var(--line);border-top:4px solid var(--c);border-radius:var(--r);padding:14px 16px;cursor:pointer;display:flex;flex-direction:column;gap:6px}
+.ovc:hover{border-color:var(--c)}
+.ovc h3{font-size:18px}
+.ovc span{font-size:14px;color:var(--muted)}
+@media (max-width:860px){
+  .app{grid-template-columns:minmax(0,1fr)}
+  .side{position:static;height:auto;border-right:0;border-bottom:1px solid var(--line);padding-right:max(16px, env(safe-area-inset-right, 0px))}
+  .nav{flex-direction:row;overflow-x:auto;gap:6px;padding-bottom:4px}
+  .nav li{flex:0 0 auto}
+  .nav button{grid-template-columns:10px auto auto;white-space:nowrap;border:1px solid var(--line)}
+  .nav .sub{display:none}
+  .continuum{grid-template-columns:1fr}
+  .continuum div.z+div.z{border-left:0;border-top:1px dashed var(--line);text-align:left}
+  details.card .body{padding-left:16px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+
+<div class="app">
+  <aside class="side">
+    <div class="brand">Claude Code 101<small>Claude Academy · study guide</small></div>
+    <div class="search">
+      <svg viewBox="0 0 24 24" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>
+      <input id="q" type="search" placeholder="Search the course…" aria-label="Search the course" autocomplete="off">
+    </div>
+    <div class="prog"><span id="progtxt">0 of 9 modules done</span><div class="bar"><i id="progbar"></i></div></div>
+    <div>
+      <p class="navlabel">Modules</p>
+      <ul class="nav" id="navm"></ul>
+    </div>
+    <div>
+      <p class="navlabel">Practice &amp; review</p>
+      <ul class="nav" id="navp"></ul>
+    </div>
+  </aside>
+  <main><div class="wrap" id="view"></div></main>
+</div>
+
+<script>
+const STORE="cc101";
+/* ---------- storage ---------- */
+function load(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}}
+function save(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
+let done=new Set(load(STORE+"-done",[]));
+
+/* ---------- helpers ---------- */
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+function srcLink(m,lesson){
+  if(typeof lesson==="string") return `<span class="src">${esc(lesson)}</span>`;
+  const [name,slug]=LESSONS[lesson];
+  return `<a class="src" href="${BASE+slug}" target="_blank" rel="noopener" title="Local notes: ${m.file}">${m.file} · L${lesson} ${esc(name)} ↗</a>`;
+}
+function cvar(m){return `--c:var(${m.c})`}
+
+/* ---------- diagrams ---------- */
+const AR=`<defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" class="ac"/></marker><marker id="ahc" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" class="acc"/></marker></defs>`;
+const BASE="https://academy.claude.com/courses/claude-code-101/";
+const LESSONS={1:["What is Claude Code?","what-is-claude-code"],2:["How Claude Code works","how-claude-code-works"],3:["Installing Claude Code","installing-claude-code"],4:["Your first prompt","your-first-prompt"],5:["The explore → plan → code → commit workflow","the-explore-plan-code-commit-workflow"],6:["Context management","context-management"],7:["Code review","code-review"],8:["The CLAUDE.md file","the-claude-md-file"],9:["Subagents","subagents"],10:["Skills","skills"],11:["MCP","mcp"],12:["Hooks","hooks"]};
+const NOTES={cs:"your notes · training/cheatsheet.md",ct:"colleague tips · training/colleague-tips.md",d5:"your notes · training/day-05/notes.md"};
+
+const M=[
+{id:"basics",c:"--p1",short:"What it is & how it works",sub:"Getting started · L1–2",eyebrow:"Lessons 1–2 · Getting started",title:"What Claude Code is and how it works",file:"01-getting-started.md",
+ question:"What makes Claude Code an agent, not a chat?",
+ take:[
+  ["An agentic coding tool","It understands your codebase, edits files, runs commands and connects to developer tools, in the terminal, VS Code, JetBrains, the Desktop app and the web. Unlike Claude.ai, it works on your files directly; no copy-paste.",1],
+  ["An LLM running in a loop","Prompt → gather context → take action → verify against the goal → done, or loop again. You can add context, interrupt or steer at any point.",2],
+  ["Three building blocks","Context (conversation, files, command output; auto-compacts at the limit), tools (read files, run code, search the web; Claude decides when to call them), permissions (four modes).",2],
+  ["Four permission modes","Manual (asks before every edit/command), Auto-accept (edits and common fs commands run), Plan (explores, doesn't edit source), Auto (a background classifier blocks irreversible or destructive actions).",2],
+  ["It can make mistakes","It may misread intent, add a bug or over-engineer. Stay in the loop, and be careful when skipping permissions.",1]
+ ],
+ concepts:[
+  ["AI agent","Software that acts on its environment to reach a goal; an LLM in a loop using tools.",1],
+  ["Agentic loop","Prompt → gather context → act → verify → done or loop.",2],
+  ["Context window","Claude's working memory; Claude searches smartly instead of loading the whole codebase.",1],
+  ["Compaction","Automatic summarizing/removing when context hits the limit.",2],
+  ["Tools","Actions Claude can call (read files, run commands, web search) and use the output of.",2],
+  ["Manual mode","Asks before every file edit or shell command.",2],
+  ["Auto-accept mode","File edits and common fs commands (mkdir, mv, rm) run without asking; others ask.",2],
+  ["Auto mode","No routine prompts; a classifier blocks irreversible, destructive or out-of-environment actions.",2]
+ ],
+ snips:[],
+ pit:[
+  "Treating it like chat and pasting code back and forth instead of letting it work on files.",
+  "Skipping permissions without staying in the loop: mistakes are harder to catch before they happen.",
+  "Assuming it never over-engineers or misreads your intent."
+ ],
+ gaps:["Videos were not read."],
+ diagram:"loop",
+ quiz:[
+  ["What is the main difference from Claude.ai?",["A different model","Direct access to your files and terminal","No context window","It only explains code"],1,"No copy-paste; it does the work itself.",1],
+  ["Order the agentic loop:",["Act → prompt → verify → gather","Prompt → gather context → act → verify","Verify → act → prompt → gather","Gather → verify → prompt → act"],1,"Then done, or loop again.",2],
+  ["Which mode lets edits and mkdir/mv/rm run but asks for other commands?",["Manual","Auto-accept","Plan","Auto"],1,"Lesson 2.",2],
+  ["In Auto mode, what stops a destructive action?",["Nothing","A background classifier","You, every time","Plan mode"],1,"It blocks irreversible or out-of-environment actions.",2],
+  ["What happens when context hits the limit?",["Session crashes","Claude Code compacts automatically","It deletes files","It switches model"],1,"Summarizes/removes; can lose details.",2]
+ ]},
+{id:"setup",c:"--p1",short:"Install & first prompt",sub:"Getting started · L3–4",eyebrow:"Lessons 3–4 · Getting started",title:"Installing and your first prompt",file:"01-getting-started.md",
+ question:"Where do I run it, and how do I start safely?",
+ take:[
+  ["Many surfaces, one tool","Terminal (new features first), IDE (VS Code extension by Anthropic, JetBrains plugin), Desktop Code tab (good for background work), web at claude.ai/code (GitHub repos only).",3],
+  ["First run","Go to your project folder and run claude. Pick a theme, sign in (Pro, Max, Team, Enterprise) or use an API key. Claude can access that folder and all subfolders.",3],
+  ["Shift + Tab cycles permission modes","Manual, Auto-accept, Auto, Plan. No right answer; choose what you're comfortable with.",4],
+  ["Plan mode first for multi-step work","Claude reads files and runs shell commands to study the code, asks clarifying questions, then gives a detailed plan without editing source files. Also good for a safe code review.",4],
+  ["Be descriptive","The dark-mode walk-through: Plan mode on, describe the feature, the toggle location and the color goal, review the plan, then accept and let it work.",4],
+  ["From colleague tips: the folder decides CLAUDE.md","The folder you open Claude Code in decides which CLAUDE.md it reads.",NOTES.ct]
+ ],
+ concepts:[
+  ["Plan mode","Explores and plans without editing source files.",4],
+  ["Shift + Tab","Keyboard shortcut that cycles permission modes.",4],
+  ["claude.ai/code","Web surface; works on GitHub repositories only.",3]
+ ],
+ snips:[
+  ["Start a session","cd your-project\nclaude",3,"If the command is missing, restart the terminal."],
+  ["VS Code command palette","Claude Code: Open in New Tab",3,"Ctrl/Cmd+Shift+P."],
+  ["Plan-mode prompt (Lesson 4, paraphrased)","Add dark mode across the app, with a toggle switch in the header. Pick good contrast colors based on the existing light theme.",4,"Run it with plan mode on, then review the plan."]
+ ],
+ pit:[
+  "Starting claude in the wrong folder: access and CLAUDE.md follow the start folder.",
+  "Installing a look-alike VS Code extension: pick the one by Anthropic with the blue check.",
+  "Expecting Homebrew or winget installs to auto-update (they don't by default).",
+  "Jumping to code on a multi-step feature without Plan mode."
+ ],
+ gaps:["The exact install commands are only in the Lesson 3 video/screenshots and were not copied — ⚠ check the course page or official docs."],
+ diagram:"modes",
+ quiz:[
+  ["Which surface gets new features first?",["Web","Terminal","JetBrains","Desktop"],1,"Lesson 3.",3],
+  ["What can Claude access after you run claude in a folder?",["Your whole disk","That folder and its subfolders","Only open files","Nothing until you upload"],1,"Lesson 3.",3],
+  ["How do you switch permission modes?",["Ctrl+P","Shift + Tab","/mode","Restart"],1,"It cycles the modes.",4],
+  ["What does Plan mode NOT do?",["Read files","Run shell commands to explore","Ask clarifying questions","Edit source files"],3,"It plans first.",4],
+  ["The web surface works with…",["Any local folder","GitHub repositories only","Zip uploads","Google Drive"],1,"Lesson 3.",3]
+ ]},
+{id:"workflow",c:"--p2",short:"Explore → Plan → Code → Commit",sub:"Daily workflows · L5",eyebrow:"Lesson 5 · Daily workflows",title:"The explore → plan → code → commit workflow",file:"02-daily-workflows.md",
+ question:"What's the one habit that saves the most correcting?",
+ take:[
+  ["If you take one thing, take this","Jumping straight to “write code” means more correcting later.",5],
+  ["Explore + Plan in Plan mode","Claude reads files, may search the web, then plans. Ask for changes to specific parts. This is the cheapest place to course-correct: no code exists yet.",5],
+  ["Code with success criteria, tools and tests","Say what “correct” means and put it in the plan; add tools (e.g. Claude in Chrome to test a UI); include a reliable test suite without false positives.",5],
+  ["Commit: test, fresh-eyes review, message","Test it yourself, run a subagent code reviewer with no session bias, then ask Claude for a commit message in your style.",5],
+  ["Save repeated fixes","If Claude keeps hitting the same problem, ask it to save the solution in CLAUDE.md. For a read-only overview, use the explore subagent without plan mode.",5],
+  ["From your notes: Plan Mode is where you fix direction","Plan Mode is the best moment to fix direction; your loop is ticket → plan → implement → diff comment → tests → PR.",NOTES.cs]
+ ],
+ concepts:[
+  ["Explore + Plan","Gather context and agree a plan in Plan mode before any code.",5],
+  ["Success criteria","What “correct” means, written into the plan.",5],
+  ["Subagent code reviewer","A reviewer with fresh context, no bias from the session.",5],
+  ["Explore subagent","A codebase summary without plan mode, when you won't change anything.",5]
+ ],
+ snips:[
+  ["Plan-mode prompt (Lesson 5, paraphrased)","Add WebP conversion to the image upload pipeline. Find where it should happen, whether new dependencies are needed, and how to approach it.",5,"Shift + Tab until “plan mode on”."],
+  ["Save a recurring fix (Lesson 5)","Save this solution to CLAUDE.md so you don't hit it again.",5,""],
+  ["Commit message (Lesson 5)","Write a commit message for these changes in my usual style.",5,"After testing and review."]
+ ],
+ pit:[
+  "Jumping straight to code without exploring and planning.",
+  "No success criteria: Claude can't tell when it's done.",
+  "Trusting a test suite that gives false positives.",
+  "Skipping your own test and the fresh-eyes review before commit."
+ ],
+ gaps:["Videos were not read."],
+ diagram:"workflow",
+ quiz:[
+  ["Why is planning the cheapest place to course-correct?",["It uses no tokens","No code exists yet","It runs tests","It's automatic"],1,"Lesson 5.",5],
+  ["What should go into the plan before coding?",["The commit message","Success criteria","The PR title","Nothing"],1,"Say what correct means.",5],
+  ["Why a subagent reviewer at commit time?",["It's faster","Fresh eyes, no bias from the session","It writes tests","It pushes code"],1,"Lesson 5.",5],
+  ["Claude keeps hitting the same problem. What do you do?",["Restart forever","Ask it to save the solution in CLAUDE.md","Switch models","Ignore it"],1,"Lesson 5.",5],
+  ["Which helps Claude test a web UI?",["Claude in Chrome","/compact","CLAUDE.md","/clear"],0,"Add tools in the Code step.",5]
+ ]},
+{id:"context",c:"--p2",short:"Context management",sub:"Daily workflows · L6",eyebrow:"Lesson 6 · Daily workflows",title:"Context management",file:"02-daily-workflows.md",
+ question:"How do I keep the context window healthy?",
+ take:[
+  ["Everything uses context","Every prompt, file read, tool call and tool result. Automatic compaction near the limit can lose details.",6],
+  ["/compact, /clear, /context","/compact to continue the same feature near the limit; /clear for a new feature so the old chat doesn't bias it; /context to see what fills the window.",6],
+  ["Be specific","A vague prompt looks short but costs more: Claude explores and reasons a lot.",6],
+  ["Manage MCP servers and use subagents","Each server takes some space; turn off unrelated ones. Subagents work in a separate window and return only a summary.",6],
+  ["CLAUDE.md for cross-session memory","Things Claude should remember across sessions go in CLAUDE.md; it survives /clear.",6],
+  ["From your notes: your baseline","A fresh session in ecommerce-agent started at ~34k of 1M (system tools ~16k, skills ~10k). Use it as the start line when comparing sessions.",NOTES.d5]
+ ],
+ concepts:[
+  ["/compact","Summarize the session and keep working on the same feature.",6],
+  ["/clear","Remove everything for a fresh start.",6],
+  ["/context","Show context size and a breakdown of what uses it.",6],
+  ["Automatic compaction","Summarizes key details and drops unneeded tool results near the limit.",6]
+ ],
+ snips:[
+  ["See usage","/context",6,""],
+  ["Same feature, near the limit","/compact",6,""],
+  ["New feature","/clear",6,""],
+  ["Manage MCP servers","/mcp",11,"Disable servers you don't need."],
+  ["Subagent question (Lesson 6)","Use a subagent to find where the authentication endpoints are, and give me just the answer.",6,"Only the summary enters your context."]
+ ],
+ pit:[
+  "Vague prompts that force lots of exploring.",
+  "Starting a new feature in a long, unrelated session instead of /clear.",
+  "Leaving unrelated MCP servers connected.",
+  "Relying on automatic compaction for details that matter."
+ ],
+ gaps:["Exact window sizes and compaction thresholds are ⚠ not covered in sources."],
+ diagram:"context",
+ quiz:[
+  ["Near the limit, same feature, need to continue. Which command?",["/clear","/compact","/context","/diff"],1,"Lesson 6.",6],
+  ["Starting a new feature. Which command?",["/compact","/clear","/rewind","/hooks"],1,"Old chat shouldn't bias it.",6],
+  ["Why can a vague prompt cost more context?",["It's longer","Claude has to explore and reason a lot","It disables tools","It loads all skills"],1,"Lesson 6.",6],
+  ["Where should cross-session memory go?",["/compact","CLAUDE.md","A subagent","The prompt"],1,"Survives /clear.",6],
+  ["What does a subagent return to the main context?",["Its full transcript","Only a summary","Nothing","All files it read"],1,"Separate context window.",6]
+ ]},
+{id:"review",c:"--p2",short:"Code review",sub:"Daily workflows · L7",eyebrow:"Lesson 7 · Daily workflows",title:"Code review",file:"02-daily-workflows.md",
+ question:"How do I check what Claude changed?",
+ take:[
+  ["The session that wrote it isn't the best judge","Look at the changes yourself, then get a second review from a clean context.",7],
+  ["Read the diff, not just the summary","/diff opens an interactive viewer. Look for changes you didn't ask for, weakened tests, new packages and hard-coded values. A true summary can still hide risky changes.",7],
+  ["Undo with /rewind","Esc twice on an empty prompt, choose the prompt, Restore code and conversation. Files changed by shell commands (like a package install) aren't rolled back.",7],
+  ["/code-review for a clean-context second opinion","Reports findings without editing; runs in the background and counts against usage, so use it for changes that matter.",7],
+  ["Sort findings into three piles","Fix now (real, important), ask why (can't verify or looks wrong), leave it (real but small). Ask for evidence with every fix; review again if a fix grows.",7]
+ ],
+ concepts:[
+  ["Diff","Before/after of a change, line by line, file by file.",7],
+  ["/diff","Interactive viewer of uncommitted changes (and per-turn changes).",7],
+  ["/rewind","Restore code and conversation to an earlier prompt.",7],
+  ["/code-review","Clean-context review that reports findings and edits nothing.",7],
+  ["Fix now / Ask why / Leave it","The three piles for sorting review findings.",7]
+ ],
+ snips:[
+  ["Review the diff","/diff",7,"Arrows move between files, Enter opens one."],
+  ["Undo a wrong change","/rewind",7,"Or Esc twice on an empty prompt."],
+  ["Second opinion","/code-review",7,"Run it yourself if Claude answers inline."],
+  ["Review in plain words (Lesson 7)","Review the changes you just made. Report problems; don't fix anything yet.",7,""],
+  ["Fix with evidence (Lesson 7)","Fix it, run the tests, and show me the output.",7,""]
+ ],
+ pit:[
+  "Trusting the summary without reading the diff.",
+  "Missing weakened, skipped or deleted tests.",
+  "Accepting a reviewer finding you can't verify (a cold reviewer can be wrong): ask why.",
+  "Expecting /rewind to undo a package install done by a shell command."
+ ],
+ gaps:["Lesson 7's interactive exercises are summarized; official answers were not shown (the notes give suggested answers to check)."],
+ diagram:"review",
+ quiz:[
+  ["Which is NOT on the course's “always look for” list?",["Changes you didn't ask for","Weakened tests","New packages and hard-coded values","Variable name length"],3,"Lesson 7.",7],
+  ["A finding says “no trim” but line 4 already calls trim(). Which pile?",["Fix now","Ask why","Leave it","Delete it"],1,"Looks wrong; quote it back and ask Claude to check.",7],
+  ["A hex color instead of a CSS variable. Which pile?",["Fix now","Ask why","Leave it","Rewind"],2,"Real but small (the notes' suggested answer).",7],
+  ["What does /rewind NOT roll back?",["Edited files","The conversation","Files changed by shell commands","Claude's last turn"],2,"E.g. a package install.",7],
+  ["What does /code-review do by default?",["Fixes everything","Reports findings, edits nothing","Commits","Deletes tests"],1,"Unless you ask.",7]
+ ]},
+{id:"claudemd",c:"--p3",short:"CLAUDE.md",sub:"Customizing · L8",eyebrow:"Lesson 8 · Customizing",title:"The CLAUDE.md file",file:"03-customizing.md",
+ question:"How do I stop re-explaining my project every session?",
+ take:[
+  ["An onboarding script for the codebase","A Markdown file in the project root, read automatically at the start of every session and added to your prompt. Without it, Claude re-explores and assumes.",8],
+  ["What goes in","Project description and stack, commands (dev, test, lint), code style rules.",8],
+  ["Two levels","Project-level in the repo root (commit it for the team); user-level in your config folder for personal preferences across projects.",8],
+  ["Start without one, then /init","See where you correct the model most so the file stays short, then run /init to generate one. Save repeated corrections; reference docs with @path.",8],
+  ["From your notes: it's a request","CLAUDE.md holds commands, conventions and a never-do list, but Claude only usually follows it. If it must happen every time, use a hook.",NOTES.cs]
+ ],
+ concepts:[
+  ["CLAUDE.md","Markdown memory read at the start of every session.",8],
+  ["Project-level CLAUDE.md","In the repo root, committed for the whole team.",8],
+  ["User-level CLAUDE.md","In your config folder; your preferences for all projects.",8],
+  ["/init","Has Claude generate a CLAUDE.md.",8],
+  ["@ reference","Point to a doc by path, e.g. @README.md.",8]
+ ],
+ snips:[
+  ["CLAUDE.md example (Lesson 8)","# Project\nThis is a Next.js 15 app using the App Router, Tailwind, and Drizzle ORM.\n\n# Commands\n- Dev server: `pnpm dev`\n- Run tests: `pnpm test`",8,"Stack, then commands; grow it from real corrections."],
+  ["Generate one","/init",8,""],
+  ["Reference a doc","@README.md",8,""],
+  ["Save a correction (Lesson 8)","Save this rule to memory.",8,"When you keep correcting the same thing."]
+ ],
+ pit:[
+  "Writing a long CLAUDE.md up front instead of growing it from real corrections.",
+  "Putting must-happen-every-time rules only in CLAUDE.md (use a hook).",
+  "Keeping personal preferences in the team's project-level file."
+ ],
+ gaps:["Exact user-level path is not named in the Lesson 8 notes."],
+ diagram:"claudemd",
+ quiz:[
+  ["When does Claude read CLAUDE.md?",["Only when asked","At the start of every session","After each commit","Never"],1,"Lesson 8.",8],
+  ["Which file does the whole team share?",["User-level CLAUDE.md","Project-level CLAUDE.md in the repo root","~/.bashrc","settings.local.json"],1,"Commit it to git.",8],
+  ["Why start without a CLAUDE.md?",["It's slow","To see where you correct the model most, so the file stays short","It's required","To save money"],1,"Then run /init.",8],
+  ["How do you reference a doc in CLAUDE.md?",["#README","@README.md","!README","$README"],1,"@ and a path.",8],
+  ["Is a CLAUDE.md rule guaranteed to run every time?",["Yes","No, it's usually followed; use a hook for guarantees","Only in Auto mode","Only for tests"],1,"Lesson 12.",12]
+ ]},
+{id:"agents",c:"--p3",short:"Subagents & skills",sub:"Customizing · L9–10",eyebrow:"Lessons 9–10 · Customizing",title:"Subagents and skills",file:"03-customizing.md",
+ question:"How do I keep context clean and teach Claude a task once?",
+ take:[
+  ["Subagents: own context, return a summary","A subagent has an isolated context window and can run in parallel. It does the heavy exploring and returns only a summary, keeping your main context clean.",9],
+  ["Create subagents by asking","Markdown with YAML frontmatter in .claude/agents/ (project) or ~/.claude/agents/ (all projects). The description tells Claude when to use it. Restart if the folder didn't exist at session start.",9],
+  ["Skills: teach once, applied automatically","A folder with SKILL.md. Claude compares your request to all skill descriptions and activates matches. Personal in ~/.claude/skills, project in the repo's .claude/skills.",10],
+  ["Skills vs. CLAUDE.md vs. slash commands","CLAUDE.md loads into every conversation; a skill loads on demand (only name and description sit in context). You type a slash command; a skill applies itself.",10],
+  ["If you explain it repeatedly, write a skill","Good for review standards, commit formats, brand rules. Subagents can preload skills with a skills key (whole skill loaded there).",10]
+ ],
+ concepts:[
+  ["Subagent","An agent with its own isolated context window that returns a summary.",9],
+  [".claude/agents/","Project subagents folder (~/.claude/agents/ for all projects).",9],
+  ["Skill","A folder with SKILL.md that Claude loads when its description matches.",10],
+  ["Skill description","How Claude decides to activate a skill.",10],
+  ["Progressive loading","Only a skill's name and description are in context until it's needed.",10]
+ ],
+ snips:[
+  ["Create a reviewer subagent (Lesson 9, paraphrased)","Create a code-reviewer subagent in .claude/agents/ that reviews code for bugs and readability. Make it read-only.",9,"Claude writes the name, description and prompt."],
+  ["Skill locations (Lesson 10)","~/.claude/skills/<name>/SKILL.md      # personal, all projects\n<repo>/.claude/skills/<name>/SKILL.md # project, shared via git",10,"Team standards go in the project folder."]
+ ],
+ pit:[
+  "Writing a vague subagent or skill description, so Claude never picks it.",
+  "Putting a task-specific checklist in CLAUDE.md, where it loads into every conversation.",
+  "Creating .claude/agents/ mid-session and wondering why it isn't found (restart)."
+ ],
+ gaps:["Exact YAML frontmatter fields for subagents and SKILL.md are ⚠ not covered in sources.","Deeper courses (Introduction to subagents, Introduction to agent skills) not read."],
+ diagram:"agents",
+ quiz:[
+  ["What does a subagent return to the main conversation?",["Its whole context","Only a summary","Nothing","All tool output"],1,"Lesson 9.",9],
+  ["Where do project subagents live?",[".claude/agents/","~/.ssh/","node_modules/",".git/agents/"],0,"~/.claude/agents/ for all projects.",9],
+  ["How does Claude decide to use a skill?",["Random","It compares your request to skill descriptions","You must type its name","Alphabetical"],1,"Lesson 10.",10],
+  ["Skill vs. CLAUDE.md?",["Both load every time","CLAUDE.md loads every conversation; a skill loads on demand","Skills are deterministic","CLAUDE.md is per tool"],1,"Lesson 10.",10],
+  ["Skill vs. slash command?",["Same thing","You type a slash command; a skill applies itself","Skills need a hook","Slash commands load automatically"],1,"Lesson 10.",10]
+ ]},
+{id:"mcp",c:"--p3",short:"MCP",sub:"Customizing · L11",eyebrow:"Lesson 11 · Customizing",title:"MCP",file:"03-customizing.md",
+ question:"How do I connect tools and data outside the codebase?",
+ take:[
+  ["An open standard for external tools and data","Databases, productivity apps, public repos. Claude decides when to use the tools. Examples: a Linear server for issues, Context7 for up-to-date docs.",11],
+  ["Add with claude mcp add","Two types: HTTP (remote, hosted by the provider) and stdio (local processes).",11],
+  ["Three scopes","Local (this project, only you), user (all your projects), project (.mcp.json in git, the whole team).",11],
+  ["Watch the context cost","Connected servers add tool names and instructions even when unused; disable unused ones with /mcp. Tool search keeps full definitions out until needed.",11],
+  ["Prefer a CLI when one exists","gh or aws is more context-efficient than an MCP server. Pair a server with a skill that teaches good use of its tools.",11]
+ ],
+ concepts:[
+  ["MCP","Model Context Protocol: open standard connecting Claude Code to external tools and data.",11],
+  ["HTTP server","Remote service hosted by the provider.",11],
+  ["Stdio server","Local process on your machine.",11],
+  [".mcp.json","Project-scope MCP config checked into git.",11],
+  ["Tool search","On by default; full tool definitions stay out of context until needed.",11]
+ ],
+ snips:[
+  ["Add a server","claude mcp add",11,"⚠ Full flags and arguments are not in the sources."],
+  ["Inspect / disable servers","/mcp",11,""],
+  ["Team config file",".mcp.json",11,"Project scope, committed to git."]
+ ],
+ pit:[
+  "Leaving unused servers connected: they cost context even when idle.",
+  "Using an MCP server where a CLI (gh, aws) would be cheaper.",
+  "Sharing servers by telling teammates instead of committing .mcp.json."
+ ],
+ gaps:["claude mcp add flags and .mcp.json format are ⚠ not covered in sources."],
+ diagram:"mcp",
+ quiz:[
+  ["Which MCP type runs as a local process?",["HTTP","Stdio","Cloud","Remote"],1,"HTTP is remote.",11],
+  ["Which scope shares servers with the whole team?",["Local","User","Project (.mcp.json)","Session"],2,"Checked into git.",11],
+  ["How do you see and disable connected servers in a session?",["/mcp","/context","/hooks","/init"],0,"Lesson 11.",11],
+  ["When is a CLI better than an MCP server?",["Never","When one exists (gh, aws): more context-efficient","Only on Windows","When offline"],1,"Lesson 11.",11],
+  ["Do idle servers use context?",["No","Yes, tool names and instructions","Only on first use","Only HTTP ones"],1,"Disable unused ones.",11]
+ ]},
+{id:"hooks",c:"--p4",short:"Hooks",sub:"Customizing · L12",eyebrow:"Lesson 12 · Customizing",title:"Hooks",file:"03-customizing.md",
+ question:"How do I make something happen every single time?",
+ take:[
+  ["Deterministic: they always run","Hooks run commands at lifecycle points. A CLAUDE.md rule like “run Prettier after edits” is usually followed; a hook always runs.",12],
+  ["Event + matcher + command","Set in settings.json. Key events: PreToolUse, PostToolUse, UserPromptSubmit, Stop, Notification. /hooks shows a read-only list to confirm loading.",12],
+  ["Auto-format after edits","A PostToolUse hook with matcher \"Edit|Write\" checks the file extension and runs the right formatter.",12],
+  ["Block with PreToolUse exit codes","The hook gets tool name and input as JSON on stdin. Exit 0 proceeds, exit 2 blocks and sends stderr back to Claude, other codes show a non-blocking error.",12],
+  ["Share with the team","Project hooks in .claude/settings.json can be committed; use CLAUDE_PROJECT_DIR to point to scripts so they work from any directory.",12]
+ ],
+ concepts:[
+  ["Hook","A command run on a lifecycle event; deterministic.",12],
+  ["PreToolUse","Runs before a tool call; can block it.",12],
+  ["PostToolUse","Runs after a tool call completes.",12],
+  ["UserPromptSubmit","Runs when you submit a prompt, before Claude processes it.",12],
+  ["Stop","Runs when Claude finishes responding.",12],
+  ["Exit code 2","Blocks the action; stderr goes back to Claude.",12],
+  ["CLAUDE_PROJECT_DIR","Env var pointing to the project, for portable hook scripts.",12]
+ ],
+ snips:[
+  ["Formatter matcher (Lesson 12)","\"Edit|Write\"",12,"PostToolUse matcher for auto-format."],
+  ["List loaded hooks","/hooks",12,"Read-only."],
+  ["Exit codes (Lesson 12)","0      → proceed\n2      → block; stderr goes back to Claude\nother  → non-blocking error shown to you",12,"For PreToolUse blocking hooks."],
+  ["Portable script path","$CLAUDE_PROJECT_DIR/.claude/hooks/<script>",12,"⚠ Folder name is illustrative; the env var is from the lesson."]
+ ],
+ pit:[
+  "Putting a must-happen rule in a prompt or CLAUDE.md instead of a hook.",
+  "Using exit code 1 to block (only 2 blocks; others are non-blocking).",
+  "Hard-coding script paths so hooks break from another working directory.",
+  "Expecting /hooks to edit hooks (it's read-only)."
+ ],
+ gaps:["The full settings.json hook schema is ⚠ not covered in sources; see the hooks reference.","Many more events exist beyond the five listed."],
+ diagram:"hooks",
+ quiz:[
+  ["Why use a hook instead of a CLAUDE.md rule?",["Hooks are shorter","Hooks always run (deterministic)","CLAUDE.md is ignored","Hooks are free"],1,"Lesson 12.",12],
+  ["Which event can block a tool call before it runs?",["PostToolUse","PreToolUse","Stop","Notification"],1,"Lesson 12.",12],
+  ["Which exit code blocks and sends stderr to Claude?",["0","1","2","127"],2,"Others are non-blocking errors.",12],
+  ["Matcher for auto-format after edits?",["\"Bash\"","\"Edit|Write\"","\"Read\"","\"*\""],1,"PostToolUse.",12],
+  ["What does /hooks do?",["Edits hooks","Shows a read-only list of hooks","Deletes hooks","Runs all hooks"],1,"Confirms a new hook loaded.",12]
+ ]}
+];
+
+const PRACTICE=[["overview","Overview","Start here","--p0"],["flashcards","Flashcards","Key terms","--accent"],["cheatsheet","Cheat sheet","One-page summary","--accent"]];
+
+const box=(x,y,w,h,t,s,cls)=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="8" class="${cls||"bx"}"/><text x="${x+w/2}" y="${y+h/2-(s?3:-5)}" text-anchor="middle" class="tb">${t}</text>${s?`<text x="${x+w/2}" y="${y+h/2+15}" text-anchor="middle" class="tm">${s}</text>`:""}`;
+const arr=(d,dash)=>`<path d="${d}" class="ln${dash?" dash":""}" marker-end="url(#ah)"/>`;
+const D={
+loop:`<svg viewBox="0 0 720 230" role="img" aria-label="Agentic loop">${AR}
+ ${box(20,40,120,56,"Prompt","you")}${arr("M140 68H170")}
+ ${box(175,40,150,56,"Gather context","read · search","bxc")}${arr("M325 68H355")}
+ ${box(360,40,140,56,"Take action","edit · run (tools)","bxc")}${arr("M500 68H530")}
+ ${box(535,40,90,56,"Verify","vs. goal","bxc")}${arr("M625 68H650")}
+ ${box(655,40,55,56,"Done","")}
+ ${arr("M580 96V140H250V100",true)}<text x="415" y="134" text-anchor="middle" class="tm">not done: loop again</text>
+ <text x="360" y="180" text-anchor="middle" class="t">You can add context, interrupt or steer at any point.</text>
+ <text x="360" y="206" text-anchor="middle" class="tm">Built on: context (auto-compacts) · tools · permissions</text>
+</svg><figcaption>Lesson 2: an LLM running in a loop with tools.</figcaption>`,
+modes:`<svg viewBox="0 0 720 220" role="img" aria-label="Shift+Tab cycles permission modes">${AR}
+ <text x="360" y="22" text-anchor="middle" class="tb">Shift + Tab cycles</text>
+ ${box(20,40,160,70,"Manual","asks before every edit/cmd")}${box(200,40,160,70,"Auto-accept","edits + mkdir/mv/rm run")}${box(380,40,160,70,"Auto","classifier blocks risky acts")}${box(560,40,145,70,"Plan","explore, no source edits","bxc")}
+ ${arr("M180 75H197")}${arr("M360 75H377")}${arr("M540 75H557")}${arr("M632 110V140H100V115",true)}
+ <text x="20" y="180" class="t">Plan mode first for multi-step features; review the plan, then accept.</text>
+ <text x="20" y="204" class="tm">Starting mode depends on your version and settings.</text>
+</svg><figcaption>Lessons 2 and 4: four modes, one shortcut.</figcaption>`,
+workflow:`<svg viewBox="0 0 720 230" role="img" aria-label="Explore, plan, code, commit">${AR}
+ ${box(20,40,150,70,"Explore","read files, web","bxc")}${arr("M170 75H195")}
+ ${box(200,40,150,70,"Plan","fix it before code","bxc")}${arr("M350 75H375")}
+ ${box(380,40,150,70,"Code","criteria · tools · tests")}${arr("M530 75H555")}
+ ${box(560,40,145,70,"Commit","test · review · message")}
+ <rect x="15" y="30" width="340" height="90" rx="12" fill="none" class="lc dash"/><text x="185" y="140" text-anchor="middle" class="tm">Plan mode (Shift + Tab) — cheapest place to course-correct</text>
+ ${arr("M632 110V175H455V115",true)}<text x="545" y="192" text-anchor="middle" class="tm">repeat</text>
+ <text x="560" y="218" class="tm">subagent reviewer: fresh eyes</text>
+</svg><figcaption>Lesson 5: if you take one thing from the course, take this.</figcaption>`,
+context:`<svg viewBox="0 0 720 240" role="img" aria-label="Which context command">${AR}
+ ${box(250,14,220,48,"Context getting full?","","bxc")}
+ ${arr("M300 62L110 100")}${arr("M360 62V100")}${arr("M420 62L610 100")}
+ ${box(20,105,180,60,"Same feature","→ /compact")}${box(270,105,180,60,"New feature","→ /clear")}${box(520,105,180,60,"What uses it?","→ /context")}
+ <text x="20" y="200" class="t">Save space: specific prompts · disable unused MCP servers (/mcp) · subagents for heavy exploring</text>
+ <text x="20" y="224" class="t">Survives /clear and new sessions: CLAUDE.md</text>
+</svg><figcaption>Lesson 6: pick the command by what you need next.</figcaption>`,
+review:`<svg viewBox="0 0 720 250" role="img" aria-label="Review flow and three piles">${AR}
+ ${box(20,30,160,60,"/diff","read real changes","bxc")}${arr("M180 60H210")}
+ ${box(215,30,180,60,"/code-review","clean-context opinion","bxc")}${arr("M395 60H425")}
+ ${box(430,30,130,60,"Sort findings","")}${arr("M560 60H590")}
+ ${box(595,30,110,60,"Fix + evidence","run tests")}
+ ${arr("M100 90V120",true)}${box(20,125,160,50,"/rewind","if all wrong")}
+ ${box(250,170,140,56,"Fix now","real, important")}${box(410,170,140,56,"Ask why","can't verify")}${box(570,170,135,56,"Leave it","real but small")}
+ <path d="M495 90V150M320 150H637M320 150V168M480 150V168M637 150V168" class="ln"/>
+</svg><figcaption>Lesson 7: read the diff, get a second opinion, sort the findings.</figcaption>`,
+claudemd:`<svg viewBox="0 0 720 220" role="img" aria-label="CLAUDE.md levels">${AR}
+ ${box(20,30,200,60,"User-level","your prefs, all projects")}${box(20,120,200,60,"Project-level","repo root, team, in git","bxc")}
+ <path d="M220 60H300M220 150H300M300 60V150" class="ln"/>${arr("M300 105H340")}
+ ${box(345,75,170,60,"Session start","read automatically","bxc")}${arr("M515 105H545")}
+ ${box(550,75,155,60,"Added to prompt","stack · commands · style")}
+ <text x="345" y="185" class="tm">Grow it from real corrections · /init · @README.md</text>
+</svg><figcaption>Lesson 8: memory that survives /clear and new sessions.</figcaption>`,
+agents:`<svg viewBox="0 0 720 260" role="img" aria-label="Subagent flow and skill loading">${AR}
+ ${box(20,30,200,64,"Main conversation","stays clean","bxc")}${arr("M220 50H300")}<text x="260" y="42" text-anchor="middle" class="tm">task</text>
+ ${box(305,24,200,76,"Subagent","own context window")}${arr("M305 80H225")}<text x="265" y="96" text-anchor="middle" class="tm">summary only</text>
+ <text x="520" y="54" class="tm">.claude/agents/</text><text x="520" y="74" class="tm">~/.claude/agents/</text>
+ <text x="20" y="140" class="tb">Skill loading</text>
+ ${box(20,154,220,70,"Every conversation","name + description only")}${arr("M240 189H290")}<text x="265" y="180" text-anchor="middle" class="tm">match</text>
+ ${box(295,154,200,70,"Request matches","full SKILL.md loads","bxc")}
+ ${box(520,154,185,70,"CLAUDE.md","always fully loaded")}
+</svg><figcaption>Lessons 9–10: subagents isolate work; skills load on demand.</figcaption>`,
+mcp:`<svg viewBox="0 0 720 240" role="img" aria-label="MCP servers and scopes">${AR}
+ ${box(270,30,180,60,"Claude Code","decides when to call","bxc")}
+ ${box(20,30,200,60,"HTTP server","remote, provider-hosted")}${box(500,30,205,60,"Stdio server","local process")}
+ <path d="M220 60H268M450 60H498" class="ln"/><text x="360" y="118" text-anchor="middle" class="t">claude mcp add · /mcp to inspect and disable</text>
+ ${box(20,150,200,60,"Local","this project, only you")}${box(260,150,200,60,"User","all your projects")}${box(500,150,205,60,"Project",".mcp.json, whole team","bxc")}
+</svg><figcaption>Lesson 11: two server types, three scopes.</figcaption>`,
+hooks:`<svg viewBox="0 0 720 250" role="img" aria-label="Hook lifecycle and exit codes">${AR}
+ ${box(20,30,150,56,"UserPromptSubmit","before processing")}${arr("M170 58H195")}
+ ${box(200,30,130,56,"PreToolUse","can block","bxc")}${arr("M330 58H355")}
+ ${box(360,30,100,56,"Tool runs","")}${arr("M460 58H485")}
+ ${box(490,30,120,56,"PostToolUse","e.g. format")}${arr("M610 58H635")}
+ ${box(640,30,65,56,"Stop","")}
+ <text x="20" y="130" class="tb">PreToolUse exit codes</text>
+ ${box(20,145,200,56,"0 → proceed","")}${box(240,145,240,56,"2 → block","stderr back to Claude","bxc")}${box(500,145,205,56,"other → error shown","nothing stops")}
+ <text x="20" y="232" class="tm">Set in settings.json (event + matcher + command) · /hooks to list · commit .claude/settings.json</text>
+</svg><figcaption>Lesson 12: if it must happen every time, put it in a hook.</figcaption>`
+};
+
+function viewOverview(){
+  return `<div class="mhead" style="--c:var(--accent)"><span class="eyebrow">Claude Academy · 12 lessons</span><h1>Claude Code 101</h1>
+  <p class="question">An agentic coding tool: from the loop and permission modes, to daily workflows, to customizing it.</p></div>
+  <div class="intro"><p>Three sections: getting started (Lessons 1–4), daily workflows (5–7) and customizing Claude Code (8–12). The habit to keep: explore → plan → code → commit. The rule to keep: if something must happen every time, use a hook, not a prompt.</p></div>
+  <div class="overview">${M.map(m=>`<button class="ovc" data-go="${m.id}" style="${cvar(m)}"><span class="eyebrow">${m.eyebrow}</span><h3>${esc(m.short)}</h3><span>${esc(m.question)}</span><span>${done.has(m.id)?"✓ Done":m.take.length+" takeaways · "+m.quiz.length+" quiz questions"}</span></button>`).join("")}</div>
+  <div class="gap"><b>About the sources.</b> Built only from the local lesson notes (README.md, 01–03 lesson files) and your notes (cheatsheet, colleague tips, Day 5). Install commands, the Lesson 7 interactive answers, exact config formats, videos and the course quiz are not in the sources. Gaps are flagged per module with ⚠.</div>`;
+}
+
+function viewCheat(){
+  const T=[["CLAUDE.md","Markdown memory read at every session start","Stack, commands, style, rules for every task","No (usually followed)"],["Subagent","Agent in .claude/agents/ with own context, returns a summary","Heavy exploring, independent review","No"],["Skill","Folder with SKILL.md; name/description loaded until relevant","Repeated task-specific know-how","No (loads on match)"],["MCP","Open standard for external tools and data","Issues, docs, databases","No (Claude decides)"],["Hook","Command on a lifecycle event, in settings.json","Format, log, block: every time","<b>Yes, always runs</b>"]];
+  return `<div class="mhead" style="--c:var(--accent)"><span class="eyebrow">Review</span><h1>Cheat sheet</h1><p class="question">The whole course on one page.</p></div>
+  <div class="grid2">
+   <div class="panel"><h3>Agentic loop (L2)</h3><ul><li>Prompt → gather context → act (tools) → verify → done or loop</li><li>Add context, interrupt or steer any time</li></ul></div>
+   <div class="panel"><h3>Workflow (L5)</h3><ul><li><b>Explore + Plan</b> in Plan mode: fix the plan before code</li><li><b>Code</b>: success criteria, tools, reliable tests</li><li><b>Commit</b>: test, /diff, /code-review, commit message</li></ul></div>
+   <div class="panel"><h3>Permission modes (Shift + Tab)</h3><ul><li>Manual · Auto-accept · Plan · Auto</li></ul></div>
+   <div class="panel"><h3>Context (L6)</h3><ul><li><code>/context</code> see usage · <code>/compact</code> same feature · <code>/clear</code> new feature</li><li>Be specific · /mcp off unused · subagents</li><li>CLAUDE.md survives /clear</li></ul></div>
+   <div class="panel"><h3>Review (L7)</h3><ul><li><code>/diff</code>: unasked changes, weaker tests, new packages, hard-coded values</li><li><code>/rewind</code> or Esc Esc (shell changes not rolled back)</li><li><code>/code-review</code> → fix now · ask why · leave it</li></ul></div>
+   <div class="panel"><h3>Hooks (L12)</h3><ul><li>PreToolUse · PostToolUse · UserPromptSubmit · Stop · Notification</li><li>Exit 0 proceed · 2 block · other = error</li><li>Commit .claude/settings.json; use CLAUDE_PROJECT_DIR</li></ul></div>
+  </div>
+  <section><h2>Customization compared</h2><div class="tbl"><table><thead><tr><th>Tool</th><th>What it is</th><th>When to use</th><th>Deterministic?</th></tr></thead><tbody>
+  ${T.map(r=>`<tr><td><b>${r[0]}</b></td><td>${r[1]}</td><td>${r[2]}</td><td>${r[3]}</td></tr>`).join("")}
+  </tbody></table></div></section>
+  <div class="gap"><b>⚠ Not covered in sources:</b> install commands; claude mcp add flags; .mcp.json, SKILL.md and subagent frontmatter formats; full hook schema; course quiz content.</div>`;
+}
+
+/* ---------- nav ---------- */
+function renderNav(cur){
+  $("#navm").innerHTML=M.map(m=>`<li><button data-go="${m.id}" style="${cvar(m)}" aria-current="${cur===m.id}"><span class="dot"></span><span>${esc(m.short)}<span class="sub">${m.sub}</span></span><span class="chk">${done.has(m.id)?"✓":""}</span></button></li>`).join("");
+  $("#navp").innerHTML=PRACTICE.map(p=>`<li><button data-go="${p[0]}" style="--c:var(${p[3]})" aria-current="${cur===p[0]}"><span class="dot"></span><span>${p[1]}<span class="sub">${p[2]}</span></span><span></span></button></li>`).join("");
+  const n=M.filter(m=>done.has(m.id)).length;
+  $("#progtxt").textContent=`${n} of ${M.length} modules done`;
+  $("#progbar").style.width=(n/M.length*100)+"%";
+}
+
+/* ---------- views ---------- */
+function viewModule(m){
+  const z=m.zone?`<div class="continuum"><span class="rail"></span><div class="z"><b>${(m.zl||["Capability zone","Limitation zone"])[0]}</b>${esc(m.zone[0])}</div><div class="z"><b>${(m.zl||["Capability zone","Limitation zone"])[1]}</b>${esc(m.zone[1])}</div></div>`:"";
+  const isDone=done.has(m.id);
+  return `<div class="mhead"><span class="eyebrow">${m.eyebrow}</span>
+   <div class="headrow"><h1>${esc(m.title)}</h1><button class="btn ${isDone?"done":"primary"}" data-done="${m.id}" id="donebtn">${isDone?"✓ Done":"Mark as done"}</button></div>
+   <p class="question">${esc(m.question)}</p></div>${z}
+  <section><h2>Key takeaways <span class="count">${m.take.length}</span></h2><div class="cards">
+   ${m.take.map((t,i)=>`<details class="card" id="${m.id}-t${i}"${i===0?" open":""}><summary><span class="n">${String(i+1).padStart(2,"0")}</span><span>${esc(t[0])}</span><span class="chev">›</span></summary><div class="body"><p>${esc(t[1])}</p>${srcLink(m,t[2])}</div></details>`).join("")}
+  </div></section>
+  <section><h2>How it fits together</h2><figure class="diagram" style="margin:0">${D[m.diagram]}</figure></section>
+  <section><h2>Core concepts <span class="count">${m.concepts.length}</span></h2><dl class="concepts">
+   ${m.concepts.map((c,i)=>`<div id="${m.id}-c${i}"><dt>${esc(c[0])}</dt><dd>${esc(c[1])}</dd></div>`).join("")}</dl></section>
+  <section><h2>Commands, files and prompts</h2>
+   
+   <div class="snips">${m.snips.length?"":`<div class="gap"><b>⚠</b> No prompts in this module's sources.</div>`}${m.snips.map((s,i)=>`<div class="snip" id="${m.id}-s${i}"><header><span>${esc(s[0])}</span><button class="btn copy" data-copy="${m.id}-s${i}">Copy</button></header><pre>${esc(s[1])}</pre><header style="border:0;border-top:1px solid var(--line)"><span>${esc(s[3])}</span>${srcLink(m,s[2])}</header></div>`).join("")}</div></section>
+  <section><h2>Common pitfalls</h2><ul class="pit">${m.pit.map((p,i)=>`<li id="${m.id}-p${i}"><span>${esc(p)}</span></li>`).join("")}</ul></section>
+  <section><h2>Check yourself <span class="score" id="score-${m.id}"></span></h2><div class="quiz">
+   ${m.quiz.map((q,i)=>`<div class="q" data-q="${m.id}:${i}"><p class="stem">${i+1}. ${esc(q[0])}</p><div class="opts">${q[1].map((o,j)=>`<button data-opt="${j}">${esc(o)}</button>`).join("")}</div><div class="expl" hidden></div></div>`).join("")}
+   <button class="btn" data-reset="${m.id}" style="align-self:flex-start">Reset quiz</button></div></section>
+  <section><h2>Gaps in the sources</h2><div style="display:flex;flex-direction:column;gap:8px">${m.gaps.map(g=>`<div class="gap"><b>⚠</b> ${esc(g)}</div>`).join("")}</div></section>
+  <div class="headrow"><span class="prog">Source file: ${m.file}</span><button class="btn ${isDone?"done":"primary"}" data-done="${m.id}">${isDone?"✓ Done":"Mark as done"}</button></div>`;
+}
+
+let FC={deck:[],i:0,filter:"all"};
+function buildDeck(){
+  const all=[];M.forEach(m=>m.concepts.forEach(c=>all.push({m,term:c[0],def:c[1],l:c[2]})));
+  FC.deck=FC.filter==="all"?all:all.filter(x=>x.m.id===FC.filter);FC.i=0;
+}
+function viewFlash(){
+  if(!FC.deck.length) buildDeck();
+  const x=FC.deck[FC.i];
+  return `<div class="mhead" style="--c:var(--accent)"><span class="eyebrow">Practice</span><h1>Flashcards</h1><p class="question">Tap the card (or press Space) to flip. Arrow keys move.</p></div>
+  <div class="fc-tools"><label for="fcf" class="prog">Deck</label><select id="fcf"><option value="all">All modules (${M.reduce((a,m)=>a+m.concepts.length,0)})</option>${M.map(m=>`<option value="${m.id}"${FC.filter===m.id?" selected":""}>${esc(m.short)} (${m.concepts.length})</option>`).join("")}</select><button class="btn" id="fcshuf">Shuffle</button></div>
+  <div class="fcard" id="fcard" tabindex="0" role="button" aria-label="Flip card" style="${cvar(x.m)}"><div class="inner">
+   <div class="face"><span class="tag">${esc(x.m.short)}</span><span class="term">${esc(x.term)}</span><span class="prog">tap to reveal</span></div>
+   <div class="face back"><span class="tag">${esc(x.term)}</span><span class="def">${esc(x.def)}</span>${srcLink(x.m,x.l)}</div></div></div>
+  <div class="fc-nav"><button class="btn" id="fcprev">← Previous</button><span class="score">${FC.i+1} / ${FC.deck.length}</span><button class="btn primary" id="fcnext">Next →</button></div>`;
+}
+
+/* ---------- search ---------- */
+function searchIndex(){
+  const out=[];
+  M.forEach(m=>{
+    m.take.forEach((t,i)=>out.push({m,kind:"Takeaway",title:t[0],text:t[1],el:`${m.id}-t${i}`}));
+    m.concepts.forEach((c,i)=>out.push({m,kind:"Concept",title:c[0],text:c[1],el:`${m.id}-c${i}`}));
+    m.snips.forEach((s,i)=>out.push({m,kind:"Prompt",title:s[0],text:s[1]+" "+s[3],el:`${m.id}-s${i}`}));
+    m.pit.forEach((p,i)=>out.push({m,kind:"Pitfall",title:p,text:"",el:`${m.id}-p${i}`}));
+  });
+  return out;
+}
+const IDX=searchIndex();
+function hl(s,q){return esc(s).replace(new RegExp("("+q.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")+")","ig"),"<mark>$1</mark>")}
+function viewSearch(q){
+  const ql=q.toLowerCase();
+  const hits=IDX.filter(x=>(x.title+" "+x.text).toLowerCase().includes(ql));
+  return `<div class="mhead"><span class="eyebrow">Search</span><h1>${hits.length} result${hits.length===1?"":"s"} for “${esc(q)}”</h1></div>
+  <div class="res">${hits.map(x=>`<button data-jump="${x.m.id}|${x.el}" style="${cvar(x.m)}"><span class="kind">${x.kind} · ${esc(x.m.short)}</span><b>${hl(x.title,q)}</b>${x.text?`<span class="prog">${hl(x.text.slice(0,180),q)}${x.text.length>180?"…":""}</span>`:""}</button>`).join("")||`<p>No matches. Try a property name, “citation”, “cutoff” or “goal”.</p>`}</div>`;
+}
+
+/* ---------- router ---------- */
+let cur="overview";
+function go(id,opts={}){
+  cur=id;save(STORE+"-view",id);
+  const m=M.find(x=>x.id===id);
+  const v=$("#view");
+  if(m){v.style.cssText=cvar(m);v.innerHTML=viewModule(m);restoreQuiz(m)}
+  else if(id==="flashcards"){v.style.cssText="";v.innerHTML=viewFlash()}
+  else if(id==="cheatsheet"){v.style.cssText="";v.innerHTML=viewCheat()}
+  else {cur="overview";v.style.cssText="";v.innerHTML=viewOverview()}
+  renderNav(cur);
+  try{history.replaceState(null,"","#"+cur)}catch(e){}
+  if(!opts.keepScroll) window.scrollTo({top:0});
+}
+
+/* ---------- quiz state (per browser) ---------- */
+let QA=load(STORE+"-quiz",{});
+function answer(qel,j,persist=true){
+  const [mid,i]=qel.dataset.q.split(":");const m=M.find(x=>x.id===mid);const q=m.quiz[+i];
+  qel.querySelectorAll(".opts button").forEach((b,k)=>{b.disabled=true;if(k===q[2])b.classList.add("right");else if(k===j)b.classList.add("wrong")});
+  const e=qel.querySelector(".expl");e.hidden=false;
+  e.innerHTML=`<b>${j===q[2]?"Correct.":"Not quite."}</b> ${esc(q[3])} ${srcLink(m,q[4])}`;
+  if(persist){QA[qel.dataset.q]=j;save(STORE+"-quiz",QA)}
+  updScore(m);
+}
+function updScore(m){
+  const ans=m.quiz.map((q,i)=>QA[m.id+":"+i]);const n=ans.filter(a=>a!==undefined).length;
+  const r=ans.filter((a,i)=>a===m.quiz[i][2]).length;
+  const el=$("#score-"+m.id);if(el)el.textContent=n?`${r}/${n} correct`:`${m.quiz.length} questions`;
+}
+function restoreQuiz(m){m.quiz.forEach((q,i)=>{const a=QA[m.id+":"+i];if(a!==undefined)answer(document.querySelector(`[data-q="${m.id}:${i}"]`),a,false)});updScore(m)}
+
+/* ---------- events ---------- */
+document.addEventListener("click",e=>{
+  const g=e.target.closest("[data-go]");if(g){$("#q").value="";go(g.dataset.go);return}
+  const d=e.target.closest("[data-done]");if(d){const id=d.dataset.done;done.has(id)?done.delete(id):done.add(id);save(STORE+"-done",[...done]);go(id,{keepScroll:true});return}
+  const o=e.target.closest("[data-opt]");if(o&&!o.disabled){answer(o.closest(".q"),+o.dataset.opt);return}
+  const r=e.target.closest("[data-reset]");if(r){const m=M.find(x=>x.id===r.dataset.reset);m.quiz.forEach((q,i)=>delete QA[m.id+":"+i]);save(STORE+"-quiz",QA);go(m.id,{keepScroll:true});return}
+  const c=e.target.closest("[data-copy]");if(c){const txt=document.querySelector("#"+c.dataset.copy+" pre").textContent;
+    const ok=()=>{c.textContent="Copied";setTimeout(()=>c.textContent="Copy",1500)};
+    const fb=()=>{const pre=document.querySelector("#"+c.dataset.copy+" pre");const s=getSelection();const rg=document.createRange();rg.selectNodeContents(pre);s.removeAllRanges();s.addRange(rg);c.textContent="Selected — press ⌘/Ctrl+C"};
+    try{navigator.clipboard.writeText(txt).then(ok,fb)}catch(err){fb()}return}
+  const j=e.target.closest("[data-jump]");if(j){const [mid,el]=j.dataset.jump.split("|");$("#q").value="";go(mid);const t=document.getElementById(el);if(t){if(t.tagName==="DETAILS")t.open=true;t.scrollIntoView({block:"center"});t.classList.add("flash")}return}
+  if(e.target.closest("#fcard")){$("#fcard").classList.toggle("flipped");return}
+  if(e.target.closest("#fcnext")){FC.i=(FC.i+1)%FC.deck.length;go("flashcards",{keepScroll:true});return}
+  if(e.target.closest("#fcprev")){FC.i=(FC.i-1+FC.deck.length)%FC.deck.length;go("flashcards",{keepScroll:true});return}
+  if(e.target.closest("#fcshuf")){for(let i=FC.deck.length-1;i>0;i--){const k=Math.floor(Math.random()*(i+1));[FC.deck[i],FC.deck[k]]=[FC.deck[k],FC.deck[i]]}FC.i=0;go("flashcards",{keepScroll:true});return}
+});
+document.addEventListener("change",e=>{if(e.target.id==="fcf"){FC.filter=e.target.value;buildDeck();go("flashcards",{keepScroll:true})}});
+document.addEventListener("keydown",e=>{
+  if(cur!=="flashcards"||e.target.tagName==="INPUT"||e.target.tagName==="SELECT")return;
+  if(e.key===" "){e.preventDefault();$("#fcard").classList.toggle("flipped")}
+  if(e.key==="ArrowRight")$("#fcnext").click();
+  if(e.key==="ArrowLeft")$("#fcprev").click();
+});
+$("#q").addEventListener("input",e=>{const q=e.target.value.trim();if(q.length>=2){$("#view").style.cssText="";$("#view").innerHTML=viewSearch(q)}else go(cur,{keepScroll:true})});
+
+/* ---------- boot ---------- */
+const h=(location.hash||"").slice(1);
+const valid=id=>M.some(m=>m.id===id)||["overview","flashcards","cheatsheet"].includes(id);
+go(valid(h)?h:(valid(load(STORE+"-view","overview"))?load(STORE+"-view","overview"):"overview"));
+</script>
