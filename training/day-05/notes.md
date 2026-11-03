@@ -30,17 +30,19 @@ Progress: 9/15 at start of day → 10/15. Full notes for lessons 1–10: [ai-flu
 - `/memory` auto-saved entries: 
 
 ## 3. Fresh vs primed
-Ticket: issue-
+Ticket: [#48 Unit test run fail](https://github.com/thanhnguyen-agilityio/claude-training-practice/issues/48) (onnxruntime import crashes CI collection). Full report: [fresh-vs-primed.md](fresh-vs-primed.md)
 
 | | A: fresh | B: primed (CLAUDE.md + read code) |
 |---|---|---|
-| Questions Claude asked | | |
-| Files touched / correct? | | |
-| Wrong assumptions | | |
-| Tokens / cost | | |
-| Quality (1–5) | | |
+| Questions Claude asked | 0 | 0 |
+| Files touched / correct? | `retriever.py` (+4/−2) + new test; correct | Same fix + a closer-to-CI test; correct |
+| Wrong assumptions | None that cost anything (read test commands from `ci.yml`); ran server suite only | Used CLAUDE.md's `--env-file ../.env` with no `.env` → suites errored, then recovered; ran all 3 suites + ruff |
+| Tokens / cost | 71.0k → 83.4k · ≈ $0.89 (est.) | 71.5k → 80.2k primed → 92.6k · ≈ $1.25 (est., priming ≈ $0.54) |
+| Quality (1–5) | 4 | 4 |
 
-Verdict (1 line): 
+First run, from `/cost`: A $0.39, B $0.33 (B cheaper). The re-run estimate says the opposite, so the cost row needs real `/cost` numbers before trusting it.
+
+Verdict (1 line): Same fix either way; priming cost ~9k context and only made the checks more complete (all 3 suites), not the fix better.
 
 ## Take-away (copy to training/take-away.md)
 - 
@@ -60,5 +62,5 @@ Phone away, Slack closed. One topic per session: new session per block. Write th
 | [ ] | 0:55–1:45 | **Write `CLAUDE.md` for the app (50 min).** Commands (build/run/test), conventions, "never do" list. Let Claude draft from the code, then you cut. Refine `ai-kit/CLAUDE.md.template`. | File under ~40 lines, template updated |
 | [ ] | 1:45–1:55 | **Break.** Away from screen. | |
 | [x] | 1:55–2:45 | **Compaction and `/rewind` (50 min).** Long session on a real task → `/compact` → ask what it remembers, list what was lost. Make a deliberately bad edit → Esc Esc to rewind. Read `/memory`. | 5-line note: survived / died / restored |
-| [ ] | 2:45–3:45 | **Fresh vs primed (60 min).** One ticket, same prompt. A: fresh, no CLAUDE.md, no reading. B: CLAUDE.md + codebase read. Compare quality, questions, tokens (`/context`, `/cost`). | Table filled + 1-line verdict |
+| [x] | 2:45–3:45 | **Fresh vs primed (60 min).** One ticket, same prompt. A: fresh, no CLAUDE.md, no reading. B: CLAUDE.md + codebase read. Compare quality, questions, tokens (`/context`, `/cost`). | Table filled + 1-line verdict |
 | [ ] | 3:45–4:00 | **Wrap-up (15 min).** Tick Day 5 in `TODO.md`, add Day 5 lines to `training/take-away.md`, commit to `main`, push. | Pushed |

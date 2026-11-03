@@ -71,7 +71,7 @@ _Tips: [colleague-tips](training/colleague-tips.md) — Day 4–5_
 ### Day 5
 - [ ] Write `CLAUDE.md` for sample-project (<1 screen) → refine `ai-kit/CLAUDE.md.template`
 - [x] Compaction experiment; `/rewind` bad edit
-- [ ] Ex: fresh vs primed session comparison
+- [x] Ex: fresh vs primed session comparison
 
 ### Day 6 — CP2
 _Tips: [colleague-tips](training/colleague-tips.md) — Day 6_
