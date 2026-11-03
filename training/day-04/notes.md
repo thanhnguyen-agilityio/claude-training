@@ -25,6 +25,8 @@ Source: https://code.claude.com/docs/en/common-workflows
 
 ### Worktrees
 
+Interactive guide: [Git Worktree Playground](https://claude.ai/artifact/WNygvExsGUkeGZ7toZfU4v): how it works · switching vs worktrees · bare clone setup · workflows · [gotchas](https://claude.ai/artifact/WNygvExsGUkeGZ7toZfU4v#gotchas)
+
 Key concepts:
 
 1. One worktree = one directory + one branch + one isolated workspace
