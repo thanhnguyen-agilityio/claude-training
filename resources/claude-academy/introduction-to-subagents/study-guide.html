@@ -1,0 +1,610 @@
+<title>Subagents Study Guide</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: fixed module rail on the left, one reading column on the right; each lesson owns a hue (how it works, create and configure, design, when to use). */
+:root{
+  --bg:#f4f6f9; --surface:#ffffff; --sunken:#eaeef4; --ink:#18202d; --muted:#596476; --line:#d9dfe8;
+  --accent:#2c56c9; --accent-ink:#ffffff;
+  --p0:#56607a; --p1:#5a48d4; --p2:#0e8576; --p3:#b8700c; --p4:#c03a66;
+  --good:#1e7d4a; --good-bg:#e3f4ea; --bad:#b4322c; --bad-bg:#fbe8e6; --warn:#8a5a00; --warn-bg:#fdf2d8;
+  --f-display:"Bricolage Grotesque", "Avenir Next", "Segoe UI", sans-serif;
+  --f-body:"Atkinson Hyperlegible", "Segoe UI", system-ui, sans-serif;
+  --f-mono:"JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+  --r:10px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0f131a; --surface:#161b24; --sunken:#1d2330; --ink:#e5e9f0; --muted:#9ba5b6; --line:#2a3242;
+  --accent:#7d9dff; --accent-ink:#0f131a;
+  --p0:#a3abc0; --p1:#a093ff; --p2:#3cc5b0; --p3:#e7a845; --p4:#f27ba1;
+  --good:#5fd394; --good-bg:#15301f; --bad:#ff8a80; --bad-bg:#3a1c1a; --warn:#f0c160; --warn-bg:#352a12;
+  color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f131a; --surface:#161b24; --sunken:#1d2330; --ink:#e5e9f0; --muted:#9ba5b6; --line:#2a3242;
+  --accent:#7d9dff; --accent-ink:#0f131a;
+  --p0:#a3abc0; --p1:#a093ff; --p2:#3cc5b0; --p3:#e7a845; --p4:#f27ba1;
+  --good:#5fd394; --good-bg:#15301f; --bad:#ff8a80; --bad-bg:#3a1c1a; --warn:#f0c160; --warn-bg:#352a12;
+  color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.55}
+button{font:inherit;color:inherit}
+a{color:var(--accent)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
+h1,h2,h3{font-family:var(--f-display);line-height:1.15;text-wrap:balance;margin:0}
+.app{display:grid;grid-template-columns:270px minmax(0,1fr);min-height:100vh}
+/* Sidebar */
+.side{position:sticky;top:0;height:100vh;overflow-y:auto;border-right:1px solid var(--line);background:var(--surface);
+  padding-block:20px;padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:16px;display:flex;flex-direction:column;gap:18px}
+.brand{font-family:var(--f-display);font-weight:700;font-size:19px;line-height:1.2}
+.brand small{display:block;font-family:var(--f-body);font-weight:400;font-size:13px;color:var(--muted);margin-top:4px}
+.search{position:relative}
+.search input{width:100%;padding:9px 12px 9px 34px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);font:inherit;font-size:15px}
+.search svg{position:absolute;left:10px;top:50%;transform:translateY(-50%);width:16px;height:16px;stroke:var(--muted);fill:none}
+.prog{font-size:13px;color:var(--muted)}
+.prog .bar{height:6px;border-radius:3px;background:var(--sunken);margin-top:6px;overflow:hidden}
+.prog .bar i{display:block;height:100%;background:var(--accent);width:0;transition:width .3s}
+.navlabel{font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);margin:0 0 6px}
+.nav{display:flex;flex-direction:column;gap:2px;list-style:none;margin:0;padding:0}
+.nav button{width:100%;text-align:left;background:none;border:0;padding:8px 10px;border-radius:8px;cursor:pointer;display:grid;grid-template-columns:10px 1fr auto;gap:10px;align-items:center;font-size:15px}
+.nav button:hover{background:var(--sunken)}
+.nav button[aria-current="true"]{background:var(--sunken);font-weight:700}
+.nav .dot{width:10px;height:10px;border-radius:50%;background:var(--c)}
+.nav .sub{display:block;font-size:12px;color:var(--muted);font-weight:400}
+.nav .chk{font-size:13px;color:var(--good)}
+/* Main */
+main{min-width:0;padding-block:28px 64px;padding-left:max(16px, 4vw);padding-right:max(16px, env(safe-area-inset-right, 0px), 4vw)}
+.wrap{max-width:860px;margin:0 auto;display:flex;flex-direction:column;gap:32px}
+.eyebrow{font-size:12px;letter-spacing:.09em;text-transform:uppercase;color:var(--c, var(--muted));font-weight:700}
+.mhead{display:flex;flex-direction:column;gap:10px}
+.mhead h1{font-size:clamp(28px,4vw,40px)}
+.question{font-size:19px;color:var(--muted);font-style:italic;margin:0}
+.headrow{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between}
+.btn{border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:8px 14px;cursor:pointer;font-size:14px}
+.btn:hover{border-color:var(--accent)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink);font-weight:700}
+.btn.done{background:var(--good-bg);border-color:var(--good);color:var(--good);font-weight:700}
+/* Continuum */
+.continuum{display:grid;grid-template-columns:1fr 1fr;gap:0;border-radius:var(--r);overflow:hidden;border:1px solid var(--line)}
+.continuum .rail{grid-column:1/-1;height:8px;background:linear-gradient(90deg,var(--c),color-mix(in srgb,var(--c) 15%,var(--surface)))}
+.continuum div.z{padding:12px 14px;background:var(--surface);font-size:15px}
+.continuum div.z+div.z{border-left:1px dashed var(--line);text-align:right}
+.continuum b{display:block;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+section h2{font-size:21px;margin-bottom:12px;display:flex;align-items:baseline;gap:10px}
+section h2 .count{font-family:var(--f-mono);font-size:13px;color:var(--muted);font-weight:400}
+/* Takeaway cards */
+.cards{display:flex;flex-direction:column;gap:8px}
+details.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r)}
+details.card[open]{border-color:color-mix(in srgb,var(--c) 45%,var(--line))}
+details.card summary{cursor:pointer;list-style:none;padding:13px 16px;display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:start;font-weight:700}
+details.card summary::-webkit-details-marker{display:none}
+details.card summary .n{font-family:var(--f-mono);font-size:13px;color:var(--c);padding-top:2px;font-weight:500}
+details.card summary .chev{transition:transform .2s;color:var(--muted)}
+details.card[open] summary .chev{transform:rotate(90deg)}
+details.card .body{padding:0 16px 14px 46px;display:flex;flex-direction:column;gap:8px}
+details.card .body p{margin:0;max-width:65ch}
+.src{font-family:var(--f-mono);font-size:12px;color:var(--muted);text-decoration:none;align-self:flex-start;border-bottom:1px dotted var(--muted)}
+.src:hover{color:var(--accent);border-color:var(--accent)}
+.flash{animation:flash 1.6s ease-out}
+@keyframes flash{0%{box-shadow:0 0 0 3px var(--accent)}100%{box-shadow:0 0 0 0 transparent}}
+/* Concepts */
+dl.concepts{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px;margin:0}
+dl.concepts div{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:12px 14px}
+dl.concepts dt{font-weight:700;margin-bottom:2px}
+dl.concepts dd{margin:0;color:var(--muted);font-size:15px}
+/* Diagram */
+.diagram{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px;overflow-x:auto}
+.diagram svg{display:block;min-width:600px;width:100%;height:auto}
+.diagram figcaption{font-size:14px;color:var(--muted);margin-top:8px}
+svg .bx{fill:var(--sunken);stroke:var(--line)}
+svg .bxc{fill:color-mix(in srgb,var(--c) 14%,var(--surface));stroke:var(--c)}
+svg .t{fill:var(--ink);font-family:var(--f-body);font-size:14px}
+svg .tb{fill:var(--ink);font-family:var(--f-body);font-size:14px;font-weight:700}
+svg .tm{fill:var(--muted);font-family:var(--f-body);font-size:12px}
+svg .ln{stroke:var(--muted);stroke-width:1.5;fill:none}
+svg .lc{stroke:var(--c);stroke-width:2.5;fill:none}
+svg .dash{stroke-dasharray:5 4}
+svg .ac{fill:var(--muted)}
+svg .acc{fill:var(--c)}
+/* Snippets */
+.snips{display:flex;flex-direction:column;gap:10px}
+.snip{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.snip header{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:8px 12px;border-bottom:1px solid var(--line);font-size:13px;color:var(--muted);flex-wrap:wrap}
+.snip pre{margin:0;padding:12px 14px;font-family:var(--f-mono);font-size:13.5px;white-space:pre-wrap;word-break:break-word;background:var(--sunken)}
+.copy{font-size:12px;padding:4px 10px}
+/* Pitfalls & gaps */
+ul.pit{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:8px}
+ul.pit li{padding:10px 14px;border-radius:8px;background:var(--bad-bg);color:var(--ink);display:grid;grid-template-columns:auto 1fr;gap:10px}
+ul.pit li::before{content:"✕";color:var(--bad);font-weight:700}
+.gap{background:var(--warn-bg);color:var(--ink);border-radius:8px;padding:10px 14px;font-size:15px}
+.gap b{color:var(--warn)}
+/* Quiz */
+.quiz{display:flex;flex-direction:column;gap:14px}
+.q{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px}
+.q p.stem{margin:0 0 10px;font-weight:700}
+.opts{display:flex;flex-direction:column;gap:6px}
+.opts button{text-align:left;border:1px solid var(--line);background:var(--bg);border-radius:8px;padding:9px 12px;cursor:pointer;font-size:15px}
+.opts button:hover:not(:disabled){border-color:var(--accent)}
+.opts button:disabled{cursor:default}
+.opts button.right{background:var(--good-bg);border-color:var(--good)}
+.opts button.wrong{background:var(--bad-bg);border-color:var(--bad)}
+.expl{margin-top:10px;font-size:15px;padding:10px 12px;border-radius:8px;background:var(--sunken)}
+.score{font-family:var(--f-mono);font-size:13px;color:var(--muted)}
+/* Flashcards */
+.fc-tools{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.fc-tools select{padding:8px 10px;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font:inherit;font-size:14px}
+.fcard{perspective:1200px;cursor:pointer;min-height:260px}
+.fcard .inner{position:relative;width:100%;min-height:260px;transition:transform .5s;transform-style:preserve-3d}
+.fcard.flipped .inner{transform:rotateY(180deg)}
+.fcard .face{position:absolute;inset:0;backface-visibility:hidden;border-radius:14px;border:1px solid var(--line);background:var(--surface);display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:28px;gap:10px}
+.fcard .face.back{transform:rotateY(180deg);background:var(--sunken)}
+.fcard .term{font-family:var(--f-display);font-size:clamp(26px,5vw,36px);font-weight:700}
+.fcard .def{font-size:18px;max-width:46ch}
+.fcard .tag{font-size:12px;letter-spacing:.09em;text-transform:uppercase;font-weight:700;color:var(--c)}
+.fc-nav{display:flex;justify-content:space-between;align-items:center;gap:10px}
+/* Cheat sheet */
+.tbl{overflow-x:auto;border:1px solid var(--line);border-radius:var(--r);background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:720px;font-size:14.5px}
+th,td{padding:10px 12px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line)}
+th{font-size:12px;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);background:var(--sunken)}
+tr:last-child td{border-bottom:0}
+td .pname{font-weight:700;color:var(--c);display:block}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px}
+.panel h3{font-size:16px;margin-bottom:8px}
+.panel ul{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:4px;font-size:15px}
+/* Search results */
+.res{display:flex;flex-direction:column;gap:8px}
+.res button{text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:12px 14px;cursor:pointer;display:flex;flex-direction:column;gap:4px}
+.res button:hover{border-color:var(--accent)}
+.res .kind{font-size:12px;color:var(--c);font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+mark{background:color-mix(in srgb,var(--accent) 25%,transparent);color:inherit;border-radius:2px}
+.intro p{max-width:65ch;margin:0}
+.overview{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+.ovc{text-align:left;background:var(--surface);border:1px solid var(--line);border-top:4px solid var(--c);border-radius:var(--r);padding:14px 16px;cursor:pointer;display:flex;flex-direction:column;gap:6px}
+.ovc:hover{border-color:var(--c)}
+.ovc h3{font-size:18px}
+.ovc span{font-size:14px;color:var(--muted)}
+@media (max-width:860px){
+  .app{grid-template-columns:minmax(0,1fr)}
+  .side{position:static;height:auto;border-right:0;border-bottom:1px solid var(--line);padding-right:max(16px, env(safe-area-inset-right, 0px))}
+  .nav{flex-direction:row;overflow-x:auto;gap:6px;padding-bottom:4px}
+  .nav li{flex:0 0 auto}
+  .nav button{grid-template-columns:10px auto auto;white-space:nowrap;border:1px solid var(--line)}
+  .nav .sub{display:none}
+  .continuum{grid-template-columns:1fr}
+  .continuum div.z+div.z{border-left:0;border-top:1px dashed var(--line);text-align:left}
+  details.card .body{padding-left:16px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+
+<div class="app">
+  <aside class="side">
+    <div class="brand">Introduction to subagents<small>Claude Academy · study guide</small></div>
+    <div class="search">
+      <svg viewBox="0 0 24 24" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>
+      <input id="q" type="search" placeholder="Search the course…" aria-label="Search the course" autocomplete="off">
+    </div>
+    <div class="prog"><span id="progtxt">0 of 5 modules done</span><div class="bar"><i id="progbar"></i></div></div>
+    <div>
+      <p class="navlabel">Modules</p>
+      <ul class="nav" id="navm"></ul>
+    </div>
+    <div>
+      <p class="navlabel">Practice &amp; review</p>
+      <ul class="nav" id="navp"></ul>
+    </div>
+  </aside>
+  <main><div class="wrap" id="view"></div></main>
+</div>
+
+<script>
+const STORE="subag";
+/* ---------- storage ---------- */
+function load(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}}
+function save(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
+let done=new Set(load(STORE+"-done",[]));
+
+/* ---------- helpers ---------- */
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+function srcLink(m,lesson){
+  if(typeof lesson==="string") return `<span class="src">${esc(lesson)}</span>`;
+  const [name,slug]=LESSONS[lesson];
+  return `<a class="src" href="${BASE+slug}" target="_blank" rel="noopener" title="Local notes: ${m.file}">${m.file} · L${lesson} ${esc(name)} ↗</a>`;
+}
+function cvar(m){return `--c:var(${m.c})`}
+
+/* ---------- diagrams ---------- */
+const AR=`<defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" class="ac"/></marker><marker id="ahc" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" class="acc"/></marker></defs>`;
+const BASE="https://academy.claude.com/courses/introduction-to-subagents/";
+const LESSONS={1:["What are subagents?","what-are-subagents"],2:["Creating a subagent","creating-a-subagent"],3:["Designing effective subagents","designing-effective-subagents"],4:["Using subagents effectively","using-subagents-effectively"]};
+const NOTES={readme:"introduction-to-subagents/README.md · course in one page",d4:"your notes · training/day-04/notes.md"};
+
+const M=[
+{id:"how",c:"--p1",short:"How subagents work",sub:"Lesson 1",eyebrow:"Lesson 1 · What are subagents?",title:"A separate context window that returns a summary",file:"01-what-are-subagents.md",
+ question:"What is a subagent, and why does it keep my main context clean?",
+ take:[
+  ["A focused helper with its own context","A subagent is an assistant Claude Code hands a task to. It runs in its own context window, does the work there, and sends back only a summary.",1],
+  ["The main context window is finite","Every tool call, file read and search result in the main chat takes space. When it fills, Claude starts losing track of earlier parts of the session.",1],
+  ["Two inputs start every subagent","A custom system prompt from its config file (role and behavior) and a task description the parent agent writes from your request.",1],
+  ["Only the summary comes back","File reads, searches and edits stay in the subagent. Claude Code saves its full conversation in a separate transcript file.",1],
+  ["The tradeoff: you don't see the journey","Your main thread gets the answer but not how the subagent reached it.",1],
+  ["Three benefits","Work splits into focused pieces, the main context stays clean, and you get back only what you need.",1]
+ ],
+ concepts:[
+  ["Subagent","A specialized assistant Claude Code delegates a task to; runs in its own context window and returns a summary.",1],
+  ["Main thread","Your main Claude Code conversation, which keeps only the question and the subagent's summary.",1],
+  ["Subagent transcript","The separate file where Claude Code saves the subagent's full conversation.",1],
+  ["General purpose subagent","Built-in; multi-step tasks that need both exploring and acting.",1],
+  ["Explore subagent","Built-in; fast searching and navigation of a codebase.",1],
+  ["Plan subagent","Built-in; researches the codebase during plan mode before Claude presents a plan.",1],
+  ["Custom subagent","Your own subagent with a custom system prompt and tool access (reviewer, test writer, docs generator).",1]
+ ],
+ snips:[
+  ["Explore question (Lesson 1 example)","Use the Explore subagent to find which service handles refunds. Return the file and function name only.",1,"Keeps 15 file reads out of your context."],
+  ["From your notes (Day 4)","Delegate research to subagents",NOTES.d4,"Listed under Common workflows in your Day 4 notes."]
+ ],
+ pit:["Doing big exploration in the main thread when you only need one fact.","Expecting the main thread to know how the subagent found its answer: only the summary comes back."],
+ gaps:["Lesson video not watched; notes come from the lesson's written summary."],
+ diagram:"how",
+ quiz:[
+  ["What does a subagent return to the main conversation?",["Its full transcript","Every file it read","A summary","Nothing"],2,"The intermediate work stays in the subagent.",1],
+  ["Which two inputs make up a subagent's starting context?",["Your full chat history and CLAUDE.md","A system prompt from its config file and a task description from the parent agent","Only your last message","The git log and the open files"],1,"Config system prompt + parent's task description.",1],
+  ["Where does Claude Code keep the subagent's full conversation?",["In the main context","In a separate transcript file","It is deleted","In CLAUDE.md"],1,"Saved separately from your main thread.",1],
+  ["Which built-in subagent is for fast codebase search?",["Plan","General purpose","Explore","Reviewer"],2,"Plan is for plan mode; general purpose explores and acts.",1],
+  ["What is the main tradeoff of using a subagent?",["It costs no tokens","The main thread can't see how the answer was reached","It can't read files","It always uses Opus"],1,"Clean context, hidden journey.",1]
+ ]},
+
+{id:"create",c:"--p2",short:"Create a subagent",sub:"Lesson 2",eyebrow:"Lesson 2 · Creating a subagent",title:"Scope, tools, model and color",file:"02-creating-a-subagent.md",
+ question:"How do I make my own subagent, and what do I choose?",
+ take:[
+  ["Ask Claude to write it","Describe what the subagent should do and where to save it, and include your choices for scope, tools, model and color. Claude writes the file.",2],
+  ["The /agents wizard is gone","The lesson video shows the /agents wizard, removed in Claude Code v2.1.198. The file and its fields did not change.",2],
+  ["Pick the scope by folder",".claude/agents/ is project-level (this project only); ~/.claude/agents/ is user-level (all your projects).",2],
+  ["Give only the tools it needs","Categories: read-only, edit, execution, MCP, other. A reviewer reads and analyzes, so no edit tools; execution tools help it find pending changes.",2],
+  ["Match the model to the job","Haiku for fast light tasks, Sonnet for a balance, Opus for complex analysis, or inherit the main conversation's model.",2],
+  ["Color tells you who is running","The color shows in the UI so you can tell which subagent is active when several run.",2]
+ ],
+ concepts:[
+  ["Project-level subagent","Saved in .claude/agents/; available only in the current project.",2],
+  ["User-level subagent","Saved in ~/.claude/agents/; shared across all projects on your machine.",2],
+  ["Tool categories","Read-only, edit, execution, MCP and other tools.",2],
+  ["Haiku (subagent model)","Best for fast, lightweight tasks.",2],
+  ["Sonnet (subagent model)","Middle ground between speed and depth.",2],
+  ["Opus (subagent model)","Best for complex analysis.",2],
+  ["inherit","Model setting that uses whatever model the main conversation runs.",2]
+ ],
+ snips:[
+  ["Ask Claude to create a subagent","Create a project-level subagent in .claude/agents/ named code-quality-reviewer. It reviews recently changed code for quality and security. Tools: read-only plus Bash for git diff, no edit tools. Model: sonnet. Color: purple.",2,"Covers every choice the old wizard asked for."],
+  ["Folders","Project: .claude/agents/<name>.md\nUser:    ~/.claude/agents/<name>.md",2,"Scope is set by where the file lives."]
+ ],
+ pit:["Looking for the /agents wizard: it was removed in v2.1.198.","Giving a reviewer edit tools: it should analyze, not change code.","Defaulting every subagent to Opus when a lighter model fits."],
+ gaps:["Wizard screenshots and video not read (the wizard no longer exists)."],
+ diagram:"create",
+ quiz:[
+  ["What is the recommended way to create a subagent now?",["Run the /agents wizard","Ask Claude to write the file with your choices","Edit settings.json","Install a plugin"],1,"The wizard was removed in v2.1.198.",2],
+  ["A file in ~/.claude/agents/ is…",["Project-level","User-level, shared across all your projects","Ignored","Only for plan mode"],1,".claude/agents/ in the repo is project-level.",2],
+  ["Why skip edit tools for a code reviewer?",["Edit tools are slow","It should read and analyze code, not change it","Reviewers can't use tools","Edit tools need Opus"],1,"Least tools for the job.",2],
+  ["Which model choice uses the main conversation's model?",["haiku","default","inherit","same"],2,"inherit.",2],
+  ["What is the subagent color for?",["Priority","Spotting which subagent is active in the UI","Cost tracking","Permission level"],1,"Helps when several run.",2]
+ ]},
+
+{id:"config",c:"--p2",short:"The config file",sub:"Lesson 2",eyebrow:"Lesson 2 · Creating a subagent",title:"Frontmatter, system prompt and triggering",file:"02-creating-a-subagent.md",
+ question:"What goes in the subagent file, and how do I make Claude use it?",
+ take:[
+  ["Markdown plus YAML frontmatter","Frontmatter tells Claude when to use the subagent; the Markdown body below it is the system prompt that says how it behaves.",2],
+  ["name is how you call it","A unique ID. Ask Claude to use it, or type @agent-<name> in your message.",2],
+  ["description decides when it runs","Must be one line (use \\n for breaks). It can include example conversations that show when to delegate.",2],
+  ["The body is the system prompt","Say what to focus on, how to analyze, and how to report back. Specific instructions make the difference between useful and off-target.",2],
+  ["\"proactively\" turns on auto-delegation","Put the word in the description and add concrete scenarios so Claude delegates without being asked.",2],
+  ["Test it, restart if the folder is new","Make a change and ask for a review. If the agents folder didn't exist when the session started, restart Claude Code. Not triggering? Sharpen the description.",2]
+ ],
+ concepts:[
+  ["YAML frontmatter","The block between --- lines at the top of the subagent file holding name, description, tools, model, color.",2],
+  ["name (field)","Unique identifier; call it by name or with @agent-<name>.",2],
+  ["description (field)","Single line that controls when Claude delegates; may include example conversations.",2],
+  ["tools (field)","Comma-separated list of tools the subagent may use; edit any time.",2],
+  ["model (field)","An alias (sonnet, opus, haiku, fable), a full model ID, or inherit.",2],
+  ["color (field)","UI color that identifies the subagent.",2],
+  ["System prompt (subagent)","Everything below the frontmatter: focus, method and report format.",2],
+  ["proactively","Word in the description that tells Claude to delegate without being asked.",2]
+ ],
+ snips:[
+  ["Subagent file skeleton (Lesson 2)","---\nname: code-quality-reviewer\ndescription: Use this agent when you need to review recently written or modified code for quality, security, and best practice compliance.\ntools: Bash, Glob, Grep, Read\nmodel: sonnet\ncolor: purple\n---\n\nYou are a code reviewer. Focus on ... Report back as ...",2,"Save as .claude/agents/code-quality-reviewer.md."],
+  ["Call it directly","@agent-code-quality-reviewer review my last commit",2,"Uses the name field."],
+  ["Auto-delegation","description: Proactively suggest running this agent after major code changes...",2,"The word that matters is proactively."]
+ ],
+ pit:["A multi-line description: it must be one line.","A vague system prompt with no report format.","Expecting a brand-new agents folder to load without restarting Claude Code."],
+ gaps:["Full list of frontmatter fields beyond the five shown is not in the lesson."],
+ diagram:"config",
+ quiz:[
+  ["Which part of the file is the system prompt?",["The name field","The description field","Everything below the frontmatter","The tools list"],2,"The Markdown body.",2],
+  ["How do you call a subagent named code-quality-reviewer directly?",["/code-quality-reviewer","@agent-code-quality-reviewer","#code-quality-reviewer","!agent"],1,"@agent-<name>.",2],
+  ["Which field controls when Claude decides to delegate?",["color","model","description","tools"],2,"It must be a single line.",2],
+  ["Which word in the description makes Claude delegate without being asked?",["always","proactively","automatic","must"],1,"Add concrete scenarios too.",2],
+  ["You created .claude/agents/ mid-session and the subagent doesn't show. What first?",["Reinstall Claude Code","Restart Claude Code","Rename the file","Switch to Opus"],1,"A new agents folder loads on restart.",2]
+ ]},
+
+{id:"design",c:"--p3",short:"Design for reliability",sub:"Lesson 3",eyebrow:"Lesson 3 · Designing effective subagents",title:"Description, output format, obstacles, tools",file:"03-designing-effective-subagents.md",
+ question:"Why do some subagents wander or run too long, and how do I fix them?",
+ take:[
+  ["Name and description go into the main prompt","Every subagent's name and description sit in the main agent's system prompt. That is how it picks which one to launch and when.",3],
+  ["The description also writes the brief","The main agent uses the description as guidance when it writes the subagent's input prompt. It shapes what the subagent is told, not only when it runs.",3],
+  ["Steer the brief from the description","Add \"tell the agent precisely which files you want it to review\" and the main agent lists the files instead of saying \"use git diff\". Add \"return sources that can be cited\" to a search agent and the brief asks for them.",3],
+  ["Output format is the biggest single fix","A defined format gives natural stopping points (done when every section is filled) and stops the subagent researching far longer than needed.",3],
+  ["Ask for obstacles explicitly","An \"Obstacles encountered\" section surfaces workarounds, quirks, special flags and broken imports, so the main thread doesn't rediscover them.",3],
+  ["Limit tools by role","Read-only for research, add Bash for reviewers, Edit and Write only for agents meant to change code. Fewer side effects, clearer roles.",3]
+ ],
+ concepts:[
+  ["Input prompt","The task prompt the main agent writes when it launches a subagent, guided by the description.",3],
+  ["Output format","Sections defined in the system prompt; the subagent stops when all are filled.",3],
+  ["Natural stopping point","The moment a subagent has filled every section of its output format.",3],
+  ["Obstacles encountered","Output section for setup issues, workarounds, quirks, special flags and problem dependencies.",3],
+  ["Least tool access","Give a subagent only the tools its job needs.",3],
+  ["Approval status","Last section of the lesson's review format: ready to merge or needs changes.",3]
+ ],
+ snips:[
+  ["Review output format (Lesson 3, paraphrased)","Report in these sections:\nSummary: what you reviewed, overall verdict\nCritical issues: security, data integrity, logic errors\nMajor issues: quality, architecture, performance\nMinor issues: style, docs, small optimizations\nRecommendations\nApproval status: ready to merge, or what must change",3,"Put this in the system prompt."],
+  ["Obstacles section","Obstacles encountered: setup issues, workarounds, environment quirks, commands that needed special flags, dependencies or imports that caused problems.",3,"Add to any output format."],
+  ["Description line that steers the brief","You must tell the agent precisely which files you want it to review.",3,"Main agent then lists files."]
+ ],
+ pit:["A generic description: the main agent writes a vague brief.","No output format: the subagent doesn't know when to stop.","Workarounds lost in the summary, so the main thread redoes them.","Giving every subagent every tool."],
+ gaps:["Video not watched; the two \"Open in Claude Code\" prompts are paraphrased."],
+ diagram:"design",
+ quiz:[
+  ["How does the main agent decide which subagent to launch?",["Randomly","From each subagent's name and description in its system prompt","From the tools list","From the color"],1,"Edit these to tune triggering.",3],
+  ["Besides triggering, what does the description influence?",["The model used","The input prompt the main agent writes","The UI color","The transcript location"],1,"It shapes what the subagent is told.",3],
+  ["What does the lesson call the single most important improvement?",["More tools","A bigger model","A defined output format","A longer description"],2,"It creates stopping points.",3],
+  ["Why add an Obstacles encountered section?",["To make the summary longer","So the main thread doesn't rediscover workarounds","To log errors to a file","It's required YAML"],1,"Saves time and tokens.",3],
+  ["Which tools fit a research subagent?",["Edit and Write","Glob, Grep and Read","Bash only","All tools"],1,"It can't accidentally modify files.",3]
+ ]},
+
+{id:"when",c:"--p4",short:"When to use them",sub:"Lesson 4",eyebrow:"Lesson 4 · Using subagents effectively",title:"Does the intermediate work matter?",file:"04-using-subagents-effectively.md",
+ question:"When do subagents help, and when do they get in the way?",
+ take:[
+  ["One decision rule","Ask: does the intermediate work matter? No, I only need the result → subagent. Yes, I need to see and react to each step → main thread.",4],
+  ["Research is the classic case","A subagent reads dozens of files tracing JWT validation; the main thread gets one line naming the file and the caller.",4],
+  ["Reviews need fresh eyes","Claude reviews code better when it looks like someone else's. A reviewer subagent has no memory of writing it, and can carry team review standards in its system prompt.",4],
+  ["Custom prompts beat the default for non-code work","Claude Code's default prompt favors short, code-focused answers. A copywriting agent gets tone and audience rules; a styling agent reads design-system files before writing CSS.",4],
+  ["Three anti-patterns","\"Expert\" personas add nothing; sequential pipelines lose details at each handoff when steps depend on each other; test runners hide the failure output you need.",4],
+  ["Test runners did worst","In testing, the test-runner subagent pattern performed worst of all configurations.",4]
+ ],
+ concepts:[
+  ["Decision rule (subagents)","Does the intermediate work matter? No → delegate. Yes → keep it in the main thread.",4],
+  ["Exploration vs execution","Subagents fit when exploring is separate from acting on what you find.",4],
+  ["Expert persona anti-pattern","\"You are a Python expert\" adds no capability; Claude already knows it.",4],
+  ["Sequential pipeline anti-pattern","Reproduce → debug → fix agents lose information at each handoff when steps depend on each other.",4],
+  ["Test runner anti-pattern","Returns \"tests failed\" and hides the output you need to debug.",4],
+  ["Copywriting subagent","Custom prompt with tone, audience and voice rules for marketing text.",4],
+  ["Styling subagent","Reads design-system files (colors, spacing, components) before writing CSS.",4]
+ ],
+ snips:[
+  ["Research delegation","Use a subagent to find where the JWT is validated. Return the file, line and the caller only.",4,"Lesson 4 research example."],
+  ["Styling subagent system prompt","Before writing any CSS, read the design system files and follow their color variables, spacing and component patterns.",4,"A custom prompt the default can't give."]
+ ],
+ pit:["\"Expert\" persona subagents.","Reproduce → debug → fix pipelines for one bug.","A subagent that runs tests and returns only pass/fail.","Asking the thread that wrote the code to review it."],
+ gaps:["Video not watched. The course quiz and completion page have no text in the sources."],
+ diagram:"when",
+ quiz:[
+  ["What single question decides whether to use a subagent?",["Is the task long?","Does the intermediate work matter?","Is Opus available?","Are there more than 10 files?"],1,"No → delegate; yes → main thread.",4],
+  ["Why do reviews work better in a subagent?",["It uses a bigger model","It sees the code without the history of writing it","It can edit faster","It skips tests"],1,"Fresh eyes.",4],
+  ["Why does an \"expert\" persona subagent rarely help?",["It costs more","Claude already has that knowledge","It can't read files","It needs MCP"],1,"No added capability.",4],
+  ["When does a reproduce → debug → fix pipeline fail?",["When steps are independent","When each step depends on the previous step's findings","Never","Only with Haiku"],1,"Details are lost at each handoff.",4],
+  ["Which pattern did worst in testing?",["Research","Code review","Test runner","Copywriting"],2,"It hides failure output.",4]
+ ]}
+];
+
+const PRACTICE=[["overview","Overview","Start here","--p0"],["flashcards","Flashcards","Key terms","--accent"],["cheatsheet","Cheat sheet","One-page summary","--accent"]];
+
+const box=(x,y,w,h,t,s,cls)=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="8" class="${cls||"bx"}"/><text x="${x+w/2}" y="${y+h/2-(s?3:-5)}" text-anchor="middle" class="tb">${t}</text>${s?`<text x="${x+w/2}" y="${y+h/2+15}" text-anchor="middle" class="tm">${s}</text>`:""}`;
+const arr=(d,dash)=>`<path d="${d}" class="ln${dash?" dash":""}" marker-end="url(#ah)"/>`;
+const D={
+how:`<svg viewBox="0 0 720 230" role="img" aria-label="Main thread sends a task to a subagent, which works in its own context and returns a summary">${AR}
+ ${box(20,40,170,64,"Main thread","your conversation","bxc")}${arr("M190 62H270")}
+ <text x="230" y="52" text-anchor="middle" class="tm">task prompt</text>
+ ${box(275,30,200,84,"Subagent","own context window")}
+ <text x="375" y="140" text-anchor="middle" class="t">reads · searches · edits</text>
+ ${arr("M475 72H545")}${box(550,40,150,64,"Transcript","saved separately")}
+ ${arr("M300 114C300 190 120 190 105 108",1)}
+ <text x="200" y="200" text-anchor="middle" class="tb">summary only comes back</text>
+ <text x="375" y="20" text-anchor="middle" class="tm">system prompt from config file</text>
+</svg><figcaption>Lesson 1: inputs flow in, a summary flows back.</figcaption>`,
+create:`<svg viewBox="0 0 720 200" role="img" aria-label="Four choices: scope, tools, model, color">${AR}
+ ${box(20,40,160,70,"Scope","project · user","bxc")}${arr("M180 75H200")}
+ ${box(205,40,160,70,"Tools","only what it needs")}${arr("M365 75H385")}
+ ${box(390,40,150,70,"Model","haiku · sonnet · opus · inherit")}${arr("M540 75H560")}
+ ${box(565,40,135,70,"Color","spot it in the UI")}
+ <text x="20" y="150" class="t">.claude/agents/ → this project   ·   ~/.claude/agents/ → all projects</text>
+ <text x="20" y="178" class="tm">Ask Claude to write the file with these four choices (the /agents wizard is gone).</text>
+</svg><figcaption>Lesson 2: four choices go into every subagent.</figcaption>`,
+config:`<svg viewBox="0 0 720 220" role="img" aria-label="Frontmatter controls when; the body controls how">${AR}
+ ${box(20,20,330,120,"","")}
+ <text x="36" y="46" class="tb">--- frontmatter ---</text>
+ <text x="36" y="70" class="t">name · description · tools</text>
+ <text x="36" y="92" class="t">model · color</text>
+ <text x="36" y="120" class="tm">decides WHEN Claude delegates</text>
+ ${box(370,20,330,120,"","","bxc")}
+ <text x="386" y="46" class="tb">body = system prompt</text>
+ <text x="386" y="70" class="t">focus · method</text>
+ <text x="386" y="92" class="t">report format</text>
+ <text x="386" y="120" class="tm">decides HOW it works</text>
+ <text x="20" y="180" class="t">Call it: @agent-&lt;name&gt;   ·   auto: "proactively" in description</text>
+ <text x="20" y="204" class="tm">New agents folder mid-session → restart Claude Code.</text>
+</svg><figcaption>Lesson 2: one Markdown file, two jobs.</figcaption>`,
+design:`<svg viewBox="0 0 720 230" role="img" aria-label="Description shapes the brief; output format and obstacles shape the summary; tools limit the work">${AR}
+ ${box(20,30,170,64,"Description","when + what it's told","bxc")}${arr("M190 62H230")}
+ ${box(235,30,150,64,"Input prompt","specific files")}${arr("M385 62H425")}
+ ${box(430,30,120,64,"Subagent","limited tools")}${arr("M550 62H590")}
+ ${box(595,30,110,64,"Summary","")}
+ ${box(430,140,275,64,"Output format + Obstacles","stop point · workarounds kept","bxc")}${arr("M650 140V98",1)}
+ <text x="20" y="170" class="t">Research: Glob · Grep · Read</text>
+ <text x="20" y="192" class="t">Reviewer: + Bash (git diff)</text>
+ <text x="20" y="214" class="t">Changes code: + Edit · Write</text>
+</svg><figcaption>Lesson 3: four fixes for wandering, slow or unusable subagents.</figcaption>`,
+when:`<svg viewBox="0 0 720 230" role="img" aria-label="Does the intermediate work matter? No means subagent, yes means main thread">${AR}
+ ${box(235,16,250,60,"Does the intermediate work matter?","","bxc")}
+ ${arr("M300 76L180 116")}${arr("M420 76L540 116")}
+ <text x="215" y="100" text-anchor="end" class="tm">no</text><text x="505" y="100" class="tm">yes</text>
+ ${box(40,120,280,60,"Subagent","research · review · custom prompt")}
+ ${box(400,120,280,60,"Main thread","react to each step")}
+ <text x="400" y="208" class="t">Avoid: expert personas · dependent pipelines · test runners</text>
+</svg><figcaption>Lesson 4: one question decides it.</figcaption>`
+};
+
+function viewOverview(){
+  return `<div class="mhead" style="--c:var(--accent)"><span class="eyebrow">Claude Academy · 4 lessons · 45 min</span><h1>Introduction to subagents</h1>
+  <p class="question">Hand work to a helper with its own context window and get back only the answer.</p></div>
+  <div class="intro"><p>The course goes from how a subagent works (Lesson 1), to writing one (2), to making it reliable (3), to knowing when not to use one (4). The rule to keep: if you don't need to see the intermediate work, delegate it. The fix to remember: give every subagent an output format.</p></div>
+  <div class="overview">${M.map(m=>`<button class="ovc" data-go="${m.id}" style="${cvar(m)}"><span class="eyebrow">${m.eyebrow}</span><h3>${esc(m.short)}</h3><span>${esc(m.question)}</span><span>${done.has(m.id)?"✓ Done":m.take.length+" takeaways · "+m.quiz.length+" quiz questions"}</span></button>`).join("")}</div>
+  <div class="gap"><b>About the sources.</b> Built only from the local lesson notes (README.md and the four lesson files), which summarize each lesson's written summary, plus one line from your Day 4 notes. Lesson videos were not watched; the course pages show no quiz. Quiz questions here are my own. Gaps are flagged per module with ⚠.</div>`;
+}
+
+function viewCheat(){
+  const T=[["Find one fact in a big codebase","Explore / research subagent","Main thread keeps only the answer"],["Review code you just built","Reviewer subagent","Fresh context, team rules in its prompt"],["Copy, styling, other non-code voice","Subagent with a custom prompt","Default prompt is short and code-focused"],["Bug: reproduce → debug → fix","Main thread","Steps depend on each other"],["Run tests to debug a failure","Main thread","You need the full output"],["\"You are a Python expert\"","Don't","Adds no capability"]];
+  return `<div class="mhead" style="--c:var(--accent)"><span class="eyebrow">Review</span><h1>Cheat sheet</h1><p class="question">The whole course on one page.</p></div>
+  <div class="grid2">
+   <div class="panel"><h3>How it works (L1)</h3><ul><li>Own context window; summary only comes back</li><li>Inputs: config system prompt + parent's task prompt</li><li>Built-in: general purpose · Explore · Plan</li></ul></div>
+   <div class="panel"><h3>Create (L2)</h3><ul><li>Ask Claude to write it (wizard removed v2.1.198)</li><li><code>.claude/agents/</code> project · <code>~/.claude/agents/</code> user</li><li>Model: haiku · sonnet · opus · <code>inherit</code></li></ul></div>
+   <div class="panel"><h3>The file (L2)</h3><ul><li><code>name</code> · <code>description</code> (one line) · <code>tools</code> · <code>model</code> · <code>color</code></li><li>Body = system prompt</li><li><code>@agent-&lt;name&gt;</code> · "proactively" for auto</li></ul></div>
+   <div class="panel"><h3>Design (L3)</h3><ul><li>Description steers the brief</li><li>Output format = stopping point</li><li>Obstacles encountered section</li></ul></div>
+   <div class="panel"><h3>Tools by role (L3)</h3><ul><li>Research: Glob · Grep · Read</li><li>Reviewer: + Bash for <code>git diff</code></li><li>Changes code: + Edit · Write</li></ul></div>
+   <div class="panel"><h3>Decide (L4)</h3><ul><li>Intermediate work doesn't matter → subagent</li><li>It matters → main thread</li><li>Test runners did worst in testing</li></ul></div>
+  </div>
+  <section><h2>Subagent or main thread?</h2><div class="tbl"><table><thead><tr><th>Job</th><th>Use</th><th>Why</th></tr></thead><tbody>
+  ${T.map(r=>`<tr><td><b>${r[0]}</b></td><td>${r[1]}</td><td>${r[2]}</td></tr>`).join("")}
+  </tbody></table></div></section>
+  <div class="gap"><b>⚠ Not covered in sources:</b> lesson videos; frontmatter fields beyond the five shown; how subagents run in parallel; course quiz content.</div>`;
+}
+
+function renderNav(cur){
+  $("#navm").innerHTML=M.map(m=>`<li><button data-go="${m.id}" style="${cvar(m)}" aria-current="${cur===m.id}"><span class="dot"></span><span>${esc(m.short)}<span class="sub">${m.sub}</span></span><span class="chk">${done.has(m.id)?"✓":""}</span></button></li>`).join("");
+  $("#navp").innerHTML=PRACTICE.map(p=>`<li><button data-go="${p[0]}" style="--c:var(${p[3]})" aria-current="${cur===p[0]}"><span class="dot"></span><span>${p[1]}<span class="sub">${p[2]}</span></span><span></span></button></li>`).join("");
+  const n=M.filter(m=>done.has(m.id)).length;
+  $("#progtxt").textContent=`${n} of ${M.length} modules done`;
+  $("#progbar").style.width=(n/M.length*100)+"%";
+}
+
+/* ---------- views ---------- */
+function viewModule(m){
+  const z=m.zone?`<div class="continuum"><span class="rail"></span><div class="z"><b>${(m.zl||["Capability zone","Limitation zone"])[0]}</b>${esc(m.zone[0])}</div><div class="z"><b>${(m.zl||["Capability zone","Limitation zone"])[1]}</b>${esc(m.zone[1])}</div></div>`:"";
+  const isDone=done.has(m.id);
+  return `<div class="mhead"><span class="eyebrow">${m.eyebrow}</span>
+   <div class="headrow"><h1>${esc(m.title)}</h1><button class="btn ${isDone?"done":"primary"}" data-done="${m.id}" id="donebtn">${isDone?"✓ Done":"Mark as done"}</button></div>
+   <p class="question">${esc(m.question)}</p></div>${z}
+  <section><h2>Key takeaways <span class="count">${m.take.length}</span></h2><div class="cards">
+   ${m.take.map((t,i)=>`<details class="card" id="${m.id}-t${i}"${i===0?" open":""}><summary><span class="n">${String(i+1).padStart(2,"0")}</span><span>${esc(t[0])}</span><span class="chev">›</span></summary><div class="body"><p>${esc(t[1])}</p>${srcLink(m,t[2])}</div></details>`).join("")}
+  </div></section>
+  <section><h2>How it fits together</h2><figure class="diagram" style="margin:0">${D[m.diagram]}</figure></section>
+  <section><h2>Core concepts <span class="count">${m.concepts.length}</span></h2><dl class="concepts">
+   ${m.concepts.map((c,i)=>`<div id="${m.id}-c${i}"><dt>${esc(c[0])}</dt><dd>${esc(c[1])}</dd></div>`).join("")}</dl></section>
+  <section><h2>Commands, files and prompts</h2>
+   
+   <div class="snips">${m.snips.length?"":`<div class="gap"><b>⚠</b> No prompts in this module's sources.</div>`}${m.snips.map((s,i)=>`<div class="snip" id="${m.id}-s${i}"><header><span>${esc(s[0])}</span><button class="btn copy" data-copy="${m.id}-s${i}">Copy</button></header><pre>${esc(s[1])}</pre><header style="border:0;border-top:1px solid var(--line)"><span>${esc(s[3])}</span>${srcLink(m,s[2])}</header></div>`).join("")}</div></section>
+  <section><h2>Common pitfalls</h2><ul class="pit">${m.pit.map((p,i)=>`<li id="${m.id}-p${i}"><span>${esc(p)}</span></li>`).join("")}</ul></section>
+  <section><h2>Check yourself <span class="score" id="score-${m.id}"></span></h2><div class="quiz">
+   ${m.quiz.map((q,i)=>`<div class="q" data-q="${m.id}:${i}"><p class="stem">${i+1}. ${esc(q[0])}</p><div class="opts">${q[1].map((o,j)=>`<button data-opt="${j}">${esc(o)}</button>`).join("")}</div><div class="expl" hidden></div></div>`).join("")}
+   <button class="btn" data-reset="${m.id}" style="align-self:flex-start">Reset quiz</button></div></section>
+  <section><h2>Gaps in the sources</h2><div style="display:flex;flex-direction:column;gap:8px">${m.gaps.map(g=>`<div class="gap"><b>⚠</b> ${esc(g)}</div>`).join("")}</div></section>
+  <div class="headrow"><span class="prog">Source file: ${m.file}</span><button class="btn ${isDone?"done":"primary"}" data-done="${m.id}">${isDone?"✓ Done":"Mark as done"}</button></div>`;
+}
+
+let FC={deck:[],i:0,filter:"all"};
+function buildDeck(){
+  const all=[];M.forEach(m=>m.concepts.forEach(c=>all.push({m,term:c[0],def:c[1],l:c[2]})));
+  FC.deck=FC.filter==="all"?all:all.filter(x=>x.m.id===FC.filter);FC.i=0;
+}
+function viewFlash(){
+  if(!FC.deck.length) buildDeck();
+  const x=FC.deck[FC.i];
+  return `<div class="mhead" style="--c:var(--accent)"><span class="eyebrow">Practice</span><h1>Flashcards</h1><p class="question">Tap the card (or press Space) to flip. Arrow keys move.</p></div>
+  <div class="fc-tools"><label for="fcf" class="prog">Deck</label><select id="fcf"><option value="all">All modules (${M.reduce((a,m)=>a+m.concepts.length,0)})</option>${M.map(m=>`<option value="${m.id}"${FC.filter===m.id?" selected":""}>${esc(m.short)} (${m.concepts.length})</option>`).join("")}</select><button class="btn" id="fcshuf">Shuffle</button></div>
+  <div class="fcard" id="fcard" tabindex="0" role="button" aria-label="Flip card" style="${cvar(x.m)}"><div class="inner">
+   <div class="face"><span class="tag">${esc(x.m.short)}</span><span class="term">${esc(x.term)}</span><span class="prog">tap to reveal</span></div>
+   <div class="face back"><span class="tag">${esc(x.term)}</span><span class="def">${esc(x.def)}</span>${srcLink(x.m,x.l)}</div></div></div>
+  <div class="fc-nav"><button class="btn" id="fcprev">← Previous</button><span class="score">${FC.i+1} / ${FC.deck.length}</span><button class="btn primary" id="fcnext">Next →</button></div>`;
+}
+
+/* ---------- search ---------- */
+function searchIndex(){
+  const out=[];
+  M.forEach(m=>{
+    m.take.forEach((t,i)=>out.push({m,kind:"Takeaway",title:t[0],text:t[1],el:`${m.id}-t${i}`}));
+    m.concepts.forEach((c,i)=>out.push({m,kind:"Concept",title:c[0],text:c[1],el:`${m.id}-c${i}`}));
+    m.snips.forEach((s,i)=>out.push({m,kind:"Prompt",title:s[0],text:s[1]+" "+s[3],el:`${m.id}-s${i}`}));
+    m.pit.forEach((p,i)=>out.push({m,kind:"Pitfall",title:p,text:"",el:`${m.id}-p${i}`}));
+  });
+  return out;
+}
+const IDX=searchIndex();
+function hl(s,q){return esc(s).replace(new RegExp("("+q.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")+")","ig"),"<mark>$1</mark>")}
+function viewSearch(q){
+  const ql=q.toLowerCase();
+  const hits=IDX.filter(x=>(x.title+" "+x.text).toLowerCase().includes(ql));
+  return `<div class="mhead"><span class="eyebrow">Search</span><h1>${hits.length} result${hits.length===1?"":"s"} for “${esc(q)}”</h1></div>
+  <div class="res">${hits.map(x=>`<button data-jump="${x.m.id}|${x.el}" style="${cvar(x.m)}"><span class="kind">${x.kind} · ${esc(x.m.short)}</span><b>${hl(x.title,q)}</b>${x.text?`<span class="prog">${hl(x.text.slice(0,180),q)}${x.text.length>180?"…":""}</span>`:""}</button>`).join("")||`<p>No matches. Try a property name, “citation”, “cutoff” or “goal”.</p>`}</div>`;
+}
+
+/* ---------- router ---------- */
+let cur="overview";
+function go(id,opts={}){
+  cur=id;save(STORE+"-view",id);
+  const m=M.find(x=>x.id===id);
+  const v=$("#view");
+  if(m){v.style.cssText=cvar(m);v.innerHTML=viewModule(m);restoreQuiz(m)}
+  else if(id==="flashcards"){v.style.cssText="";v.innerHTML=viewFlash()}
+  else if(id==="cheatsheet"){v.style.cssText="";v.innerHTML=viewCheat()}
+  else {cur="overview";v.style.cssText="";v.innerHTML=viewOverview()}
+  renderNav(cur);
+  try{history.replaceState(null,"","#"+cur)}catch(e){}
+  if(!opts.keepScroll) window.scrollTo({top:0});
+}
+
+/* ---------- quiz state (per browser) ---------- */
+let QA=load(STORE+"-quiz",{});
+function answer(qel,j,persist=true){
+  const [mid,i]=qel.dataset.q.split(":");const m=M.find(x=>x.id===mid);const q=m.quiz[+i];
+  qel.querySelectorAll(".opts button").forEach((b,k)=>{b.disabled=true;if(k===q[2])b.classList.add("right");else if(k===j)b.classList.add("wrong")});
+  const e=qel.querySelector(".expl");e.hidden=false;
+  e.innerHTML=`<b>${j===q[2]?"Correct.":"Not quite."}</b> ${esc(q[3])} ${srcLink(m,q[4])}`;
+  if(persist){QA[qel.dataset.q]=j;save(STORE+"-quiz",QA)}
+  updScore(m);
+}
+function updScore(m){
+  const ans=m.quiz.map((q,i)=>QA[m.id+":"+i]);const n=ans.filter(a=>a!==undefined).length;
+  const r=ans.filter((a,i)=>a===m.quiz[i][2]).length;
+  const el=$("#score-"+m.id);if(el)el.textContent=n?`${r}/${n} correct`:`${m.quiz.length} questions`;
+}
+function restoreQuiz(m){m.quiz.forEach((q,i)=>{const a=QA[m.id+":"+i];if(a!==undefined)answer(document.querySelector(`[data-q="${m.id}:${i}"]`),a,false)});updScore(m)}
+
+/* ---------- events ---------- */
+document.addEventListener("click",e=>{
+  const g=e.target.closest("[data-go]");if(g){$("#q").value="";go(g.dataset.go);return}
+  const d=e.target.closest("[data-done]");if(d){const id=d.dataset.done;done.has(id)?done.delete(id):done.add(id);save(STORE+"-done",[...done]);go(id,{keepScroll:true});return}
+  const o=e.target.closest("[data-opt]");if(o&&!o.disabled){answer(o.closest(".q"),+o.dataset.opt);return}
+  const r=e.target.closest("[data-reset]");if(r){const m=M.find(x=>x.id===r.dataset.reset);m.quiz.forEach((q,i)=>delete QA[m.id+":"+i]);save(STORE+"-quiz",QA);go(m.id,{keepScroll:true});return}
+  const c=e.target.closest("[data-copy]");if(c){const txt=document.querySelector("#"+c.dataset.copy+" pre").textContent;
+    const ok=()=>{c.textContent="Copied";setTimeout(()=>c.textContent="Copy",1500)};
+    const fb=()=>{const pre=document.querySelector("#"+c.dataset.copy+" pre");const s=getSelection();const rg=document.createRange();rg.selectNodeContents(pre);s.removeAllRanges();s.addRange(rg);c.textContent="Selected — press ⌘/Ctrl+C"};
+    try{navigator.clipboard.writeText(txt).then(ok,fb)}catch(err){fb()}return}
+  const j=e.target.closest("[data-jump]");if(j){const [mid,el]=j.dataset.jump.split("|");$("#q").value="";go(mid);const t=document.getElementById(el);if(t){if(t.tagName==="DETAILS")t.open=true;t.scrollIntoView({block:"center"});t.classList.add("flash")}return}
+  if(e.target.closest("#fcard")){$("#fcard").classList.toggle("flipped");return}
+  if(e.target.closest("#fcnext")){FC.i=(FC.i+1)%FC.deck.length;go("flashcards",{keepScroll:true});return}
+  if(e.target.closest("#fcprev")){FC.i=(FC.i-1+FC.deck.length)%FC.deck.length;go("flashcards",{keepScroll:true});return}
+  if(e.target.closest("#fcshuf")){for(let i=FC.deck.length-1;i>0;i--){const k=Math.floor(Math.random()*(i+1));[FC.deck[i],FC.deck[k]]=[FC.deck[k],FC.deck[i]]}FC.i=0;go("flashcards",{keepScroll:true});return}
+});
+document.addEventListener("change",e=>{if(e.target.id==="fcf"){FC.filter=e.target.value;buildDeck();go("flashcards",{keepScroll:true})}});
+document.addEventListener("keydown",e=>{
+  if(cur!=="flashcards"||e.target.tagName==="INPUT"||e.target.tagName==="SELECT")return;
+  if(e.key===" "){e.preventDefault();$("#fcard").classList.toggle("flipped")}
+  if(e.key==="ArrowRight")$("#fcnext").click();
+  if(e.key==="ArrowLeft")$("#fcprev").click();
+});
+$("#q").addEventListener("input",e=>{const q=e.target.value.trim();if(q.length>=2){$("#view").style.cssText="";$("#view").innerHTML=viewSearch(q)}else go(cur,{keepScroll:true})});
+
+/* ---------- boot ---------- */
+const h=(location.hash||"").slice(1);
+const valid=id=>M.some(m=>m.id===id)||["overview","flashcards","cheatsheet"].includes(id);
+go(valid(h)?h:(valid(load(STORE+"-view","overview"))?load(STORE+"-view","overview"):"overview"));
+</script>
