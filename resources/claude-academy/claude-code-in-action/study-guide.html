@@ -1,0 +1,777 @@
+<title>Claude Code in action Study Guide</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: fixed module rail on the left, one reading column on the right; each course section owns a hue (Steer the work, Configure Claude, Automate repeat work, Verify and share). */
+:root{
+  --bg:#f4f6f9; --surface:#ffffff; --sunken:#eaeef4; --ink:#18202d; --muted:#596476; --line:#d9dfe8;
+  --accent:#2c56c9; --accent-ink:#ffffff;
+  --p0:#56607a; --p1:#5a48d4; --p2:#0e8576; --p3:#b8700c; --p4:#c03a66;
+  --good:#1e7d4a; --good-bg:#e3f4ea; --bad:#b4322c; --bad-bg:#fbe8e6; --warn:#8a5a00; --warn-bg:#fdf2d8;
+  --f-display:"Bricolage Grotesque", "Avenir Next", "Segoe UI", sans-serif;
+  --f-body:"Atkinson Hyperlegible", "Segoe UI", system-ui, sans-serif;
+  --f-mono:"JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+  --r:10px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0f131a; --surface:#161b24; --sunken:#1d2330; --ink:#e5e9f0; --muted:#9ba5b6; --line:#2a3242;
+  --accent:#7d9dff; --accent-ink:#0f131a;
+  --p0:#a3abc0; --p1:#a093ff; --p2:#3cc5b0; --p3:#e7a845; --p4:#f27ba1;
+  --good:#5fd394; --good-bg:#15301f; --bad:#ff8a80; --bad-bg:#3a1c1a; --warn:#f0c160; --warn-bg:#352a12;
+  color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f131a; --surface:#161b24; --sunken:#1d2330; --ink:#e5e9f0; --muted:#9ba5b6; --line:#2a3242;
+  --accent:#7d9dff; --accent-ink:#0f131a;
+  --p0:#a3abc0; --p1:#a093ff; --p2:#3cc5b0; --p3:#e7a845; --p4:#f27ba1;
+  --good:#5fd394; --good-bg:#15301f; --bad:#ff8a80; --bad-bg:#3a1c1a; --warn:#f0c160; --warn-bg:#352a12;
+  color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.55}
+button{font:inherit;color:inherit}
+a{color:var(--accent)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
+h1,h2,h3{font-family:var(--f-display);line-height:1.15;text-wrap:balance;margin:0}
+.app{display:grid;grid-template-columns:270px minmax(0,1fr);min-height:100vh}
+/* Sidebar */
+.side{position:sticky;top:0;height:100vh;overflow-y:auto;border-right:1px solid var(--line);background:var(--surface);
+  padding-block:20px;padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:16px;display:flex;flex-direction:column;gap:18px}
+.brand{font-family:var(--f-display);font-weight:700;font-size:19px;line-height:1.2}
+.brand small{display:block;font-family:var(--f-body);font-weight:400;font-size:13px;color:var(--muted);margin-top:4px}
+.search{position:relative}
+.search input{width:100%;padding:9px 12px 9px 34px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);font:inherit;font-size:15px}
+.search svg{position:absolute;left:10px;top:50%;transform:translateY(-50%);width:16px;height:16px;stroke:var(--muted);fill:none}
+.prog{font-size:13px;color:var(--muted)}
+.prog .bar{height:6px;border-radius:3px;background:var(--sunken);margin-top:6px;overflow:hidden}
+.prog .bar i{display:block;height:100%;background:var(--accent);width:0;transition:width .3s}
+.navlabel{font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);margin:0 0 6px}
+.nav{display:flex;flex-direction:column;gap:2px;list-style:none;margin:0;padding:0}
+.nav button{width:100%;text-align:left;background:none;border:0;padding:8px 10px;border-radius:8px;cursor:pointer;display:grid;grid-template-columns:10px 1fr auto;gap:10px;align-items:center;font-size:15px}
+.nav button:hover{background:var(--sunken)}
+.nav button[aria-current="true"]{background:var(--sunken);font-weight:700}
+.nav .dot{width:10px;height:10px;border-radius:50%;background:var(--c)}
+.nav .sub{display:block;font-size:12px;color:var(--muted);font-weight:400}
+.nav .chk{font-size:13px;color:var(--good)}
+/* Main */
+main{min-width:0;padding-block:28px 64px;padding-left:max(16px, 4vw);padding-right:max(16px, env(safe-area-inset-right, 0px), 4vw)}
+.wrap{max-width:860px;margin:0 auto;display:flex;flex-direction:column;gap:32px}
+.eyebrow{font-size:12px;letter-spacing:.09em;text-transform:uppercase;color:var(--c, var(--muted));font-weight:700}
+.mhead{display:flex;flex-direction:column;gap:10px}
+.mhead h1{font-size:clamp(28px,4vw,40px)}
+.question{font-size:19px;color:var(--muted);font-style:italic;margin:0}
+.headrow{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between}
+.btn{border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:8px 14px;cursor:pointer;font-size:14px}
+.btn:hover{border-color:var(--accent)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink);font-weight:700}
+.btn.done{background:var(--good-bg);border-color:var(--good);color:var(--good);font-weight:700}
+/* Continuum */
+.continuum{display:grid;grid-template-columns:1fr 1fr;gap:0;border-radius:var(--r);overflow:hidden;border:1px solid var(--line)}
+.continuum .rail{grid-column:1/-1;height:8px;background:linear-gradient(90deg,var(--c),color-mix(in srgb,var(--c) 15%,var(--surface)))}
+.continuum div.z{padding:12px 14px;background:var(--surface);font-size:15px}
+.continuum div.z+div.z{border-left:1px dashed var(--line);text-align:right}
+.continuum b{display:block;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+section h2{font-size:21px;margin-bottom:12px;display:flex;align-items:baseline;gap:10px}
+section h2 .count{font-family:var(--f-mono);font-size:13px;color:var(--muted);font-weight:400}
+/* Takeaway cards */
+.cards{display:flex;flex-direction:column;gap:8px}
+details.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r)}
+details.card[open]{border-color:color-mix(in srgb,var(--c) 45%,var(--line))}
+details.card summary{cursor:pointer;list-style:none;padding:13px 16px;display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:start;font-weight:700}
+details.card summary::-webkit-details-marker{display:none}
+details.card summary .n{font-family:var(--f-mono);font-size:13px;color:var(--c);padding-top:2px;font-weight:500}
+details.card summary .chev{transition:transform .2s;color:var(--muted)}
+details.card[open] summary .chev{transform:rotate(90deg)}
+details.card .body{padding:0 16px 14px 46px;display:flex;flex-direction:column;gap:8px}
+details.card .body p{margin:0;max-width:65ch}
+.src{font-family:var(--f-mono);font-size:12px;color:var(--muted);text-decoration:none;align-self:flex-start;border-bottom:1px dotted var(--muted)}
+.src:hover{color:var(--accent);border-color:var(--accent)}
+.flash{animation:flash 1.6s ease-out}
+@keyframes flash{0%{box-shadow:0 0 0 3px var(--accent)}100%{box-shadow:0 0 0 0 transparent}}
+/* Concepts */
+dl.concepts{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px;margin:0}
+dl.concepts div{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:12px 14px}
+dl.concepts dt{font-weight:700;margin-bottom:2px}
+dl.concepts dd{margin:0;color:var(--muted);font-size:15px}
+/* Diagram */
+.diagram{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px;overflow-x:auto}
+.diagram svg{display:block;min-width:600px;width:100%;height:auto}
+.diagram figcaption{font-size:14px;color:var(--muted);margin-top:8px}
+svg .bx{fill:var(--sunken);stroke:var(--line)}
+svg .bxc{fill:color-mix(in srgb,var(--c) 14%,var(--surface));stroke:var(--c)}
+svg .t{fill:var(--ink);font-family:var(--f-body);font-size:14px}
+svg .tb{fill:var(--ink);font-family:var(--f-body);font-size:14px;font-weight:700}
+svg .tm{fill:var(--muted);font-family:var(--f-body);font-size:12px}
+svg .ln{stroke:var(--muted);stroke-width:1.5;fill:none}
+svg .lc{stroke:var(--c);stroke-width:2.5;fill:none}
+svg .dash{stroke-dasharray:5 4}
+svg .ac{fill:var(--muted)}
+svg .acc{fill:var(--c)}
+/* Snippets */
+.snips{display:flex;flex-direction:column;gap:10px}
+.snip{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.snip header{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:8px 12px;border-bottom:1px solid var(--line);font-size:13px;color:var(--muted);flex-wrap:wrap}
+.snip pre{margin:0;padding:12px 14px;font-family:var(--f-mono);font-size:13.5px;white-space:pre-wrap;word-break:break-word;background:var(--sunken)}
+.copy{font-size:12px;padding:4px 10px}
+/* Pitfalls & gaps */
+ul.pit{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:8px}
+ul.pit li{padding:10px 14px;border-radius:8px;background:var(--bad-bg);color:var(--ink);display:grid;grid-template-columns:auto 1fr;gap:10px}
+ul.pit li::before{content:"✕";color:var(--bad);font-weight:700}
+.gap{background:var(--warn-bg);color:var(--ink);border-radius:8px;padding:10px 14px;font-size:15px}
+.gap b{color:var(--warn)}
+/* Quiz */
+.quiz{display:flex;flex-direction:column;gap:14px}
+.q{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px}
+.q p.stem{margin:0 0 10px;font-weight:700}
+.opts{display:flex;flex-direction:column;gap:6px}
+.opts button{text-align:left;border:1px solid var(--line);background:var(--bg);border-radius:8px;padding:9px 12px;cursor:pointer;font-size:15px}
+.opts button:hover:not(:disabled){border-color:var(--accent)}
+.opts button:disabled{cursor:default}
+.opts button.right{background:var(--good-bg);border-color:var(--good)}
+.opts button.wrong{background:var(--bad-bg);border-color:var(--bad)}
+.expl{margin-top:10px;font-size:15px;padding:10px 12px;border-radius:8px;background:var(--sunken)}
+.score{font-family:var(--f-mono);font-size:13px;color:var(--muted)}
+/* Flashcards */
+.fc-tools{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.fc-tools select{padding:8px 10px;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font:inherit;font-size:14px}
+.fcard{perspective:1200px;cursor:pointer;min-height:260px}
+.fcard .inner{position:relative;width:100%;min-height:260px;transition:transform .5s;transform-style:preserve-3d}
+.fcard.flipped .inner{transform:rotateY(180deg)}
+.fcard .face{position:absolute;inset:0;backface-visibility:hidden;border-radius:14px;border:1px solid var(--line);background:var(--surface);display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:28px;gap:10px}
+.fcard .face.back{transform:rotateY(180deg);background:var(--sunken)}
+.fcard .term{font-family:var(--f-display);font-size:clamp(26px,5vw,36px);font-weight:700}
+.fcard .def{font-size:18px;max-width:46ch}
+.fcard .tag{font-size:12px;letter-spacing:.09em;text-transform:uppercase;font-weight:700;color:var(--c)}
+.fc-nav{display:flex;justify-content:space-between;align-items:center;gap:10px}
+/* Cheat sheet */
+.tbl{overflow-x:auto;border:1px solid var(--line);border-radius:var(--r);background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:720px;font-size:14.5px}
+th,td{padding:10px 12px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line)}
+th{font-size:12px;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);background:var(--sunken)}
+tr:last-child td{border-bottom:0}
+td .pname{font-weight:700;color:var(--c);display:block}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px}
+.panel h3{font-size:16px;margin-bottom:8px}
+.panel ul{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:4px;font-size:15px}
+/* Search results */
+.res{display:flex;flex-direction:column;gap:8px}
+.res button{text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:12px 14px;cursor:pointer;display:flex;flex-direction:column;gap:4px}
+.res button:hover{border-color:var(--accent)}
+.res .kind{font-size:12px;color:var(--c);font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+mark{background:color-mix(in srgb,var(--accent) 25%,transparent);color:inherit;border-radius:2px}
+.intro p{max-width:65ch;margin:0}
+.overview{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+.ovc{text-align:left;background:var(--surface);border:1px solid var(--line);border-top:4px solid var(--c);border-radius:var(--r);padding:14px 16px;cursor:pointer;display:flex;flex-direction:column;gap:6px}
+.ovc:hover{border-color:var(--c)}
+.ovc h3{font-size:18px}
+.ovc span{font-size:14px;color:var(--muted)}
+@media (max-width:860px){
+  .app{grid-template-columns:minmax(0,1fr)}
+  .side{position:static;height:auto;border-right:0;border-bottom:1px solid var(--line);padding-right:max(16px, env(safe-area-inset-right, 0px))}
+  .nav{flex-direction:row;overflow-x:auto;gap:6px;padding-bottom:4px}
+  .nav li{flex:0 0 auto}
+  .nav button{grid-template-columns:10px auto auto;white-space:nowrap;border:1px solid var(--line)}
+  .nav .sub{display:none}
+  .continuum{grid-template-columns:1fr}
+  .continuum div.z+div.z{border-left:0;border-top:1px dashed var(--line);text-align:left}
+  details.card .body{padding-left:16px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+
+<div class="app">
+  <aside class="side">
+    <div class="brand">Claude Code in action<small>Claude Academy · study guide</small></div>
+    <div class="search">
+      <svg viewBox="0 0 24 24" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>
+      <input id="q" type="search" placeholder="Search the course…" aria-label="Search the course" autocomplete="off">
+    </div>
+    <div class="prog"><span id="progtxt">0 of 9 modules done</span><div class="bar"><i id="progbar"></i></div></div>
+    <div>
+      <p class="navlabel">Modules</p>
+      <ul class="nav" id="navm"></ul>
+    </div>
+    <div>
+      <p class="navlabel">Practice &amp; review</p>
+      <ul class="nav" id="navp"></ul>
+    </div>
+  </aside>
+  <main><div class="wrap" id="view"></div></main>
+</div>
+
+<script>
+const STORE="ccia";
+/* ---------- storage ---------- */
+function load(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}}
+function save(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
+let done=new Set(load(STORE+"-done",[]));
+
+/* ---------- helpers ---------- */
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+function srcLink(m,lesson){
+  if(typeof lesson==="string") return `<span class="src">${esc(lesson)}</span>`;
+  const [name,slug]=LESSONS[lesson];
+  return `<a class="src" href="${BASE+slug}" target="_blank" rel="noopener" title="Local notes: ${m.file}">${m.file} · L${lesson} ${esc(name)} ↗</a>`;
+}
+function cvar(m){return `--c:var(${m.c})`}
+
+/* ---------- diagrams ---------- */
+const AR=`<defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" class="ac"/></marker><marker id="ahc" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" class="acc"/></marker></defs>`;
+const BASE="https://academy.claude.com/courses/claude-code-in-action/";
+const LESSONS={1:["Steering long sessions","steering-long-sessions"],2:["A CLAUDE.md that follows","a-claude-md-that-follows"],3:["Verification skills","verification-skills"],4:["Permission modes","permission-modes"],5:["Hooks","hooks"],6:["Scheduled tasks and headless","routines-and-headless"],7:["GitHub Actions and Code Review","github-actions-and-code-review"],8:["Trust it: Verifying unsupervised runs","trust-it-verifying-unsupervised-runs"],9:["Plugins","plugins"]};
+const NOTES={readme:"claude-code-in-action/README.md · course in one page"};
+
+const M=[
+{id:"steer",c:"--p1",short:"Steering long sessions",sub:"Steer the work · L1",eyebrow:"Lesson 1 · Steer the work",title:"Steering long sessions",file:"01-steer-the-work.md",
+ question:"How do I keep a multi-hour run on course without babysitting it?",
+ take:[
+  ["Scope first, then steer","Long tasks drag when you keep correcting Claude. Two habits fix most of it: scope the work before Claude starts, and steer it while it runs.",1],
+  ["Plan mode is the cheap place to fix things","Claude reads the code and proposes a plan without editing source files. Read the plan properly and ask for what is missing; changing a plan costs far less than cleaning up a bad run.",1],
+  ["Tell /compact what to keep","Compaction replaces the conversation with a summary, and details can drop out. Text after the command shapes the summary, e.g. /compact Focus on the --version flag implementation.",1],
+  ["Rewind instead of arguing","Every prompt is a checkpoint. Esc Esc on an empty prompt opens rewind: restore code, conversation or both, or summarize from or up to a checkpoint.",1],
+  ["Goal and loop for autonomy","/goal keeps Claude working until an evaluator confirms a condition visible in the transcript. /loop reruns a prompt on a fixed or self-paced interval, e.g. to poll CI.",1],
+  ["Worktrees for parallel sessions","Each session gets its own file tree so they cannot clobber each other. .worktreeinclude copies git-ignored files such as an env file into each worktree.",1]
+ ],
+ concepts:[
+  ["Plan mode","Claude researches and proposes a plan without editing source files.",1],
+  ["Directed compaction","/compact followed by instructions that decide what the summary keeps.",1],
+  ["Checkpoint","Created by every user prompt; rewind returns to it.",1],
+  ["/goal","Completion condition; Claude keeps working until a fast evaluator confirms it from the transcript.",1],
+  ["/loop","Runs a prompt on an interval between turns, fixed or self-paced.",1],
+  [".worktreeinclude","Repo-root list of git-ignored files to copy into each worktree.",1]
+ ],
+ snips:[
+  ["Directed compact","/compact Focus on the --version flag implementation",1,"Free context but keep the part you still need"],
+  ["Goal","/goal all tests in src/billing pass, and the type checker reports zero errors",1,"You can describe done better than the steps"],
+  ["Cancel a goal","/goal clear",1,"Stop a goal run"]
+ ],
+ pit:[
+  "Running bare /compact and losing the detail you still needed.",
+  "Writing a /goal condition the evaluator cannot see in the transcript (it does not run anything itself).",
+  "Running two sessions in the same checkout and letting them overwrite each other.",
+  "Skimming the plan, then fixing the result by hand."
+ ],
+ gaps:["The lesson video was not read; notes come from the lesson text."],
+ diagram:"steer",
+ quiz:[
+  ["What does plan mode do?",["Edits files faster","Researches and proposes a plan without editing source files","Skips permission prompts","Runs tests automatically"],1,"It hands you a plan to review first.",1],
+  ["Why add text after /compact?",["It renames the session","It shapes what the summary keeps","It disables compaction","It is required syntax"],1,"Your steering wheel for context.",1],
+  ["How do you open the rewind menu?",["Ctrl+R","Esc twice on an empty prompt","/undo","Shift+Tab"],1,"Every prompt is a checkpoint.",1],
+  ["What limits a /goal condition?",["It must be under 10 words","The evaluator only reads the transcript","It only works in plan mode","It expires after one hour"],1,"Make it checkable from output, e.g. test results.",1],
+  ["How long does a fixed-interval /loop run if not cancelled?",["One hour","Until the next commit","Seven days","Forever"],2,"Esc stops a self-paced loop while it waits.",1]
+ ]},
+{id:"claudemd",c:"--p2",short:"A CLAUDE.md that follows",sub:"Configure Claude · L2",eyebrow:"Lesson 2 · Configure Claude",title:"A CLAUDE.md Claude actually follows",file:"02-configure-claude.md",
+ question:"Why does Claude ignore parts of my CLAUDE.md, and how do I fix it?",
+ take:[
+  ["Guidance, not enforced config","Every line competes with every other line for attention. The longer the file, the less reliably any one rule is followed. Leaner file, more of it followed.",2],
+  ["Hard rules belong in hooks","A rule like never push to main should be a PreToolUse hook that can actually block the action. Keep CLAUDE.md for softer conventions.",2],
+  ["Four locations stack","Managed policy (org, cannot be excluded), user (all your projects), project (shared in the repo) and local (git-ignored, just you in this repo) all load at launch.",2],
+  ["Imports organize, they do not shrink","@path imports are expanded inline at launch, so the same amount of text still loads.",2],
+  ["Phrase rules so they stick","Make them specific and checkable, name the replacement instead of only banning something, and spend emphasis words on two or three rules only.",2],
+  ["Keep revising","Treat each wrong action as a bug report against the file. Ask Claude to add the rule. Delete any line you cannot justify.",2]
+ ],
+ concepts:[
+  ["Managed policy CLAUDE.md","Org-level file controlled by the platform team; always loaded.",2],
+  ["Local CLAUDE.md","Git-ignored notes for one repo, only for you.",2],
+  ["@import","Line that pulls another file inline into CLAUDE.md at launch.",2],
+  ["Emphasis budget","IMPORTANT or YOU MUST only work when few rules use them.",2],
+  ["Name the replacement","Say what to do instead: use named exports, not default exports.",2]
+ ],
+ snips:[
+  ["Split with imports","@.claude/conventions/code-style.md\n@.claude/conventions/testing.md",2,"Long project file; organize only"],
+  ["Specific rule","Put new API routes in src/api/handlers, one per file.",2,"Instead of follow best practices"]
+ ],
+ pit:[
+  "Adding a rule for every problem until the file competes with itself.",
+  "Using imports to cut context; everything still loads.",
+  "Putting dangerous-action rules in CLAUDE.md instead of a hook.",
+  "Marking every rule IMPORTANT."
+ ],
+ gaps:["The lesson video was not read."],
+ diagram:"claudemd",
+ quiz:[
+  ["Where should a never-push-to-main rule live?",["Project CLAUDE.md","Local CLAUDE.md","A PreToolUse hook","A skill"],2,"A hook can block the action.",2],
+  ["Which CLAUDE.md is git-ignored and just for you in one repo?",["Managed policy","User","Project","Local"],3,"Good for notes on your own branch.",2],
+  ["What do @imports change about context?",["They halve it","Nothing; files expand inline at launch","They load lazily","They move text to a subagent"],1,"Organize, don't shrink.",2],
+  ["Which rule is best phrased?",["Follow best practices","Don't use default exports","Use named exports, not default exports","Write clean code"],2,"Specific and names the replacement.",2],
+  ["Why limit IMPORTANT and YOU MUST?",["They cost tokens","Emphasis only works relative to quieter rules","Claude rejects them","They break imports"],1,"Spend it on the rules that hurt most.",2]
+ ]},
+{id:"skills",c:"--p2",short:"Verification skills",sub:"Configure Claude · L3",eyebrow:"Lesson 3 · Configure Claude",title:"Verification skills",file:"02-configure-claude.md",
+ question:"Which skill should I build first, and what goes in it?",
+ take:[
+  ["Build a verification skill first","Hand checking depends on you remembering to ask. A skill whose description matches finished work triggers by itself and runs the same steps every time.",3],
+  ["The four steps","Run the test suite, read the diff, check no test was weakened to pass, report pass or fail with evidence.",3],
+  ["Done means gates observed","Green tests are not enough, because a test can be loosened until it always passes. Done is gates run, observed and stated.",3],
+  ["Keep SKILL.md lean","Put detail in a linked reference.md that Claude reads only when needed, and tooling in scripts like check.sh that Claude executes rather than loads.",3],
+  ["Pick the right surface","Always-on conventions go in CLAUDE.md, task procedures in a skill, and anything that must never be skipped in a hook.",3]
+ ],
+ concepts:[
+  ["Verification skill","Skill that runs tests, reads the diff, checks for weakened tests and reports with evidence.",3],
+  ["Skill description","The text that triggers a skill; only descriptions sit in context until needed.",3],
+  ["reference.md","Side file linked from SKILL.md for depth, read on demand.",3],
+  ["Skill script","Executable in the skill folder that Claude runs instead of loading into context.",3]
+ ],
+ snips:[
+  ["Team location",".claude/skills/",3,"Check the skill in so the whole team inherits it"]
+ ],
+ pit:[
+  "Trusting a green test run without reading whether tests were weakened.",
+  "Stuffing long explanations and scripts into SKILL.md itself.",
+  "Using a skill for a rule that must never be skipped."
+ ],
+ gaps:["The lesson video was not read.","Exact SKILL.md frontmatter fields are not in the notes."],
+ diagram:"skills",
+ quiz:[
+  ["What triggers a skill automatically?",["A cron schedule","Its description matching the work","A hook exit code","The file name"],1,"Only descriptions load until needed.",3],
+  ["Why read the diff after tests pass?",["To count lines","To check no test was weakened to pass","To format code","To find TODOs"],1,"A loosened test always passes.",3],
+  ["What happens to a script in a skill folder?",["It is loaded into context","Claude executes it","It is ignored","It becomes a hook"],1,"Keeps context small.",3],
+  ["A rule that must never be skipped belongs in…",["CLAUDE.md","A skill","A hook","reference.md"],2,"Hooks are code that runs.",3]
+ ]},
+{id:"modes",c:"--p2",short:"Permission modes",sub:"Configure Claude · L4",eyebrow:"Lesson 4 · Configure Claude",title:"Permission modes",file:"02-configure-claude.md",
+ question:"Which mode fits which job?",
+ take:[
+  ["Decide trust once","A permission mode sets what runs without asking. Shift+Tab cycles manual, accept edits, plan and auto; the status bar shows the current one.",4],
+  ["Six modes","Manual (reads only), accept edits (reads, edits, common fs commands), plan (no edits), auto (classifier reviews most actions), don't ask (prompts become denials), bypass permissions (no checks).",4],
+  ["Auto guards intent","The classifier blocks production deploys and migrations, force push, piping downloads into a shell, sending sensitive data out and destroying pre-existing files. It allows local edits, lock-file installs and pushing your own branch.",4],
+  ["Intent is not correctness","Broken code is not dangerous, so the classifier passes it. Pair auto with a Stop hook that runs tests.",4],
+  ["Don't ask for pipelines","With nobody to approve, anything that would prompt is denied so CI, scheduled and overnight jobs never hang. Bypass belongs only in an isolated container or VM.",4]
+ ],
+ concepts:[
+  ["Accept edits mode","Reads, file edits and common fs bash commands run without asking.",4],
+  ["Auto mode","Everything runs, but a separate classifier model reviews most actions first.",4],
+  ["Don't ask mode","Reads and pre-approved tools run; anything that would prompt is auto-denied.",4],
+  ["Bypass permissions","No checks at all; same as --dangerously-skip-permissions.",4],
+  ["Auto-mode classifier","Model that checks actions for escalation beyond what you asked.",4]
+ ],
+ snips:[],
+ pit:[
+  "Expecting auto mode to catch broken code.",
+  "Running bypass permissions on your own machine instead of an isolated container.",
+  "Leaving a CI job in a mode that waits for approval."
+ ],
+ gaps:["The lesson video was not read.","The current block and allow lists change; check the docs."],
+ diagram:"modes",
+ quiz:[
+  ["Which mode suits an overnight CI batch with no human?",["Manual","Plan","Don't ask","Accept edits"],2,"Prompts become denials, nothing hangs.",4],
+  ["What does the auto classifier check?",["Code correctness","Intent: actions beyond what you asked","Style","Test coverage"],1,"Pair it with a test-running Stop hook.",4],
+  ["Which action would auto mode block?",["Installing from the lock file","Local edits","Force pushing","Pushing your own branch"],2,"Also production deploys and piping downloads into a shell.",4],
+  ["Where is bypass permissions acceptable?",["Anywhere","On main only","Inside an isolated container or VM","In plan mode"],2,"It skips all checks.",4],
+  ["Which mode runs reads, file edits and common fs commands without asking?",["Accept edits","Plan","Manual","Don't ask"],0,"For iterating on code you review after.",4]
+ ]},
+{id:"hooks",c:"--p2",short:"Hooks",sub:"Configure Claude · L5",eyebrow:"Lesson 5 · Configure Claude",title:"Hooks",file:"02-configure-claude.md",
+ question:"How do I make a rule Claude cannot skip?",
+ take:[
+  ["Usually versus always","A CLAUDE.md rule is a request. A hook is deterministic code at a fixed point in the loop, so Claude cannot skip it.",5],
+  ["The events to know","PreToolUse (enforce), PostToolUse (format, lint), Stop and SubagentStop (refuse done), Pre/PostCompact, InstructionsLoaded (audit context), SessionStart (prime the environment).",5],
+  ["PreToolUse speaks JSON","Print JSON and exit 0 with permissionDecision allow, deny or ask. updatedInput rewrites the call, but replaces the whole input object, so echo unchanged fields.",5],
+  ["Exit 2 blocks, exit 1 does not","Exit 0 is success, 2 is a blocking error with stderr sent to Claude, anything else (including 1) is logged and Claude carries on.",5],
+  ["Redact instead of block","A PreToolUse hook on Bash can swap an sk_live_ secret for a placeholder so the command still runs without leaking it.",5],
+  ["Restore state after compaction","Use SessionStart with the compact matcher, not PostCompact, to print a summary of files in progress back into context.",5]
+ ],
+ concepts:[
+  ["PreToolUse","Fires before a tool call; can allow, deny, ask or rewrite it.",5],
+  ["PostToolUse","Fires after a successful tool call; too late to block, can feed text back.",5],
+  ["Stop hook","Fires when Claude wants to end its turn; exit 2 says not done yet.",5],
+  ["permissionDecision","PreToolUse JSON field: allow, deny, ask (or defer for -p runs).",5],
+  ["updatedInput","PreToolUse JSON field that replaces the tool input to rewrite a call.",5]
+ ],
+ snips:[
+  ["Deny decision","{\"hookSpecificOutput\":{\"hookEventName\":\"PreToolUse\",\"permissionDecision\":\"deny\",\"permissionDecisionReason\":\"...\"}}",5,"Block a tool call with a reason"]
+ ],
+ pit:[
+  "Exiting 1 to block: it does not block.",
+  "Using PostCompact to re-inject context; its output does not reach the conversation.",
+  "Returning updatedInput with only the changed field and losing the rest.",
+  "Expecting PostToolUse to prevent the call."
+ ],
+ gaps:["The lesson video was not read.","The full list of about 30 events is not in the notes."],
+ diagram:"hooks",
+ quiz:[
+  ["Which exit code blocks and sends stderr to Claude?",["0","1","2","127"],2,"Exit 1 is non-blocking.",5],
+  ["How do you re-inject context after compaction?",["PostCompact hook","SessionStart with the compact matcher","PreCompact hook","Stop hook"],1,"Only SessionStart output returns to the conversation.",5],
+  ["What is the catch with updatedInput?",["It only works on Read","It replaces the whole input object","It needs exit 2","It is ignored in auto mode"],1,"Echo back unchanged fields.",5],
+  ["Where does auto-format usually go?",["PreToolUse","PostToolUse","SessionStart","Notification"],1,"After a successful edit.",5],
+  ["On which event is plain stdout added to context?",["PostToolUse","Stop","SessionStart","Notification"],2,"Also UserPromptSubmit and UserPromptExpansion.",5]
+ ]},
+{id:"headless",c:"--p3",short:"Scheduled tasks & headless",sub:"Automate repeat work · L6",eyebrow:"Lesson 6 · Automate repeat work",title:"Scheduled tasks and headless",file:"03-automate-repeat-work.md",
+ question:"How do I stop starting the same prompt by hand?",
+ take:[
+  ["A spectrum of control","From cloud scheduled tasks (build nothing, Anthropic hosts it) to headless mode and the Agent SDK (your own code). Start at the build-nothing end.",6],
+  ["Cloud scheduled task","Prompt + repository + connectors + trigger, run on Anthropic's infrastructure. Triggers: cron, HTTP POST, or a GitHub event. Create at claude.ai/code/routines or with /schedule.",6],
+  ["Know the limits","Research preview, at most hourly, fresh clone of the default branch and pushes to a claude/ branch. Restrict pushes with GitHub branch protection or rulesets.",6],
+  ["Headless with -p","claude -p runs one shot with no UI, reads stdin and writes stdout. It still loads hooks, skills, plugins, MCP and CLAUDE.md.",6],
+  ["Structured output and sessions","--output-format json with --json-schema puts the result in structured_output. Save session_id and continue later with --resume.",6],
+  ["--bare for CI, SDK for products","--bare skips auto-discovery for an identical, faster setup and needs ANTHROPIC_API_KEY. The Agent SDK embeds the same engine in TypeScript or Python via query().",6]
+ ],
+ concepts:[
+  ["Cloud scheduled task","Saved prompt, repo, connectors and trigger run in the cloud (formerly routines).",6],
+  ["/schedule","Creates a cloud scheduled task from the terminal in plain language.",6],
+  ["claude -p","Non-interactive one-shot run that pipes like a shell tool.",6],
+  ["--bare","Skips auto-discovery of hooks, skills, plugins, MCP and CLAUDE.md.",6],
+  ["Agent SDK","TypeScript/Python library exposing query() with the CLI's primitives.",6]
+ ],
+ snips:[
+  ["Schedule","/schedule daily dependency audit at 9am",6,"Recurring prompt, nothing to host"],
+  ["Headless","claude -p \"summarize the changes in this diff\"",6,"One-shot in a script"],
+  ["Structured","claude -p \"...\" --output-format json --json-schema '<schema>' | jq '.structured_output'",6,"Data for the next script"],
+  ["Resume","claude --resume \"$(jq -r .session_id /tmp/plan.json)\"",6,"Plan in one step, execute in another"]
+ ],
+ pit:[
+  "Expecting a cloud scheduled task to run more often than hourly.",
+  "Assuming -p runs clean; it loads your hooks and CLAUDE.md unless you add --bare.",
+  "Using --bare without setting ANTHROPIC_API_KEY.",
+  "Trusting a branch rule that your connected GitHub access can bypass."
+ ],
+ gaps:["The lesson video was not read.","Agent SDK option names beyond allowedTools are not in the notes."],
+ diagram:"headless",
+ quiz:[
+  ["Which is NOT a cloud scheduled task trigger?",["Cron schedule","HTTP POST","GitHub event","A file change on your laptop"],3,"It runs on Anthropic's infrastructure.",6],
+  ["What is the most frequent recurring schedule?",["Every minute","Every 15 minutes","Hourly","Daily"],2,"Research preview limit.",6],
+  ["Where does the schema-matching object land?",["stdout text","structured_output","session_id","result.md"],1,"Extract it with jq.",6],
+  ["What does --bare skip?",["The model","Auto-discovery of hooks, skills, plugins, MCP and CLAUDE.md","The API key","JSON output"],1,"Same setup on every machine.",6],
+  ["When should you choose the Agent SDK?",["For a daily audit","When the work belongs inside your own product","For PR reviews","Never"],1,"Same engine, callable from your app.",6]
+ ]},
+{id:"github",c:"--p3",short:"GitHub Actions & Code Review",sub:"Automate repeat work · L7",eyebrow:"Lesson 7 · Automate repeat work",title:"GitHub Actions and Code Review",file:"03-automate-repeat-work.md",
+ question:"How do I put Claude to work on pull requests?",
+ take:[
+  ["Two paths","Code Review is a managed service you switch on. claude-code-action is a GitHub Action you wire up for anything beyond review.",7],
+  ["Code Review setup","A Claude org Owner turns on Allow code review, installs the GitHub app, picks repos and timing: once on open, every push, or on an @claude review comment.",7],
+  ["What it does and doesn't","Review agents read the diff against the whole codebase and post ranked, deduplicated inline findings with severity. It never approves, blocks or pushes fixes. Team and Enterprise only.",7],
+  ["Check fixes locally","Run /code-review in your terminal before pushing; --fix applies its findings to your working tree.",7],
+  ["The action","Set up with /install-github-app (repo admin). Key inputs: anthropic_api_key, trigger_phrase, prompt, claude_args, and use_bedrock/use_vertex/use_foundry.",7],
+  ["Tune with claude_args","--max-turns caps the loop; use a non-prompting permission mode and only the tools the job needs, read-only for reports.",7]
+ ],
+ concepts:[
+  ["Code Review (managed)","Anthropic-hosted PR review via the Claude GitHub app, posting inline findings.",7],
+  ["claude-code-action@v1","GitHub Action that runs Claude Code on comments, schedules or any event.",7],
+  ["/install-github-app","Sets up the GitHub app and API key secret for the action.",7],
+  ["trigger_phrase","Comment phrase the action listens for; default @claude.",7],
+  ["prompt input","Makes the action run on the event without waiting for a mention.",7]
+ ],
+ snips:[
+  ["Mention step","- uses: anthropics/claude-code-action@v1\n  with:\n    anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}\n    trigger_phrase: \"@claude\"\n    claude_args: \"--max-turns 5\"",7,".github/workflows/claude.yaml"],
+  ["Local review","/code-review --fix",7,"Check your fix before pushing"]
+ ],
+ pit:[
+  "Expecting Code Review to approve or block a PR.",
+  "Waiting for Code Review to push fixes; it only posts findings.",
+  "Forgetting id-token: write in the workflow permissions.",
+  "Giving a report job write tools it does not need."
+ ],
+ gaps:["The lesson video was not read.","Full workflow YAML beyond the core step is not in the notes."],
+ diagram:"github",
+ quiz:[
+  ["What does managed Code Review never do?",["Post inline comments","Approve or block a PR","Rank findings","Read the full codebase"],1,"Judgment stays with a human.",7],
+  ["Which command sets up the GitHub Action?",["/schedule","/install-github-app","/plugin install","/code-review"],1,"Needs repo admin.",7],
+  ["What makes the action run without an @claude mention?",["trigger_phrase","prompt","github_token","use_vertex"],1,"Otherwise it waits for the phrase.",7],
+  ["What does --max-turns in claude_args do?",["Sets the model","Caps the agent loop","Limits comments","Sets the schedule"],1,"So it cannot run forever.",7],
+  ["Where do you read a scheduled action's rollup?",["A PR comment","The run log","Email","Slack"],1,"Scheduled runs post no comment.",7]
+ ]},
+{id:"verify",c:"--p4",short:"Verifying unsupervised runs",sub:"Verify and share · L8",eyebrow:"Lesson 8 · Verify and share",title:"Trust it: verifying unsupervised runs",file:"04-verify-and-share.md",
+ question:"How do I check work I didn't watch?",
+ take:[
+  ["Verify in proportion","The less you watched, the more you verify. A short watched session needs a glance; an unattended or CI run needs a real check.",8],
+  ["Stay in auto, not bypass","Auto keeps the classifier screening dangerous actions. It never judges correctness, so your bar stays the same.",8],
+  ["Diff before summary","Run /code-review, then read git diff yourself. A tidy summary can hide a change to a file you didn't expect.",8],
+  ["Tests as a gate","A Stop hook runs tests and refuses to end the turn on failure; a PostToolUse hook lints and type-checks every edit. Exit 2 sends the failure back for Claude to fix.",8],
+  ["Cold second opinion","A fresh session or subagent with no memory of the build reviews the change and catches what the author talked itself past.",8]
+ ],
+ concepts:[
+  ["Proportional verification","Check effort grows with how little you supervised the run.",8],
+  ["Test-gate Stop hook","Runs tests and blocks the end of turn on failure.",8],
+  ["Cold review","Review by a fresh session or subagent with no stake in the approach.",8],
+  ["Headless verification","Check a -p run by its JSON result and exit code.",8]
+ ],
+ snips:[
+  ["Review order","/code-review then git diff",8,"Start every unsupervised check"]
+ ],
+ pit:[
+  "Starting from Claude's summary instead of the diff.",
+  "Switching unattended runs to bypass permissions.",
+  "Trusting that Claude ran the tests because it said so."
+ ],
+ gaps:["The lesson video was not read."],
+ diagram:"verify",
+ quiz:[
+  ["What should you read first after an unsupervised run?",["Claude's summary","The diff","The commit message","The PR title"],1,"Summaries can hide surprises.",8],
+  ["Which hook refuses to end the turn when tests fail?",["PostToolUse","SessionStart","Stop","InstructionsLoaded"],2,"Exit 2 feeds the failure back.",8],
+  ["Why prefer auto over bypass for unattended runs?",["It's faster","The classifier still screens dangerous actions","It checks correctness","It runs tests"],1,"It still doesn't judge correctness.",8],
+  ["What does a cold reviewer bring?",["Faster runs","No memory of how the code was built","Write access","A bigger model"],1,"No stake in the approach.",8]
+ ]},
+{id:"plugins",c:"--p4",short:"Plugins",sub:"Verify and share · L9",eyebrow:"Lesson 9 · Verify and share",title:"Plugins",file:"04-verify-and-share.md",
+ question:"How do I share a setup with my team safely?",
+ take:[
+  ["One installable unit","A plugin bundles skills, subagents, hooks and MCP configs (plus LSP servers, monitors, themes and a slice of settings) as one version and one install.",9],
+  ["Install and marketplaces","/plugin install name@marketplace shows details first, then installs and reloads. Add a team marketplace once with /plugin marketplace add for central discovery and updates.",9],
+  ["Read before you install","A plugin runs with your privileges and its hooks fire on matching tool calls. Listed is not trusted; use sources you trust and check what it does.",9],
+  ["Runs alongside yours","Hooks stack with yours. Skills, agents and commands are namespaced. Its settings.json only honors agent and the subagent status line; agent can change the main thread's behavior.",9],
+  ["Package your own","Same shape as .claude: skill folders, agents/*.md, hooks/hooks.json, .mcp.json. Optional .claude-plugin/plugin.json; only name is required and it namespaces skills.",9]
+ ],
+ concepts:[
+  ["Plugin","Versioned, installable bundle of a Claude Code setup.",9],
+  ["Marketplace","Shared source that plugin installs resolve through.",9],
+  ["Hook stacking","Plugin hooks and your hooks both fire; neither replaces the other.",9],
+  ["plugin.json","Optional manifest at .claude-plugin/plugin.json with name, version, description, author.",9],
+  ["Plugin namespace","Skills run as /plugin-name:skill-name, so they never clash.",9]
+ ],
+ snips:[
+  ["Install","/plugin install github@claude-plugins-official",9,"Install a published plugin"],
+  ["Team marketplace","/plugin marketplace add your-org/claude-plugins",9,"Once per team"],
+  ["Force reload","/reload-plugins --force",9,"Reload warns it would re-read the conversation"]
+ ],
+ pit:[
+  "Installing for the skills and ignoring the hooks that come with them.",
+  "Assuming a marketplace listing means the plugin is safe.",
+  "Missing that the agent key can change Claude Code's default behavior."
+ ],
+ gaps:["The lesson video was not read."],
+ diagram:"plugins",
+ quiz:[
+  ["Which manifest field is required?",["version","author","name","description"],2,"It namespaces your skills.",9],
+  ["What happens when a plugin and you both have a PreToolUse hook?",["Yours wins","The plugin's wins","Both fire","Neither fires"],2,"Hooks stack.",9],
+  ["Which settings keys does a plugin settings.json honor?",["All keys","agent and the subagent status line","permissions only","none"],1,"agent can change the main thread.",9],
+  ["Does a community-marketplace listing mean the plugin is trusted?",["Yes","Only if starred","No, listed is not trusted","Only on Enterprise"],2,"Check before you turn it on.",9]
+ ]}
+];
+
+const PRACTICE=[["overview","Overview","Start here","--p0"],["flashcards","Flashcards","Key terms","--accent"],["cheatsheet","Cheat sheet","One-page summary","--accent"]];
+
+const box=(x,y,w,h,t,s,cls)=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="8" class="${cls||"bx"}"/><text x="${x+w/2}" y="${y+h/2-(s?3:-5)}" text-anchor="middle" class="tb">${t}</text>${s?`<text x="${x+w/2}" y="${y+h/2+15}" text-anchor="middle" class="tm">${s}</text>`:""}`;
+const arr=(d,dash)=>`<path d="${d}" class="ln${dash?" dash":""}" marker-end="url(#ah)"/>`;
+const D={
+steer:`<svg viewBox="0 0 720 240" role="img" aria-label="Scope then steer">${AR}
+ ${box(20,40,150,64,"Plan mode","read, no source edits","bxc")}${arr("M170 72H200")}
+ ${box(205,40,130,64,"Review plan","add what's missing")}${arr("M335 72H365")}
+ ${box(370,40,140,64,"Claude runs","")}${arr("M510 72H540")}
+ ${box(545,40,160,64,"Done","goal met?")}
+ ${box(300,150,130,54,"/compact …","keep what matters","bxc")}${box(450,150,120,54,"Rewind","Esc Esc")}${box(590,150,115,54,"/goal · /loop","autonomy")}
+ <path d="M440 104V128M365 128H647M365 128V148M510 128V148M647 128V148" class="ln"/>
+ <text x="20" y="175" class="tb">Scope first</text><text x="20" y="197" class="tm">then steer while it runs</text>
+ <text x="20" y="228" class="tm">Parallel sessions: one worktree each (.worktreeinclude for git-ignored files)</text>
+</svg><figcaption>Lesson 1: scope with a plan, then steer with compact, rewind, goal and loop.</figcaption>`,
+claudemd:`<svg viewBox="0 0 720 230" role="img" aria-label="Four CLAUDE.md locations">${AR}
+ ${box(20,20,160,56,"Managed policy","org, can't exclude")}${box(200,20,150,56,"User","all your projects")}${box(370,20,160,56,"Project","repo, shared","bxc")}${box(550,20,155,56,"Local","git-ignored, just you")}
+ <path d="M100 76V100M275 76V100M450 76V100M627 76V100M100 100H627" class="ln"/>${arr("M360 100V122")}
+ ${box(245,126,230,50,"All loaded at launch","they stack","bxc")}
+ <text x="20" y="206" class="t">Lean · specific · name the replacement · small emphasis budget</text>
+ <text x="20" y="226" class="tm">Hard rules → hooks · @imports organize, don't shrink</text>
+</svg><figcaption>Lesson 2: four locations stack; the leaner the file, the more Claude follows.</figcaption>`,
+skills:`<svg viewBox="0 0 720 240" role="img" aria-label="Verification skill flow">${AR}
+ ${box(20,40,130,60,"Change done","matches description")}${arr("M150 70H175")}
+ ${box(180,40,110,60,"Run tests","","bxc")}${arr("M290 70H315")}
+ ${box(320,40,110,60,"Read diff","","bxc")}${arr("M430 70H455")}
+ ${box(460,40,120,60,"Tests weakened?","check","bxc")}${arr("M580 70H605")}
+ ${box(610,40,95,60,"Report","with evidence")}
+ <text x="20" y="140" class="tb">Skill folder</text>
+ ${box(20,154,200,56,"SKILL.md","lean: what to do")}${box(240,154,200,56,"reference.md","read when needed")}${box(460,154,245,56,"check.sh","executed, not loaded")}
+</svg><figcaption>Lesson 3: the skill fires on its own and runs the same gates every time.</figcaption>`,
+modes:`<svg viewBox="0 0 720 240" role="img" aria-label="Permission modes by trust">${AR}
+ <text x="20" y="22" class="tm">less runs freely</text><text x="700" y="22" text-anchor="end" class="tm">more runs freely</text>
+ ${arr("M20 32H700")}
+ ${box(20,46,105,64,"Manual","reads only")}${box(135,46,105,64,"Plan","no edits")}${box(250,46,115,64,"Accept edits","edits + fs cmds")}${box(375,46,105,64,"Don't ask","prompts denied")}${box(490,46,100,64,"Auto","classifier","bxc")}${box(600,46,105,64,"Bypass","no checks")}
+ <text x="20" y="150" class="t">Shift+Tab cycles manual → accept edits → plan → auto</text>
+ <text x="20" y="178" class="t">Auto: classifier guards intent before · Stop hook guards correctness after</text>
+ <text x="20" y="206" class="tm">Don't ask: CI and overnight jobs · Bypass: isolated container or VM only</text>
+</svg><figcaption>Lesson 4: match the mode to the job.</figcaption>`,
+hooks:`<svg viewBox="0 0 720 250" role="img" aria-label="Hook events and exit codes">${AR}
+ ${box(20,30,120,56,"SessionStart","prime · compact")}${arr("M140 58H160")}
+ ${box(165,30,120,56,"PreToolUse","allow/deny/ask","bxc")}${arr("M285 58H305")}
+ ${box(310,30,90,56,"Tool runs","")}${arr("M400 58H420")}
+ ${box(425,30,130,56,"PostToolUse","format · lint")}${arr("M555 58H575")}
+ ${box(580,30,125,56,"Stop","not done yet?","bxc")}
+ <text x="20" y="130" class="tb">Exit codes</text>
+ ${box(20,145,200,56,"0 → success","JSON parsed")}${box(240,145,220,56,"2 → block","stderr to Claude","bxc")}${box(480,145,225,56,"1 or other → logged","Claude carries on")}
+ <text x="20" y="232" class="tm">updatedInput rewrites a call (redact secrets) · it replaces the whole input</text>
+</svg><figcaption>Lesson 5: exit 2 blocks; exit 1 does not.</figcaption>`,
+headless:`<svg viewBox="0 0 720 230" role="img" aria-label="Automation spectrum">${AR}
+ <text x="20" y="22" class="tm">build nothing</text><text x="700" y="22" text-anchor="end" class="tm">full control</text>
+ ${arr("M20 32H700")}
+ ${box(20,48,160,70,"Scheduled task","cloud · cron/POST/GitHub","bxc")}${box(195,48,160,70,"claude -p","your pipeline")}${box(370,48,160,70,"-p --bare","same setup in CI")}${box(545,48,160,70,"Agent SDK","inside your product")}
+ <text x="20" y="160" class="t">Scheduled task = prompt + repo + connectors + trigger (max hourly)</text>
+ <text x="20" y="188" class="t">-p: --output-format json --json-schema → structured_output</text>
+ <text x="20" y="214" class="tm">Start on the left; move right only when the job needs more control.</text>
+</svg><figcaption>Lesson 6: pick the least you need to build.</figcaption>`,
+github:`<svg viewBox="0 0 720 240" role="img" aria-label="Code Review vs GitHub Action">${AR}
+ ${box(270,20,180,50,"Pull request","","bxc")}
+ ${arr("M320 70L160 104")}${arr("M400 70L560 104")}
+ ${box(20,108,280,64,"Code Review (managed)","inline findings · never approves or fixes")}
+ ${box(420,108,285,64,"claude-code-action@v1","@claude · cron · any event","bxc")}
+ <text x="20" y="200" class="tm">Owner enables · open / every push / @claude review</text>
+ <text x="420" y="200" class="tm">/install-github-app · tune claude_args</text>
+ <text x="20" y="228" class="tm">Before pushing a fix: /code-review --fix locally</text>
+</svg><figcaption>Lesson 7: review with the service; do work with the action.</figcaption>`,
+verify:`<svg viewBox="0 0 720 240" role="img" aria-label="Verify in proportion">${AR}
+ <text x="20" y="22" class="tm">watched it closely</text><text x="700" y="22" text-anchor="end" class="tm">nobody watched</text>
+ ${arr("M20 32H700")}
+ ${box(20,48,200,60,"Quick glance","short, watched session")}${box(260,48,200,60,"Read the diff","/code-review + git diff")}${box(500,48,205,60,"Full check","gates + cold review","bxc")}
+ ${box(20,140,220,56,"Stop hook","tests gate the turn","bxc")}${box(260,140,200,56,"PostToolUse","lint + types")}${box(480,140,225,56,"Fresh subagent","no memory of build")}
+ <text x="20" y="226" class="tm">Headless runs: check the JSON result and exit code</text>
+</svg><figcaption>Lesson 8: the less you watched, the more you verify.</figcaption>`,
+plugins:`<svg viewBox="0 0 720 240" role="img" aria-label="Plugin structure">${AR}
+ ${box(20,30,200,60,".claude setup","skills · agents · hooks · MCP")}${arr("M220 60H260")}
+ ${box(265,30,190,60,"Plugin","one version, one install","bxc")}${arr("M455 60H495")}
+ ${box(500,30,205,60,"Marketplace","team installs + updates")}
+ <text x="20" y="130" class="tb">Inside the plugin</text>
+ <text x="20" y="154" class="t">skill folders · agents/*.md · hooks/hooks.json · .mcp.json</text>
+ <text x="20" y="178" class="t">.claude-plugin/plugin.json (only name required → /name:skill)</text>
+ <text x="20" y="210" class="tm">Read before you install: hooks stack with yours and run with your privileges.</text>
+</svg><figcaption>Lesson 9: package what works; read what you install.</figcaption>`
+};
+
+function viewOverview(){
+  return `<div class="mhead" style="--c:var(--accent)"><span class="eyebrow">Claude Academy · 9 lessons</span><h1>Claude Code in action</h1>
+  <p class="question">Point Claude at hours of work, walk away, and check what it did with confidence.</p></div>
+  <div class="intro"><p>Four sections: steer the work (Lesson 1), configure Claude (2–5), automate repeat work (6–7), and verify and share (8–9). The rule to keep: a rule Claude must never skip belongs in a hook. The habit to keep: the less you watched a run, the more you verify it.</p></div>
+  <div class="overview">${M.map(m=>`<button class="ovc" data-go="${m.id}" style="${cvar(m)}"><span class="eyebrow">${m.eyebrow}</span><h3>${esc(m.short)}</h3><span>${esc(m.question)}</span><span>${done.has(m.id)?"✓ Done":m.take.length+" takeaways · "+m.quiz.length+" quiz questions"}</span></button>`).join("")}</div>
+  <div class="gap"><b>About the sources.</b> Built only from the local lesson notes (README.md and the four section files), which summarize the lesson text. The lesson videos, the course quiz and the completion badge are not in the sources. Quiz questions here are my own. Gaps are flagged per module with ⚠.</div>`;
+}
+
+function viewCheat(){
+  const T=[["Rule Claude must never skip","Hook (PreToolUse / Stop)","Code that runs; exit 2 blocks"],["Always-on convention","CLAUDE.md","Lean, specific, name the replacement"],["Repeated procedure","Skill","Description triggers it; scripts execute"],["Repeat prompt, nothing to host","Cloud scheduled task","Cron, HTTP POST or GitHub event; max hourly"],["Job in your own pipeline","claude -p (+ --bare in CI)","JSON + schema → structured_output"],["PR review","Managed Code Review","Never approves, blocks or fixes"],["Work in CI","claude-code-action@v1","/install-github-app, tune claude_args"],["Share a setup","Plugin","Read before install; hooks stack"]];
+  return `<div class="mhead" style="--c:var(--accent)"><span class="eyebrow">Review</span><h1>Cheat sheet</h1><p class="question">The whole course on one page.</p></div>
+  <div class="grid2">
+   <div class="panel"><h3>Steer (L1)</h3><ul><li>Plan mode first; read the plan</li><li><code>/compact &lt;focus&gt;</code> · rewind with Esc Esc</li><li><code>/goal</code> (checkable in transcript) · <code>/loop</code> · worktrees</li></ul></div>
+   <div class="panel"><h3>CLAUDE.md (L2)</h3><ul><li>Managed · user · project · local, all stack</li><li>@imports organize, don't shrink</li><li>Specific, name the replacement, small emphasis budget</li></ul></div>
+   <div class="panel"><h3>Permission modes (L4)</h3><ul><li>Manual · accept edits · plan · auto · don't ask · bypass</li><li>Auto checks intent, not correctness: add a test Stop hook</li><li>Bypass only in a container or VM</li></ul></div>
+   <div class="panel"><h3>Hooks (L5)</h3><ul><li>Exit 0 success · 2 block · 1/other logged</li><li>PreToolUse JSON: allow/deny/ask + updatedInput</li><li>After compaction: SessionStart <code>compact</code> matcher</li></ul></div>
+   <div class="panel"><h3>Automate (L6–7)</h3><ul><li><code>/schedule</code> · <code>claude -p</code> · <code>--bare</code> · Agent SDK</li><li>Code Review for PRs; the action for CI work</li></ul></div>
+   <div class="panel"><h3>Verify and share (L8–9)</h3><ul><li>Diff before summary · tests as a hook gate · cold review</li><li>Plugin: read before install; only <code>name</code> required</li></ul></div>
+  </div>
+  <section><h2>Which tool for which job</h2><div class="tbl"><table><thead><tr><th>Job</th><th>Use</th><th>Remember</th></tr></thead><tbody>
+  ${T.map(r=>`<tr><td><b>${r[0]}</b></td><td>${r[1]}</td><td>${r[2]}</td></tr>`).join("")}
+  </tbody></table></div></section>
+  <div class="gap"><b>⚠ Not covered in sources:</b> lesson videos; full list of hook events; SKILL.md frontmatter; complete workflow YAML; Agent SDK options; course quiz content.</div>`;
+}
+
+/* ---------- nav ---------- */
+function renderNav(cur){
+  $("#navm").innerHTML=M.map(m=>`<li><button data-go="${m.id}" style="${cvar(m)}" aria-current="${cur===m.id}"><span class="dot"></span><span>${esc(m.short)}<span class="sub">${m.sub}</span></span><span class="chk">${done.has(m.id)?"✓":""}</span></button></li>`).join("");
+  $("#navp").innerHTML=PRACTICE.map(p=>`<li><button data-go="${p[0]}" style="--c:var(${p[3]})" aria-current="${cur===p[0]}"><span class="dot"></span><span>${p[1]}<span class="sub">${p[2]}</span></span><span></span></button></li>`).join("");
+  const n=M.filter(m=>done.has(m.id)).length;
+  $("#progtxt").textContent=`${n} of ${M.length} modules done`;
+  $("#progbar").style.width=(n/M.length*100)+"%";
+}
+
+/* ---------- views ---------- */
+function viewModule(m){
+  const z=m.zone?`<div class="continuum"><span class="rail"></span><div class="z"><b>${(m.zl||["Capability zone","Limitation zone"])[0]}</b>${esc(m.zone[0])}</div><div class="z"><b>${(m.zl||["Capability zone","Limitation zone"])[1]}</b>${esc(m.zone[1])}</div></div>`:"";
+  const isDone=done.has(m.id);
+  return `<div class="mhead"><span class="eyebrow">${m.eyebrow}</span>
+   <div class="headrow"><h1>${esc(m.title)}</h1><button class="btn ${isDone?"done":"primary"}" data-done="${m.id}" id="donebtn">${isDone?"✓ Done":"Mark as done"}</button></div>
+   <p class="question">${esc(m.question)}</p></div>${z}
+  <section><h2>Key takeaways <span class="count">${m.take.length}</span></h2><div class="cards">
+   ${m.take.map((t,i)=>`<details class="card" id="${m.id}-t${i}"${i===0?" open":""}><summary><span class="n">${String(i+1).padStart(2,"0")}</span><span>${esc(t[0])}</span><span class="chev">›</span></summary><div class="body"><p>${esc(t[1])}</p>${srcLink(m,t[2])}</div></details>`).join("")}
+  </div></section>
+  <section><h2>How it fits together</h2><figure class="diagram" style="margin:0">${D[m.diagram]}</figure></section>
+  <section><h2>Core concepts <span class="count">${m.concepts.length}</span></h2><dl class="concepts">
+   ${m.concepts.map((c,i)=>`<div id="${m.id}-c${i}"><dt>${esc(c[0])}</dt><dd>${esc(c[1])}</dd></div>`).join("")}</dl></section>
+  <section><h2>Commands, files and prompts</h2>
+   
+   <div class="snips">${m.snips.length?"":`<div class="gap"><b>⚠</b> No prompts in this module's sources.</div>`}${m.snips.map((s,i)=>`<div class="snip" id="${m.id}-s${i}"><header><span>${esc(s[0])}</span><button class="btn copy" data-copy="${m.id}-s${i}">Copy</button></header><pre>${esc(s[1])}</pre><header style="border:0;border-top:1px solid var(--line)"><span>${esc(s[3])}</span>${srcLink(m,s[2])}</header></div>`).join("")}</div></section>
+  <section><h2>Common pitfalls</h2><ul class="pit">${m.pit.map((p,i)=>`<li id="${m.id}-p${i}"><span>${esc(p)}</span></li>`).join("")}</ul></section>
+  <section><h2>Check yourself <span class="score" id="score-${m.id}"></span></h2><div class="quiz">
+   ${m.quiz.map((q,i)=>`<div class="q" data-q="${m.id}:${i}"><p class="stem">${i+1}. ${esc(q[0])}</p><div class="opts">${q[1].map((o,j)=>`<button data-opt="${j}">${esc(o)}</button>`).join("")}</div><div class="expl" hidden></div></div>`).join("")}
+   <button class="btn" data-reset="${m.id}" style="align-self:flex-start">Reset quiz</button></div></section>
+  <section><h2>Gaps in the sources</h2><div style="display:flex;flex-direction:column;gap:8px">${m.gaps.map(g=>`<div class="gap"><b>⚠</b> ${esc(g)}</div>`).join("")}</div></section>
+  <div class="headrow"><span class="prog">Source file: ${m.file}</span><button class="btn ${isDone?"done":"primary"}" data-done="${m.id}">${isDone?"✓ Done":"Mark as done"}</button></div>`;
+}
+
+let FC={deck:[],i:0,filter:"all"};
+function buildDeck(){
+  const all=[];M.forEach(m=>m.concepts.forEach(c=>all.push({m,term:c[0],def:c[1],l:c[2]})));
+  FC.deck=FC.filter==="all"?all:all.filter(x=>x.m.id===FC.filter);FC.i=0;
+}
+function viewFlash(){
+  if(!FC.deck.length) buildDeck();
+  const x=FC.deck[FC.i];
+  return `<div class="mhead" style="--c:var(--accent)"><span class="eyebrow">Practice</span><h1>Flashcards</h1><p class="question">Tap the card (or press Space) to flip. Arrow keys move.</p></div>
+  <div class="fc-tools"><label for="fcf" class="prog">Deck</label><select id="fcf"><option value="all">All modules (${M.reduce((a,m)=>a+m.concepts.length,0)})</option>${M.map(m=>`<option value="${m.id}"${FC.filter===m.id?" selected":""}>${esc(m.short)} (${m.concepts.length})</option>`).join("")}</select><button class="btn" id="fcshuf">Shuffle</button></div>
+  <div class="fcard" id="fcard" tabindex="0" role="button" aria-label="Flip card" style="${cvar(x.m)}"><div class="inner">
+   <div class="face"><span class="tag">${esc(x.m.short)}</span><span class="term">${esc(x.term)}</span><span class="prog">tap to reveal</span></div>
+   <div class="face back"><span class="tag">${esc(x.term)}</span><span class="def">${esc(x.def)}</span>${srcLink(x.m,x.l)}</div></div></div>
+  <div class="fc-nav"><button class="btn" id="fcprev">← Previous</button><span class="score">${FC.i+1} / ${FC.deck.length}</span><button class="btn primary" id="fcnext">Next →</button></div>`;
+}
+
+/* ---------- search ---------- */
+function searchIndex(){
+  const out=[];
+  M.forEach(m=>{
+    m.take.forEach((t,i)=>out.push({m,kind:"Takeaway",title:t[0],text:t[1],el:`${m.id}-t${i}`}));
+    m.concepts.forEach((c,i)=>out.push({m,kind:"Concept",title:c[0],text:c[1],el:`${m.id}-c${i}`}));
+    m.snips.forEach((s,i)=>out.push({m,kind:"Prompt",title:s[0],text:s[1]+" "+s[3],el:`${m.id}-s${i}`}));
+    m.pit.forEach((p,i)=>out.push({m,kind:"Pitfall",title:p,text:"",el:`${m.id}-p${i}`}));
+  });
+  return out;
+}
+const IDX=searchIndex();
+function hl(s,q){return esc(s).replace(new RegExp("("+q.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")+")","ig"),"<mark>$1</mark>")}
+function viewSearch(q){
+  const ql=q.toLowerCase();
+  const hits=IDX.filter(x=>(x.title+" "+x.text).toLowerCase().includes(ql));
+  return `<div class="mhead"><span class="eyebrow">Search</span><h1>${hits.length} result${hits.length===1?"":"s"} for “${esc(q)}”</h1></div>
+  <div class="res">${hits.map(x=>`<button data-jump="${x.m.id}|${x.el}" style="${cvar(x.m)}"><span class="kind">${x.kind} · ${esc(x.m.short)}</span><b>${hl(x.title,q)}</b>${x.text?`<span class="prog">${hl(x.text.slice(0,180),q)}${x.text.length>180?"…":""}</span>`:""}</button>`).join("")||`<p>No matches. Try a property name, “citation”, “cutoff” or “goal”.</p>`}</div>`;
+}
+
+/* ---------- router ---------- */
+let cur="overview";
+function go(id,opts={}){
+  cur=id;save(STORE+"-view",id);
+  const m=M.find(x=>x.id===id);
+  const v=$("#view");
+  if(m){v.style.cssText=cvar(m);v.innerHTML=viewModule(m);restoreQuiz(m)}
+  else if(id==="flashcards"){v.style.cssText="";v.innerHTML=viewFlash()}
+  else if(id==="cheatsheet"){v.style.cssText="";v.innerHTML=viewCheat()}
+  else {cur="overview";v.style.cssText="";v.innerHTML=viewOverview()}
+  renderNav(cur);
+  try{history.replaceState(null,"","#"+cur)}catch(e){}
+  if(!opts.keepScroll) window.scrollTo({top:0});
+}
+
+/* ---------- quiz state (per browser) ---------- */
+let QA=load(STORE+"-quiz",{});
+function answer(qel,j,persist=true){
+  const [mid,i]=qel.dataset.q.split(":");const m=M.find(x=>x.id===mid);const q=m.quiz[+i];
+  qel.querySelectorAll(".opts button").forEach((b,k)=>{b.disabled=true;if(k===q[2])b.classList.add("right");else if(k===j)b.classList.add("wrong")});
+  const e=qel.querySelector(".expl");e.hidden=false;
+  e.innerHTML=`<b>${j===q[2]?"Correct.":"Not quite."}</b> ${esc(q[3])} ${srcLink(m,q[4])}`;
+  if(persist){QA[qel.dataset.q]=j;save(STORE+"-quiz",QA)}
+  updScore(m);
+}
+function updScore(m){
+  const ans=m.quiz.map((q,i)=>QA[m.id+":"+i]);const n=ans.filter(a=>a!==undefined).length;
+  const r=ans.filter((a,i)=>a===m.quiz[i][2]).length;
+  const el=$("#score-"+m.id);if(el)el.textContent=n?`${r}/${n} correct`:`${m.quiz.length} questions`;
+}
+function restoreQuiz(m){m.quiz.forEach((q,i)=>{const a=QA[m.id+":"+i];if(a!==undefined)answer(document.querySelector(`[data-q="${m.id}:${i}"]`),a,false)});updScore(m)}
+
+/* ---------- events ---------- */
+document.addEventListener("click",e=>{
+  const g=e.target.closest("[data-go]");if(g){$("#q").value="";go(g.dataset.go);return}
+  const d=e.target.closest("[data-done]");if(d){const id=d.dataset.done;done.has(id)?done.delete(id):done.add(id);save(STORE+"-done",[...done]);go(id,{keepScroll:true});return}
+  const o=e.target.closest("[data-opt]");if(o&&!o.disabled){answer(o.closest(".q"),+o.dataset.opt);return}
+  const r=e.target.closest("[data-reset]");if(r){const m=M.find(x=>x.id===r.dataset.reset);m.quiz.forEach((q,i)=>delete QA[m.id+":"+i]);save(STORE+"-quiz",QA);go(m.id,{keepScroll:true});return}
+  const c=e.target.closest("[data-copy]");if(c){const txt=document.querySelector("#"+c.dataset.copy+" pre").textContent;
+    const ok=()=>{c.textContent="Copied";setTimeout(()=>c.textContent="Copy",1500)};
+    const fb=()=>{const pre=document.querySelector("#"+c.dataset.copy+" pre");const s=getSelection();const rg=document.createRange();rg.selectNodeContents(pre);s.removeAllRanges();s.addRange(rg);c.textContent="Selected — press ⌘/Ctrl+C"};
+    try{navigator.clipboard.writeText(txt).then(ok,fb)}catch(err){fb()}return}
+  const j=e.target.closest("[data-jump]");if(j){const [mid,el]=j.dataset.jump.split("|");$("#q").value="";go(mid);const t=document.getElementById(el);if(t){if(t.tagName==="DETAILS")t.open=true;t.scrollIntoView({block:"center"});t.classList.add("flash")}return}
+  if(e.target.closest("#fcard")){$("#fcard").classList.toggle("flipped");return}
+  if(e.target.closest("#fcnext")){FC.i=(FC.i+1)%FC.deck.length;go("flashcards",{keepScroll:true});return}
+  if(e.target.closest("#fcprev")){FC.i=(FC.i-1+FC.deck.length)%FC.deck.length;go("flashcards",{keepScroll:true});return}
+  if(e.target.closest("#fcshuf")){for(let i=FC.deck.length-1;i>0;i--){const k=Math.floor(Math.random()*(i+1));[FC.deck[i],FC.deck[k]]=[FC.deck[k],FC.deck[i]]}FC.i=0;go("flashcards",{keepScroll:true});return}
+});
+document.addEventListener("change",e=>{if(e.target.id==="fcf"){FC.filter=e.target.value;buildDeck();go("flashcards",{keepScroll:true})}});
+document.addEventListener("keydown",e=>{
+  if(cur!=="flashcards"||e.target.tagName==="INPUT"||e.target.tagName==="SELECT")return;
+  if(e.key===" "){e.preventDefault();$("#fcard").classList.toggle("flipped")}
+  if(e.key==="ArrowRight")$("#fcnext").click();
+  if(e.key==="ArrowLeft")$("#fcprev").click();
+});
+$("#q").addEventListener("input",e=>{const q=e.target.value.trim();if(q.length>=2){$("#view").style.cssText="";$("#view").innerHTML=viewSearch(q)}else go(cur,{keepScroll:true})});
+
+/* ---------- boot ---------- */
+const h=(location.hash||"").slice(1);
+const valid=id=>M.some(m=>m.id===id)||["overview","flashcards","cheatsheet"].includes(id);
+go(valid(h)?h:(valid(load(STORE+"-view","overview"))?load(STORE+"-view","overview"):"overview"));
+</script>
