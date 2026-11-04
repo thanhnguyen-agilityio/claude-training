@@ -3,10 +3,10 @@
 Work in `../claude-training-practice` (the app), not this repo. CP2 = 2 parallel sessions both merged · 1 plan-mode change steered via diff comments · 1 artifact · 1 Remote Control steer · 1 `/loop` run.
 
 ## 0. Practice repo reset
-- CLAUDE.md restored on main (commit):
-- Test line fixed for missing `.env`:
-- #48 merged (PR), CI green:
-- Day 5 branches/worktrees cleaned:
+- CLAUDE.md restored on main (commit): [6e4c9ef](https://github.com/thanhnguyen-agilityio/claude-training-practice/commit/6e4c9ef) (from a82f689)
+- Test line fixed for missing `.env`: dropped `--env-file ../.env`, same as CI
+- #48 merged (PR), CI green: already merged via [PR #49](https://github.com/thanhnguyen-agilityio/claude-training-practice/pull/49)
+- Day 5 branches/worktrees cleaned: skipped
 
 ## 1. Intro to subagents
 Notes: [my notes](../courses/introduction-to-subagents.md) · [resources/claude-academy/](../../resources/claude-academy/) (via `/academy-course`)
@@ -81,7 +81,7 @@ Order: subagents course → Day 6 → GitHub App review. If a block overruns, dr
 
 | Done | Time | Block | Finish line |
 |---|---|---|---|
-| [ ] | 0:00–0:15 | **Practice repo reset.** Switch to `main`. Revert `7157b2f` to restore CLAUDE.md and fix its Test line for a missing `.env`. Merge #48 from `fix/issue-48-onnxruntime-import`. Delete the Day 5 branches and worktrees. | main has CLAUDE.md, CI green |
+| [x] | 0:00–0:15 | **Practice repo reset.** Switch to `main`. Revert `7157b2f` to restore CLAUDE.md and fix its Test line for a missing `.env`. Merge #48 from `fix/issue-48-onnxruntime-import`. Delete the Day 5 branches and worktrees. | main has CLAUDE.md, CI green |
 | [ ] | 0:15–1:00 | **Course: Intro to subagents (45 min).** Then run `/academy-course` here. | Notes + hub card |
 | [x] | 1:00–1:15 | **Pick 2 tickets from #45** that touch separate files, for example (a) whitespace-only input posts an empty bubble (client, report #22) and (b) ticket email/phone validation (server, report #10). Create them as GitHub issues. | 2 issues |
 | [ ] | 1:15–3:00 | **2 parallel worktree sessions.** A: `/do-issue`, unaided. B: Plan mode, with at least 2 plan/diff comments to steer it. Both open PRs. Run `/loop 15m` on PR B, write `loop.md`, try `/loop 5m` health check. | 2 PRs, loop ran |
