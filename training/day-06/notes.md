@@ -33,6 +33,8 @@ Notes: [my notes](../courses/introduction-to-subagents.md) · [resources/claude-
 
 ## 4. Claude GitHub App vs CodeRabbit
 - Install: `/install-github-app` (auth secret set by me) · workflow PR:
+- Issue [#71](https://github.com/thanhnguyen-agilityio/claude-training-practice/issues/71): verified the problem and noted findings on the issue.
+- Fix: switched to the OAuth approach → workflow works: [run 41855608085](https://github.com/thanhnguyen-agilityio/claude-training-practice/actions/runs/41855608085) ✅
 - Inline comments working? (prompt change in `claude-code-review.yml`):
 
 | | Claude GitHub App | CodeRabbit |
