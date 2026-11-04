@@ -37,6 +37,10 @@ Ticket pool: existing issues in [milestone 1](https://github.com/thanhnguyen-agi
 - Install: `/install-github-app` (auth secret set by me) · workflow PR:
 - Issue [#71](https://github.com/thanhnguyen-agilityio/claude-training-practice/issues/71): verified the problem and noted findings on the issue.
 - Fix: switched to the OAuth approach → workflow works: [run 41855608085](https://github.com/thanhnguyen-agilityio/claude-training-practice/actions/runs/41855608085) ✅
+- Verified working (3 ways):
+  - `@claude` review on old PR: [#11 comment](https://github.com/thanhnguyen-agilityio/claude-training-practice/pull/11#issuecomment-6634621534)
+  - `@claude` chat on an issue: [#71 comment](https://github.com/thanhnguyen-agilityio/claude-training-practice/issues/71#issuecomment-6634389999)
+  - Auto code-review workflow triggered on a PR: [run 41856819885](https://github.com/thanhnguyen-agilityio/claude-training-practice/actions/runs/41856819885/job/126667588617)
 - Inline comments working? (prompt change in `claude-code-review.yml`):
 
 | | Claude GitHub App | CodeRabbit |
@@ -93,7 +97,7 @@ Order: subagents course → Day 6 → GitHub App review. If a block overruns, dr
 | [x] | 1:00–1:15 | **Pick 2 tickets from #45** that touch separate files, for example (a) whitespace-only input posts an empty bubble (client, report #22) and (b) ticket email/phone validation (server, report #10). Create them as GitHub issues. | 2 issues |
 | [ ] | 1:15–3:00 | **2 parallel worktree sessions.** A: `/do-issue`, unaided. B: Plan mode, with at least 2 plan/diff comments to steer it. Both open PRs. Run `/loop 15m` on PR B, write `loop.md`, try `/loop 5m` health check. | 2 PRs, loop ran |
 | [ ] | 3:00–3:15 | Break | |
-| [ ] | 3:15–4:15 | **Claude GitHub App (extra).** Run `/install-github-app` in a terminal `claude` session. I set the secret myself. Merge the workflow PR, ask for inline comments in `claude-code-review.yml`, then trigger reviews on PR A and PR B and compare with CodeRabbit. | Reviews + table |
+| [x] | 3:15–4:15 | **Claude GitHub App (extra).** Run `/install-github-app` in a terminal `claude` session. I set the secret myself. Merge the workflow PR, ask for inline comments in `claude-code-review.yml`, then trigger reviews on PR A and PR B and compare with CodeRabbit. | Reviews + table |
 | [ ] | 4:15–5:00 | **Artifact + `/rc`.** PR walkthrough artifact for PR B. Steer session A from my phone. | Link + 1 steer |
 | [ ] | 5:00–5:30 | **Merge both PRs.** Fix review comments, get CI green, merge. | 2 merged |
 | [ ] | 5:30–6:30 | **ultrathink + `/effort`.** Run one bug (for example report #20) at low and high effort with the same prompt. | Table |
