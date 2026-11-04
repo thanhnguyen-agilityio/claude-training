@@ -20,6 +20,7 @@ Installs: `CLAUDE.md` (from template — fill `<…>`), `.claude/settings.json`,
 | `skills/repro-bug` | Reproduce-ready bug report + failing test first |
 | `skills/optimize-skill` | Shrink a skill's tokens without changing its output: baseline runs, cut in order, re-run, report before/after |
 | `skills/unslop` | Cut AI tells from any writing: 31 patterns (content, language, style, filler, jargon, plain speech) plus a self-audit |
+| `skills/academy-course` | `/academy-course <course URL>` → Chrome reads the course → notes in `resources/claude-academy/<slug>/` → study-guide artifact + `study-guide.html` → card on the Study Hub artifact. Gates after lesson list; `task1/2/3` runs one phase |
 | `skills/writing-training-reports` | Daily/weekly `[bgh][training]` report email from session notes → Gmail draft (never sends). Eval: [training/evals/](../training/evals/writing-training-reports.md) |
 
 ## Backlog (add as course reaches it)
