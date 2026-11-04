@@ -9,8 +9,11 @@ Work in `../claude-training-practice` (the app), not this repo. CP2 = 2 parallel
 - Day 5 branches/worktrees cleaned:
 
 ## 1. Intro to subagents
-Notes: [resources/claude-academy/](../../resources/claude-academy/) (via `/academy-course`)
+Notes: [my notes](../courses/introduction-to-subagents.md) · [resources/claude-academy/](../../resources/claude-academy/) (via `/academy-course`)
 - 3 take-aways:
+  - Subagent = own context window + custom prompt, returns a summary → keeps main context clean.
+  - Design = description (when to use) + output format (when done) + least tools.
+  - Delegate only when the intermediate work doesn't matter (research, custom-instruction tasks, review); not for expert personas, pipelines, test runners.
 
 ## 2. Parallel worktree sessions
 | | Session A (unaided, `/do-issue`) | Session B (Plan mode + diff steer) |
