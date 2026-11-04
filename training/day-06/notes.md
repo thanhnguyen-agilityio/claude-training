@@ -16,6 +16,8 @@ Notes: [my notes](../courses/introduction-to-subagents.md) · [resources/claude-
   - Delegate only when the intermediate work doesn't matter (research, custom-instruction tasks, review); not for expert personas, pipelines, test runners.
 
 ## 2. Parallel worktree sessions
+Ticket pool: existing issues in [milestone 1](https://github.com/thanhnguyen-agilityio/claude-training-practice/milestone/1) / [milestone 2](https://github.com/thanhnguyen-agilityio/claude-training-practice/milestone/2), so no new issues needed.
+
 | | Session A (unaided, `/do-issue`) | Session B (Plan mode + diff steer) |
 |---|---|---|
 | Ticket | | |
@@ -88,7 +90,7 @@ Order: subagents course → Day 6 → GitHub App review. If a block overruns, dr
 |---|---|---|---|
 | [ ] | 0:00–0:15 | **Practice repo reset.** Switch to `main`. Revert `7157b2f` to restore CLAUDE.md and fix its Test line for a missing `.env`. Merge #48 from `fix/issue-48-onnxruntime-import`. Delete the Day 5 branches and worktrees. | main has CLAUDE.md, CI green |
 | [ ] | 0:15–1:00 | **Course: Intro to subagents (45 min).** Then run `/academy-course` here. | Notes + hub card |
-| [ ] | 1:00–1:15 | **Pick 2 tickets from #45** that touch separate files, for example (a) whitespace-only input posts an empty bubble (client, report #22) and (b) ticket email/phone validation (server, report #10). Create them as GitHub issues. | 2 issues |
+| [x] | 1:00–1:15 | **Pick 2 tickets from #45** that touch separate files, for example (a) whitespace-only input posts an empty bubble (client, report #22) and (b) ticket email/phone validation (server, report #10). Create them as GitHub issues. | 2 issues |
 | [ ] | 1:15–3:00 | **2 parallel worktree sessions.** A: `/do-issue`, unaided. B: Plan mode, with at least 2 plan/diff comments to steer it. Both open PRs. Run `/loop 15m` on PR B, write `loop.md`, try `/loop 5m` health check. | 2 PRs, loop ran |
 | [ ] | 3:00–3:15 | Break | |
 | [ ] | 3:15–4:15 | **Claude GitHub App (extra).** Run `/install-github-app` in a terminal `claude` session. I set the secret myself. Merge the workflow PR, ask for inline comments in `claude-code-review.yml`, then trigger reviews on PR A and PR B and compare with CodeRabbit. | Reviews + table |
