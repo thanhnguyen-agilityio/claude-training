@@ -8,10 +8,17 @@ Reusable Claude Code starter. Copy into any project; never overwrites existing f
 
 Installs: `CLAUDE.md` (from template — fill `<…>`), `.claude/settings.json`, `.claude/commands/`, `.claude/skills/`.
 
+Personal global rules (all projects), not installed by the script:
+
+```bash
+cp -n ai-kit/global/CLAUDE.md ~/.claude/CLAUDE.md
+```
+
 ## Contents
 | Item | What |
 |---|---|
 | `CLAUDE.md.template` | Project rules: commands, conventions, never-do |
+| `global/CLAUDE.md` | My `~/.claude/CLAUDE.md`: model/cost split (Opus advises, Sonnet/Haiku build), 80/20 writing style |
 | `.claude/settings.json` | Safe permissions (deny secrets, force-push) |
 | `commands/analyze-ticket` | `/analyze-ticket <text>` → 3-sentence analysis + gaps + questions |
 | `commands/pr` | `/pr` → PR description from current branch diff |
