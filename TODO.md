@@ -81,7 +81,7 @@ _Tips: [colleague-tips](training/colleague-tips.md) — Day 6_
 - [ ] ultrathink + `/effort` compare on one bug
 - [ ] 2 parallel worktree sessions on 2 tickets, both merged
 - [ ] Plan-mode change steered via diff comments
-- [ ] (extra) Claude GitHub App auto-review on the Day 6 PRs vs CodeRabbit (pulls forward Day 9 `@claude` Action)
+- [x] (extra) Claude GitHub App: `@claude` PR review, issue chat, auto-review workflow (OAuth). CodeRabbit compare dropped
 - [ ] Course: Intro to subagents; cloud session check from claude.ai/code
 - [ ] **CP2 pass**: 2 parallel merged ✔ plan-mode+diff steer ✔ artifact ✔ RC steer ✔ loop ✔
 
