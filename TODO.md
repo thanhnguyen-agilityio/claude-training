@@ -1,6 +1,6 @@
 # TODO / Progress
 
-Started 2026-10-12. No dates: go by day number, 80/20 only (checkpoints matter, extras optional). Tell Claude "done day N" / "update todo" to tick items.
+Started 2026-10-12. Full-time 8h/day from 2026-11-04 (one course day per day). No dates: go by day number, 80/20 only (checkpoints matter, extras optional). Tell Claude "done day N" / "update todo" to tick items.
 Detail per day: [PLAN.md](PLAN.md). Notes: [training/](training/).
 
 ## Progress
@@ -11,8 +11,8 @@ Detail per day: [PLAN.md](PLAN.md). Notes: [training/](training/).
 | 2 | Ticket analysis, repro | ✅ |
 | 3 | Fix/review/merge **CP1** | ✅ |
 | 4 | Install, daily loop | ✅ |
-| 5 | Memory & context | 🟨 |
-| 6 | Flagship + parallel **CP2** | ⬜ |
+| 5 | Memory & context | ✅ |
+| 6 | Flagship + parallel **CP2** | 🟨 |
 | 7 | Skills/commands/plugins | ⬜ |
 | 8 | MCP & connectors | ⬜ |
 | 9 | Hooks & automation | ⬜ |
@@ -59,7 +59,7 @@ Exercises: [training/day-02/exercises/](training/day-02/exercises/README.md)
 
 ### Day 4
 _Tips: [colleague-tips](training/colleague-tips.md) — Day 4–5_
-- [x] Course Claude Code 101 · [~] Claude Code in action (optional; in progress, [notes](training/courses/claude-code-in-action.md), quiz: see colleague-tips Shared resources)
+- [x] Course Claude Code 101 · [x] Claude Code in action (optional; done, [notes](training/courses/claude-code-in-action.md), quiz: see colleague-tips Shared resources)
 - [ ] Docs (optional, skim only): quickstart, common-workflows, best-practices
 - [x] Code tab on repo; sessions/resume
 - [x] Permission modes tour on throwaway change
@@ -80,6 +80,8 @@ _Tips: [colleague-tips](training/colleague-tips.md) — Day 6_
 - [ ] Remote Control `/rc` + phone steer
 - [ ] ultrathink + `/effort` compare on one bug
 - [ ] 2 parallel worktree sessions on 2 tickets, both merged
+- [ ] Plan-mode change steered via diff comments
+- [ ] (extra) Claude GitHub App auto-review on the Day 6 PRs vs CodeRabbit (pulls forward Day 9 `@claude` Action)
 - [ ] Course: Intro to subagents; cloud session check from claude.ai/code
 - [ ] **CP2 pass**: 2 parallel merged ✔ plan-mode+diff steer ✔ artifact ✔ RC steer ✔ loop ✔
 
