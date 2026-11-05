@@ -12,7 +12,7 @@ Training report profile
 - CC: asoft.training@asnet.com.vn, Cuong Pham <cuong.pham@example.com>
 - Course: [MCP training plan](https://docs.google.com/document/d/EXAMPLE)
 - Hashtags: #llm #mcp
-- Repo: [mcp-training](https://gitlab.asoft-python.com/minh.le/mcp-training), folder 3-practices/3-2-ecommerce
+- Repos: [mcp-training](https://github.com/minh-le/mcp-training) (practice), folder 3-practices/3-2-ecommerce
 ```
 
 **Today's notes from the user:**
@@ -31,15 +31,15 @@ Today, I continued the [MCP training plan](https://docs.google.com/document/d/EX
 Please find more detail in content below:
 FINISHED
 
-* Implement Database MCP Server ([#12](https://gitlab.asoft-python.com/minh.le/mcp-training/-/issues/12))
+* Implement Database MCP Server ([#12](https://github.com/minh-le/mcp-training/issues/12))
    * Resources give the model read-only context; tools perform actions
    * Keep SQL tools read-only to avoid unsafe queries
-* For more details, please refer to the [board](https://gitlab.asoft-python.com/minh.le/mcp-training/-/boards)
+* For more details, please refer to the [project board](https://github.com/minh-le/mcp-training/projects)
 * Source code:
-   * Git repository: [mcp-training](https://gitlab.asoft-python.com/minh.le/mcp-training)
-   * Branch: [feat/ecommerce](https://gitlab.asoft-python.com/minh.le/mcp-training/-/commits/feat/ecommerce)
-   * Folder: 3-practices/3-2-ecommerce
-   * Last commit: [b69e476](https://gitlab.asoft-python.com/minh.le/mcp-training/-/commit/b69e476)
+   * Practice: [mcp-training](https://github.com/minh-le/mcp-training)
+      * Branch: [feat/ecommerce](https://github.com/minh-le/mcp-training/tree/feat/ecommerce)
+      * Folder: 3-practices/3-2-ecommerce
+      * Last commit: [b69e476](https://github.com/minh-le/mcp-training/commit/b69e476)
 
 ISSUES
 
@@ -49,7 +49,7 @@ ISSUES
 
 NEXT PLAN
 
-* Continue task Implement Database MCP Server ([#12](https://gitlab.asoft-python.com/minh.le/mcp-training/-/issues/12))
+* Continue task Implement Database MCP Server (#12)
    * Implement cart tools
    * Implement order tools
 
@@ -57,4 +57,4 @@ Best regards,
 Minh Le.
 ```
 
-Recipients, course, repo, and folder come from the profile; notes add only work, branch, commit, extra tags. IN PROCESS is omitted because it is empty.
+Recipients, course, repo, and folder come from the profile; notes add only work, branch, commit, extra tags. IN PROCESS is omitted because it is empty. #12 is linked once, at first mention.

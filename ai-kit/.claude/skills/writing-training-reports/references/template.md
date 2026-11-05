@@ -8,14 +8,14 @@ Today, I continued training the [<Course>](<link>) by <one-line summary>.
 Please find more detail in content below:
 FINISHED
 
-* <Finished item> ([#<id>](<issue link>))
+* <Finished item> ([#<id>](https://github.com/<owner>/<repo>/issues/<id>))
    * <takeaway>
 * For more details, please refer to the [<reference>](<url>)
-* Source code:
-   * Git repository: [<repo-name>](<repo link>)
-   * Branch: [<branch>](<branch link>)
-   * Folder: <folder>
-   * Last commit: [<short hash>](<commit link>)
+* Source code (one block per repo touched today):
+   * <Role>: [<repo-name>](https://github.com/<owner>/<repo>)
+      * Branch: [<branch>](https://github.com/<owner>/<repo>/tree/<branch>)
+      * Folder: <folder>   (only if set)
+      * Last commit: [<short hash>](https://github.com/<owner>/<repo>/commit/<short hash>)
 
 IN PROCESS
 
@@ -32,7 +32,7 @@ ISSUES
 
 NEXT PLAN
 
-* <Specific task> ([#<id>](<issue link>))
+* <Specific task> ([#<id>](https://github.com/<owner>/<repo>/issues/<id>))
    * <sub-task>
 
 Best regards,

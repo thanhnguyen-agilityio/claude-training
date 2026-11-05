@@ -17,7 +17,7 @@ Training report profile
 - CC: asoft.training@asnet.com.vn, <others <email>>, ...
 - Course: [<name>](<link>)
 - Hashtags: #<tag> #<tag>
-- Repo: [<repo-name>](<repo link>), folder <folder>
+- Repos: [<repo-name>](https://github.com/<owner>/<repo>) (<role, e.g. notes>), folder <folder>; ...
 ```
 
 ## Workflow
@@ -36,7 +36,15 @@ Training report profile
 - ★ Include references (notes, docs, board, demo) when they exist.
 - ★ Next plan: each item names a task and its sub-tasks. Reject "continue working on practice".
 - ★ Issue: title + link, or what / where / error / tried, ending with the help needed.
-- Every URL is a Markdown link. Build issue, branch, and commit links from the repo URL pattern; unknown host → ask.
+- Every URL is a Markdown link on a short label (`#12`, `PR #34`, `b69e476`, `notes`), never a bare URL.
+- Links are GitHub by default; build them from the repo URL `https://github.com/<owner>/<repo>`:
+  issue `/issues/<n>`, PR `/pull/<n>`, branch `/tree/<branch>`, commit `/commit/<short hash>`,
+  file `/blob/<branch>/<path>`. Other host → ask for its pattern.
+- ★ Clean links: strip redirect wrappers (`google.com/url?q=...`) and tracking params
+  (`source=`, `ust=`, `sa=`, `utm_*`); keep `#anchors`. Re-check after the user pastes from Gmail.
+- ★ Fewer links: link each issue/PR once (first mention); group evidence on one line
+  ("Verified: [a](..), [b](..)"); no link for things the reader won't open.
+- Source code: one entry per repo touched today (repo, branch, last commit); skip untouched repos.
 - Omit empty sections and sub-groups.
 - Never invent. Missing hash or link → ask; still missing → `<TODO: ...>` and say so.
 - Never include secrets (passwords, tokens, keys, `.env` values) or customer data; drop them and tell the user.
@@ -45,7 +53,7 @@ Training report profile
 
 ## Gmail draft
 
-ToolSearch `gmail draft`, then `create_draft` with `to`, `cc`, `subject`, `htmlBody` (`<a href>`, nested `<ul><li>`, `<b>` headers), text identical to the approved report. **Never send.** Gmail missing or failing → show the body as rendered Markdown, say to select the formatted text and copy it (the code-block Copy button gives raw Markdown), and give one line why (connect via Settings → Connectors).
+ToolSearch `gmail draft`, then `create_draft` with `to`, `cc`, `subject`, `htmlBody` (`<a href>`, nested `<ul><li>`, `<b>` headers), text identical to the approved report. Edit after drafting → `get_draft` first and keep the user's own edits; clean any Gmail redirect links in it. **Never send.** Gmail missing or failing → show the body as rendered Markdown, say to select the formatted text and copy it (the code-block Copy button gives raw Markdown), and give one line why (connect via Settings → Connectors).
 
 ## Future expansion (not built)
 
