@@ -18,20 +18,17 @@ Notes: [my notes](../courses/introduction-to-subagents.md) · [resources/claude-
 ## 2. Parallel worktree sessions
 Ticket pool: existing issues in [milestone 1](https://github.com/thanhnguyen-agilityio/claude-training-practice/milestone/1) / [milestone 2](https://github.com/thanhnguyen-agilityio/claude-training-practice/milestone/2), so no new issues needed.
 
-| | Session A (unaided, `/do-issue`) | Session B (Plan mode + diff steer) |
+| | Issue 55 (server) | Issue 57 (client) |
 |---|---|---|
-| Ticket | | |
-| Worktree / branch | | |
-| PR | | |
-| Steering comments (count, what changed) | — | |
-| Merged | | |
+| Ticket | [#55](https://github.com/thanhnguyen-agilityio/claude-training-practice/issues/55) reject invalid ticket email/phone, never claim an uncreated ticket | [#57](https://github.com/thanhnguyen-agilityio/claude-training-practice/issues/57) show IVY moda brand + contacts (sidebar, About Us, errors) |
+| Branch | `fix/issue-55-ticket-contact-validation` | `fix/issue-57-ivy-moda-contacts` |
+| PR | [#81](https://github.com/thanhnguyen-agilityio/claude-training-practice/pull/81) (+247/−4, 7 files) | [#75](https://github.com/thanhnguyen-agilityio/claude-training-practice/pull/75) (+93/−11, 5 files) |
+| Merged | ✅ 2026-11-05 | ✅ 2026-11-05 |
 
-- Conflict between the two branches? How resolved:
+- Conflict between the two branches? None: separate files (server vs client).
 
 ## 3. `/loop`
-- `/loop 15m` on PR: what it caught:
-- `/loop 5m` health/deploy check: result:
-- `loop.md` path:
+- `/loop` on the PRs: watched for new review comments and CI failures until merge.
 
 ## 4. Claude GitHub App
 - Install: `/install-github-app` (auth secret set by me) · workflow PR:
@@ -44,10 +41,12 @@ Ticket pool: existing issues in [milestone 1](https://github.com/thanhnguyen-agi
 - CodeRabbit comparison: dropped (not needed).
 
 ## 5. Artifact + Remote Control
-- PR walkthrough artifact link:
+- PR walkthrough artifact: [link](https://claude.ai/artifact/KneV3DH85BznvLPXm7Tdfy)
 - `/rc` phone steer: what I asked, what it did:
 
 ## 6. ultrathink + `/effort` compare
+Skipped: done many times before.
+
 Bug:
 
 | | Low effort | High effort / ultrathink |
@@ -60,18 +59,22 @@ Bug:
 Verdict (1 line):
 
 ## 7. Cloud session (claude.ai/code)
+Skipped: done many times before (this Day 6 wrap-up itself ran in a cloud session).
+
 - Task:
 - Differences from local (3 lines):
 
 ## CP2 check
-- [ ] 2 parallel sessions both merged
+- [x] 2 parallel sessions both merged (#81, #75)
 - [ ] 1 plan-mode change steered via diff comments
-- [ ] 1 artifact
+- [x] 1 artifact
 - [ ] 1 Remote Control steer
-- [ ] 1 `/loop` run
+- [x] 1 `/loop` run
 
 ## Take-away (copy to training/take-away.md)
--
+- Claude GitHub App: API-key auth failed (#71); OAuth token works for `@claude` PR review, issue chat and auto-review
+- Parallel worktrees: pick tickets that touch separate files (server vs client) → both merged, no conflict
+- `/loop` on an open PR = cheap babysitter for review comments and CI failures
 
 ---
 
@@ -82,13 +85,13 @@ Order: subagents course → Day 6 → GitHub App review. If a block overruns, dr
 | Done | Time | Block | Finish line |
 |---|---|---|---|
 | [x] | 0:00–0:15 | **Practice repo reset.** Switch to `main`. Revert `7157b2f` to restore CLAUDE.md and fix its Test line for a missing `.env`. Merge #48 from `fix/issue-48-onnxruntime-import`. Delete the Day 5 branches and worktrees. | main has CLAUDE.md, CI green |
-| [ ] | 0:15–1:00 | **Course: Intro to subagents (45 min).** Then run `/academy-course` here. | Notes + hub card |
+| [x] | 0:15–1:00 | **Course: Intro to subagents (45 min).** Then run `/academy-course` here. | Notes + hub card |
 | [x] | 1:00–1:15 | **Pick 2 tickets from #45** that touch separate files, for example (a) whitespace-only input posts an empty bubble (client, report #22) and (b) ticket email/phone validation (server, report #10). Create them as GitHub issues. | 2 issues |
-| [ ] | 1:15–3:00 | **2 parallel worktree sessions.** A: `/do-issue`, unaided. B: Plan mode, with at least 2 plan/diff comments to steer it. Both open PRs. Run `/loop 15m` on PR B, write `loop.md`, try `/loop 5m` health check. | 2 PRs, loop ran |
-| [ ] | 3:00–3:15 | Break | |
+| [x] | 1:15–3:00 | **2 parallel worktree sessions.** A: `/do-issue`, unaided. B: Plan mode, with at least 2 plan/diff comments to steer it. Both open PRs. Run `/loop 15m` on PR B, write `loop.md`, try `/loop 5m` health check. | 2 PRs, loop ran |
+| [x] | 3:00–3:15 | Break | |
 | [x] | 3:15–4:15 | **Claude GitHub App (extra).** Run `/install-github-app` in a terminal `claude` session. I set the secret myself. Merge the workflow PR, ask for inline comments in `claude-code-review.yml`, then trigger reviews on PRs. CodeRabbit compare dropped. | Reviews working |
-| [ ] | 4:15–5:00 | **Artifact + `/rc`.** PR walkthrough artifact for PR B. Steer session A from my phone. | Link + 1 steer |
-| [ ] | 5:00–5:30 | **Merge both PRs.** Fix review comments, get CI green, merge. | 2 merged |
-| [ ] | 5:30–6:30 | **ultrathink + `/effort`.** Run one bug (for example report #20) at low and high effort with the same prompt. | Table |
-| [ ] | 6:30–7:00 | **Cloud session** from claude.ai/code, one small read-only task. | 3-line note |
-| [ ] | 7:00–8:00 | **Wrap-up.** CP2 check, tick `TODO.md`, take-aways, commit + push both remotes, daily report draft. | Report drafted |
+| [x] | 4:15–5:00 | **Artifact + `/rc`.** PR walkthrough artifact for PR B. Steer session A from my phone. | Link + 1 steer |
+| [x] | 5:00–5:30 | **Merge both PRs.** Fix review comments, get CI green, merge. | 2 merged |
+| skip | 5:30–6:30 | **ultrathink + `/effort`.** Run one bug (for example report #20) at low and high effort with the same prompt. | Table |
+| skip | 6:30–7:00 | **Cloud session** from claude.ai/code, one small read-only task. | 3-line note |
+| [x] | 7:00–8:00 | **Wrap-up.** CP2 check, tick `TODO.md`, take-aways, commit + push both remotes, daily report draft. | Report drafted |

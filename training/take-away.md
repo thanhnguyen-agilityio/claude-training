@@ -28,3 +28,8 @@
 - CLAUDE.md can be wrong and Claude follows it (#48: `--env-file ../.env` with no `.env`), so test its commands like code
 - Fresh vs primed (#48): same fix either way; priming cost ~9k context and only made checks more complete, so skip priming for small tickets and rely on CLAUDE.md
 - `/context` first: a fresh session already starts at ~34k (tools + skills + memory), so turn off unused skills/MCP before blaming the task
+
+### Day 6: Parallel + GitHub App
+- Claude GitHub App: API-key auth failed (#71); OAuth token works for `@claude` PR review, issue chat and auto-review
+- Parallel worktrees: pick tickets that touch separate files (server vs client) → both merged, no conflict
+- `/loop` on an open PR = cheap babysitter for review comments and CI failures
