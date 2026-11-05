@@ -25,6 +25,7 @@ Ticket pool: existing issues in [milestone 1](https://github.com/thanhnguyen-agi
 | PR | [#81](https://github.com/thanhnguyen-agilityio/claude-training-practice/pull/81) (+247/−4, 7 files) | [#75](https://github.com/thanhnguyen-agilityio/claude-training-practice/pull/75) (+93/−11, 5 files) |
 | Merged | ✅ 2026-11-05 | ✅ 2026-11-05 |
 
+- Plan mode as the gate in `/do-issue`: [#87](https://github.com/thanhnguyen-agilityio/claude-training-practice/issues/87) → [PR #89](https://github.com/thanhnguyen-agilityio/claude-training-practice/pull/89)
 - Conflict between the two branches? None: separate files (server vs client).
 
 ## 3. `/loop`
@@ -42,7 +43,8 @@ Ticket pool: existing issues in [milestone 1](https://github.com/thanhnguyen-agi
 
 ## 5. Artifact + Remote Control
 - PR walkthrough artifact: [link](https://claude.ai/artifact/KneV3DH85BznvLPXm7Tdfy)
-- `/rc` phone steer: what I asked, what it did:
+- `/rc` phone steer: done
+- Artifact shows: bug before/after, flow, files changed, evidence, commit history, follow-ups, risks
 
 ## 6. ultrathink + `/effort` compare
 Skipped: done many times before.
@@ -66,9 +68,9 @@ Skipped: done many times before (this Day 6 wrap-up itself ran in a cloud sessio
 
 ## CP2 check
 - [x] 2 parallel sessions both merged (#81, #75)
-- [ ] 1 plan-mode change steered via diff comments
+- [x] 1 plan-mode change steered via diff comments ([#87](https://github.com/thanhnguyen-agilityio/claude-training-practice/issues/87) → [PR #89](https://github.com/thanhnguyen-agilityio/claude-training-practice/pull/89))
 - [x] 1 artifact
-- [ ] 1 Remote Control steer
+- [x] 1 Remote Control steer
 - [x] 1 `/loop` run
 
 ## Take-away (copy to training/take-away.md)

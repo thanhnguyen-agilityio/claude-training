@@ -77,13 +77,13 @@ _Tips: [colleague-tips](training/colleague-tips.md) — Day 4–5_
 _Tips: [colleague-tips](training/colleague-tips.md) — Day 6_
 - [x] Artifact: PR walkthrough
 - [x] `/loop` on PRs (review comments + CI)
-- [ ] Remote Control `/rc` + phone steer
+- [x] Remote Control `/rc` + phone steer
 - [~] ultrathink + `/effort` compare on one bug (skipped, done before)
 - [x] 2 parallel worktree sessions on 2 tickets, both merged (#81, #75)
-- [ ] Plan-mode change steered via diff comments
+- [x] Plan-mode change steered via diff comments (#87 → PR #89)
 - [x] (extra) Claude GitHub App: `@claude` PR review, issue chat, auto-review workflow (OAuth). CodeRabbit compare dropped
 - [x] Course: Intro to subagents; cloud session check skipped (done before)
-- [ ] **CP2 pass**: 2 parallel merged ✔ plan-mode+diff steer ✔ artifact ✔ RC steer ✔ loop ✔
+- [x] **CP2 pass**: 2 parallel merged ✔ plan-mode+diff steer ✔ artifact ✔ RC steer ✔ loop ✔
 
 ### Day 7
 - [ ] Course: Intro to agent skills
